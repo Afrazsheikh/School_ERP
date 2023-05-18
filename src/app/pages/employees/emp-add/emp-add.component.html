@@ -2,39 +2,28 @@
   <div class="container p-5">
     <form [formGroup]="addEmployee" >
 
-    <div class="heading mb-3">
+    <div class="heading mb-3 header-txt">
       <h4>Academic Details</h4>
-      <button class="btn" data-bs-toggle="modal" data-bs-target="#multipleImport">Multiple Import</button>
+     <button class="btn" data-bs-toggle="modal" data-bs-target="#multipleImport">Multiple Import</button>
     </div>
 
     <div class="row mb-3">
       <div class="col-4">
-     
-        <!-- <div class="col-4"> -->
-          <label class="form-label">Designation *</label>
+          <label class="form-label">Designation <span class="error">*</span></label>
           <select class="form-select" formControlName="designation" (change)="DisableDetails($event)">
             <option disabled value="select">Select</option>
             <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
           </select>
-          <!-- <mat-form-field appearance="fill">
-            <mat-label>Designation</mat-label>
-            <mat-select formControlName="designation" (change)="DisableDetails($event)" >
-              <mat-option  *ngFor="let designation of designations"  [value]="designation._id">
-                {{designation.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field> -->
-       
       </div>
       <div class="col-4">
-        <label class="form-label">Deaprtment *</label>
+        <label class="form-label">Deaprtment <span class="error">*</span></label>
         <select class="form-select" formControlName="department">
           <option disabled value="select">Select</option>
           <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>
         </select>
       </div>
       <div class="col-4">
-        <label class="form-label">Joining Date *</label>
+        <label class="form-label">Joining Date <span class="error">*</span></label>
         <div class="input-group">
        <div class="mr-2 tooglePicker">  
           <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle >
@@ -48,27 +37,9 @@
       </div>
     </div>
 
-
-    <div class="row mb-3">
-      <!-- <div class="col-4">
-        <label class="form-label">Designation *</label>
-        <select class="form-select" formControlName="designation">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
-        </select>
-      </div> -->
-      <!-- <div class="col-4 offset-4">
-        <label class="form-label">Deaprtment *</label>
-        <select class="form-select" formControlName="department">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>
-        </select>
-      </div> -->
-    </div>
-
     <div class="row mb-3">
       <div class="col-4">
-        <label class="form-label">Qualification *</label>
+        <label class="form-label">Qualification <span class="error">*</span></label>
         <input type="text" formControlName="qualification" class="form-control">
       </div>
       <div class="col-4">
@@ -80,47 +51,24 @@
         <input type="text" formControlName="totalExperience" class="form-control">
       </div>
     </div>
-
-    <!--  Employee Details  -->
-    <div class="my-5">
+    <div class="my-5 header-txt">
       <h4>Employee Details</h4>
     </div>
 
     <div class="row mb-3">
       <div class="col-4">
-        <label class="form-label">Name *</label>
+        <label class="form-label">Gender</label>
+        <select class="form-select" formControlName="gender">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let genderD of genderList" value="{{genderD._id}}">{{genderD.name}}</option>
+        </select>
+      </div>
+      <div class="col-4">
+        <label class="form-label">Name <span class="error">*</span></label>
         <div class="input-group">
           <!-- <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span> -->
           <input type="text"   formControlName="name" class="form-control">
         </div>
-      </div>
-
-      <div class="col-4 offset-4">
-        <label class="form-label">Gender</label>
-        <select class="form-select" formControlName="gender">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let genderD of genderList" value="{{genderD._id}}">{{genderD.name}}</option>
-          </select>
-      </div>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-4">
-        <label class="form-label">Religion</label>
-       
-        <select class="form-select" formControlName="religion">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let day of religionList" value="{{day._id}}">{{day.name}}</option>
-          </select>
-      </div>
-      <div class="col-4">
-        <!-- <label class="form-label">Blood Group</label>
-        <input type="text" formControlName="bloodGroup" class="form-control"> -->
-        <label class="form-label">Blood group <span class="error">*</span></label>
-        <select class="form-select" formControlName="bloodGroup">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let day of bloodGrList" value="{{day._id}}">{{day.name}}</option>
-          </select>
       </div>
       <div class="col-4">
         <label class="form-label">Date Of Birth</label>
@@ -137,101 +85,71 @@
        
         </div>
       </div>
+     
     </div>
-
     <div class="row mb-3">
       <div class="col-4">
-        <label class="form-label">Phone No. *</label>
+        <label class="form-label">Religion</label>
+        <select class="form-select" formControlName="religion">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let day of religionList" value="{{day._id}}">{{day.name}}</option>
+        </select>
+      </div>
+      <div class="col-4">
+        <label class="form-label">Blood Group</label>
+        <select class="form-select" formControlName="bloodGroup">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let day of bloodGrList" value="{{day._id}}">{{day.name}}</option>
+        </select>
+      </div>
+      <div class="col-4">
+        <label class="form-label">Phone No. <span class="error">*</span></label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-          <input type="text"  formControlName="number" class="form-control">
+          <input type="text" formControlName="number" class="form-control">
         </div>
       </div>
-
-      <div class="col-4 offset-4">
+     
+    </div>
+    
+    <div class="row mb-3">
+      <div class="col-8">
         <label class="form-label">Email Id</label>
         <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+         <!-- <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span> -->
           <input type="text" formControlName="email" class="form-control">
         </div>
       </div>
     </div>
-
     <div class="row mb-3">
-      <div class="col-4">
-        <label class="form-label">Present Address *</label>
-        <div class="input-group">
-          <!-- <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span> -->
-          <input type="text"  formControlName="presentAddress" class="form-control">
-        </div>
+      <div class="col-6">
+        <label class="form-label">Present Address <span class="error">*</span></label>
+        <textarea type="text" class="form-control"  rows="3"  formControlName="presentAddress" > </textarea>
       </div>
 
-      <div class="col-4 offset-4">
+      <div class="col-6">
         <label class="form-label">Permanent Address</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-          <input type="text" formControlName="permanentAddress" class="form-control">
-        </div>
+        <textarea type="text" class="form-control"  rows="3"  formControlName="permanentAddress" > </textarea>
+
       </div>
     </div>
-
-    <div>
-      <!-- <label class="form-label">Profile Picture</label> -->
-      <!-- <div class="upload-cont">
-        <p class="text-center">
-          <i class="fa-solid fa-cloud-arrow-up"></i>
-          <br>
-          Drag and drop a file here or click
-        </p>
-      </div> -->
-    </div>
-<!--     
-    <div class="center">
-      <label class="form-label">Profile Picture</label>
-      <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" 
-      (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-            Drag and drop a file here or click
-            <button type="button" (click)="openFileSelector()">Browse Files</button>
-          </ng-template>
+    <div class="mb-3 py-2">
+      <label class="form-label">Profile Picture <span class="error">*</span></label>
+      <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event)">
+        <ng-template  ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <ng-container *ngIf="!fileData">
+              Drag and drop or
+              <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
+            </ng-container>
+            <ng-container *ngIf="fileData">
+              {{fileData.name}}
+              <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="fileData=null">
+                Remove
+              </a>
+            </ng-container>
+        </ng-template>
       </ngx-file-drop>
-      <div class="upload-table">
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th>Name of Photo</th>
-                  </tr>
-              </thead>
-              <tbody class="upload-name-style">
-                  <tr *ngFor="let item of files; let i=index">
-                      <td><strong>{{ item.relativePath }}</strong></td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
-  </div>
-   -->
-
-   <div class="mb-3 py-2">
-    <label class="form-label">Profile Picture*</label>
-    <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event)">
-      <ng-template formControlName="file" ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-          <ng-container *ngIf="!fileData">
-            Drag and drop or
-            <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
-          </ng-container>
-          <ng-container *ngIf="fileData">
-            {{fileData.name}}
-            <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="fileData=null">
-              Remove
-            </a>
-          </ng-container>
-      </ng-template>
-    </ngx-file-drop>
-  </div>
-
-    <!-- Login Details -->
-    <div class="my-5" *ngIf="loginDeatils ==true">
+    </div>
+    <div class="my-5 header-txt" *ngIf="loginDeatils ==true">
       <h4>Login Details</h4>
     </div>
     <div class="row mb-3"  *ngIf="loginDeatils ==true">
@@ -259,7 +177,7 @@
     </div>
 
     <!-- Social Details -->
-    <div class="my-5">
+    <div class="my-5 header-txt">
       <h4>Social Links</h4>
     </div>
     <div class="row mb-3">
@@ -274,7 +192,7 @@
         <label class="form-label">Twitter</label>
         <div class="input-group">
           <span class="input-group-text"><i class="fa-brands fa-twitter"></i></span>
-          <input type="password" formControlName="twitter"  class="form-control">
+          <input type="text" formControlName="twitter"  class="form-control">
         </div>
       </div>
       <div class="col-4">
@@ -282,54 +200,54 @@
         <div class="input-group">
           <span class="input-group-text">
             <i class="fa-brands fa-linkedin" ></i></span>
-          <input type="password" formControlName="linkedin"  class="form-control">
+          <input type="text" formControlName="linkedin"  class="form-control">
         </div>
       </div>
     </div>
 
     <!-- Bank Details -->
-    <div class="my-5">
+    <div class="my-5 header-txt">
       <h4>Bank Details</h4>
     </div>
     <div class="form-check mb-3">
      
 
       <section class="example-section">
-        <mat-checkbox class="example-margin" (change)="skipDetail($event)" formControlName="skipBankDetails">  Skip Bank Details!</mat-checkbox>
+        <mat-checkbox class="example-margin"  formControlName="skipBankDetails">  Skip Bank Details!</mat-checkbox>
       
       </section>
     </div>
-
-    <div class="row mb-3" *ngIf="skipBankDetails != true"  >
-      <div class="col-4">
-        <label class="form-label">Bank Name *</label>
-        <input type="text" formControlName="bankName"  class="form-control">
+    <ng-container *ngIf="!addEmployee.controls['skipBankDetails'].value">
+      <div class="row mb-3"   >
+        <div class="col-4">
+          <label class="form-label">Bank Name *</label>
+          <input type="text" formControlName="bankName"  class="form-control">
+        </div>
+        <div class="col-4">
+          <label class="form-label">Holder Name *</label>
+          <input type="text" formControlName="holderName"  class="form-control">
+        </div>
+        <div class="col-4">
+          <label class="form-label">Bank Branch *</label>
+          <input type="text" formControlName="bankBranch"  class="form-control">
+        </div>
       </div>
-      <div class="col-4">
-        <label class="form-label">Holder Name *</label>
-        <input type="text" formControlName="holderName"  class="form-control">
+  
+      <div class="row mb-3" >
+        <div class="col-4">
+          <label class="form-label">Bank Address</label>
+          <input type="text"  formControlName="bankAddress"  class="form-control">
+        </div>
+        <div class="col-4">
+          <label class="form-label">IFSC Code</label>
+          <input type="text" formControlName="ifscCode"  class="form-control">
+        </div>
+        <div class="col-4">
+          <label class="form-label">Account Number *</label>
+          <input type="text" formControlName="accountNumber"  class="form-control">
+        </div>
       </div>
-      <div class="col-4">
-        <label class="form-label">Bank Branch *</label>
-        <input type="text" formControlName="bankBranch"  class="form-control">
-      </div>
-    </div>
-
-    <div class="row mb-3" *ngIf="skipBankDetails != true">
-      <div class="col-4">
-        <label class="form-label">Bank Address</label>
-        <input type="text"  formControlName="bankAddress"  class="form-control">
-      </div>
-      <div class="col-4">
-        <label class="form-label">IFSC Code</label>
-        <input type="text" formControlName="ifscCode"  class="form-control">
-      </div>
-      <div class="col-4">
-        <label class="form-label">Account Number *</label>
-        <input type="text" formControlName="accountNumber"  class="form-control">
-      </div>
-    </div>
-
+    </ng-container>
     <div class="text-end my-4" *ngIf="buttonSave==true">
       <button class="btn" >
         <span *ngIf="isLoading" class="spinner-border text-light"></span>
@@ -348,11 +266,11 @@
         Cancel
       </button>
     </div>
-</form>
+    <!---
+    Form closed-->
+    </form>
   </div>
-
-</app-layout>
-
+  </app-layout>
 
 <div class="modal fade" id="multipleImport">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

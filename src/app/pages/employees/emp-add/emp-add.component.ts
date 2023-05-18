@@ -125,6 +125,28 @@ export class EmpAddComponent {
     console.log("yes");
     this.getDepartments()
     this.getDesignations()
+
+    if(this.AddEmployeF || (this.editEmploye === null || this.editEmploye === undefined) ){
+      this.AddEmloyeForm();
+      this.multipleImForm()
+      this.buttonSave = true;
+      // this.getDepartments()
+      // this.getDesignations() 
+      this.buttonSave = true;
+    } else {
+      if(this.editEmploye.hasOwnProperty('_id')) {
+        if(!this.AddEmployeF || this.editEmploye._id){
+          console.log("not");
+          
+          this._setValue()
+          this._action = 'Update'
+          this.buttonUpdate = true
+       
+          this.Cancel_update = 'Cancel Update'
+        }
+      }
+    }
+/*
     if (this.AddEmployeF || this.editEmploye == null) {
       this.AddEmloyeForm()
       this.multipleImForm()
@@ -139,7 +161,7 @@ export class EmpAddComponent {
 
       this.Cancel_update = 'Cancel Update'
     }
-
+*/
 
 
 
