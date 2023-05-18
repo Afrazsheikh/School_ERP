@@ -28,5 +28,11 @@ export class StudentService {
 
   educationList= [{_id:"School", name:"School"},{_id:"Graduate", name:"Graduate"},{_id:"Post Graduate", name:"Post Graduate"},{_id:"Others", name:"Others"}];
   
+  studentDetailBackAction = {
+    "isBack": false,
+    "academicYear":"",
+    "studentClass":"",
+    "section":""
+  };
    constructor() { }
 }

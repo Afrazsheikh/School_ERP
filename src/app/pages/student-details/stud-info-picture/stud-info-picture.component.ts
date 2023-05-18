@@ -3,6 +3,7 @@ import { NgxFileDropEntry } from 'ngx-file-drop';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { StudentService} from '../student.service';
 @Component({
   selector: 'app-stud-info-picture',
   templateUrl: './stud-info-picture.component.html',
@@ -13,7 +14,7 @@ export class StudInfoPictureComponent {
   student:any;
   isUploadImage = false;
   image: any;
-  constructor(private api: ApiService,private toastr: ToastrService, private router: Router) {
+  constructor(private api: ApiService,private toastr: ToastrService, private router: Router, private studentService:StudentService) {
   }
  ngOnInit() {
   this.student = this.studentData;
@@ -63,5 +64,8 @@ export class StudInfoPictureComponent {
      }
    }
  }
- 
+ backButtonClick(){
+    this.studentService.studentDetailBackAction.isBack = true;
+    this.router.navigate(['/student-details/student-list']);
+ }
 }

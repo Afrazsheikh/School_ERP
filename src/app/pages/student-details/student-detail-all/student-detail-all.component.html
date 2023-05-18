@@ -1,8 +1,8 @@
 <app-layout>
+ 
     <ng-container *ngIf="student">
         <div class="container p-5" >
-            <app-stud-info-picture [studentData]="student"></app-stud-info-picture>
-            
+            <app-stud-info-picture [studentData]="student"></app-stud-info-picture>            
             <accordion [isAnimated]="true" class="mt-3">
                 <accordion-group heading="Academic Details" class="mt-3">
                     <app-stu-info-basic  [studentData]="student"></app-stu-info-basic>

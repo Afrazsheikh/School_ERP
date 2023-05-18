@@ -18,8 +18,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 
 
-
-
 @NgModule({
   declarations: [
     EmpListComponent,
@@ -32,10 +30,10 @@ import {MatSelectModule} from '@angular/material/select';
     EmployeesRoutingModule,
     MatTabsModule,
     SharedModule,
+    ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     NgxFileDropModule,
-    ReactiveFormsModule,
     MatDatepickerModule,
     MatMomentDateModule,
     MatFormFieldModule,

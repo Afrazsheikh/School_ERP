@@ -4,7 +4,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
-
+import { StudentService} from '../student.service';
 @Component({
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
@@ -20,13 +20,15 @@ export class StudentListComponent implements OnInit {
   studentId:any;
   studentSelRow:any;
   aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService,
+    private studentService:StudentService
 ) {
    this.addForm();
   }
   ngOnInit(): void {  
     this.getAllClass();
     // this.getAllSection();
+  
     
   }
   addForm() {
@@ -35,6 +37,16 @@ export class StudentListComponent implements OnInit {
       section: new FormControl(null, [Validators.required]),
       academicYear: new FormControl(null, [Validators.required])
     })
+  }
+  setClass(classId){
+    this.sections =[];
+    this.reportForm.patchValue({section: 'select'});
+    const id = classId;
+    this.classes.forEach(element => {
+        if(element._id === id) {
+          this.sections = element.sections;
+        }
+    });
   }
   onChangeClass(event){
     this.sections =[];
@@ -48,12 +60,24 @@ export class StudentListComponent implements OnInit {
   }
   getAllSection() {
     this.api.getAllSection().subscribe(resp => {
-      this.sections = resp.sections
+      this.sections = resp.sections;
+      
     });
   }
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {
-      this.classes = resp.classes
+      this.classes = resp.classes;
+      if(this.studentService.studentDetailBackAction.isBack){
+        this.setClass(this.studentService.studentDetailBackAction.studentClass);
+        this.reportForm.patchValue({
+          studentClass: this.studentService.studentDetailBackAction.studentClass ,
+          section:this.studentService.studentDetailBackAction.section,
+          academicYear:this.studentService.studentDetailBackAction.academicYear
+        });
+       
+        this.reportForm.updateValueAndValidity();
+        this.callReport(this.reportForm);
+      }
     });
   }
   callReport(reportForm){
@@ -64,6 +88,7 @@ export class StudentListComponent implements OnInit {
     }
     this.api.studentList(data).subscribe(data => {
       this.studentData = data['students'];
+      this.studentService.studentDetailBackAction.isBack = false;
     },
     (err) =>{
       this.studentData =[];
@@ -93,6 +118,10 @@ export class StudentListComponent implements OnInit {
     this.modalRef.hide();
   }
   editClick(student:any) {
+    this.studentService.studentDetailBackAction.isBack = false;
+    this.studentService.studentDetailBackAction.academicYear = this.reportForm.value.academicYear;
+    this.studentService.studentDetailBackAction.section = this.reportForm.value.section;
+    this.studentService.studentDetailBackAction.studentClass = this.reportForm.value.studentClass;
     this.router.navigate(['/student-details/student-view/', student._id]);
   }
 }

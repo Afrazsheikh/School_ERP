@@ -73,7 +73,7 @@
             <div class="row mt-3 mb-3">
                 <div class="col-3">
                     <label class="form-label">First Name <span class="error">*</span></label>
-                    <input type="text" class="form-control"  formControlName="firstName">
+                    <input type="text" class="form-control"  formControlName="firstName" >
                 </div>
                 <div class="col-3">
                     <label class="form-label">Last Name <span class="error">*</span></label>
@@ -135,7 +135,7 @@
                 </div>
                 <div class="col-3">
                     <label class="form-label">Email <span class="error">*</span></label>
-                    <input type="text" class="form-control"  formControlName="email">
+                    <input type="text" class="form-control"  formControlName="email" >
                 </div>
                 <div class="col-3">
                     <label class="form-label">City <span class="error">*</span></label>
@@ -271,7 +271,7 @@
                 </div>       
                 <div class="col-4">
                     <label class="form-label">email  <span class="error">*</span></label>
-                    <input type="text" class="form-control"  formControlName="email">
+                    <input type="text" class="form-control"  formControlName="email" (blur)="onBlurEmail()">
                 </div>
             </div>
             <div class="row mt-3 mb-3" >
@@ -348,7 +348,7 @@
                 </div>  
                 <div class="col-4">
                     <label class="form-label">Password  <span class="error">*</span></label>
-                    <input type="password" class="form-control"  formControlName="password">
+                    <input type="text" class="form-control"  formControlName="password">
                 </div>                
             </div>
         </ng-container>
