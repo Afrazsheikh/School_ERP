@@ -2,40 +2,58 @@
 <app-layout>
 
     <div class="container p-5">
-        <!-- <div class="py-2 " style="border: solid;"> -->
         <div class="py-2 ">
+          <form [formGroup]="reportForm">
+            <div class="row mt-3">
+              <div class="mb-3 col-md-4">
+                <label class="form-label">Class <span class="error">*</span></label>
+             
+                <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
+                </select>
+                <div *ngIf="reportForm.controls['studentClass'].invalid && (reportForm.controls['studentClass'].dirty || reportForm.controls['studentClass'].touched)"
+                class="error mt-2">
+                <div *ngIf="reportForm.controls['studentClass'].errors['required']">
+                  Class is required.
+                </div>
+              </div></div>
+        
+              <div class="mb-3 col-md-4">
+                <label class="form-label">Section <span class="error">*</span></label>
+              
+                <select class="form-select" formControlName="section">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
+                </select>
+                <div *ngIf="reportForm.controls['section'].invalid && (reportForm.controls['section'].dirty || reportForm.controls['section'].touched)"
+                class="error mt-2">
+                <div *ngIf="reportForm.controls['section'].errors['required']">
+                  Section is required.
+                </div>
+              </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label class="form-label">Year <span class="error">*</span></label>
+                <select class="form-select" formControlName="academicYear">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
+                </select>
+                <div *ngIf="reportForm.controls['academicYear'].invalid && (reportForm.controls['academicYear'].dirty || reportForm.controls['academicYear'].touched)"
+                class="error mt-2">
+                <div *ngIf="reportForm.controls['academicYear'].errors['required']">
+                  Year is required.
+                </div></div>
+              </div>
+            </div>
+           
+          <div class="text-end mb-5">
+            <button class="btn" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+          </div>
+        </form>
 
 
-<div class="col-12">
-<div class="row">
-    <div class="col">
-        <p>Class<sup class="red">*</sup></p>
-        <select class="form-select " aria-label="Default select example">
-            <option selected>Select</option>
-            <option value="1">Select</option>
-            <option value="2">Six</option>
-            <option value="3">Seven</option>
-        </select>
-    </div>
-    <div class="col">
-        <p>Section</p>
-        <select class="form-select  " aria-label="Default select example">
-            <option selected>select</option>
-            <option value="1">A</option>
-            <option value="2">B</option>
-            <option value="3">C</option>
-        </select>
-    </div>
-   
-    <div class="col-12 text-end px-0 pt-4">
-
-        <div class="button pe-5 pt-1 pb-1"><button type="button"
-                class="btn button_color">Filter</button></div>
-
-    </div>
-</div>
-</div>
-</div>
+        </div>
 
 <div class="tab-container">
     <div class="pt-4">
@@ -76,13 +94,10 @@
 <thead>
 <tr>
   <th scope="col">Student</th>
-  <th scope="col"> Class</th>
+  <th scope="col">Class</th>
   <th scope="col">Section</th>
   <th scope="col">Registration</th>
-  <th scope="col">Roll</th>
-  <!-- <th scope="col">Gender</th> -->
   <th scope="col">Mobile No.</th>
-  <th scope="col">Fee Group</th>
   <th scope="col"> Status</th>
   <th scope="col"> Action </th>
 
@@ -90,23 +105,22 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-  <td>#001234</td>
-  <td>Fanny Siregar</td>
-  <td>General</td>
-  <td>111111</td>
-  <td>11</td>
-  <td>11</td>
 
-  <td>11</td>
+  <ng-container *ngFor="let student of studentData; let i = index">
+    <tr>
+    <td>{{student.firstName + " " + student.lastName}}</td>         
+    <td>{{student.class}}</td>
+    <td>{{student.section}}</td>
+    <td>{{student.registerNo}}</td>
+    <td>{{student.number}}</td>
+    <td><span class="red-border">Unpaid</span></td>
+    <td>
+      <button class="btn emp-edit me-1" (click)="viewFeeReport(student)"><i class="fa-regular fa-circle-right"></i></button>
+    <!-- <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, student)"><i class="fa-solid fa-trash-can"></i></button>-->
+    </td>
+  </tr>
+  </ng-container>
 
-  <td><button class="rounded-pill" [routerLink]="routes.INVOI" routerLinkActive="sub-active">Unpaid</button></td>
-  <td><button class="rounded-pill">Collect</button></td>
-
-
-
- 
-</tr>
 </tbody>
 </table>
 </div>

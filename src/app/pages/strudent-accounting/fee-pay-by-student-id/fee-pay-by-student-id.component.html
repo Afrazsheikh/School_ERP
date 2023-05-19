@@ -1,0 +1,99 @@
+<app-layout>
+
+    <div class="container p-5">
+        <div class="card">
+            <div class="card-body">
+             <div class="row">
+                <div class="col-md-6">
+                    <span class="invoice-lbl">School ERP </span>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="invoice-lbl">Invoice No #0001</div>
+                    <div class="invoice-lbl-lg">Date:{{invoiceDate | date :"dd/MM/yyyy"}}</div>
+                    <div class="invoice-lbl-lg">Status: <span class="red-border">Unpaid</span> </div>
+                </div>
+             </div>
+            </div>
+        </div>
+        <div class="row mt-3 acd-detai">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12 text-weight">Invoice To :</div>
+                    <div class="col-md-12">Danielle Solomon</div>
+                    <div class="col-md-12">Register No : RSM-00001</div>
+                    <div class="col-md-12">D/2684 Jefferson Street, Portsmouth, Virginia.</div>
+                    <div class="col-md-12">Class : Six (A)</div>
+                    <div class="col-md-12">Father Name : Binoya Naik</div>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="row">
+                    <div class="col-md-12 text-weight">Academic :</div>
+                    <div class="col-md-12">ERP School & College</div>
+                    <div class="col-md-12">Chyakunjo, Moylapotha, New York</div>
+                    <div class="col-md-12">(91) 123456789</div>
+                    <div class="col-md-12">school@gmail.com</div>
+                </div>
+            </div>
+        </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <table class="table ">
+                <thead class="table-secondary">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Fee Type</th>
+                      <th scope="col">Due Date</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Discount</th>
+                      <th scope="col">Fine</th>
+                      <th scope="col">Payment Method</th>
+                      <th scope="col">Pay By</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let feeData of feePayload; let i = index">
+                        <tr>
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{feeData?.feeType}}</td>
+                            <td>{{feeData?.dueDate}}</td>
+                            <td>{{feeData?.amount}}</td>
+                            <td>{{feeData?.discount}}</td>
+                            <td>{{feeData?.fine}}</td>
+                            <td><select class="form-select" >
+                                <option  value="">Select</option>
+                                <option *ngFor="let sec of paymentMethod" [value]="sec._id">{{sec.name}}</option>
+                              </select></td>
+                            <td><select class="form-select" >
+                                <option value="">Select</option>
+                                <option *ngFor="let sec of accountMethod" [value]="sec._id">{{sec.name}}</option>
+                              </select></td>
+                            <td><button class="btn">Pay</button></td>
+                          </tr>
+                    </ng-container>
+                    
+                   
+                  </tbody>
+            </table>
+        </div>
+    </div>  
+        <div class="row mt-3">
+            <div class="col-md-7"></div>
+            <div class="col-md-5 text-end">
+                <div class="col-md-12 grey-box"><strong>Grand Total :</strong> $1350.00</div>
+                <div class="col-md-12 grey-box"><strong>Discount :</strong> $0.00</div>
+                <div class="col-md-12 grey-box"><strong>Paid :</strong> $300.00</div>
+                <div class="col-md-12 grey-box"><strong>Fine :</strong> $0.00</div>
+                <div class="col-md-12 grey-box"><strong>Total Paid (with fine) :</strong> $300.00</div>
+                <div class="col-md-12 grey-box"><strong>Balance : </strong> $1050.00 <br/>( One Thousand Fifty )</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><button class="btn">Print</button></div>
+        </div>
+</div>
+</app-layout>
+
+

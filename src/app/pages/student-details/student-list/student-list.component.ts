@@ -19,10 +19,11 @@ export class StudentListComponent implements OnInit {
   modalRef!: BsModalRef;
   studentId:any;
   studentSelRow:any;
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
+  aceYear :any[] =[];
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService,
     private studentService:StudentService
 ) {
+   this.aceYear = this.studentService.aceYear;
    this.addForm();
   }
   ngOnInit(): void {  
