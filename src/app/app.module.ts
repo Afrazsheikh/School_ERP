@@ -18,11 +18,13 @@ import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 @NgModule({
     declarations: [
       AppComponent,
       HumanRessourceComponent,
       ReportsComponent,
+      DashboardComponent,
     ],
     providers: [BsModalService],
     bootstrap: [AppComponent],
