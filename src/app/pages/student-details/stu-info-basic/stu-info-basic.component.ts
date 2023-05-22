@@ -82,11 +82,15 @@ onChangeClass(event){
   });
 }
  createForm(){
+  
+  if(this.studentBasic?.dob !== '' && this.studentBasic?.dob !== null && this.studentBasic?.dob !== undefined) {
+    this.studentBasic.dob = new Date(this.studentBasic.dob);
+  }
   this.studentForm = this.fb.group({ 
       id:[this.studentBasic._id],
       academicYear: [this.studentBasic?.academic?.academicYear, Validators.required],
-      studentClass: [this.studentBasic?.academic?.studentClass, Validators.required],
-      section: [this.studentBasic?.academic?.section, Validators.required],
+      studentClass: [this.studentBasic?.academic?.studentClass?._id, Validators.required],
+      section: [this.studentBasic?.academic?.section?._id, Validators.required],
       category: [this.studentBasic?.category?._id, Validators.required],      
       registerNo: [this.studentBasic?.registerNo, Validators.required],
       rollNo: [this.studentBasic?.rollNo, Validators.required],

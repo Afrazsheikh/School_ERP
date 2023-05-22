@@ -27,7 +27,7 @@
         <select class="form-select" [(ngModel)]="filter.academicYear">
           <option disabled value="select">Select</option>
           <option *ngFor="let class of academics" [value]="class._id">
-            {{class.academicYear}}
+            {{class.name}}
           </option>
         </select>
       </div>

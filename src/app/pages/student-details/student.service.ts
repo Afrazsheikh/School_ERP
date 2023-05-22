@@ -11,7 +11,8 @@ export class StudentService {
    AccountMethod = [{ _id: "STB", name: "STB" }, { _id: "Janata bank", name: "Janata bank" }];
   concessionList = [{ _id: "0", name: "0" }, { _id: "10", name: "10%" },{ _id: "15", name: "15%" }]
   feeMode = [{ _id: "quarterly", name: "Quarterly" }, { _id: "monthly", name: "Monthly" },{ _id: "anually", name: "Anually" }];
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
+  aceYear = [{ _id: "2026-2027", name: "2026-2027" },{ _id: "2025-2026", name: "2025-2026" }, { _id: "2023-2024", name: "2023-2024" },{ _id: "2022-2023", name: "2022-2023" },
+  { _id: "2021-2022", name: "2021-2022" },{ _id: "2020-2021", name: "2020-2021" }];
   genderList = [{_id:"Male", name:"Male"}, {_id:"Female", name:"Female"},{_id:"Other", name:"Other"}];
 
   typeList=[{ _id: "TYPE-A", name: "TYPE-A" },{ _id: "TYPE-B", name: "TYPE-B" }]
@@ -22,7 +23,10 @@ export class StudentService {
   religionList =[{_id:"Hinduism", name:"Hinduism"},{_id:"Christians ", name:"Christians "},{_id:"Muslims", name:"Muslims"},
   {_id:"Sikhs", name:"Sikhs"},{_id:"Jains", name:"Jains"},{_id:"Buddhists", name:"Buddhists"}];
 
-  castList = [{_id:"SC", name:"SC"},{_id:"ST", name:"ST"},{_id:"OBC", name:"OBC"}, {_id:"GENERAL", name:"General"}];
+  castList = [{_id:"BC", name:"BC"},{_id:"ОВС", name:"ОВС"},{_id:"OC", name:"OC"}, {_id:"ST", name:"ST"}, {_id:"SC", name:"SC"}, {_id:"BC-A", name:"BC-A"},
+  {_id:"BC-B", name:"BC-B"},{_id:"BC-C", name:"BC-C"},{_id:"BC-D", name:"BC-D"}, {_id:"BC-E", name:"BC-E"}, {_id:"SC-A", name:"SC-A"}, {_id:"SC-B", name:"SC-B"},{_id:"SC-C", name:"SC-C"},{_id:"SC-D", name:"SC-D"},
+  {_id:"Others", name:"Others"},{_id:"AO", name:"AO"},{_id:"NT-A", name:"NT-A"}, {_id:"NT-B", name:"NT-B"}, {_id:"NT-C", name:"NT-C"}, {_id:"NT-D", name:"NT-D"}
+];
 
   language =[{_id:"Gujarati", name:"Gujarati"},{_id:"Hindi", name:"Hindi"},{_id:"English", name:"English"},
   {_id:"Marathi", name:"Marathi "},{_id:"Telugu", name:"Telugu"},{_id:"Tamil", name:"Tamil"},  {_id:"Urdu", name:"Urdu"},

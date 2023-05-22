@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HomeworkService } from '../homework.service';
+import { StudentService } from '../../student-details/student.service';
 
 @Component({
   selector: 'app-homework-list',
@@ -19,9 +20,10 @@ export class HomeworkListComponent {
   reportData: any;
   modalRef!: BsModalRef;
   homeWorkId:any;
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
+  aceYear: any [];
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService, 
-    private homeworkService: HomeworkService) {
+    private homeworkService: HomeworkService,private studentService:StudentService ) {
+      this.aceYear = this.studentService.aceYear;
     this.getAllClass();
     this.getAllSection();
     this.addForm();

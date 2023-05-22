@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgxFileDropEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
+import { StudentService } from '../../student-details/student.service';
 
 @Component({
   selector: 'app-multiple-import',
@@ -12,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./multiple-import.component.scss']
 })
 export class MultipleImportComponent {
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
+  aceYear = [];
 
   myFiles:string [] = [];
   // myFiles:any
@@ -30,15 +31,14 @@ export class MultipleImportComponent {
 
   acceptedFileTypes: string = '.csv';
   
-  constructor(private http: HttpClient, private api: ApiService, private toastr: ToastrService, private router: Router) {
+  constructor(private http: HttpClient, private api: ApiService, private toastr: ToastrService, private router: Router,private studentService:StudentService) {
 
    this. myForm = new FormGroup({
     studentClass: new FormControl('', [Validators.required]),
     section: new FormControl('', [Validators.required]),
-    academicYear: new FormControl('', [Validators.required]),
-
-
+    academicYear: new FormControl('', [Validators.required])
     });
+    this.aceYear = this.studentService.aceYear;
    }
 
    
