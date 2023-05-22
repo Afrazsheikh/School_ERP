@@ -62,7 +62,7 @@
               <td>{{i+1}}</td>
               <td>{{dept.className}}</td>
               <td>{{dept.classNumeric}}</td>
-              <td>{{dept.sections[0].name}}</td>
+              <td>{{dept.sections[0]?.name}}</td>
               <!-- <td>11</td> -->
               <td>
                 <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#editPrompt"
@@ -213,7 +213,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button id="editModalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+        <button id="editModalDismissBtna" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-danger" [disabled]="isLoading || !editSection.valid" (click)="updateSection()">
           <!-- <span *ngIf="isLoading" class="spinner-border text-light"></span> -->
          Update

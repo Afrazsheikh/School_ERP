@@ -46,7 +46,9 @@ export class ControlClassComponent {
     
       sections: new FormControl(null, [Validators.required]),
 
-      classNumeric: new FormControl(null, [Validators.required])
+      classNumeric: new FormControl(null, [Validators.required]),
+      capacity: new FormControl(null, [Validators.required]),
+
   
 
     });
@@ -135,7 +137,7 @@ export class ControlClassComponent {
 
       this.toastr.success(resp.message, "Class add success");
       // this.designForm.reset();
-      // this.getDesignations();
+     this.getAllClass()
     ;
     },
     (err) => {
@@ -220,13 +222,13 @@ console.log(this.selectedDesign._id);
       console.log(resp);
       
       this.isLoading = false;
-      this.toastr.success(resp.message, "  update success");
-      document.getElementById('editModalDismissBtn')?.click();
+      this.toastr.success(resp.message, " section update success");
+      document.getElementById('editModalDismissBtna')?.click();
       this.updateSection();
     },
     (err) => {
       this.isLoading = false;
-      this.toastr.error(err, "E update failed");
+      this.toastr.error(err, "section  update failed");
     })
 
   }
