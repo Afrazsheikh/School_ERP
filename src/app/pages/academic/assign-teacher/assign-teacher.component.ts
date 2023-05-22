@@ -124,8 +124,9 @@ getDesignations()
  arrayA: any[] = []
   commentArray = [];
 getAcdemicsDeatails(){
- console.log(this.selectedAcdemic._id);
+//  console.log(this.selectedAcdemic._id);
 
+console.log(this.TeacherForm.value.academicYear);
 
   this.api.getAcademics(this.selectedAcdemic._id).subscribe(resp => {
     console.log("=======",resp);
