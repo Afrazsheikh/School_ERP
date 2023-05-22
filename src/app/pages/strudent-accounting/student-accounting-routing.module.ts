@@ -9,6 +9,7 @@ import { FeesPayInvoiceComponent } from './fees-pay-invoice/fees-pay-invoice.com
 import { FeesRemainderComponent } from './fees-remainder/fees-remainder.component';
 import { EditComponent } from './fine-setup/edit/edit.component';
 import { FineSetupComponent } from './fine-setup/fine-setup.component';
+import { FeePayByStudentIdComponent } from './fee-pay-by-student-id/fee-pay-by-student-id.component';
 
 const routes: Routes = [
 
@@ -32,6 +33,11 @@ const routes: Routes = [
     path: 'fine-setup/:id',
     component: EditComponent
   },
+  {
+    path: 'pay-fees/:id',
+    component: FeePayByStudentIdComponent
+  },
+  
   {
     path: 'fees-allocation',
     component: FeesAllocationComponent

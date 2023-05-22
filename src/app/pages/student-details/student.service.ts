@@ -4,6 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StudentService {
+  paymentMethod = [{ _id: "Card", name: "Card" }, { _id: "Cash", name: "Cash" },{ _id: "Cheque", name: "Cheque" },{ _id: "Bank Transfer", name: "Bank Transfer" },
+  { _id: "Other", name: "Other" },{ _id: "Paypal", name: "Paypal" },{ _id: "Stripe", name: "Stripe" },{ _id: "PayUmoney", name: "PayUmoney" },{ _id: "Paystack", name: "Paystack" },
+  { _id: "Razorpay", name: "Razorpay" },{ _id: "SSLcommerz", name: "SSLcommerz" },{ _id: "Jazzcash", name: "Jazzcash" },{ _id: "Midtrans", name: "Midtrans" },{ _id: "Flutter Wave", name: "Flutter Wave" }
+   ];
+   AccountMethod = [{ _id: "STB", name: "STB" }, { _id: "Janata bank", name: "Janata bank" }];
+  concessionList = [{ _id: "0", name: "0" }, { _id: "10", name: "10%" },{ _id: "15", name: "15%" }]
+  feeMode = [{ _id: "quarterly", name: "Quarterly" }, { _id: "monthly", name: "Monthly" },{ _id: "anually", name: "Anually" }];
   aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
   genderList = [{_id:"Male", name:"Male"}, {_id:"Female", name:"Female"},{_id:"Other", name:"Other"}];
 

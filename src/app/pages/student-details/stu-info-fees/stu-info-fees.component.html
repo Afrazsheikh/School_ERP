@@ -1,11 +1,50 @@
 
+<form [formGroup]="studentForm">
+  <div class="row">
+      <div class="col-md-12 header-txt" >
+          <span>Fee Mode Details</span>
+      </div>
+  </div>
+  <div class="row mt-2 mb-3">
+      <div class="col-3">
+        <label class="form-label">Fee Type <span class="error">*</span></label>
+        <select class="form-select" formControlName="feeType">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
+        </select>
+      </div>
+      <div class="col-3">
+          <label class="form-label">Concession Fee<span class="error">*</span></label>
+          <select class="form-select" formControlName="concession">
+            <option disabled value="select">Select</option>
+            <option *ngFor="let sec of concessionList" value="{{sec._id}}">{{sec.name}}</option>
+          </select>
+      </div>
+      <div class="col-3">
+          <label class="form-label">Fee Mode <span class="error">*</span></label>
+          <select class="form-select" formControlName="feeMode">
+            <option disabled value="select">Select</option>
+            <option *ngFor="let day of feeModeList" value="{{day._id}}">{{day.name}}</option>
+          </select>
+        </div>
+        <div class="col-3 mt-4">
+          <button type="button" class="save_button btn" (click)="updateInfo(studentForm)" [disabled]="!studentForm.valid">Update</button>
+        </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-md-12 header-txt" >
+      <span>Fee Details</span>
+      <span class="float-end"><a (click)="payInvoice()" class="hand">Pay Invoice</a></span>
+  </div>
+</div>
 <table class="table mt-3">
   <thead>
     <tr>
       <th scope="col">S.No.</th>
       <th scope="col">Fee Type</th>
       <th scope="col">Due</th>
-      <th scope="col">Status</th>
+      <th scope="col">Status</th> 
       <th scope="col">Amount</th>
       <th scope="col">Discount</th>
       <th scope="col">Fine</th>

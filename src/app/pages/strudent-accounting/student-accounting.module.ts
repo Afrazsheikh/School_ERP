@@ -22,6 +22,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { EditComponent } from './fine-setup/edit/edit.component';
 import { FeeTypeEditComponent } from './fee-type/fee-type-edit/fee-type-edit.component';
+import { FeePayByStudentIdComponent } from './fee-pay-by-student-id/fee-pay-by-student-id.component';
 
 
 
@@ -39,7 +40,8 @@ import { FeeTypeEditComponent } from './fee-type/fee-type-edit/fee-type-edit.com
     DueFeesInvoiceComponent,
     FeesRemainderComponent,
     EditComponent,
-    FeeTypeEditComponent
+    FeeTypeEditComponent,
+    FeePayByStudentIdComponent
   ],
   imports: [
     CommonModule,
