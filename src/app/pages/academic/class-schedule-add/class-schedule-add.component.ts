@@ -56,7 +56,7 @@ export class ClassScheduleAddComponent {
   {
     this.api.getAllEmployees().subscribe(resp => {
       this.employees = resp.employees;
-      this.teacherOption = this.employees.filter(emp => emp?.designation?.name == 'Teacher');     
+      this.teacherOption = this.employees.filter(emp => (emp?.designation?.name).toLowerCase() == 'teacher');     
     });
   }
    /*getTeacher(){

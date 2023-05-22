@@ -398,6 +398,9 @@ export class ApiService {
     addTeacher(postData: any): Observable<any> {
       return this.httpClient.put(environment.apiBaseUrl + '/academic/teachers/add', postData).pipe(catchError(this.errorHandler));
     }
+    removeAssignTechare(payload: any): Observable<any> {
+      return this.httpClient.delete(environment.apiBaseUrl +'/academic/teacher/remove' ,{body:payload}).pipe(catchError(this.errorHandler));
+    }
     addExpensReport(postData: any): Observable<any> {
       return this.httpClient.post(environment.apiBaseUrl +'/vehicle/expense', postData ).pipe(catchError(this.errorHandler));
     }
@@ -539,9 +542,6 @@ export class ApiService {
     getAllAcademic(): Observable<any> {
       return this.httpClient.get(environment.apiBaseUrl +'/academic/all' ).pipe(catchError(this.errorHandler));
     }
-
-
-
     getMarksAll(): Observable<any> {
       return this.httpClient.get(environment.apiBaseUrl +'/marks/all').pipe(catchError(this.errorHandler));
     }
@@ -593,6 +593,9 @@ export class ApiService {
 
     updateLeaveStatus(postData): Observable<any> {
       return this.httpClient.put(environment.apiBaseUrl +'/leavesRequest/status', postData ).pipe(catchError(this.errorHandler));
+    }
+    getAllAcademicData(postData: any): Observable<any> {
+      return this.httpClient.post(environment.apiBaseUrl +'/academic/details',postData ).pipe(catchError(this.errorHandler));
     }
 
     getAcademics(id): Observable<any> {
