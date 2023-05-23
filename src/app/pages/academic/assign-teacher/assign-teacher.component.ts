@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { elementAt } from 'rxjs';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService } from '../../../services/api.service';
+import { StudentService } from '../../student-details/student.service';
 
 @Component({
   selector: 'app-assign-teacher',
@@ -11,153 +14,84 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class AssignTeacherComponent {
   isLoading: boolean;
-
   TeacherForm: FormGroup
   sections: any[] = [];
   classes: any[] = [];
-  designations: any[] = [];
-  employees: any[] = [];
-  filteredEmp: any[] = []
-  academics: any = []
-  selectedAcdemic: any
-  academicsId: String
-  value: any;
-
-  stud: any
-  acdemicId: any;
-  constructor(private api: ApiService, private toastr: ToastrService) {
-    this.TeacherForm = new FormGroup({
-      academicYear: new FormControl(null, [Validators.required]),
-      studentClass: new FormControl(null, [Validators.required]),
-      section: new FormControl(null, [Validators.required]),
-      teacher: new FormControl(null, [Validators.required])
-
-
-    });
-
-
+  aceYear :any[] =[];
+  teacherList:any;
+  teacherId:any;
+  modalRef!: BsModalRef;
+  constructor(private api: ApiService,private toastr: ToastrService, private router: Router, private modalService: BsModalService,
+    private studentService:StudentService) {
+      this.aceYear = this.studentService.aceYear;
+      this.TeacherForm = new FormGroup({
+        academicYear: new FormControl(null, [Validators.required]),
+        studentClass: new FormControl(null, [Validators.required]),
+        section: new FormControl(null, [Validators.required])
+      });
   }
 
   ngOnInit(): void {
-
-    this.getAllAcademics();
-    this.getAllSection();
     this.getAllClass();
-    this.getDesignations();
-    this.getEmployees();
-    console.log(this.selectedAcdemic);
-
-    this.getAcdemicsDeatails()
 
   }
-
-
-  getEmployees() {
-    this.api.getAllEmployees().subscribe(resp => {
-      this.employees = resp.employees;
-      // console.log(this.employees);
-
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Teacher');
-      // console.log(this.filteredEmp);
-
+  onChangeClass(event){
+    this.sections =[];
+    this.TeacherForm.patchValue({section: 'select'});
+    const id = event.target.value;
+    this.classes.forEach(element => {
+        if(element._id === id) {
+          this.sections = element.sections;
+        }
     });
-  }
-
-  filterEmployee(event: any) {
-    const tabIndex = event.index;
-    if (tabIndex == 0) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Admin')
-    }
-    else if (tabIndex == 1) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Teacher')
-    }
-    else if (tabIndex == 2) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Accountant')
-    }
-    else if (tabIndex == 3) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Librarian')
-    }
-    else if (tabIndex == 4) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Receptionist')
-    }
   }
   getAllSection() {
-
-
     this.api.getAllSection().subscribe(resp => {
-      // console.log(resp);
-
-      this.sections = resp.sections
-    });
-
-  }
-  x
-  getDesignations() {
-    this.api.getDesignations().subscribe(resp => {
-      this.designations = resp.designations
+      this.sections = resp.sections;
+      
     });
   }
-
-
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {
-      this.classes = resp.classes
-    });
-
-  }
-  getAcdemicsDeatails() {
-    this.api.getAcademics(this.acdemicId).subscribe(resp => {
-      console.log("=======", resp);
-
-      this.academics = resp.academics
-      console.log(this.academics);
-
-    });
-
-  }
-  onChangeClass(event) {
-    console.log(event.target.value)
-    this.acdemicId = event.target.value
-  }
-
-  getAllAcademics() {
-    this.api.getAllAcademic().subscribe(resp => {
-      console.log(resp);
-      this.academics = resp.academics
-      console.log(this.academics);
-
-    });
-
-
-  }
-
-  clickFilter(formData) {
-    console.log(formData.value);
-    this.api.getAcademics(this.acdemicId).subscribe(resp => {
-      console.log("=======", resp);
-      this.academics = resp.academics
-
+      this.classes = resp.classes;
     });
   }
-
-  addTeachernew() {
-    this.isLoading = true;
-    this.api.addTeacher(this.TeacherForm.value).subscribe(resp => {
-      // console.log(resp);
-
-      this.isLoading = false;
-
-      this.toastr.success(resp.message, " add success");
-      this.TeacherForm.reset();
-
-      ;
+  callReport(reportForm){
+    this.teacherList = [];
+    const data = {
+      academicYear: reportForm.value.academicYear,
+      section: reportForm.value.section,
+      studentClass: reportForm.value.studentClass,
+    }
+    this.api.getAllAcademicData(data).subscribe(data => {
+      this.teacherList = data['academics']['teachers'];
+  //    this.studentService.studentDetailBackAction.isBack = false;
     },
-      (err) => {
-        this.isLoading = false;
-        this.toastr.error(err, "Assign Teacher  failed");
-        // console.error(err);
-      })
+    (err) =>{
+    //  this.studentData =[];
+      this.toastr.error(err);
+    })
   }
-
-
+  assignTeacher(){
+    this.router.navigate(['/academic/assign-teacher']);
+    
+  }
+  deleteAssignTec(template: TemplateRef<any>, data: any){
+    this.teacherId = data._id;
+    this.modalRef = this.modalService.show(template);
+  }
+  deletePopup(){
+    /*this.api.deleteHomeWork(this.studentId).subscribe(resp => {
+      this.closePopup();
+      this.toastr.success(resp.message, "Deleted success");
+      this.callReport(this.reportForm );
+    },
+    (err) => {
+      this.toastr.error(err, " update failed");
+      console.error(err);
+    })*/
+  }
+  closePopup(){
+    this.modalRef.hide();
+  }
 }

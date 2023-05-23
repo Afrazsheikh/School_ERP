@@ -8,72 +8,55 @@
         </div>
       </div>
   </div>
-    <form [formGroup]="teacherForm">
-      <div class="row mt-3">
-        <div class="mb-3 col-md-4">
-          <label class="form-label">Class <span class="error">*</span></label>
-       
-<<<<<<< HEAD
-        <select class="form-select"  formControlName="academicYear" (change)="onChangeClass($event)">
-          <option disabled value="select">Select</option>
-      
-          <!-- <option *ngFor="let stud of academics"  [value]="stud.academicYear" >{{stud.academicYear}}</option> -->
-          <option *ngFor="let stud of academics"  [value]="stud._id" >{{stud.academicYear}}</option>
-
-
-        </select>
-=======
-          <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
-          </select>
-          <div *ngIf="teacherForm.controls['studentClass'].invalid && (teacherForm.controls['studentClass'].dirty || teacherForm.controls['studentClass'].touched)"
-          class="error mt-2">
-          <div *ngIf="teacherForm.controls['studentClass'].errors['required']">
-            Class is required.
-          </div>
-        </div></div>
-  
-        <div class="mb-3 col-md-4">
-          <label class="form-label">Section <span class="error">*</span></label>
-        
-          <select class="form-select" formControlName="section">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-          </select>
-          <div *ngIf="teacherForm.controls['section'].invalid && (teacherForm.controls['section'].dirty || teacherForm.controls['section'].touched)"
-          class="error mt-2">
-          <div *ngIf="teacherForm.controls['section'].errors['required']">
-            Section is required.
-          </div>
-        </div>
-        </div>
-        <div class="mb-3 col-md-4">
-          <label class="form-label">Year <span class="error">*</span></label>
-          <select class="form-select" formControlName="academicYear">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
-          </select>
-          <div *ngIf="teacherForm.controls['academicYear'].invalid && (teacherForm.controls['academicYear'].dirty || teacherForm.controls['academicYear'].touched)"
-          class="error mt-2">
-          <div *ngIf="teacherForm.controls['academicYear'].errors['required']">
-            Year is required.
-          </div></div>
-        </div>
->>>>>>> be0e8c5343df371ca3880456251ac40e2b864af4
-      </div>
+  <form [formGroup]="TeacherForm">
+    <div class="row mt-3">
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Class <span class="error">*</span></label>
      
-    <div class="text-end mb-5">
-      <button class="btn" (click)="findTeacher(teacherForm)"  [disabled]="!teacherForm.valid">Filter</button>
+        <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
+        </select>
+        <div *ngIf="TeacherForm.controls['studentClass'].invalid && (TeacherForm.controls['studentClass'].dirty || TeacherForm.controls['studentClass'].touched)"
+        class="error mt-2">
+        <div *ngIf="TeacherForm.controls['studentClass'].errors['required']">
+          Class is required.
+        </div>
+      </div></div>
+
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Section <span class="error">*</span></label>
+      
+        <select class="form-select" formControlName="section">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
+        </select>
+        <div *ngIf="TeacherForm.controls['section'].invalid && (TeacherForm.controls['section'].dirty || TeacherForm.controls['section'].touched)"
+        class="error mt-2">
+        <div *ngIf="TeacherForm.controls['section'].errors['required']">
+          Section is required.
+        </div>
+      </div>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Year <span class="error">*</span></label>
+        <select class="form-select" formControlName="academicYear">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
+        </select>
+        <div *ngIf="TeacherForm.controls['academicYear'].invalid && (TeacherForm.controls['academicYear'].dirty || TeacherForm.controls['academicYear'].touched)"
+        class="error mt-2">
+        <div *ngIf="TeacherForm.controls['academicYear'].errors['required']">
+          Year is required.
+        </div></div>
+      </div>
     </div>
-<<<<<<< HEAD
-    <div class="text-end mb-5">
-      <button (click) = "clickFilter(TeacherForm)" class="btn">filter</button>
-    </div>
+   
+  <div class="text-end mb-5">
+    <button class="btn" (click)="callReport(TeacherForm)"  [disabled]="!TeacherForm.valid">Filter</button>
+  </div>
 </form>
-=======
-  </form>
->>>>>>> be0e8c5343df371ca3880456251ac40e2b864af4
+
     <h6 class="table-heading mb-3">Class Teacher List</h6>
     <div class="top-options">
       <div class="search-area col-md-8">
@@ -108,15 +91,18 @@
             <td></td>
             <td></td>      
             <td>
-              <button class="btn emp-edit me-1" (click)="editAssignTec(teacher)"><i class="fa-solid fa-pencil"></i></button>
+             <!-- <button class="btn emp-edit me-1" ><i class="fa-solid fa-pencil"></i></button>-->
               <button class="btn emp-edit ms-1" (click)="deleteAssignTec(deletemplate,teacher)"><i class="fa-solid fa-trash-can"></i></button>
-            </td>
+            </td> <!--(click)="deleteAssignTec(deletemplate,teacher)"
+            (click)="editAssignTec(teacher)"
+            -->
           </tr>
         </ng-container>
         
       </tbody>
     </table>
   </div>
+  </app-layout>
   <ng-template #deletemplate>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Delete Confirmation</h4>
@@ -137,4 +123,4 @@
         </div>
     </div>
   </ng-template>
-</app-layout>
+ 
