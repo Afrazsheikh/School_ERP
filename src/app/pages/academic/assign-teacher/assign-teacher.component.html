@@ -1,11 +1,19 @@
 <app-layout>
   <div class="container tab-container p-4">
-    <form [formGroup]="TeacherForm">
-    <div class="row mt-5 mb-3">
-      <h6>Class Teacher  Allocation</h6>
-      <div class="col-3">
-        <label class="form-label">Academic Year *</label>
+    <div class="row">
+      <div class="col-md-12 header-txt pb-2" >
+        <div class="row">
+          <div class="col-md-6"><i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span class="f-17">Class Teacher List</span></div>
+          <div class="col-md-6 text-end"><button class="btn" (click)="assignTeacher()">Assing Teacher</button></div>
+        </div>
+      </div>
+  </div>
+    <form [formGroup]="teacherForm">
+      <div class="row mt-3">
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Class <span class="error">*</span></label>
        
+<<<<<<< HEAD
         <select class="form-select"  formControlName="academicYear" (change)="onChangeClass($event)">
           <option disabled value="select">Select</option>
       
@@ -14,44 +22,61 @@
 
 
         </select>
+=======
+          <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+            <option disabled value="select">Select</option>
+            <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
+          </select>
+          <div *ngIf="teacherForm.controls['studentClass'].invalid && (teacherForm.controls['studentClass'].dirty || teacherForm.controls['studentClass'].touched)"
+          class="error mt-2">
+          <div *ngIf="teacherForm.controls['studentClass'].errors['required']">
+            Class is required.
+          </div>
+        </div></div>
+  
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Section <span class="error">*</span></label>
+        
+          <select class="form-select" formControlName="section">
+            <option disabled value="select">Select</option>
+            <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
+          </select>
+          <div *ngIf="teacherForm.controls['section'].invalid && (teacherForm.controls['section'].dirty || teacherForm.controls['section'].touched)"
+          class="error mt-2">
+          <div *ngIf="teacherForm.controls['section'].errors['required']">
+            Section is required.
+          </div>
+        </div>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Year <span class="error">*</span></label>
+          <select class="form-select" formControlName="academicYear">
+            <option disabled value="select">Select</option>
+            <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
+          </select>
+          <div *ngIf="teacherForm.controls['academicYear'].invalid && (teacherForm.controls['academicYear'].dirty || teacherForm.controls['academicYear'].touched)"
+          class="error mt-2">
+          <div *ngIf="teacherForm.controls['academicYear'].errors['required']">
+            Year is required.
+          </div></div>
+        </div>
+>>>>>>> be0e8c5343df371ca3880456251ac40e2b864af4
       </div>
-      <div class="col-3">
-        <label class="form-label">Student Class *</label>
-      
-        <!-- <label class="form-label">Class *</label> -->
-        <select class="form-select" formControlName="studentClass">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
-        </select>
-      </div>
-      <div class="col-3">
-        <label class="form-label">Section  *</label>
-        <!-- <input type="text" formControlName="section"  class="form-control"> -->
-        <!-- <label class="form-label">Class *</label> -->
-        <select class="form-select" formControlName="section">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-        </select>
-      </div>
-      <div class="col-3">
-        <label class="form-label">Class Teacher *</label>
-        <!-- <input type="text" formControlName="teacher" class="form-control"> -->
-        <select class="form-select" formControlName="teacher">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let sec of filteredEmp" [value]="sec._id">{{sec.name}}</option>
-        </select>
-      </div>
-    </div>
+     
     <div class="text-end mb-5">
-      <button class="btn" (click)="addTeachernew()">Save</button>
+      <button class="btn" (click)="findTeacher(teacherForm)"  [disabled]="!teacherForm.valid">Filter</button>
     </div>
+<<<<<<< HEAD
     <div class="text-end mb-5">
       <button (click) = "clickFilter(TeacherForm)" class="btn">filter</button>
     </div>
 </form>
+=======
+  </form>
+>>>>>>> be0e8c5343df371ca3880456251ac40e2b864af4
     <h6 class="table-heading mb-3">Class Teacher List</h6>
     <div class="top-options">
-      <div class="search-area">
+      <div class="search-area col-md-8">
         <div class="input-group pe-3">
           <input type="search" class="form-control" placeholder="Search here...">
           <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -69,28 +94,47 @@
       <thead>
         <tr>
           <th scope="col">SL</th>
-          <th scope="col">Branch</th>
-          <th scope="col">Class Teacher</th>
+          <th scope="col">Name</th>
           <th scope="col">Class</th>
           <th scope="col">Section</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor=" let assign of academics;  index as i">
-          <!-- <td>{{i +1}}</td>
-          <td>{{assign.subjects[0].subjectAuthor}}</td>
-          <td>{{assign.subjects[0]?.subjectCode}}</td>
-          <td>{{assign.subjects[0]?.subjectName}}</td>
-          <td>{{assign.subjects[0]?.subjectType}}</td> -->
-
-      
-          <td>
-            <button class="btn emp-edit me-1"><i class="fa-solid fa-pencil"></i></button>
-            <button class="btn emp-edit ms-1"><i class="fa-solid fa-trash-can"></i></button>
-          </td>
-        </tr>
+        <ng-container *ngFor="let teacher of teacherList; let i = index">
+          <tr >
+            <td>{{i +1}}</td>
+            <td>{{teacher?.name}}</td>
+            <td></td>
+            <td></td>      
+            <td>
+              <button class="btn emp-edit me-1" (click)="editAssignTec(teacher)"><i class="fa-solid fa-pencil"></i></button>
+              <button class="btn emp-edit ms-1" (click)="deleteAssignTec(deletemplate,teacher)"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
+          </tr>
+        </ng-container>
+        
       </tbody>
     </table>
   </div>
+  <ng-template #deletemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Delete Confirmation</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="text-justify">Are you sure, You Want To Delete This Information?</span>
+        </div>
+      </div>
+         
+        <div class="modal-footer mt-4">
+          <button type="button" class="save_button btn" (click)="deletePopup()">Yes, Continue</button>
+          <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+        </div>
+    </div>
+  </ng-template>
 </app-layout>

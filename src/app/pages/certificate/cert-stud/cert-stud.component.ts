@@ -11,6 +11,7 @@ import { jsPDF } from "jspdf";
 import DomToImage from 'dom-to-image';
 import axios from 'axios';
 import * as moment from 'moment';
+import { StudentService } from '../../student-details/student.service';
 
 @Component({
   selector: 'app-cert-stud',
@@ -18,7 +19,7 @@ import * as moment from 'moment';
   styleUrls: ['./cert-stud.component.scss']
 })
 export class CertStudComponent {
-
+  aceYear:any[] = [];
   students: any[] = [];
   certTemplates: any[] = [];
   selectedTemplate: any;
@@ -33,8 +34,9 @@ export class CertStudComponent {
   isLoading = false;
   canvasWrapper: HTMLElement;
 
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router) {
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private studentService:StudentService) {
     this.filter.printDate = moment().format('YYYY-MM-DD');
+    this.aceYear = this.studentService.aceYear;
   }
 
   ngOnInit(): void {

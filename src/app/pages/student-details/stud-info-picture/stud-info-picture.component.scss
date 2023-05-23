@@ -2,6 +2,9 @@
   div{
     margin: 0px 20px 5px 0px;
   }
+  label {
+    width: 90%;
+  }
 }
 .icon-menu {
   display: inline-block;
@@ -14,6 +17,7 @@
   transform: rotate(0deg);
   z-index: 1;
   margin-right: 10px;
+  vertical-align: top;
 }
 .icon-menu:before {
   position: absolute;

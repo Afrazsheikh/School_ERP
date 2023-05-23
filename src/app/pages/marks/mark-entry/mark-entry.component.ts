@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
+import { StudentService } from '../../student-details/student.service';
 
 @Component({
   selector: 'app-mark-entry',
@@ -28,7 +29,7 @@ export class MarkEntryComponent {
   };
 
 
-  constructor(private api: ApiService,private toastr: ToastrService  ) {
+  constructor(private api: ApiService,private toastr: ToastrService,private studentService:StudentService  ) {
 
   }
 
@@ -44,7 +45,8 @@ export class MarkEntryComponent {
     this.getAllAcademics();
   }
 getAllAcademics(){
-
+  this.academics = this.studentService.aceYear;
+/*
 
   this.api.getAllAcademic().subscribe(resp => {
 
@@ -55,7 +57,7 @@ getAllAcademics(){
 //  this.mapAcademicYear()
 
   });
-
+*/
 }
 
 getAllStudent()

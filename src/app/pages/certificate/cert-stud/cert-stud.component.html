@@ -3,12 +3,16 @@
     <div class="row mt-5 mb-3">
       <div class="col-3">
         <label class="form-label">Academic Year</label>
-        <select class="form-select" [(ngModel)]="filter.academicYear">
+        <!--<select class="form-select" [(ngModel)]="filter.academicYear">
           <option value="select">Select</option>
           <option value="2022-2023">2022-2023</option>
           <option value="2021-2022">2021-2022</option>
           <option value="2020-2021">2020-2021</option>
           <option value="2019-2020">2019-2020</option>
+        </select> -->
+        <select class="form-select" formControlName="academicYear">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
         </select>
       </div>
       <div class="col-3">

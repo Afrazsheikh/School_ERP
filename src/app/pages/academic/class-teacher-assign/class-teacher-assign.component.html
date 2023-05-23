@@ -1,0 +1,54 @@
+<app-layout>
+    <div class="container tab-container p-4">
+       <form [formGroup]="teacherForm">
+            <div class="row">
+                <div class="col-md-12 header-txt" >
+                    <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Class Teacher Allocation</span>
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-4 offset-md-3">
+                  <label class="form-label">Class <span class="error">*</span></label>
+                  <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+                    <option disabled value="select">Select</option>
+                    <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
+                  </select>
+                </div>
+            </div>
+            <div class="row mt-2 mb-3">
+                <div class="col-4 offset-md-3">
+                    <label class="form-label">Section <span class="error">*</span></label>
+                    <select class="form-select" formControlName="section">
+                      <option disabled value="select">Select</option>
+                      <option *ngFor="let sec of sections" value="{{sec._id}}">{{sec.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-2 mb-3">
+                <div class="col-4 offset-md-3">
+                    <label class="form-label">Year <span class="error">*</span></label>
+                    <select class="form-select" formControlName="academicYear">
+                      <option disabled value="select">Select</option>
+                      <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="row mt-2 mb-3">
+                <div class="col-4 offset-md-3">
+                    <label class="form-label">Class Teacher <span class="error">*</span></label>
+                    <select class="form-select" formControlName="assignTeacher">
+                      <option disabled value="select">Select</option>
+                      <option *ngFor="let tedata of teacher" value="{{tedata._id}}">{{tedata.name}}</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="row mt-3 mb-3 ">
+              <div class="col-md-4"></div>
+              <div class="col-md-3">
+                  <button type="button" class="save_button btn" (click)="createInfo(teacherForm)" [disabled]="!teacherForm.valid">Save</button>
+              </div>
+            
+          </div>
+        </form>
+    </div>
+</app-layout>

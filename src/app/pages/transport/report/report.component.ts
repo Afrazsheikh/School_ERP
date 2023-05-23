@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
+import { StudentService } from '../../student-details/student.service';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -16,8 +17,9 @@ export class ReportComponent {
   modalRef!: BsModalRef;
   reportData: any[];
   deleteRecId : any;
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private modalService: BsModalService) {
+  aceYear: any[];
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private modalService: BsModalService,private studentService:StudentService) {
+    this.aceYear = this.studentService.aceYear;
     this.getAllClass();
     this.getAllSection();
     this.addForm();

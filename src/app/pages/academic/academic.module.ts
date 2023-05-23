@@ -14,6 +14,7 @@ import { ClassScheduleAddComponent } from './class-schedule-add/class-schedule-a
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditClassComponent } from './control-class/edit-class/edit-class.component';
 import {MatSelectModule} from '@angular/material/select';
+import { ClassTeacherAssignComponent } from './class-teacher-assign/class-teacher-assign.component';
 
 
 
@@ -26,7 +27,8 @@ import {MatSelectModule} from '@angular/material/select';
     TeacherScheduleComponent,
     ClassAssignComponent,
     ClassScheduleAddComponent,
-    EditClassComponent
+    EditClassComponent,
+    ClassTeacherAssignComponent
   ],
   imports: [
     CommonModule,

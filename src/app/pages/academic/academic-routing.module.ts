@@ -8,11 +8,15 @@ import { ControlClassComponent } from './control-class/control-class.component';
 import { EditClassComponent } from './control-class/edit-class/edit-class.component';
 import { SubjectComponent } from './subject/subject.component';
 import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
-
+import { ClassTeacherAssignComponent } from './class-teacher-assign/class-teacher-assign.component';
 const routes: Routes = [
   {
     path: "class",
     component: ControlClassComponent
+  },
+  {
+    path: "assign-teacher",
+    component: ClassTeacherAssignComponent
   },
   {
     path: "assign",
