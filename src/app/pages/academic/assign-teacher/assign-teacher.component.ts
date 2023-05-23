@@ -21,14 +21,15 @@ export class AssignTeacherComponent {
   academics:  any=[]
   selectedAcdemic: any
 
-  abc: any;
+
   academicsId: String
-  beeni: any;
+
   letter: any;
   value: any;
   selectedItem
 
   stud: any
+  acdemicId: any;
   constructor(private api: ApiService, private toastr: ToastrService) {
     this.TeacherForm = new FormGroup({
       academicYear: new FormControl(null, [Validators.required]),
@@ -50,16 +51,12 @@ export class AssignTeacherComponent {
     this.getDesignations();
     this.getEmployees();
     console.log(this.selectedAcdemic);
-    
+      
 this.getAcdemicsDeatails()
 
   }
 
-abaac(selectedAcdemic, event){
-  console.log(selectedAcdemic._id);
-  
 
-}
   getEmployees()
   {
     this.api.getAllEmployees().subscribe(resp => {
@@ -121,14 +118,10 @@ getDesignations()
     });
 
 }
- arrayA: any[] = []
-  commentArray = [];
 getAcdemicsDeatails(){
-//  console.log(this.selectedAcdemic._id);
 
-console.log(this.TeacherForm.value.academicYear);
 
-  this.api.getAcademics(this.selectedAcdemic._id).subscribe(resp => {
+  this.api.getAcademics(this.acdemicId).subscribe(resp => {
     console.log("=======",resp);
     
     this.academics = resp.academics
@@ -137,18 +130,15 @@ console.log(this.TeacherForm.value.academicYear);
   });
 
 }
-emptyArr = []
-getAllAcademics(){
-   
-  
-  this.api.getAllAcademic().subscribe(resp => {
+onChangeClass(event){
+console.log(event.target.value)
+this.acdemicId  = event.target.value
+}
 
-  console.log(resp);
-  // this.getAcdemicsDeatails(resp.academics) 
-  
-    
-    this.academics = resp.academics
-  
+getAllAcademics(){  
+  this.api.getAllAcademic().subscribe(resp => {
+  console.log(resp); 
+   this.academics = resp.academics
 console.log(this.academics);
 
   });
@@ -156,14 +146,14 @@ console.log(this.academics);
 
 }
 
-
-
-clickFilter(){
-
-  
-  this.selectedAcdemic
-  console.log(this.selectedItem);
-  
+clickFilter(formData){
+  console.log(formData.value);
+  this.api.getAcademics(this.acdemicId).subscribe(resp => {
+    console.log("=======",resp);
+    
+    this.academics = resp.academics
+    
+  });
 }
 
   addTeachernew()

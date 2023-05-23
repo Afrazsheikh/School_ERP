@@ -358,8 +358,11 @@
                   <td>{{employee.email}}</td>
                   <td>{{employee.number}}</td>
                   <td>
-                    <button class="btn emp-edit me-1"><i class="fa-solid fa-pencil"></i></button>
-                    <button class="btn emp-edit ms-1"  ><i class="fa-solid fa-trash-can"></i></button>
+                    <button class="btn emp-edit me-1" (click)="editTeacherEm(employee)"  routerLink="'/employee/add' + employee._id"  ><i class="fa-solid fa-pencil"></i></button>
+                    <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePrompt"
+                    (click)="emplyee=employee">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
                   </td>
                 </tr>
               </tbody>

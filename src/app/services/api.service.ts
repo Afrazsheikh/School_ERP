@@ -349,8 +349,8 @@ export class ApiService {
     deleteDesignation(deptId: string): Observable<any> {
       return this.httpClient.delete(environment.apiBaseUrl + '/designation/' + deptId).pipe(catchError(this.errorHandler));
     }
-    deleteEmployee(deptId: string): Observable<any> {
-      return this.httpClient.delete(environment.apiBaseUrl + '/employee/' + deptId).pipe(catchError(this.errorHandler));
+    deleteEmployee(_id: string): Observable<any> {
+      return this.httpClient.delete(environment.apiBaseUrl + '/employee/' + _id).pipe(catchError(this.errorHandler));
     }
     //Acadamic '/class'   /class/all
     addAcadamic(postData: any): Observable<any> {

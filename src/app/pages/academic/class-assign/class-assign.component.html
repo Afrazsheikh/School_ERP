@@ -51,7 +51,7 @@
           <div class="col-3">
         
             <label class="form-label">Academic Year *</label>
-            <select class="form-select" formControlName="academicYear">
+            <select class="form-select" formControlName="academicYear" (change)="onChangeYear($event)">
               <option disabled value="select">Select</option>
               <!-- <option *ngFor="let stud of students" ></option> -->
               <option *ngFor="let stud of academics" [value]="stud.academicYear" >{{stud.academicYear}}</option>

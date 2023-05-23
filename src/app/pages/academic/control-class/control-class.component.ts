@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,8 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./control-class.component.scss']
 })
 export class ControlClassComponent {
+
+   @ViewChild('closeButton') closeButton;
 
   ClassForm:  FormGroup
   sectionForm: FormGroup
@@ -136,7 +138,8 @@ export class ControlClassComponent {
       this.isLoading = false;
 
       this.toastr.success(resp.message, "Class add success");
-      // this.designForm.reset();
+      // this.designForm.reset()
+      this.ClassForm.reset();
      this.getAllClass()
     ;
     },
@@ -156,8 +159,7 @@ export class ControlClassComponent {
       this.isLoading = false;
 
       this.toastr.success(resp.message, "Section  add success");
-      // this.designForm.reset();
-      // this.getDesignations();
+  this.getAllSection()
     ;
     },
     (err) => {
@@ -167,29 +169,52 @@ export class ControlClassComponent {
     })
   }
 
-  deleteClass(){
-console.log(this.selectedDesign._id);
+  // deleteClass(){
 
-    this.isLoading = true;
-    this.api.deleteClass(this.selectedDesign._id).subscribe(resp => {
-      console.log(resp);
-      this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
-      this.getAllClass()
-    },
-    (err) => {
-      this.isLoading = false;
-      console.error(err);
-    })
-  }
+  //   this.isLoading = true;
+  //   this.api.deleteClass(this.selectedDesign._id).subscribe(resp => {
+  //     console.log(resp);
+  //     this.isLoading = false;
+  //     this.toastr.success(resp.message, "Class  Deleted successfully");
+  //     document.getElementById('modalDismissBtn')?.click();
+  //     this.getAllClass()
+  //   },
+  //   (err) => {
+  //     this.isLoading = false;
+  //     console.error(err);
+  //   })
+  // }
   deleteSection(){
 
     this.isLoading = true;
     this.api.deleteSection(this.selectedDesign._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
+   
+
+      this.toastr.success(resp.message, "Section  Deleted successFully");
       document.getElementById('modalDismissBtn')?.click();
+     
       this.getAllSection()
+    },
+    (err) => {
+      this.isLoading = false;
+      console.error(err);
+    })
+  }
+
+  deleteClass(){
+
+    this.isLoading = true;
+    this.api.deleteClass(this.selectedDesign._id).subscribe(resp => {
+      console.log(resp);
+      this.isLoading = false;
+   
+
+      this.toastr.success(resp.message, "Class  Deleted successFully");
+      // document.getElementById('modalDismissBtn')?.click();
+      this.closeButton.nativeElement?.click();
+      this.getAllClass()
     },
     (err) => {
       this.isLoading = false;
@@ -224,7 +249,7 @@ console.log(this.selectedDesign._id);
       this.isLoading = false;
       this.toastr.success(resp.message, " section update success");
       document.getElementById('editModalDismissBtna')?.click();
-      this.updateSection();
+      this.getAllSection();
     },
     (err) => {
       this.isLoading = false;

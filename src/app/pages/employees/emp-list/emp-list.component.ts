@@ -17,10 +17,10 @@ export class EmpListComponent {
   selectedDesign: any;
 
   constructor(private api: ApiService,
-     private toastr: ToastrService,
-      
-     private router: Router
-     ) {
+    private toastr: ToastrService,
+
+    private router: Router
+  ) {
 
   }
 
@@ -28,65 +28,72 @@ export class EmpListComponent {
     this.getEmployees();
   }
 
-  getEmployees()
-  {
+  getEmployees() {
     this.api.getAllEmployees().subscribe(resp => {
       this.employees = resp.employees;
       console.log(this.employees);
-      
+
       this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Admin');
     });
   }
 
-  filterEmployee(event: any)
-  {
-    const tabIndex = event.index;
-    if(tabIndex == 0) {
+  filterEmployee(event: any) {
+    console.log(this.filteredEmp);
+const tabIndex = event.index;
+    if (tabIndex == 0) {
       this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Admin')
+      console.log();
+      
     }
-    else if(tabIndex == 1) {
+    if (tabIndex == 0) {
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'ADMIN')
+    }
+    else if (tabIndex == 1) {
       this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Teacher')
     }
-    else if(tabIndex == 2) {
+    else if (tabIndex == 1) {
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == "TEACHER")
+    }
+    else if (tabIndex == 2) {
       this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Accountant')
     }
-    else if(tabIndex == 3) {
+    else if (tabIndex == 3) {
       this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Librarian')
     }
-    else if(tabIndex == 4) {
+    else if (tabIndex == 4) {
       this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Receptionist')
     }
-    else if(tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name !=  'Teacher'  ) 
-
-
+    else if (tabIndex == 5) {
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Teacher')
     }
-    else if(tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name !=  'Admin'  ) 
+    else if (tabIndex == 5) {
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'TEACHER')
+    }
+    else if (tabIndex == 5) {
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Admin')
 
 
-    }   else if(tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name !=  'Accountant'  ) 
+    } else if (tabIndex == 5) {
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Accountant')
 
 
-    }   else if(tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name !=  'Librarian'  ) 
+    } else if (tabIndex == 5) {
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Librarian')
 
 
-    }   else if(tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name !=  'Receptionist'  ) 
+    } else if (tabIndex == 5) {
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Receptionist')
 
 
     }
 
   }
 
-  editTeacherEm(route: any)
-  {
+  editTeacherEm(route: any) {
     console.log("tevdafgc");
-    
+
     console.log(route);
-    
+
     this.emplyee = route;
     const navExtras: NavigationExtras = {
       state: {
@@ -97,21 +104,22 @@ export class EmpListComponent {
     this.router.navigate(["/employee/add", this.emplyee._id], navExtras);
   }
 
-  deleteEmpl()
-{
-  console.log(this.emplyee._id);
-  
-  this.isLoading = true;
-  this.api.deleteEmployee(this.emplyee._id).subscribe(resp => {
-    console.log(resp);
-    this.isLoading = false;
-    document.getElementById('modalDismissBtn')?.click();
-    // this.getLeaveApplication();
-  },
-  (err) => {
-    this.isLoading = false;
-    console.error(err);
-  })
-}
+  deleteEmpl() {
+    console.log(this.emplyee._id);
+    this.isLoading = true;
+    this.api.deleteEmployee(this.emplyee._id).subscribe(resp => {
+      console.log(resp);
+      this.isLoading = false;
+      document.getElementById('modalDismissBtn')?.click();
+      this.toastr.success(resp.message, "Employee  Deleted successFully");
+  // this.getEmployees()
+    },
+      (err) => {
+        this.isLoading = false;
+        console.error(err);
+      })
+  }
+
+
 
 }

@@ -20,6 +20,7 @@ classAssignForm: FormGroup
   aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
   acdamic: any;
   academic: any[]=[];
+  academicID: any;
 
 
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router)
@@ -45,6 +46,14 @@ classAssignForm: FormGroup
   
 
   }
+
+  onChangeYear(event){
+   
+    console.log(event.target.value)
+    this.academicID  = event.target.value
+   
+  }
+
 
   onChangeClass(event){
     this.sections =[];
