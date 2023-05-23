@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../services/api.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { StudentService } from '../../student-details/student.service';
 @Component({ 
   selector: 'app-class-schedule-add',
   templateUrl: './class-schedule-add.component.html',
@@ -19,9 +20,10 @@ export class ClassScheduleAddComponent {
   employees =[];
   hrs = [];
   mins = ["00", "30"];
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder) {
+  aceYear:any[] = [];
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder,private studentService:StudentService) {
     this.createForm();
+    this.aceYear = this.studentService.aceYear;
     this.rows = this.fb.array([]);
   }
   ngOnInit() {

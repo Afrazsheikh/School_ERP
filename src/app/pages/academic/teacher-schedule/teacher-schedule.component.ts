@@ -22,7 +22,7 @@ export class TeacherScheduleComponent {
       this.employees = resp.employees;
       console.log(this.employees);
       
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Teacher');
+      this.filteredEmp = this.employees.filter(emp => (emp.designation?.name).toLowerCase() === 'teacher');
       console.log(this.filteredEmp);
       
     });
