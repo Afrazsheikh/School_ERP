@@ -57,6 +57,8 @@ export class AssignTeacherComponent {
     });
   }
   callReport(reportForm){
+    console.log(reportForm);
+    
     this.teacherList = [];
     const data = {
       academicYear: reportForm.value.academicYear,
@@ -64,6 +66,8 @@ export class AssignTeacherComponent {
       studentClass: reportForm.value.studentClass,
     }
     this.api.getAllAcademicData(data).subscribe(data => {
+      console.log(data);
+      
       this.teacherList = data['academics']['teachers'];
   //    this.studentService.studentDetailBackAction.isBack = false;
     },

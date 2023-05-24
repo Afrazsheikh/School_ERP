@@ -18,6 +18,45 @@
               </div>
             </div>
           </div>
+
+          <!--  -->
+          <form [formGroup]="classAssignForm" >
+            <div class="row mt-5 mb-3">
+            
+              <div class="col-3">         
+                  <label class="form-label">Year <span class="error">*</span></label>
+                  <select class="form-select" formControlName="academicYear" (change)="onChangeClass($event)">
+                    <option disabled value="select">Select</option>
+                    <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
+                  </select>
+              
+              </div>
+              <div class="col-3">
+            
+                <label class="form-label">Class <span class="error">*</span></label>
+                <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
+                </select>
+              </div>
+              <div class="col-3 ">
+                <label class="form-label">Section *</label>
+                <select class="form-select" formControlName="section">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
+                </select>
+              </div>
+            </div>
+    
+  
+         
+            <div class="text-end mb-5">
+              <button class="btn" (click) = "callReport(classAssignForm)">filter</button>
+            </div>
+            </form>
+          <!--  -->
+
+
           <table class="table mt-3">
             <thead>
               <tr>
@@ -29,14 +68,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>#001234</td>
-                <td>Six</td>
-                <td>A</td>
-                <td>A</td>
+              <tr *ngFor="let suData of subjectList ; index as i ">
+                <td>{{i + 1 }}</td>
+                <td></td>
+                <td></td>
+                <td>{{suData.subjectName}}</td>
                 <td>
-                  <button class="btn emp-edit me-1"><i class="fa-solid fa-pencil"></i></button>
-                  <button class="btn emp-edit ms-1"><i class="fa-solid fa-trash-can"></i></button>
+                  <!-- <button class="btn emp-edit me-1"><i class="fa-solid fa-pencil"></i></button> -->
+                  <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePrompt"(click)="selectedID=suData" ><i class="fa-solid fa-trash-can"></i></button>
                 </td>
               </tr>
             </tbody>
@@ -48,15 +87,13 @@
         <form [formGroup]="classAssignForm"  (ngSubmit)="AssignClassTeacher()">
         <div class="row mt-5 mb-3">
         
-          <div class="col-3">
-        
-            <label class="form-label">Academic Year *</label>
-            <select class="form-select" formControlName="academicYear" (change)="onChangeYear($event)">
-              <option disabled value="select">Select</option>
-              <!-- <option *ngFor="let stud of students" ></option> -->
-              <option *ngFor="let stud of academics" [value]="stud.academicYear" >{{stud.academicYear}}</option>
-
-            </select>
+          <div class="col-3">         
+              <label class="form-label">Year <span class="error">*</span></label>
+              <select class="form-select" formControlName="academicYear">
+                <option disabled value="select">Select</option>
+                <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
+              </select>
+          
           </div>
           <div class="col-3">
         
@@ -77,16 +114,6 @@
 
         <!-- <div class="row mt-5 mb-3"> -->
           <div class="col-3">
-            <label class="form-label">Subject *</label>
-     
-<!-- 
-            <ng-select  style="border-color: aqua;" [multiple]="true">
-              <ng-option  class="selectbox" formControlName="subjects"
-               placeholder="Select subjects" 
-               *ngFor="let sec of subjects"
-               bindValue="_id"
-                [value]="sec.id">{{sec.subjectName}}</ng-option>
-           </ng-select> -->
            <mat-form-field appearance="fill">
             <mat-label>Select Subjects</mat-label>
             <mat-select formControlName="subjects" multiple>
@@ -105,3 +132,26 @@
     </mat-tab-group>
   </div>
 </app-layout>
+
+
+<!-- Delete model -->
+
+<div class="modal fade" id="deletePrompt">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete </h5>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this ?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="modalDismissBtn" type="button" #closeButton class="btn btn-primary-close" data-bs-dismiss="modal">&times;Cancel</button>
+        <button type="button" class="btn btn-danger" [disabled]="isLoading" (click)="delete()">
+          <span *ngIf="isLoading" class="spinner-border text-light"></span>
+          <span *ngIf="!isLoading">Delete</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

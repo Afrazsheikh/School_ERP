@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
+import { StudentService } from '../../student-details/student.service';
 
 @Component({
   selector: 'app-class-assign',
@@ -17,15 +18,32 @@ classAssignForm: FormGroup
   subjects: any[] = [];
   students: any[]=[]
   academics:  any=[]
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
+  subjectList :any
+  aceYear: any[] = [];
+  // aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
   acdamic: any;
   academic: any[]=[];
   academicID: any;
+  selectedID: any;
 
 
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router)
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,    private studentService:StudentService)
   {
-   
+    this.aceYear = this.studentService.aceYear;
+  
+  }
+  ngOnInit(): void {
+  
+    this.createForm()
+    // this.getAllSection();
+    this.getAllClass();
+    this.getSubject();
+    this.getAllStudent()
+    this.getAllAcademics()
+  
+
+  }
+  createForm(){
     this.classAssignForm = new FormGroup({
       // vehicleId: new FormControl("select", [Validators.required]),
       academicYear: new FormControl(null, [Validators.required]),
@@ -35,16 +53,16 @@ classAssignForm: FormGroup
 
     });
   }
-  ngOnInit(): void {
-  
-    
-    this.getAllSection();
-    this.getAllClass();
-    this.getSubject();
-    this.getAllStudent()
-    this.getAllAcademics()
-  
 
+  onChangeClass(event) {
+    this.sections = [];
+    this.classAssignForm.patchValue({ section: 'select' });
+    const id = event.target.value;
+    this.classes.forEach(element => {
+      if (element._id === id) {
+        this.sections = element.sections;
+      }
+    });
   }
 
   onChangeYear(event){
@@ -55,16 +73,16 @@ classAssignForm: FormGroup
   }
 
 
-  onChangeClass(event){
-    this.sections =[];
-    this.classAssignForm.patchValue({section: 'select'});
-    const id = event.target.value;
-    this.classes.forEach(element => {
-        if(element._id === id) {
-          this.sections = element.sections;
-        }
-    });
-  }
+  // onChangeClass(event){
+  //   this.sections =[];
+  //   this.classAssignForm.patchValue({section: 'select'});
+  //   const id = event.target.value;
+  //   this.classes.forEach(element => {
+  //       if(element._id === id) {
+  //         this.sections = element.sections;
+  //       }
+  //   });
+  // }
 
   getSubject(){
 
@@ -100,23 +118,23 @@ classAssignForm: FormGroup
 
 }
 
-mapAcademicYear()
-{
-  console.log(",-----------");
+// mapAcademicYear()
+// {
+//   console.log(",-----------");
 
-  this.students.forEach(stud => {
-console.log(stud);
+//   this.students.forEach(stud => {
+// console.log(stud);
 
     
-stud["academicYear"] = this.academics.find(d => d._id == stud.academic);
-console.log(stud.academic._id);
+// stud["academicYear"] = this.academics.find(d => d._id == stud.academic);
+// console.log(stud.academic._id);
 
  
     
-  });
+//   });
 
   
-}
+// }
 
 
 
@@ -135,38 +153,73 @@ getAllAcademics(){
 
 }
 getAllStudent(){
-   
-  
   this.api.getAllStudent().subscribe(resp => {
-    console.log(resp);
-    
+    console.log(resp); 
     this.students = resp.students
-    this.mapAcademicYear()
-
   });
 
 }
   AssignClassTeacher(){
     console.log(this.classAssignForm.value);
-    
-   
-   
     // console.log(postData);
     this.api.AssignSubject(this.classAssignForm.value ).subscribe(resp => {
     console.log(resp);
   
       this.isLoading = false;
       this.toastr.success(resp.message, "Add  success");
-   
-  
-     
+
     },
     (err) => {
       this.isLoading = false;
       this.toastr.error(err, " add failed");
     })
   }
+
+ 
   
 
+  callReport(reportForm){
+    console.log(reportForm);
+    
+    this.subjectList = [];
+    const data = {
+      academicYear: reportForm.value.academicYear,
+      section: reportForm.value.section,
+      studentClass: reportForm.value.studentClass,
+    }
+    this.api.getAllAcademicData(data).subscribe(data => {
+      console.log(data);
+      
+      this.subjectList = data['academics']['subjects'];
+      console.log(this.subjectList);
+      
+
+    },
+    (err) =>{
+
+      this.toastr.error(err);
+    })
+  }
+  
+  
+  delete(){
+console.log(this.selectedID._id);
+
+    this.isLoading = true;
+    this.api.deleteClass(this.selectedID._id).subscribe(resp => {
+      console.log(resp);
+      this.isLoading = false;
+   
+
+      this.toastr.success(resp.message, "  Deleted successFully");
+      document.getElementById('modalDismissBtn')?.click();
+      // this.closeButton.nativeElement?.click();
+      this.getAllClass()
+    },
+    (err) => {
+      this.isLoading = false;
+      console.error(err);
+    })
+  }
 }
  
