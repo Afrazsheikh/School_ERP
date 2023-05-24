@@ -8,6 +8,8 @@ export enum routes {
   C_ADMISSION ='/admission/create',
   CAT_ADMISSION ='/admission/category',
   MUL_ADMISSION ='/admission/multiple-import',
+  FEES_CATEGORY = '/fees/category',
+  FEES_TYPE = '/fees/fee-list',
   STUDNT_LIST ='/student-details/student-list',
   STUDNT_DETAIL='/student-details',
   STUDNT_INFO='/student-details/student-info',

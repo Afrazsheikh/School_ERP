@@ -26,7 +26,25 @@
   <mat-list-item>
     <mat-icon matListItemIcon>add_home</mat-icon> Attendance
   </mat-list-item>
-
+  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/fees') ? true : false">
+    <mat-expansion-panel-header>
+      <mat-list-item [ngClass]="currentUrl.includes('/fees') ? 'active' : ''">
+        <mat-icon matListItemIcon>group_work</mat-icon> Fees
+      </mat-list-item>
+    </mat-expansion-panel-header>
+    <!--Sub Menu-->
+    <div class="sub-menu-cont">
+      <mat-list-item class="sub-menu" [routerLink]="routes.FEES_CATEGORY" routerLinkActive="sub-active">
+        Fee Category
+      </mat-list-item>
+      <mat-list-item class="sub-menu" [routerLink]="routes.FEES_TYPE" routerLinkActive="sub-active">
+        Fee List
+      </mat-list-item>
+      <mat-list-item class="sub-menu" [routerLink]="routes.FEES_TYPE" routerLinkActive="sub-active">
+       Invoice
+      </mat-list-item>
+    </div>
+  </mat-expansion-panel>
   <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/academic') ? true : false">
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/academic') ? 'active' : ''">
@@ -106,7 +124,7 @@
   <mat-expansion-panel hideToggle="true"  hideToggle="true" [expanded]="currentUrl.includes('/student-acconting') ? true : false">
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/student-acconting') ? 'active' : ''">
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Student Acconting
+        <mat-icon matListItemIcon>photo_alum</mat-icon>Student Accounting
       </mat-list-item>
     </mat-expansion-panel-header>
 

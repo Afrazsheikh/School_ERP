@@ -1,0 +1,42 @@
+<app-layout>
+
+    <div class="container p-5">
+        <form [formGroup]="feeForm">
+            <div class="row">
+                <div class="col-md-12 header-txt" >
+                    <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Add Fee Category</span>
+                </div>
+            </div>
+            <div class="row mt-4 mb-3">
+                <div class="col-6">
+                  <label class="form-label">Fee Category Name <span class="error">*</span></label>
+                  <input type="text" class="form-control"  formControlName="categoryName">
+                  <div *ngIf="feeForm.controls['categoryName'].invalid && (feeForm.controls['categoryName'].dirty || feeForm.controls['categoryName'].touched)"
+                  class="error mt-2">
+                  <div *ngIf="feeForm.controls['categoryName'].errors['required']">                    
+                    Fee Category Name is required.
+                  </div>
+                </div>
+                </div>
+            </div>
+            <div class="row mt-4 mb-3">
+                <div class="col-6">
+                  <label class="form-label">Fee Category Code <span class="error">*</span></label>
+                  <input type="text" class="form-control"  formControlName="code">
+                  <div *ngIf="feeForm.controls['code'].invalid && (feeForm.controls['code'].dirty || feeForm.controls['code'].touched)"
+                  class="error mt-2">
+                  <div *ngIf="feeForm.controls['code'].errors['required']">                    
+                    Fee Category Code is required.
+                  </div>
+                </div>
+                </div>
+            </div>
+            <div class="row mt-2 mb-3">
+                <div class="col-6">
+                    <button type="button" class="save_button btn" (click)="createInfo(feeForm)" [disabled]="!feeForm.valid">Save</button>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+</app-layout>

@@ -1,0 +1,13 @@
+[
+{ "id":1, "name":"Acedemic Fee"},
+{ "id":2,"firstName":"Hostel Fee"},
+{ "id":2,"firstName":"Tution Fee"},
+{ "id":2,"firstName":"Field Trip Fee"},
+{ "id":2,"firstName":"Admission Fee"},
+{ "id":2,"firstName":"Transportation Fee for 5KM"},
+{ "id":2,"firstName":"Transportation Fee for 10KM"},
+{ "id":2,"firstName":"Transportation Fee for 15KM"},
+{ "id":2,"firstName":"Transportation Fee for 20KM"},
+{ "id":2,"firstName":"Transportation Fee for 25KM"},
+{ "id":2,"firstName":"Transportation Fee for 30KM"}
+]
