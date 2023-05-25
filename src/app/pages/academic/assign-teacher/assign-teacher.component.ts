@@ -21,6 +21,8 @@ export class AssignTeacherComponent {
   teacherList:any;
   teacherId:any;
   modalRef!: BsModalRef;
+  className:any;
+  sectionName:any;
   constructor(private api: ApiService,private toastr: ToastrService, private router: Router, private modalService: BsModalService,
     private studentService:StudentService) {
       this.aceYear = this.studentService.aceYear;
@@ -56,10 +58,9 @@ export class AssignTeacherComponent {
       this.classes = resp.classes;
     });
   }
-  callReport(reportForm){
-    console.log(reportForm);
-    
+  callReport(reportForm){    
     this.teacherList = [];
+    this.className = this.sectionName = '';
     const data = {
       academicYear: reportForm.value.academicYear,
       section: reportForm.value.section,
@@ -69,6 +70,8 @@ export class AssignTeacherComponent {
       console.log(data);
       
       this.teacherList = data['academics']['teachers'];
+      this.className = data['academics']['class'];
+      this.sectionName = data['academics']['section'];
   //    this.studentService.studentDetailBackAction.isBack = false;
     },
     (err) =>{
