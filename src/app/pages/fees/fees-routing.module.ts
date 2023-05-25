@@ -7,6 +7,8 @@ import { EditFeeCategoyComponent } from './edit-fee-categoy/edit-fee-categoy.com
 import { AssignFeeListComponent } from './assign-fee-list/assign-fee-list.component';
 import { AssignFeeTypeOneComponent } from './assign-fee-type-one/assign-fee-type-one.component';
 import { AssignFeeTypeTwoComponent } from './assign-fee-type-two/assign-fee-type-two.component';
+import { TransportFeeListComponent } from './transport-fee-list/transport-fee-list.component';
+import { TransportFeeAddComponent } from './transport-fee-add/transport-fee-add.component';
 const routes: Routes = [
   {
     path: 'category', component: FeeCategoryComponent
@@ -18,20 +20,22 @@ const routes: Routes = [
     path: 'edit-category',component: EditFeeCategoyComponent
   },
   {
-    path: 'fee-list',
-    component: AssignFeeListComponent
+    path: 'fee-list',   component: AssignFeeListComponent
   },
   {
-    path: 'define-fee-type-1',
-    component: AssignFeeTypeOneComponent
+    path: 'define-fee-type-1',    component: AssignFeeTypeOneComponent
   },
   {
-    path: 'define-fee-type-2',
-    component: AssignFeeTypeTwoComponent
+    path: 'define-fee-type-2',    component: AssignFeeTypeTwoComponent
   },
   {
-    path: 'define-fee-type',
-    component: AssignFeeTypeComponent
+    path: 'define-fee-type',component: AssignFeeTypeComponent
+  },
+  {
+    path: 'transport-fee-list',   component: TransportFeeListComponent
+  },
+  {
+    path: 'transport-fee-add',   component: TransportFeeAddComponent
   },
 ];
 

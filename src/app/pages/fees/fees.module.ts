@@ -12,6 +12,8 @@ import { EditFeeCategoyComponent } from './edit-fee-categoy/edit-fee-categoy.com
 import { AssignFeeListComponent } from './assign-fee-list/assign-fee-list.component';
 import { AssignFeeTypeOneComponent } from './assign-fee-type-one/assign-fee-type-one.component';
 import { AssignFeeTypeTwoComponent } from './assign-fee-type-two/assign-fee-type-two.component';
+import { TransportFeeListComponent } from './transport-fee-list/transport-fee-list.component';
+import { TransportFeeAddComponent } from './transport-fee-add/transport-fee-add.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { AssignFeeTypeTwoComponent } from './assign-fee-type-two/assign-fee-type
     EditFeeCategoyComponent,
     AssignFeeListComponent,
     AssignFeeTypeOneComponent,
-    AssignFeeTypeTwoComponent
+    AssignFeeTypeTwoComponent,
+    TransportFeeListComponent,
+    TransportFeeAddComponent
   ],
   imports: [
     CommonModule,

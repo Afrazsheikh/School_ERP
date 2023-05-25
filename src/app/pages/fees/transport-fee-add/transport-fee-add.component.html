@@ -1,0 +1,76 @@
+<app-layout>
+    <div class="container tab-container p-5">
+        <div class="row">
+            <div class="col-md-12 header-txt pb-2" >
+                <div class="row">
+                    <div class="col-md-4"><i  class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Define Tranportation Fee</span></div>
+                    
+                </div>
+            </div>
+        </div>
+        
+      <form [formGroup]="reportForm">
+        <div class="row mt-3">
+          <div class="mb-3 col-md-3">
+            <label class="form-label">Year <span class="error">*</span></label>
+            <select class="form-select" formControlName="academicYear">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
+            </select>
+            <div *ngIf="reportForm.controls['academicYear'].invalid && (reportForm.controls['academicYear'].dirty || reportForm.controls['academicYear'].touched)"
+            class="error mt-2">
+            <div *ngIf="reportForm.controls['academicYear'].errors['required']">
+              Year is required.
+            </div></div>
+          </div>
+          <div class="mb-3 col-md-3">
+            <label class="form-label">Distance <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="distance">           
+            <div *ngIf="reportForm.controls['distance'].invalid && (reportForm.controls['distance'].dirty || reportForm.controls['distance'].touched)"
+            class="error mt-2">
+            <div *ngIf="reportForm.controls['distance'].errors['required']">
+              Distance is required.
+            </div></div>
+          </div>
+          <div class="mb-3 col-md-3">
+            <label class="form-label">Amount <span class="error">*</span></label>
+            <input type="number" class="form-control"  formControlName="amount">  
+            <div *ngIf="reportForm.controls['amount'].invalid && (reportForm.controls['amount'].dirty || reportForm.controls['amount'].touched)"
+            class="error mt-2">
+            <div *ngIf="reportForm.controls['amount'].errors['required']">
+              Amount is required.
+            </div></div>
+          </div>
+          <div class="mb-3 col-md-3 mt-4">
+            <button class="btn" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Save</button>
+        </div>
+      </div>
+    </form>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table mt-3">
+                    <thead>
+                      <tr>
+                        <th width="15%">S. No</th>
+                        <th width="30%">Distance</th>
+                        <th width="30%">Amount</th>
+                        <th width="20%">ID</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of transportList; let i = index">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td>{{row?.distance}}</td>
+                                 <td >{{row.amount}}</td> 
+                                 <td >{{row.id}}</td>
+                            </tr>
+                        </ng-container>
+                      </tbody>                     
+                </table>
+            </div>
+        </div>
+
+    </div>
+</app-layout>
+
