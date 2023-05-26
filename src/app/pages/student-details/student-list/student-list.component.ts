@@ -105,7 +105,7 @@ export class StudentListComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
   deletePopup(){
-    /*this.api.deleteHomeWork(this.studentId).subscribe(resp => {
+    this.api.deleteStudent(this.studentId).subscribe(resp => {
       this.closePopup();
       this.toastr.success(resp.message, "Deleted success");
       this.callReport(this.reportForm );
@@ -113,7 +113,7 @@ export class StudentListComponent implements OnInit {
     (err) => {
       this.toastr.error(err, " update failed");
       console.error(err);
-    })*/
+    })
   }
   closePopup(){
     this.modalRef.hide();

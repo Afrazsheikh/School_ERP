@@ -297,13 +297,15 @@ export class ApiService {
     getAllStudents(): Observable<any> {
       return this.httpClient.get(environment.apiBaseUrl + '/student/all').pipe(catchError(this.errorHandler));
     }
-
+    deleteStudent(_id: string): Observable<any> {
+      return this.httpClient.delete(environment.apiBaseUrl + '/student/'  +_id ).pipe(catchError(this.errorHandler));
+    }
     //Employees, Departments and Designations  '/employee/all'  employee
     addEmpployee(postData: any): Observable<any> {
       return this.httpClient.post(environment.apiBaseUrl + '/employee', postData).pipe(catchError(this.errorHandler));
     }
     deleteEmploye(_id: string): Observable<any> {
-      return this.httpClient.delete(environment.apiBaseUrl + '/employee/:id/'  +_id ).pipe(catchError(this.errorHandler));
+      return this.httpClient.delete(environment.apiBaseUrl + '/employee/' +_id ).pipe(catchError(this.errorHandler));
     }
 
     updateEmpployee(postData: any): Observable<any> {
