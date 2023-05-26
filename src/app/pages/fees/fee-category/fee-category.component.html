@@ -26,11 +26,11 @@
                         <ng-container *ngFor="let row of categoryList; let i = index">
                             <tr>
                                 <td>{{i+1}}</td>
-                                 <td >{{row.name}}</td> 
-                                 <td >{{row.code}}</td> 
+                                 <td >{{row?.categoryName}}</td> 
+                                 <td >{{row?.code}}</td> 
                                  <td>
                                     <button class="btn emp-edit me-1" (click)="editCategory(row)"><i class="fa-solid fa-pencil"></i></button>
-                                  <button class="btn emp-edit ms-1" (click)="false"><i class="fa-solid fa-trash-can"></i></button>
+                                  <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, row)"><i class="fa-solid fa-trash-can"></i></button>
                                 </td>
                             </tr>
                         </ng-container>
@@ -41,3 +41,23 @@
 
     </div>
 </app-layout>
+<ng-template #deletemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Delete Confirmation</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="text-justify">Are you sure, You Want To Delete This Information?</span>
+        </div>
+      </div>
+         
+        <div class="modal-footer mt-4">
+          <button type="button" class="save_button btn" (click)="deletePopup()">Yes, Continue</button>
+          <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+        </div>
+    </div>
+  </ng-template>

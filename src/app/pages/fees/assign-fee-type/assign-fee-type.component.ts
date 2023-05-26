@@ -19,24 +19,27 @@ export class AssignFeeTypeComponent {
   aceYear:any[] = [];
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder, private studentService: StudentService) {
     this.aceYear = this.studentService.aceYear;
+    this.createForm();
+    this.rows = this.fb.array([]);
+    this.addForm.addControl('rows', this.rows);
   }
   ngOnInit() {
-    this.getAllClass();
-    this.createForm();
-    this.categoryList = [
-      { "id":1, "name":"Acedemic Fee", 'code':"ACEDEMIC_FEE"},
-      { "id":2,"name":"Hostel Fee",'code':"HOSTEL_FEE"},
-      { "id":2,"name":"Tution Fee",'code':"TUTION_FEE"},
-      { "id":2,"name":"Field Trip Fee",'code':"FIELD_FEE"},
-      { "id":2,"name":"Admission Fee",'code':"ADMISSION_FEE"},
-      { "id":2,"name":"Transportation Fee for 5KM",'code':"TRANS_5KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 10KM",'code':"TRANS_10KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 15KM",'code':"TRANS_15KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 20KM",'code':"TRANS_20KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 25KM",'code':"TRANS_25KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 30KM",'code':"TRANS_30KM_FEE"}
-      ];
-      this.onAddRow();
+    this.getAllClass();    
+    this.getCategoryData();
+  }
+  getCategoryData(){
+    this.api.getAllFeeCategory().subscribe(data =>{
+      this.categoryList = data.allData;
+      this.categoryList.forEach(element => {
+        this.onAddRow(element);
+      });
+     
+     },
+     (err) => {
+      this.categoryList = [];
+      // this.toastr.error(err, " add failed");
+       console.error(err);
+     });
   }
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {
@@ -49,23 +52,40 @@ export class AssignFeeTypeComponent {
       studentClass:[]
     });
   }
-  onAddRow() {
-    for(var i=1 ;i<5 ;i++) {
-        this.classFees.push({"class":i, "amount":"0"});
-    }
-    
-    //this.rows.push(this.createItemFormGroup());
+  onAddRow(data) {     
+    this.rows.push(this.createItemFormGroup(data));
   }
-  createItemFormGroup(): FormGroup {
+  createItemFormGroup(data): FormGroup {
     return this.fb.group({
-      break:  [''],
-      subject:  ['', Validators.required],
-      teacher:  ['',Validators.required],
-      startTime:  ['',Validators.required],
-      endTime:  ['', Validators.required],
-      classRoom:  ['']
+      id:  [data?._id],
+      categoryName:  [data?.categoryName],
+      code:  [data?.code],
+      amount:  ['',Validators.required],
     });
   }
-  createInfo(){}
+  get pairs() {
+    return (<FormArray>this.addForm.get('rows'));
+  }
+
+  resetField() {
+    this.pairs.controls.forEach(group => group.get('amount').reset());
+  }
+  createInfo(formData){
+    console.log(formData.value);
+    const payload = {
+      classId:formData.value.studentClass,
+      year:formData.value.academicYear,
+      amount:formData.value.rows
+    }
+    this.api.createFeeType(payload).subscribe(resp => {
+      this.toastr.success(resp.message, "Added Successully");
+      this.resetField();
+    },
+    (err) => {
+      this.toastr.error(err, " add failed");
+      console.error(err);
+    })
+    
+  }
   
 }

@@ -607,7 +607,24 @@ export class ApiService {
     uploadCSVEmploye(postData: any): Observable<any> {
       return this.httpClient.post(environment.apiBaseUrl +'/employee/uploadcsv', postData ).pipe(catchError(this.errorHandler));
     }
-
+    getAllFeeCategory(): Observable<any> {
+      return this.httpClient.get(environment.apiBaseUrl +'/feeCategory/all').pipe(catchError(this.errorHandler));
+    }
+    createFeeCategory(postData: any): Observable<any> {
+      return this.httpClient.post(environment.apiBaseUrl +'/createFeeCat',postData ).pipe(catchError(this.errorHandler));
+    }
+    updateFeeCategory(id: any,postData: any): Observable<any> {
+      return this.httpClient.put(environment.apiBaseUrl +'/updateFeeCategory/'+id, postData).pipe(catchError(this.errorHandler));
+    }
+    deleteFeeCategoryById(id: string): Observable<any> {
+      return this.httpClient.delete(environment.apiBaseUrl +'/delete/' + id).pipe(catchError(this.errorHandler));
+    }
+    getAllFeeType(): Observable<any>{
+      return this.httpClient.get(environment.apiBaseUrl +'/academicFeeType/all').pipe(catchError(this.errorHandler));
+    }
+    createFeeType(postData: any): Observable<any> {
+      return this.httpClient.post(environment.apiBaseUrl +'/createfeetype',postData ).pipe(catchError(this.errorHandler));
+    }
   errorHandler(error: {
     error: {
         messge: string;

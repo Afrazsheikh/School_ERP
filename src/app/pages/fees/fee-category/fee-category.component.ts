@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
+import {FeeService} from '../fee.service';
 @Component({
   selector: 'app-fee-category',
   templateUrl: './fee-category.component.html',
@@ -12,28 +12,47 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class FeeCategoryComponent {
   modalRef!: BsModalRef;
   categoryList:any[] =[];
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private modalService: BsModalService){
+  categoryId:any;
+  constructor(private api: ApiService, private toastr: ToastrService, 
+    private router: Router,private modalService: BsModalService, private feeService:FeeService){
 
   }
   ngOnInit(): void {    
-    this.categoryList = [
-      { "id":1, "name":"Acedemic Fee", 'code':"ACEDEMIC_FEE"},
-      { "id":2,"name":"Hostel Fee",'code':"HOSTEL_FEE"},
-      { "id":2,"name":"Tution Fee",'code':"TUTION_FEE"},
-      { "id":2,"name":"Field Trip Fee",'code':"FIELD_FEE"},
-      { "id":2,"name":"Admission Fee",'code':"ADMISSION_FEE"},
-      { "id":2,"name":"Transportation Fee for 5KM",'code':"TRANS_5KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 10KM",'code':"TRANS_10KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 15KM",'code':"TRANS_15KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 20KM",'code':"TRANS_20KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 25KM",'code':"TRANS_25KM_FEE"},
-      { "id":2,"name":"Transportation Fee for 30KM",'code':"TRANS_30KM_FEE"}
-      ];
+   this.getCategoryData();
+  }
+  getCategoryData(){
+    this.api.getAllFeeCategory().subscribe(data =>{
+      this.categoryList = data.allData;
+     },
+     (err) => {
+      this.categoryList = [];
+      // this.toastr.error(err, " add failed");
+       console.error(err);
+     });
   }
   addCategory(){
     this.router.navigate(['/fees/add-category']);
   }
   editCategory(row){
+    this.feeService.feeData = row;
     this.router.navigate(['/fees/edit-category']);
+  }
+  openDeleteModal(template: TemplateRef<any>, data: any){
+    this.categoryId = data._id;
+    this.modalRef = this.modalService.show(template);
+  }
+  deletePopup(){
+    this.api.deleteFeeCategoryById(this.categoryId).subscribe(resp => {
+      this.closePopup();
+      this.toastr.success(resp.message, "Deleted success");
+      this.getCategoryData();
+    },
+    (err) => {
+      this.toastr.error(err, " update failed");
+      console.error(err);
+    })
+  }
+  closePopup(){
+    this.modalRef.hide();
   }
 }

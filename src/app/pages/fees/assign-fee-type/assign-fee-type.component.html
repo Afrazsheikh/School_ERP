@@ -42,20 +42,20 @@
                 <table class="table">
                     <thead>
                         <tr>
-                             <th>Category Name</th>
                              <th>Category Code</th>
+                             <th>Category Name</th>
                              <th>Amount</th>
                     </tr>
                     </thead>
                     <tbody> 
-                        <ng-container *ngFor="let row of categoryList; let i = index">
-                            
-                                     <tr>
-                                        <td>{{row.name}}</td>
-                                        <td>{{row.code}}</td>
-                                    <td><input type="text" name="cat.code"  class="form-control" style="width:120px"></td>
+                        <ng-container *ngFor="let row of addForm.get('rows')['controls']; let i = index">
+                             <tr>
+                                       <!-- <td>{{row.get('code').value}}</td>
+                                        <td>{{row.get('categoryName').value}}</td>-->
+                                        <td><input type="text" class="form-control" [formControl]="row.get('code')" ></td>
+                                        <td><input type="text" class="form-control" [formControl]="row.get('categoryName')" ></td>
+                                        <td><input type="text" class="form-control" [formControl]="row.get('amount')" style="width:120px"></td>
                                 </tr>
-                            
                         </ng-container> 
                         
                     </tbody>
@@ -63,7 +63,7 @@
             </div>
             <div class="row mt-2 mb-3">
                 <div class="col-6">
-                    <button type="button" class="save_button btn" (click)="createInfo()" [disabled]="!addForm.valid">Save & Next</button>
+                    <button type="button" class="save_button btn" (click)="createInfo(addForm)" [disabled]="!addForm.valid">Save & Next</button>
                 </div>
                 
             </div>

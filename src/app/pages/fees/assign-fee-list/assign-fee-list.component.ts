@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../../student-details/student.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-assign-fee-list',
@@ -36,6 +37,52 @@ export class AssignFeeListComponent {
       { "id":2,"name":"Transportation Fee for 30KM","amount":"1000", "class":"Five"}
       ];
       this.addForm();
+    //  this.getFeeData();
+    //this.testData();
+  }
+  testData(){
+    const cars = [
+      {
+        id: 1,
+        brand: 'Ferrari',
+        model: 'F40'
+      },
+      {
+        id: 2,
+        brand: 'Ferrari',
+        model: 'F50'
+      },
+      {
+        id: 3,
+        brand: 'Ferrari',
+        model: 'California'
+      },
+      {
+        id: 4,
+        brand: 'Porsche',
+        model: '911'
+      },
+      {
+        id: 5,
+        brand: 'Porsche',
+        model: 'Panamera'
+      }
+    ];
+    from(cars).subscribe(data =>{
+      console.log(data);
+    });
+    var userNames = cars.map(s => s.brand).toString();
+    console.log(userNames);
+  }
+  getFeeData(){
+    this.api.getAllFeeType().subscribe(data =>{
+      console.log(data);
+     },
+     (err) => {
+      this.categoryList = [];
+      // this.toastr.error(err, " add failed");
+       console.error(err);
+     });
   }
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {

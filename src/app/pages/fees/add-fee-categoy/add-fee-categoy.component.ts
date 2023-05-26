@@ -21,11 +21,22 @@ export class AddFeeCategoyComponent {
     this.feeForm = this.fb.group({
       id: [''],
       categoryName: ['', Validators.required],
-      code: ['', Validators.required]
+      code: ['']
     });
   }
   createInfo(formData){
     console.log(formData);
-    this.router.navigate(['/fees/category']);
+    let payload = {
+      categoryName:formData.value.categoryName
+    }
+    this.api.createFeeCategory(payload).subscribe(resp => {
+      this.toastr.success(resp.message, "Added success");
+      this.router.navigate(['/fees/category']);
+    },
+    (err) => {
+      this.toastr.error(err, " add failed");
+      console.error(err);
+    })
+   
   }
 }
