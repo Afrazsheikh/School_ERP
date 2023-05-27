@@ -6,7 +6,7 @@
       </div>
   </div>
   <div class="row mt-2 mb-3">
-      <div class="col-3">
+     <!-- <div class="col-3">
         <label class="form-label">Fee Type <span class="error">*</span></label>
         <select class="form-select" formControlName="feeType">
           <option disabled value="select">Select</option>
@@ -19,7 +19,7 @@
             <option disabled value="select">Select</option>
             <option *ngFor="let sec of concessionList" value="{{sec._id}}">{{sec.name}}</option>
           </select>
-      </div>
+      </div>-->
       <div class="col-3">
           <label class="form-label">Fee Mode <span class="error">*</span></label>
           <select class="form-select" formControlName="feeMode">
@@ -41,30 +41,125 @@
 <table class="table mt-3">
   <thead>
     <tr>
-      <th scope="col">S.No.</th>
-      <th scope="col">Fee Type</th>
-      <th scope="col">Due</th>
-      <th scope="col">Status</th> 
-      <th scope="col">Amount</th>
-      <th scope="col">Discount</th>
-      <th scope="col">Fine</th>
-      <th scope="col">Paid</th>
-      <th scope="col">Balance</th>
+      <th></th>
+      <th scope="col">Category Name</th>
+      <th scope="col">Category Code</th>
+      <th scope="col">Amount</th> 
+      <th scope="col">Concession</th>
+      <th scope="col">Action</th>
+    
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let row of studentFee; let i = index">
+   
       <tr>
-      <td>{{i+1}}</td>
-      <td>{{row?.feeType?.name}}</td>
-      <td>{{row?.feeType?.dueDate | date: 'MM/dd/yyyy'}}</td>
-      <td>{{row?.status}}</td>
-      <td>{{row?.totalAmount}}</td>
-      <td>{{row?.discount}}</td>        
-      <td>{{row?.fine}}</td>
-      <td>{{row?.paidAmount}}</td>
-      <td>{{row?.balance}}</td>
+      <td (click)="row.isExpand = !row.isExpand">
+        <i *ngIf="!row.isExpand" class="fa fa-angle-double-right"></i>
+        <i *ngIf="row.isExpand" class="fa fa-angle-double-up"></i>
+      </td>
+      <td>Acdemic Fee</td>
+      <td>AF1</td>
+      <td>1000</td>
+      <td>10%</td>
+      <td></td>
     </tr>
-    </ng-container>    
+    <tr *ngIf="row.isExpand">
+      <td></td>
+      <td colspan="5">
+        <table class="table table-bordered table-sm">
+          <thead>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Due Date</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <ng-container >
+              <tr >
+                <td>2023</td>
+                <td>Jan,Feb, Mar, Apr, May,Jun, Jul, Aug,Sep, Oct, Nov, Dec</td>
+                <td>01/01/2023</td>
+                <td><button class="btn">Pay Now</button></td>
+              </tr>
+            </ng-container>
+            
+          </tbody>
+        </table>
+        <table class="table table-bordered table-sm">
+          <thead>
+            <th>Quater</th>
+            <th>Month</th>
+            <th>Due Date</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <ng-container  *ngFor="let row2 of optionsForQuaterly">
+              <tr >
+                <td>{{row2?.value}}</td>
+                <td>{{row2?.months}}</td>
+                <td>01/01/2023</td>
+                <td><button class="btn">Pay Now</button></td>
+              </tr>
+            </ng-container>
+            
+          </tbody>
+        </table>
+        <table class="table table-bordered table-sm">
+          <thead>
+            <th>Month No</th>
+            <th>Month</th>
+            <th>Due Date</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <ng-container  *ngFor="let row2 of availableMonths">
+              <tr >
+                <td>{{row2?.value}}</td>
+                <td>{{row2?.months}}</td>
+                <td>01/01/2023</td>
+                <td><button class="btn">Pay Now</button></td>
+              </tr>
+            </ng-container>
+            
+          </tbody>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td>Hostel Fee</td>
+      <td>HF1</td>
+      <td>2000</td>
+      <td>10%</td>
+      <td><button class="btn">Pay Now</button></td>
+    </tr>
+    <tr>
+      <tr>
+        <td></td>
+        <td>Hostel Fee</td>
+        <td>HF1</td>
+        <td>2000</td>
+        <td>10%</td>
+        <td><button class="btn">Pay Now</button></td>
+      </tr>
+    <tr>
+      <tr>
+        <td></td>
+        <td>Hostel Fee</td>
+        <td>HF1</td>
+        <td>2000</td>
+        <td>10%</td>
+        <td><button class="btn">Pay Now</button></td>
+      </tr>
+    <tr>
+      <tr>
+        <td></td>
+        <td>Hostel Fee</td>
+        <td>HF1</td>
+        <td>2000</td>
+        <td>10%</td>
+        <td><button class="btn">Pay Now</button></td>
+      </tr>
   </tbody>
 </table>
