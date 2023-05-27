@@ -46,31 +46,32 @@
       <th scope="col">Category Code</th>
       <th scope="col">Amount</th> 
       <th scope="col">Concession</th>
-      <th scope="col">Action</th>
+      <th scope="col">Total Amount</th>
     
     </tr>
   </thead>
   <tbody>
    
       <tr>
-      <td (click)="row.isExpand = !row.isExpand">
+      <!--<td (click)="row.isExpand = !row.isExpand">
         <i *ngIf="!row.isExpand" class="fa fa-angle-double-right"></i>
         <i *ngIf="row.isExpand" class="fa fa-angle-double-up"></i>
-      </td>
-      <td>Acdemic Fee</td>
+      </td> -->
+      <td><input type="checkbox"></td>
+      <td>  <i *ngIf="!row.isExpand"  (click)="row.isExpand = !row.isExpand" class="fa fa-angle-double-right"></i>
+        <i *ngIf="row.isExpand" (click)="row.isExpand = !row.isExpand" class="fa fa-angle-double-up"></i> Acdemic Fee</td>
       <td>AF1</td>
       <td>1000</td>
-      <td>10%</td>
-      <td></td>
+      <td><input type="text"></td>
+      <td>900</td>
     </tr>
-    <tr *ngIf="row.isExpand">
+      <tr *ngIf="row.isExpand">
       <td></td>
       <td colspan="5">
-        <table class="table table-bordered table-sm">
+    <table class="table table-bordered table-sm">
           <thead>
             <th>Year</th>
             <th>Month</th>
-            <th>Due Date</th>
             <th></th>
           </thead>
           <tbody>
@@ -78,8 +79,7 @@
               <tr >
                 <td>2023</td>
                 <td>Jan,Feb, Mar, Apr, May,Jun, Jul, Aug,Sep, Oct, Nov, Dec</td>
-                <td>01/01/2023</td>
-                <td><button class="btn">Pay Now</button></td>
+                <td>12/12/2022</td>
               </tr>
             </ng-container>
             
@@ -88,17 +88,14 @@
         <table class="table table-bordered table-sm">
           <thead>
             <th>Quater</th>
-            <th>Month</th>
-            <th>Due Date</th>
-            <th></th>
+            <th>Month</th>            <th>Due Date</th>
           </thead>
           <tbody>
             <ng-container  *ngFor="let row2 of optionsForQuaterly">
               <tr >
                 <td>{{row2?.value}}</td>
                 <td>{{row2?.months}}</td>
-                <td>01/01/2023</td>
-                <td><button class="btn">Pay Now</button></td>
+                <td>12/12/2022</td>
               </tr>
             </ng-container>
             
@@ -106,10 +103,10 @@
         </table>
         <table class="table table-bordered table-sm">
           <thead>
+            <th></th>
             <th>Month No</th>
             <th>Month</th>
-            <th>Due Date</th>
-            <th></th>
+            
           </thead>
           <tbody>
             <ng-container  *ngFor="let row2 of availableMonths">
@@ -117,7 +114,6 @@
                 <td>{{row2?.value}}</td>
                 <td>{{row2?.months}}</td>
                 <td>01/01/2023</td>
-                <td><button class="btn">Pay Now</button></td>
               </tr>
             </ng-container>
             
@@ -125,41 +121,61 @@
         </table>
       </td>
     </tr>
-
+ 
     <tr>
-      <td></td>
+      <td><input type="checkbox"></td>
       <td>Hostel Fee</td>
       <td>HF1</td>
       <td>2000</td>
-      <td>10%</td>
-      <td><button class="btn">Pay Now</button></td>
+      <td><input type="text"></td>
+      <td>900</td>
     </tr>
     <tr>
       <tr>
-        <td></td>
+        <td><input type="checkbox"></td>
         <td>Hostel Fee</td>
         <td>HF1</td>
         <td>2000</td>
-        <td>10%</td>
-        <td><button class="btn">Pay Now</button></td>
+        <td><input type="text"></td>
+        <td>900</td>
       </tr>
     <tr>
       <tr>
-        <td></td>
+        <td><input type="checkbox"></td>
         <td>Hostel Fee</td>
         <td>HF1</td>
         <td>2000</td>
-        <td>10%</td>
-        <td><button class="btn">Pay Now</button></td>
+        <td><input type="text"></td>
+        <td>900</td>
       </tr>
     <tr>
       <tr>
-        <td></td>
+        <td><input type="checkbox"></td>
         <td>Hostel Fee</td>
         <td>HF1</td>
         <td>2000</td>
-        <td>10%</td>
-        <td><button class="btn">Pay Now</button></td>
+        <td><input type="text"></td>
+        <td>900</td>
       </tr>
   </tbody>
+</table>
+<table>
+  <tr>
+    <td> Total Amount</td><td> <input type="text" value="15000" readonly></td>
+  </tr>
+  <tr>
+    <td> Due Date</td><td> 12/12/2022</td>
+  </tr>
+  <tr>
+    <td colspan="2"><div class="col-12">
+      <label class="form-label">Fee Mode</label>
+      <select class="form-select" >
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of feeModeList" value="{{day._id}}">{{day.name}}</option>
+      </select>
+    </div></td>
+  </tr>
+  <tr>
+    <td colspan="2"><button class="btn">Pay Now</button> </td>
+  </tr>
 </table>
