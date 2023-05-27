@@ -627,6 +627,21 @@ export class ApiService {
     createFeeType(postData: any): Observable<any> {
       return this.httpClient.post(environment.apiBaseUrl +'/createfeetype',postData ).pipe(catchError(this.errorHandler));
     }
+    getAllTransportationList(): Observable<any>{
+      return this.httpClient.get(environment.apiBaseUrl +'/transportfee/all').pipe(catchError(this.errorHandler));
+    }
+    getYearWiseTransportationList(postData: any): Observable<any>{
+      return this.httpClient.post(environment.apiBaseUrl +'/transportfee/year', postData).pipe(catchError(this.errorHandler));
+    }
+    createTransportFee(postData: any): Observable<any> {
+      return this.httpClient.post(environment.apiBaseUrl +'/transportfee/create',postData ).pipe(catchError(this.errorHandler));
+    }
+    updateTransportFee(id: any,postData: any): Observable<any> {
+      return this.httpClient.put(environment.apiBaseUrl +'/transportfee/update/'+id, postData ).pipe(catchError(this.errorHandler));
+    }
+    deleteTransportFee(id: any): Observable<any> {
+      return this.httpClient.delete(environment.apiBaseUrl +'/transportfee/delete/'+id).pipe(catchError(this.errorHandler));
+    }
   errorHandler(error: {
     error: {
         messge: string;

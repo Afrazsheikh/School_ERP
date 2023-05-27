@@ -60,7 +60,7 @@ export class AssignFeeTypeComponent {
       id:  [data?._id],
       categoryName:  [data?.categoryName],
       code:  [data?.code],
-      amount:  ['',Validators.required],
+      amount:  [],
     });
   }
   get pairs() {

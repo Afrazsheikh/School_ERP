@@ -42,7 +42,7 @@
             </div></div>
           </div>
           <div class="mb-3 col-md-3 mt-4">
-            <button class="btn" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Save</button>
+            <button class="btn" (click)="submitData(reportForm)"  [disabled]="!reportForm.valid">Save</button>
         </div>
       </div>
     </form>
@@ -51,19 +51,24 @@
                 <table class="table mt-3">
                     <thead>
                       <tr>
-                        <th width="15%">S. No</th>
-                        <th width="30%">Distance</th>
-                        <th width="30%">Amount</th>
-                        <th width="20%">ID</th>
+                        <th width="10%">S. No</th>
+                        <th width="20%"> Year</th>
+                        <th width="20%">Code</th>
+                        <th width="20%">Distance</th>
+                        <th >Amount</th>
+                        <th width="15%" >Action</th>
                       </tr>
                       </thead>
                       <tbody>
                         <ng-container *ngFor="let row of transportList; let i = index">
                             <tr>
                                 <td>{{i+1}}</td>
+                                <td >{{row.year}}</td>
+                                <td >{{row.code}}</td>
                                 <td>{{row?.distance}}</td>
                                  <td >{{row.amount}}</td> 
-                                 <td >{{row.id}}</td>
+                                 <td >  <button class="btn emp-edit me-1" (click)="editCategory(row)"><i class="fa-solid fa-pencil"></i></button>
+                                  <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, row)"><i class="fa-solid fa-trash-can"></i></button></td>
                             </tr>
                         </ng-container>
                       </tbody>                     
@@ -73,4 +78,25 @@
 
     </div>
 </app-layout>
+<ng-template #deletemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Delete Confirmation</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <span class="text-justify">Are you sure, You Want To Delete This Information?</span>
+      </div>
+    </div>
+       
+      <div class="modal-footer mt-4">
+        <button type="button" class="save_button btn" (click)="deletePopup()">Yes, Continue</button>
+        <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+      </div>
+  </div>
+</ng-template>
+
 

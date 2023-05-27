@@ -37,7 +37,7 @@ export class AssignFeeListComponent {
       { "id":2,"name":"Transportation Fee for 30KM","amount":"1000", "class":"Five"}
       ];
       this.addForm();
-    //  this.getFeeData();
+      this.getFeeData();
     //this.testData();
   }
   testData(){

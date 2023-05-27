@@ -36,18 +36,20 @@
                     <thead>
                       <tr>
                         <th width="15%">S. No</th>
+                        <th width="30%">Code</th>
                         <th width="30%">Distance</th>
                         <th width="30%">Amount</th>
-                        <th width="20%">ID</th>
+                       
                       </tr>
                       </thead>
                       <tbody>
                         <ng-container *ngFor="let row of transportList; let i = index">
                             <tr>
                                 <td>{{i+1}}</td>
+                                <td >{{row.code}}</td>
                                 <td>{{row?.distance}}</td>
                                  <td >{{row.amount}}</td> 
-                                 <td >{{row.id}}</td>
+                                 
                             </tr>
                         </ng-container>
                       </tbody>                     

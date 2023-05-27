@@ -31,13 +31,17 @@ export class TransportFeeListComponent {
     this.router.navigate(['/fees/transport-fee-add']);
   }
   callReport(data){
-    this.transportList = [
-      { "id":"Transport 5KM", "distance":"5 KM", "amount":"500"},
-      { "id":"Transport 10KM","distance":"10 KM","amount":"1000"},
-      { "id":"Transport 15KM","distance":"15 KM","amount":"1500"},
-      { "id":"Transport 20KM","distance":"20 KM","amount":"2000"},
-      { "id":"Transport 25KM","distance":"25 KM","amount":"2500"},
-      ];
+    const payload = {
+      year: data.value.academicYear
+    }
+    this.api.getYearWiseTransportationList(payload).subscribe(data =>{
+      this.transportList = data.allData;
+     },
+     (err) => {
+      this.transportList = [];
+      // this.toastr.error(err, " add failed");
+       console.error(err);
+     });
   }
 }
 
