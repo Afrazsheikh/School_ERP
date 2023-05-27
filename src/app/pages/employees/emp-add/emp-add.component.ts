@@ -29,6 +29,27 @@ export class EmpAddComponent {
   skipBankDetails: boolean = false;
   updateid: null;
   loginDeatils: boolean = false;
+  checkedhouse: '';
+  checkedstreet: any;
+  checkedZipCode: any;
+  cityChecked: any;
+  masterValue: any;
+  name: any;
+  Paddress: any;
+  Pstreet: any;
+  street: any;
+  inputValue: string;
+  input1: string;
+input2: string;
+concatenatedValue: string;
+  input3: string;
+  input4: string;
+  permanentAddrressChecked: any;
+  Pinput1: string;
+  Pinput2: string;
+  Pinput3: string;
+  Pinput4: string;
+  concatenatedValueP: string;
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -213,6 +234,11 @@ export class EmpAddComponent {
         accountNumber: new FormControl(null, [Validators.required]),
         abc: new FormControl(null, [Validators.required]),
         image: new FormControl(null, [Validators.required]),
+        // 
+     
+ 
+       
+
 
       });
 
@@ -251,10 +277,11 @@ export class EmpAddComponent {
       accountNumber: new FormControl(null, [Validators.required]),
       abc: new FormControl(null, [Validators.required]),
       image: new FormControl(null, [Validators.required]),
-
-
-
-
+// 
+house_no: new FormControl(null, [Validators.required]),
+Street: new FormControl(null, [Validators.required]),
+zipcode: new FormControl(null, [Validators.required]),
+city: new FormControl(null, [Validators.required]),
 
     });
   }
@@ -286,9 +313,6 @@ export class EmpAddComponent {
     else {
       this.skipBankDetails = false
     }
-
-
-
 
   }
 
@@ -360,6 +384,13 @@ export class EmpAddComponent {
     let result2: string = dob.toLocaleString();
 
     result2 = dob.toLocaleString("en-US");
+    console.log(this.addEmployee.value.house_no);
+    console.log( this.addEmployee.value.qualification);
+    console.log( this.addEmployee.value.permanentAddress);
+
+    console.log(this.concatenatedValue);
+    
+    
     let postData = new FormData();
     postData.append("joiningDate", this.addEmployee.value.joiningDate);
     postData.append("dob", this.addEmployee.value.dob);
@@ -372,7 +403,8 @@ export class EmpAddComponent {
     postData.append("religion", this.addEmployee.value.religion);
     postData.append("number", this.addEmployee.value.number);
     postData.append("email", this.addEmployee.value.email);
-    postData.append("presentAddress", this.addEmployee.value.presentAddress);
+    // postData.append("presentAddress", this.addEmployee.value.presentAddress);
+    postData.append("presentAddress", this.concatenatedValue);
     postData.append("permanentAddress", this.addEmployee.value.permanentAddress);
     postData.append("userName", this.addEmployee.value.userName);
     postData.append("password", this.addEmployee.value.password);
@@ -446,7 +478,6 @@ export class EmpAddComponent {
       joiningDate: new FormControl(this.editEmploye.joiningDate, [Validators.required]),
       designation: new FormControl(this.editEmploye.designation._id, [Validators.required]),
       department: new FormControl(this.editEmploye.department._id, [Validators.required]),
-
       qualification: new FormControl(this.editEmploye.qualification, [Validators.required]),
       experienceDetails: new FormControl(this.editEmploye.experienceDetails, [Validators.required]),
       totalExperience: new FormControl(this.editEmploye.totalExperience, [Validators.required]),
@@ -507,4 +538,72 @@ export class EmpAddComponent {
   //       console.error(err);
   //     })
   }
+
+  updateFourthField() {
+    this.concatenatedValue = this.input1 + ', ' + this.input2 + ' ,' +this.input3+ ',' + this.input4 ;
+
+
+  }
+  updateFourthFieldP(){
+    this.concatenatedValueP = this.Pinput1 + ', ' + this.Pinput2 + ' ,' +this.Pinput3+ ',' + this.Pinput4 ;
+
+
+  }
+  onKeyPress(event: KeyboardEvent) {
+    const target = event.target as HTMLInputElement;
+    if (target.tagName === 'INPUT') {
+       this.inputValue = target.value;
+      console.log('Input value:', this.inputValue);
+      // Additional logic...
+    }
+  }
+  onInputChanged(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.tagName === 'INPUT') {
+      this.inputValue = target.value;
+      console.log('Input value:', this.inputValue);
+      // Additional logic...
+    }
+  }
+  
+  
+  getVAlue(event){
+    console.log(event.checked);
+    if(event.checked==true){
+      this.checkedhouse = this.addEmployee.value.house_no
+      this.checkedstreet=this.addEmployee.value.Street
+      this.checkedZipCode = this.addEmployee.value.zipcode
+      this.cityChecked = this.addEmployee.value.city
+      this.permanentAddrressChecked = this.concatenatedValue
+    }
+    if(event.checked ==false ){
+      this.checkedhouse = ''
+      this.checkedstreet = ''
+      this.checkedZipCode = ''
+      this.cityChecked = ''
+      this.permanentAddrressChecked  = ''
+
+
+    }
+  
+  
+let data= {
+  houseNo:  this.addEmployee.value.house_no,
+  Street:  this.addEmployee.value.Street
+} 
+console.log(data);
+
+
+  this.masterValue = data.Street 
+  console.log(this.masterValue);
+  
+
+
+  }
+  changeName(name){
+    console.log(name);
+    this.Paddress = name
+   
+  }
+  
 }

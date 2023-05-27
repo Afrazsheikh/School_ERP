@@ -68,11 +68,19 @@
               </tr>
             </thead>
             <tbody>
+
               <tr *ngFor="let suData of subjectList ; index as i ">
+
                 <td>{{i + 1 }}</td>
-                <td></td>
-                <td></td>
-                <td>{{suData.subjectName}}</td>
+                <td>six</td>
+                <td>b</td>
+                <td>
+                  <div  *ngFor="let suData of subjectList">
+                    {{suData.subjectName}}
+                  </div>
+                </td>
+            
+              
                 <td>
                   <!-- <button class="btn emp-edit me-1"><i class="fa-solid fa-pencil"></i></button> -->
                   <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePrompt"(click)="selectedID=suData" ><i class="fa-solid fa-trash-can"></i></button>

@@ -46,6 +46,8 @@ export class SalaryPaymentComponent {
   getFilteredEmployees()
   {
     this.filteredEmployees = this.employees.filter(emp => emp.designation?._id === this.designFilter);
+    console.log(this.filteredEmployees);
+    
   }
 
   getAllSalaries()

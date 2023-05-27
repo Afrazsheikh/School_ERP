@@ -8,13 +8,7 @@
     </div>
 
     <div class="row mb-3">
-      <div class="col-4">
-          <label class="form-label">Designation <span class="error">*</span></label>
-          <select class="form-select" formControlName="designation" (change)="DisableDetails($event)">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
-          </select>
-      </div>
+
       <div class="col-4">
         <label class="form-label">Deaprtment <span class="error">*</span></label>
         <select class="form-select" formControlName="department">
@@ -22,6 +16,20 @@
           <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>
         </select>
       </div>
+      <div class="col-4">
+          <label class="form-label">Designation <span class="error">*</span></label>
+          <select class="form-select" formControlName="designation" (change)="DisableDetails($event)">
+            <option disabled value="select">Select</option>
+            <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
+          </select>   
+      </div>
+      <!-- <div class="col-4">
+        <label class="form-label">Deaprtment <span class="error">*</span></label>
+        <select class="form-select" formControlName="department">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>
+        </select>
+      </div> -->
       <div class="col-4">
         <label class="form-label">Joining Date <span class="error">*</span></label>
         <div class="input-group">
@@ -108,10 +116,10 @@
           <input type="text" formControlName="number" class="form-control">
         </div>
       </div>
-     
     </div>
+     
     
-    <div class="row mb-3">
+    <div class="row mb-4">
       <div class="col-8">
         <label class="form-label">Email Id</label>
         <div class="input-group">
@@ -120,18 +128,74 @@
         </div>
       </div>
     </div>
+ 
     <div class="row mb-3">
-      <div class="col-6">
-        <label class="form-label">Present Address <span class="error">*</span></label>
-        <textarea type="text" class="form-control"  rows="3"  formControlName="presentAddress" > </textarea>
-      </div>
+      <div class="col-6">  <h5>Present Address</h5></div>
+    
+        <div class="col-2">  <h5>Permanent Address</h5> </div>
+        <div class="col-4">    <mat-checkbox (change)="getVAlue($event)"><b> Same As Present Address </b></mat-checkbox></div>
 
-      <div class="col-6">
-        <label class="form-label">Permanent Address</label>
-        <textarea type="text" class="form-control"  rows="3"  formControlName="permanentAddress" > </textarea>
+    </div>
+    <div class="row mb-3">
+  
+      <div class="col-2">
+      
+        <label class="form-label">House No./House Flat</label>
+        <input type="text" [(ngModel)]="input1" (input)="updateFourthField()"formControlName="house_no" class="form-control">
+
+      </div>
+      <div class="col-2">
+        <label class="form-label">Street /Landmarek</label>
+        <input type="text" [(ngModel)]="input2" (input)="updateFourthField()" formControlName="Street" class="form-control">
+
+      </div>
+      <div class="col-2 offset-2">
+        <label class="form-label">House No./House Flat</label>
+        <input type="text" [(ngModel)]="Pinput1" (input)="updateFourthFieldP()" [value]="checkedhouse? checkedhouse:'' " class="form-control">
+
+      </div>
+      <div class="col-2 ">
+        <label class="form-label">Street /Landmarek</label>
+        <input type="text" [(ngModel)]="Pinput2" (input)="updateFourthFieldP()"  [value]="checkedstreet? checkedstreet:''" class="form-control">
 
       </div>
     </div>
+    <div class="row mb-3">
+      <div class="col-2">
+        <label class="form-label">ZipCode</label>
+        <input type="text" [(ngModel)]="input3" (input)="updateFourthField()"  formControlName="zipcode" class="form-control">
+
+      </div>
+      <div class="col-2">
+        <label class="form-label">City State</label>
+        <input type="text" [(ngModel)]="input4" (input)="updateFourthField()"  formControlName="city" class="form-control">
+
+      </div>
+      <div class="col-2 offset-2">
+        <label class="form-label">ZipCode</label>
+        <input type="text" [(ngModel)]="Pinput3" (input)="updateFourthFieldP()"  [value]="checkedZipCode? checkedZipCode:''" class="form-control">
+
+      </div>
+      <div class="col-2">
+        <label class="form-label">City State</label>
+        <input type="text" [(ngModel)]="Pinput4" (input)="updateFourthFieldP()" [value]="cityChecked? cityChecked:''" class="form-control">
+
+      </div>
+
+    </div>
+    <div class="row mb-3">
+      <div class="col-4">
+        <label class="form-label">Permanent Address</label>
+        <textarea type="text" class="form-control"  rows="3"  [value]="concatenatedValue"formControlName="permanentAddress" > </textarea>
+
+      </div>
+      <div class="col-4 offset-2">
+        <label class="form-label">Present Address</label>
+        <textarea type="text" class="form-control"  rows="3" [value]="permanentAddrressChecked ? permanentAddrressChecked : '' " formControlName="permanentAddress" > </textarea>
+
+      </div>
+    </div>
+  
     <div class="mb-3 py-2">
       <label class="form-label">Profile Picture <span class="error">*</span></label>
       <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event)">
@@ -239,7 +303,7 @@
           <input type="text"  formControlName="bankAddress"  class="form-control">
         </div>
         <div class="col-4">
-          <label class="form-label">IFSC Code</label>
+          <label class="form-label">IFSC Code <span class="error">*</span></label>
           <input type="text" formControlName="ifscCode"  class="form-control">
         </div>
         <div class="col-4">
@@ -351,5 +415,3 @@
     </div>
   </div>
 </div>
-
-
