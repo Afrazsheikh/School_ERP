@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-header">
+      Employee Information
+      <button (click)="backButtonClick()" class="btn-c">Back</button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4" style="text-align:center">
+          <div class="col">
+            <img [src]="employee.image? employee.image: 'assets/images/no-profile.jpg'" width="200" class="img-thumbnail">
+          </div>
+          <div class="col" *ngIf="!isUploadImage">
+            <a class="upload_img" (click)="uploadImage(true)">Upload Image</a>
+          </div>
+          <div class="col mt-3" *ngIf="isUploadImage">
+            <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event, 'image')">
+              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                  <ng-container *ngIf="!image">
+                Upload  Profile
+                    <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()"> Files</a>
+                  </ng-container>
+                  <ng-container *ngIf="image">
+                    {{image.name}}
+                    <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="image=null">
+                      Remove
+                    </a>
+                  </ng-container>
+              </ng-template>           
+            </ngx-file-drop>
+            <div class="col mt-3">
+              <button (click)="uploadImage(false)" class="save_button btn">Cancel</button> &nbsp;&nbsp;
+              <button (click)="SaveImage()" class="save_button btn">Upload</button>
+            </div>
+          </div>
+          </div>
+        <div class="col-md-1">
+          <div class="d-flex" style="height: 260px;">
+              <div class="vr"></div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="row profile">
+              <div><h3>{{employee.name}}</h3></div>
+              <div><h5>{{employee?.department?.name}} / {{employee?.designation?.name}}</h5></div>
+              <div><div class="icon-menu" title="Department Name"><i class="fas fa-user-tie"></i></div><label>{{employee?.designation?.name}}</label>  </div>
+              <div><div class="icon-menu" title="Date Of Birth"><i class="fa fa-birthday-cake"></i></div> <label>{{employee.dob | date: 'dd/MM/yyyy'}}</label> </div>
+              <div><div class="icon-menu" title="Joining Date"><i class="far fa-calendar-alt"></i></div><label>{{employee.joiningDate | date: 'dd/MM/yyyy' }}</label> </div>
+              <div><div class="icon-menu" title="Mobile Number"><i class="fa fa-phone-volume"></i></div><label> {{employee.number}}</label> </div>
+              <div><div class="icon-menu" title="Email Address"><i class="fa fa-envelope"></i></div><label>{{employee.email}}</label> </div>
+              <div><div class="icon-menu" title="Present Address"><i class="fa fa-home"></i></div><label>{{employee.presentAddress}}</label> </div>
+            </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+  
+  

@@ -8,11 +8,23 @@
         
       <form [formGroup]="addForm">
         <div class="row mt-3">
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Year <span class="error">*</span></label>
+            <select class="form-select" formControlName="academicYear">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
+            </select>
+            <div *ngIf="addForm.controls['academicYear'].invalid && (addForm.controls['academicYear'].dirty || addForm.controls['academicYear'].touched)"
+            class="error mt-2">
+            <div *ngIf="addForm.controls['academicYear'].errors['required']">
+              Year is required.
+            </div></div>
+          </div>
             <div class="mb-4 col-md-4">
                 <label class="form-label">Class <span class="error">*</span></label>
              
-                <select class="form-select" formControlName="studentClass" >
-                  <option disabled value="select">Select</option>
+                <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+                  <option  value="">Select</option>
                   <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
                 </select>
                 <div *ngIf="addForm.controls['studentClass'].invalid && (addForm.controls['studentClass'].dirty || addForm.controls['studentClass'].touched)"
@@ -23,18 +35,10 @@
               </div>
 
             </div>
-            <div class="mb-3 col-md-4">
-                <label class="form-label">Year <span class="error">*</span></label>
-                <select class="form-select" formControlName="academicYear">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
-                </select>
-                <div *ngIf="addForm.controls['academicYear'].invalid && (addForm.controls['academicYear'].dirty || addForm.controls['academicYear'].touched)"
-                class="error mt-2">
-                <div *ngIf="addForm.controls['academicYear'].errors['required']">
-                  Year is required.
-                </div></div>
-              </div>
+            <div class="col-md-4 mt-1">
+              <button (click)="GetAmountData()" class="btn mt-4">Filter</button>
+            </div>
+            
         </div>
         </form>
         <div class="row">
@@ -50,10 +54,10 @@
                     <tbody> 
                         <ng-container *ngFor="let row of addForm.get('rows')['controls']; let i = index">
                              <tr>
-                                       <!-- <td>{{row.get('code').value}}</td>
-                                        <td>{{row.get('categoryName').value}}</td>-->
-                                        <td><input type="text" class="form-control" [formControl]="row.get('code')" ></td>
-                                        <td><input type="text" class="form-control" [formControl]="row.get('categoryName')" ></td>
+ <td>{{row.get('code').value}}</td>
+                                        <td>{{row.get('categoryName').value}}</td>
+                                        <!--<td><input type="text" class="form-control" [formControl]="row.get('code')" readonly></td>
+                                        <td><input type="text" class="form-control" [formControl]="row.get('categoryName')"  readonly></td> -->
                                         <td><input type="text" class="form-control" [formControl]="row.get('amount')" style="width:120px"></td>
                                 </tr>
                         </ng-container> 
@@ -63,7 +67,7 @@
             </div>
             <div class="row mt-2 mb-3">
                 <div class="col-6">
-                    <button type="button" class="save_button btn" (click)="createInfo(addForm)" [disabled]="!addForm.valid">Save & Next</button>
+                    <button type="button" class="save_button btn" (click)="createInfo(addForm)" [disabled]="!addForm.valid">Save</button>
                 </div>
                 
             </div>

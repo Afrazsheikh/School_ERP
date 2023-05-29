@@ -1,0 +1,46 @@
+.profile {
+    div{
+      margin: 0px 20px 5px 0px;
+    }
+    label {
+      width: 90%;
+    }
+  }
+  .icon-menu {
+    display: inline-block;
+    height: 27px;
+    width: 27px;
+    line-height: 25px;
+    text-align: center;
+    background: transparent;
+    border-radius: 15px;
+    transform: rotate(0deg);
+    z-index: 1;
+    margin-right: 10px;
+    vertical-align: top;
+  }
+  .icon-menu:before {
+    position: absolute;
+    margin: 0 auto;
+    display: block;
+    height: 27px;
+    width: 27px;
+    background: #7f5ea3;
+    border-radius: 3px;
+    content: "";
+    z-index: -1;
+    transition: all 500ms ease;
+    box-shadow: 0 2px 4px #3c3a3a;
+  }
+  .upload_img {
+    text-decoration: underline;
+    margin: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color:#7f5ea3;
+  }
+  .btn-c{
+    float: right;
+    margin-top: 5px;
+    margin-right: 10px;
+  }

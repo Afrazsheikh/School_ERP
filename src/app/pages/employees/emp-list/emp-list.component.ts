@@ -119,7 +119,9 @@ const tabIndex = event.index;
         console.error(err);
       })
   }
-
+  detailClick(employee){
+    this.router.navigate(["/employee/detail/"+ employee._id]);
+  }
 
 
 }

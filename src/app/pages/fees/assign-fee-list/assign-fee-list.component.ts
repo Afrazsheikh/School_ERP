@@ -15,6 +15,8 @@ import { from } from 'rxjs';
 export class AssignFeeListComponent {
   modalRef!: BsModalRef;
   categoryList:any[] =[];
+  feeListClassWise:any[] = [];
+  feeListClassWiseRow:any[] =[];
   reportForm:any;
   aceYear :any[] =[];
   classes: any[] = [];
@@ -22,65 +24,41 @@ export class AssignFeeListComponent {
     this.aceYear = this.studentService.aceYear;
   }
   ngOnInit(): void {    
-    this.getAllClass();
-    this.categoryList = [
-      { "id":1, "name":"Acedemic Fee", "amount":"1000", "class":"Five"},
-      { "id":2,"name":"Hostel Fee","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Tution Fee","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Field Trip Fee","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Admission Fee","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Transportation Fee for 5KM","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Transportation Fee for 10KM","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Transportation Fee for 15KM","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Transportation Fee for 20KM","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Transportation Fee for 25KM","amount":"1000", "class":"Five"},
-      { "id":2,"name":"Transportation Fee for 30KM","amount":"1000", "class":"Five"}
-      ];
-      this.addForm();
-      this.getFeeData();
-    //this.testData();
+     this.addForm();
+     this.getFeeCategory();
   }
-  testData(){
-    const cars = [
-      {
-        id: 1,
-        brand: 'Ferrari',
-        model: 'F40'
-      },
-      {
-        id: 2,
-        brand: 'Ferrari',
-        model: 'F50'
-      },
-      {
-        id: 3,
-        brand: 'Ferrari',
-        model: 'California'
-      },
-      {
-        id: 4,
-        brand: 'Porsche',
-        model: '911'
-      },
-      {
-        id: 5,
-        brand: 'Porsche',
-        model: 'Panamera'
-      }
-    ];
-    from(cars).subscribe(data =>{
-      console.log(data);
-    });
-    var userNames = cars.map(s => s.brand).toString();
-    console.log(userNames);
-  }
-  getFeeData(){
-    this.api.getAllFeeType().subscribe(data =>{
-      console.log(data);
+  getFeeCategory(){
+    this.api.getAllFeeCategory().subscribe(data =>{
+      this.categoryList = data.allData
+    }, (err) => {
+      this.categoryList = [];
+       console.error(err);
+     });
+  };
+  getFeeData(data){
+    const payload = {
+      year: data.academicYear
+    }
+    this.feeListClassWise = [];
+    this.feeListClassWiseRow= []; 
+    this.api.getFeeTypeYearwise(payload).subscribe(data =>{
+      this.feeListClassWiseRow = data['data'];
+      this.feeListClassWiseRow.forEach(element =>{
+        const rowData ={ "class": element.class, "year": element.year}
+         this.categoryList.forEach(cate =>{
+          var userName = element.feeCategory.find(x => x.categoryName === cate.categoryName);
+          if(userName !== undefined){
+            rowData[cate.categoryName] =userName.amount
+          } else {
+            rowData[cate.categoryName] = 0;
+          }
+         });
+         this.feeListClassWise.push(rowData);
+      })
+      console.log(this.feeListClassWise);
      },
      (err) => {
-      this.categoryList = [];
-      // this.toastr.error(err, " add failed");
+      this.feeListClassWise = [];
        console.error(err);
      });
   }
@@ -91,7 +69,6 @@ export class AssignFeeListComponent {
   }
   addForm() {
     this.reportForm = new FormGroup({
-      studentClass: new FormControl(null, [Validators.required]),
       academicYear: new FormControl(null, [Validators.required])
     })
   }
@@ -105,7 +82,9 @@ export class AssignFeeListComponent {
     this.router.navigate(['/fees/define-fee-type-2']);
   }
   callReport(data){
-    
+    this.feeListClassWise = [];
+    this.feeListClassWiseRow= [];    
+    this.getFeeData(data.value);
   }
 }
 

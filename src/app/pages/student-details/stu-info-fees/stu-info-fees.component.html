@@ -1,181 +1,86 @@
 
-<form [formGroup]="studentForm">
+<form [formGroup]="addForm">
   <div class="row">
       <div class="col-md-12 header-txt" >
           <span>Fee Mode Details</span>
       </div>
-  </div>
-  <div class="row mt-2 mb-3">
-     <!-- <div class="col-3">
-        <label class="form-label">Fee Type <span class="error">*</span></label>
-        <select class="form-select" formControlName="feeType">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
-        </select>
-      </div>
-      <div class="col-3">
-          <label class="form-label">Concession Fee<span class="error">*</span></label>
-          <select class="form-select" formControlName="concession">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let sec of concessionList" value="{{sec._id}}">{{sec.name}}</option>
-          </select>
-      </div>-->
-      <div class="col-3">
-          <label class="form-label">Fee Mode <span class="error">*</span></label>
-          <select class="form-select" formControlName="feeMode">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let day of feeModeList" value="{{day._id}}">{{day.name}}</option>
-          </select>
-        </div>
-        <div class="col-3 mt-4">
-          <button type="button" class="save_button btn" (click)="updateInfo(studentForm)" [disabled]="!studentForm.valid">Update</button>
-        </div>
-  </div>
-</form>
-<div class="row">
-  <div class="col-md-12 header-txt" >
-      <span>Fee Details</span>
-      <span class="float-end"><a (click)="payInvoice()" class="hand">Pay Invoice</a></span>
-  </div>
-</div>
-<table class="table mt-3">
-  <thead>
-    <tr>
-      <th></th>
-      <th scope="col">Category Name</th>
-      <th scope="col">Category Code</th>
-      <th scope="col">Amount</th> 
-      <th scope="col">Concession</th>
-      <th scope="col">Total Amount</th>
-    
-    </tr>
-  </thead>
-  <tbody>
-   
-      <tr>
-      <!--<td (click)="row.isExpand = !row.isExpand">
-        <i *ngIf="!row.isExpand" class="fa fa-angle-double-right"></i>
-        <i *ngIf="row.isExpand" class="fa fa-angle-double-up"></i>
-      </td> -->
-      <td><input type="checkbox"></td>
-      <td>  <i *ngIf="!row.isExpand"  (click)="row.isExpand = !row.isExpand" class="fa fa-angle-double-right"></i>
-        <i *ngIf="row.isExpand" (click)="row.isExpand = !row.isExpand" class="fa fa-angle-double-up"></i> Acdemic Fee</td>
-      <td>AF1</td>
-      <td>1000</td>
-      <td><input type="text"></td>
-      <td>900</td>
-    </tr>
-      <tr *ngIf="row.isExpand">
-      <td></td>
-      <td colspan="5">
-    <table class="table table-bordered table-sm">
-          <thead>
-            <th>Year</th>
-            <th>Month</th>
+  </div> 
+
+  <table class="table">
+    <thead>
+        <tr>
             <th></th>
-          </thead>
-          <tbody>
-            <ng-container >
-              <tr >
-                <td>2023</td>
-                <td>Jan,Feb, Mar, Apr, May,Jun, Jul, Aug,Sep, Oct, Nov, Dec</td>
-                <td>12/12/2022</td>
-              </tr>
-            </ng-container>
-            
-          </tbody>
-        </table>
-        <table class="table table-bordered table-sm">
-          <thead>
-            <th>Quater</th>
-            <th>Month</th>            <th>Due Date</th>
-          </thead>
-          <tbody>
-            <ng-container  *ngFor="let row2 of optionsForQuaterly">
-              <tr >
-                <td>{{row2?.value}}</td>
-                <td>{{row2?.months}}</td>
-                <td>12/12/2022</td>
-              </tr>
-            </ng-container>
-            
-          </tbody>
-        </table>
-        <table class="table table-bordered table-sm">
-          <thead>
-            <th></th>
-            <th>Month No</th>
-            <th>Month</th>
-            
-          </thead>
-          <tbody>
-            <ng-container  *ngFor="let row2 of availableMonths">
-              <tr >
-                <td>{{row2?.value}}</td>
-                <td>{{row2?.months}}</td>
-                <td>01/01/2023</td>
-              </tr>
-            </ng-container>
-            
-          </tbody>
-        </table>
-      </td>
+             <th>Category Code</th>
+             <th>Category Name</th>
+             <th>Amount</th>
+             <th>Concession</th>
+             <th>Total Amount</th>
     </tr>
- 
-    <tr>
-      <td><input type="checkbox"></td>
-      <td>Hostel Fee</td>
-      <td>HF1</td>
-      <td>2000</td>
-      <td><input type="text"></td>
-      <td>900</td>
-    </tr>
-    <tr>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td>Hostel Fee</td>
-        <td>HF1</td>
-        <td>2000</td>
-        <td><input type="text"></td>
-        <td>900</td>
-      </tr>
-    <tr>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td>Hostel Fee</td>
-        <td>HF1</td>
-        <td>2000</td>
-        <td><input type="text"></td>
-        <td>900</td>
-      </tr>
-    <tr>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td>Hostel Fee</td>
-        <td>HF1</td>
-        <td>2000</td>
-        <td><input type="text"></td>
-        <td>900</td>
-      </tr>
-  </tbody>
+    </thead>
+    <tbody> 
+        <ng-container *ngFor="let row of addForm.get('rows')['controls']; let i = index">
+             <tr>
+                       <td><input type="checkbox" [formControl]="row.get('isChecked')" (change)="onCheckChange($event, i)" /></td>
+                        <td>{{row.get('code').value}}</td>
+                        <td>{{row.get('categoryName').value}}</td>
+                        <td><input type="text" class="form-control" [formControl]="row.get('amount')" style="width:120px"></td>
+                        <td><input type="text" class="form-control" [formControl]="row.get('concession')" style="width:120px" (focusout)='calculatePerc(i)'></td>
+                        <td><input type="text" class="form-control" [formControl]="row.get('totalAmount')" style="width:120px"></td>
+                </tr>
+        </ng-container> 
+        
+    </tbody>
 </table>
-<table>
-  <tr>
-    <td> Total Amount</td><td> <input type="text" value="15000" readonly></td>
-  </tr>
-  <tr>
-    <td> Due Date</td><td> 12/12/2022</td>
-  </tr>
-  <tr>
-    <td colspan="2"><div class="col-12">
-      <label class="form-label">Fee Mode</label>
-      <select class="form-select" >
-        <option disabled value="select">Select</option>
+  <div class="row mt-3">
+    <div class="col-4">
+      <label class="form-label">Total Amount <span class="error">*</span></label>
+      <input type="text" class="form-control"  formControlName="totalFinalAmount" readonly>
+   </div>
+    
+    <div class="mb-3 col-md-4">
+      <label class="form-label">Fee Mode <span class="error">*</span></label>
+      <select class="form-select" formControlName="feeMode">
+        <option  value="" >Select</option>
         <option *ngFor="let day of feeModeList" value="{{day._id}}">{{day.name}}</option>
       </select>
-    </div></td>
-  </tr>
-  <tr>
-    <td colspan="2"><button class="btn">Pay Now</button> </td>
-  </tr>
-</table>
+      <div *ngIf="addForm.controls['feeMode'].invalid && (addForm.controls['feeMode'].dirty || addForm.controls['feeMode'].touched)"
+      class="error mt-2">
+      <div *ngIf="addForm.controls['feeMode'].errors['required']">
+        Fee Mode is required.
+      </div></div>
+    </div>
+    <div class="col-md-3 mt-2">
+      <button (click)="payNowClick(addForm)" class="btn mt-4"  [disabled]="!addForm.valid">Pay Now</button>
+    </div>
+  </div>
+  <div class="row" *ngIf="row.isExpand">
+    <div class="col-md-12 header-txt" >
+        <span>Pay Invoice</span>
+    </div>
+</div> 
+  <div class="row" *ngIf="row.isExpand">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <th></th>
+        <th class="ps-3">Month </th>
+        <th class="ps-3">Date</th>
+        <th class="text-center">Status</th>
+        <th>Action</th>
+        
+      </thead>
+      <tbody>
+        <ng-container  *ngFor="let row2 of availableMonths">
+          <tr >
+            <td class="ps-3">{{row2?.value}}</td>
+            <td class="ps-3">{{row2?.months}}</td>
+            <td class="ps-3">{{row2?.months}} 2023</td>
+            <td class="text-center"> <span class="badge bg-danger">UnPaid</span></td>
+            <td class="text-center"><button class="btn">Pay Now</button></td>
+          </tr>
+        </ng-container>
+        
+      </tbody>
+    </table>
+  </div>
+
+</form>

@@ -148,6 +148,9 @@ export class ApiService {
     getAllEmployees(): Observable<any> {
       return this.httpClient.get(environment.apiBaseUrl + '/employee/all').pipe(catchError(this.errorHandler));
     }
+    getAllEmployeesById(id: string): Observable<any> {
+      return this.httpClient.get(environment.apiBaseUrl + '/employee/'+id).pipe(catchError(this.errorHandler));
+    }
     fineSetupListById(id: string){
       return this.httpClient.get(environment.apiBaseUrl +'/fineSetup/' + id).pipe(catchError(this.errorHandler));
     }
@@ -627,6 +630,12 @@ export class ApiService {
     createFeeType(postData: any): Observable<any> {
       return this.httpClient.post(environment.apiBaseUrl +'/createfeetype',postData ).pipe(catchError(this.errorHandler));
     }
+    getFeeTypeYearwise(postData: any){      
+       return this.httpClient.post(environment.apiBaseUrl +'/getfeetype/year',postData ).pipe(catchError(this.errorHandler));
+    }
+    getFeeTypeClassandYearWise(postData: any){      
+      return this.httpClient.post(environment.apiBaseUrl +'/getClassandYearWise',postData ).pipe(catchError(this.errorHandler));
+    }
     getAllTransportationList(): Observable<any>{
       return this.httpClient.get(environment.apiBaseUrl +'/transportfee/all').pipe(catchError(this.errorHandler));
     }
@@ -641,6 +650,14 @@ export class ApiService {
     }
     deleteTransportFee(id: any): Observable<any> {
       return this.httpClient.delete(environment.apiBaseUrl +'/transportfee/delete/'+id).pipe(catchError(this.errorHandler));
+    }
+    isEmptyObject(obj) {
+      for (var property in obj) {
+          if (obj.hasOwnProperty(property)) {
+              return false;
+          }
+      }
+      return true;
     }
   errorHandler(error: {
     error: {

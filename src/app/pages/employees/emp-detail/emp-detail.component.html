@@ -1,0 +1,22 @@
+<app-layout>
+ 
+    <ng-container *ngIf="employee">
+        <div class="container p-5" >
+            <app-emp-picture-info [employeeData]="employee"></app-emp-picture-info>            
+            <accordion [isAnimated]="true" class="mt-3">
+                <accordion-group heading="Basic Details" class="mt-3">
+                    <app-emp-baisc [employeeData]="employee"></app-emp-baisc>    
+                </accordion-group>
+                <accordion-group heading="Salary Transaction" class="mt-3">
+                    <app-emp-salary  [employeeData]="employee"></app-emp-salary>
+                </accordion-group>
+                <accordion-group heading="Bank Account" class="mt-3">
+                    <app-emp-bank-detail  [employeeData]="employee"></app-emp-bank-detail>
+                </accordion-group>
+                 <accordion-group heading="Documentation" class="mt-3">
+                    <app-emp-salary  [employeeData]="employee"></app-emp-salary>
+                 </accordion-group>
+              </accordion>
+        </div>        
+    </ng-container>    
+</app-layout>

@@ -16,6 +16,12 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import { EmpDetailComponent } from './emp-detail/emp-detail.component';
+import { EmpBaiscComponent } from './emp-baisc/emp-baisc.component';
+import { EmpSalaryComponent } from './emp-salary/emp-salary.component';
+import { EmpPictureInfoComponent } from './emp-picture-info/emp-picture-info.component';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { EmpBankDetailComponent } from './emp-bank-detail/emp-bank-detail.component';
 
 
 @NgModule({
@@ -23,11 +29,17 @@ import {MatSelectModule} from '@angular/material/select';
     EmpListComponent,
     EmpDeptComponent,
     EmpDesgComponent,
-    EmpAddComponent
+    EmpAddComponent,
+    EmpDetailComponent,
+    EmpBaiscComponent,
+    EmpSalaryComponent,
+    EmpPictureInfoComponent,
+    EmpBankDetailComponent
   ],
   imports: [
     CommonModule,
     EmployeesRoutingModule,
+    AccordionModule.forRoot(),
     MatTabsModule,
     SharedModule,
     ReactiveFormsModule,

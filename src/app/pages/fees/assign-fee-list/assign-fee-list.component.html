@@ -6,8 +6,8 @@
                     <div class="col-md-4"><i  class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Fee List</span></div>
                     <div class="col-md-8 text-end">
                         <button class="btn" (click)="addFeeType()">Define Fee Type</button>&nbsp;&nbsp;
-                        <button class="btn" (click)="addFeeType1()">Define Fee Type 1</button>&nbsp;&nbsp;
-                        <button class="btn" (click)="addFeeType2()">Define Fee Type 2</button>
+                      <!--  <button class="btn" (click)="addFeeType1()">Define Fee Type 1</button>&nbsp;&nbsp;
+                        <button class="btn" (click)="addFeeType2()">Define Fee Type 2</button>-->
                     </div>
                 </div>
             </div>
@@ -15,19 +15,6 @@
         
       <form [formGroup]="reportForm">
         <div class="row mt-3">
-          <div class="mb-3 col-md-4">
-            <label class="form-label">Class <span class="error">*</span></label>
-         
-            <select class="form-select" formControlName="studentClass" >
-              <option disabled value="select">Select</option>
-              <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
-            </select>
-            <div *ngIf="reportForm.controls['studentClass'].invalid && (reportForm.controls['studentClass'].dirty || reportForm.controls['studentClass'].touched)"
-            class="error mt-2">
-            <div *ngIf="reportForm.controls['studentClass'].errors['required']">
-              Class is required.
-            </div>
-          </div></div>
           <div class="mb-3 col-md-4">
             <label class="form-label">Year <span class="error">*</span></label>
             <select class="form-select" formControlName="academicYear">
@@ -52,21 +39,19 @@
                       <tr>
                         <th width="15%">S. No</th>
                         <th width="20%">Class</th>
-                        <th width="40%">Category Name</th>
-                        <th width="20%">Amount</th>
-                        <th>Action</th>
+                        <ng-container *ngFor="let row of categoryList">
+                          <th>{{row.categoryName}}</th>
+                        </ng-container>                        
                       </tr>
                       </thead>
                       <tbody>
-                        <ng-container *ngFor="let row of categoryList; let i = index">
+                        <ng-container *ngFor="let row of feeListClassWise; let i = index">
                             <tr>
                                 <td>{{i+1}}</td>
-                                <td>{{row?.class}}</td>
-                                 <td >{{row.name}}</td> 
-                                 <td >{{row.amount}}</td>
-                                 <td>
-                                  <button class="btn emp-edit ms-1" (click)="false"><i class="fa-solid fa-trash-can"></i></button>
-                                </td>
+                                <td>{{row?.class?.className}}</td>
+                                <ng-container *ngFor="let subRow of categoryList">
+                                  <td>{{row[subRow?.categoryName]}}</td>
+                                </ng-container>
                             </tr>
                         </ng-container>
                       </tbody>                     

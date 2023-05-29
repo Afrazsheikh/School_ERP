@@ -1,0 +1,47 @@
+<form [formGroup]="empBForm">
+    <div class="row">
+        <div class="col-md-12 header-txt" >
+            <span>Bank Detail</span>
+        </div>
+    </div>
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-6">
+            <label class="form-label">Bank Name <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="bankName">
+        </div>
+        <div class="col-6">
+            <label class="form-label">Bank Branch<span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="bankBranch">
+        </div>
+        
+    </div>
+    <div class="row mt-2 mb-3">
+      
+        <div class="col-12">
+            <label class="form-label">Bank Address <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="bankAddress">
+        </div>
+    </div>
+    <div class="row mt-2 mb-3">
+        <div class="col-4">
+            <label class="form-label">IFSC Code <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="ifscCode">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Holder Name <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="holderName">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Account Number <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="accountNumber">
+        </div>
+    </div>
+    <div class="row mt-3 mb-3 ">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+            <button type="button" class="save_button btn" (click)="updateInfo(empBForm)" [disabled]="!empBForm.valid">Save</button>
+        </div>
+      
+    </div>
+</form>
+        
