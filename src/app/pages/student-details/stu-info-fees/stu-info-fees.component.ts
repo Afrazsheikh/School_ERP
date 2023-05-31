@@ -5,6 +5,7 @@ import { ApiService } from  '../../../services/api.service';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-stu-info-fees',
   templateUrl: './stu-info-fees.component.html',
@@ -27,7 +28,8 @@ export class StuInfoFeesComponent {
   modalRef!: BsModalRef;
   invoiceRowSingleData :any;
   invoiceRowSingleIndex:any;
-   constructor(public fb: FormBuilder, private studentService:StudentService,private api: ApiService,private router: Router,private modalService: BsModalService,) {
+   constructor(public fb: FormBuilder, private studentService:StudentService,private api: ApiService,private router: Router
+    ,private modalService: BsModalService,private spinner: NgxSpinnerService) {
     this.rows = this.fb.array([]);
     this.invoceRow = this.fb.array([]);
     this.paymentMethod = this.studentService.paymentMethod;
@@ -137,7 +139,7 @@ updateInvoice(data, index){
     const controlData = this.addForm.get('invoceRow') as FormArray;
     const obje = controlData.controls[index];
      obje.patchValue({
-      paymentMethod: data.value?.paymentMethod,
+     // paymentMethod: data.value?.paymentMethod,
       status:'Paid'
     })
     controlData.controls[index].get('paymentMethod').disable();
@@ -162,10 +164,10 @@ updateInvoice(data, index){
   ]).subscribe(res => {
       this.categoryList =res[0]['data'][0]['feeCategory'];
       this.transportList = res[1]['allData'];
-
-    this.transportList.forEach(element => {
-      this.categoryList.push({id: element._id, categoryName:element.distance+" KM", code: element.code, amount: element.amount});
-    });
+      this.categoryList.push({id: '', categoryName:"", code: '', amount: 0, type:'$$KM@@'});
+   // this.transportList.forEach(element => {
+     // this.categoryList.push({id: element._id, categoryName:element.distance+" KM", code: element.code, amount: element.amount});
+    //});
    this.categoryList.forEach(element => {
         this.onAddRow(element, false);
       });    
@@ -209,6 +211,10 @@ calculateAmount(){
       this.rows.push(this.createItemFormGroup(data, disabledMode));
     }
     payNowClick(formData){
+      this.spinner.show();
+      formData.value.rows.forEach(element =>{
+        element['type']='';
+      })
     this.row.isExpand = true;
     this.row.mode = this.addForm.feeMode;
     const payload = {
@@ -219,8 +225,10 @@ calculateAmount(){
       "totalFinalAmount":(formData.value.totalFinalAmount).toString(),
       "allFee": formData.value.rows
     }
-    this.api.studenWiseFeeCategoryStore(payload).subscribe(data =>{
+    this.api.studenWiseFeeCategoryStore(payload).subscribe(data =>{     
+        this.studentFee  = data['feeConcessionData'];
         this.clearDataRestore(data);
+        this.spinner.hide();
       },
       (err) => {
        this.categoryList = [];
@@ -257,7 +265,9 @@ calculateAmount(){
           amount:  [data?.amount],
           concession: [{value:data?.concession, disabled:true}],
           totalAmount: [{value:data?.totalAmount,disabled:true}],
-          isChecked: [{value:data?.isChecked, disabled:true}]
+          isChecked: [{value:data?.isChecked, disabled:true}],
+          type:[data?.type],
+          transporationId:['']
         });
       } else {       
       return this.fb.group({
@@ -267,12 +277,26 @@ calculateAmount(){
         amount:  [data?.amount],
         concession: [''],
         totalAmount: [data?.amount],
-        isChecked: [false]
+        isChecked: [false],
+        type:[data?.type],
+        transporationId:['']
       });
-      }
-      
+      }  
+    }
+    onChangeTransporation(event, i){
+      console.log(event.target.value);
+      var transpData = this.transportList.find(l => l._id === event.target.value);
 
-  
+      const controlData = this.addForm.get('rows') as FormArray;
+      const obje = controlData.controls[i];
+      obje.patchValue({
+        id: transpData?._id,
+        categoryName:transpData?.distance,
+        code:transpData?.code,
+        amount:Number(transpData?.amount),
+        concession:0,
+        totalAmount:Number(transpData?.amount)
+        });
     }
  createForm(){
   this.addForm = this.fb.group({ 
@@ -280,8 +304,11 @@ calculateAmount(){
       feeMode: ['',  Validators.required],
       academicYear:[this.studentData?.academic?.academicYear, Validators.required],
       studentClass:[this.studentData?.academic?.studentClass?._id],
-      totalFinalAmount: []
-
+      totalFinalAmount: [],
+      tranId:[''],
+      transDistance:[''],
+      transCatgory:[''],
+      transAmount:['']
     });
  }
  updateInfo(formData){
