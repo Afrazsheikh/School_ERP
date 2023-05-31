@@ -14,50 +14,48 @@ import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-cr
 const routes: Routes = [
   {
     path: 'salary-templete',
-    component: SalaryTempleteComponent
+    component: SalaryTempleteComponent,
   },
   {
     path: 'salary-templete/:id',
-    component: SalaryEditComponent
+    component: SalaryEditComponent,
   },
   {
     path: 'salary-assign',
-    component: SalaryAssignComponent
+    component: SalaryAssignComponent,
   },
   {
     path: 'salary-payment',
-    component: SalaryPaymentComponent
+    component: SalaryPaymentComponent,
   },
   {
     path: 'advance-salary',
-    component: AdvancedSalaryComponent
+    component: AdvancedSalaryComponent,
   },
   {
     path: 'manage-application',
-    component: ManageApplicationComponent
+    component: ManageApplicationComponent,
   },
   {
     path: 'leave-category',
-    component: LeaveCategoryComponent
+    component: LeaveCategoryComponent,
   },
   {
     path: 'leave-app',
-    component: LeaveApplicationComponent
+    component: LeaveApplicationComponent,
   },
   {
     path: 'leave-manage-app',
-    component: LeaveManageApplicationComponent
+    component: LeaveManageApplicationComponent,
   },
   {
-    path: 'salary-payroll-create',
-    component: SalaryPayrollCreateComponent
+    path: 'salary-payroll-create/:id',
+    component: SalaryPayrollCreateComponent,
   },
-
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class HumanRessourceRoutingModule { }
+export class HumanRessourceRoutingModule {}

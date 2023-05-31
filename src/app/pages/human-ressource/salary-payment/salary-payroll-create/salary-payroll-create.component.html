@@ -1,57 +1,181 @@
-
 <app-layout>
-    <!-- <div class="container">
-        <div class="row">
-          <div class="col-7 ">
-            <div class="custom-card">
-              <h5 class="card-title">Card Title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            
-            </div>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="modal-header">
+          <h6 class="modal-title header-txt">
+            <i _ngcontent-dan-c162="" class="fa-solid fa-user-tie"></i
+            >&nbsp;&nbsp; <span>Salary Details</span>
+          </h6>
+        </div>
+        <div class="row modal-body bg-white p-3">
+          <div
+            class="col-lg-2 mt-2 d-flex align-items-center justify-content-center"
+          >
+            <img
+              class="w-100 img-thumbnail rounded"
+              src="../../../../../assets/images/stud-profile.jpg"
+              alt=""
+            />
           </div>
-          <div class="col-1">
-
+          <div class="col-lg-5 mt-2">
+            <table>
+              <tr>
+                <th width="15%">Name</th>
+                <td width="25%">{{ employeeDetail?.name }}</td>
+              </tr>
+              <tr>
+                <th width="15%">Joining Date</th>
+                <td width="25%">
+                  {{ employeeDetail?.joiningDate | date : "medium" }}
+                </td>
+              </tr>
+              <tr>
+                <th width="15%">Designation</th>
+                <td width="25%">{{ employeeDetail?.designation?.name }}</td>
+              </tr>
+              <tr>
+                <th width="15%">Department</th>
+                <td width="25%">{{ employeeDetail?.department?.name }}</td>
+              </tr>
+            </table>
           </div>
-          <div class="col-4">
-            
+          <div class="col-lg-5 mt-2">
+            <table>
+              <tr>
+                <th width="15%">Salary Grade</th>
+                <td width="25%">Grade A</td>
+              </tr>
+              <tr>
+                <th width="15%">Basic Salary</th>
+                <td width="25%">$3000.00</td>
+              </tr>
+              <tr>
+                <th width="15%">Overtime Rate (Per Hour)</th>
+                <td width="25%">$25.00</td>
+              </tr>
+            </table>
           </div>
         </div>
-      </div> -->
-    
+      </div>
+    </div>
 
-      <!-- <div class="container">
-      
-        <div class="row">
-          <div class="col-8">
-            <div class="custom-card">
-              <h5 class="card-title">Card 1</h5>
-              <a href="#" class="btn btn-primary">Read More</a>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="custom-card">
-              <h5 class="card-title">Card 2</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Read More</a>
-            </div>
-          </div>
+    <div class="row">
+      <div class="col-lg-6 p-0 px-2">
+        <div class="modal-header">
+          <h6 class="modal-title header-txt">
+            <i _ngcontent-dan-c162="" class="fa-solid fa-money-bill"></i
+            >&nbsp;&nbsp; <span>Allowances</span>
+          </h6>
         </div>
-      </div> -->
-      
-      <!-- <div class="card cardKm my-4" style="max-width: 600px;">
+        <div class="modal-body bg-white p-3">
+          <table>
+            <tr>
+              <th width="15%">Name</th>
+              <th width="25%">Amount</th>
+            </tr>
+            <tr *ngFor="let item of [].constructor(3); index as i">
+              <td>House Rent</td>
+              <td>${{ i + 1 }}00.00</td>
+            </tr>
+          </table>
+        </div>
+      </div>
 
-        <div class="card-header">
-           Salary Details
-          </div> 
-          <div class="row">
-          <div class="col-6 ">
-           
-            <div class="col-6">
-                
-            </div>
-          </div>
+      <div class="col-lg-6 p-0">
+        <div class="modal-header">
+          <h6 class="modal-title header-txt">
+            <i _ngcontent-dan-c162="" class="fa-solid fa-square-minus"></i
+            >&nbsp;&nbsp; <span>Deductions</span>
+          </h6>
         </div>
-         
-      </div> -->
-      
+        <div class="modal-body bg-white p-3">
+          <table>
+            <tr>
+              <th width="15%">Name</th>
+              <th width="25%">Amount</th>
+            </tr>
+            <tr *ngFor="let item of [].constructor(1); index as i">
+              <td>Provident</td>
+              <td>${{ i + 1 }}00.00</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 header-txt">
+        <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i
+        >&nbsp;&nbsp;<span>Payment Details</span>
+      </div>
+    </div>
+    <div class="row mt-3 mb-3">
+      <div class="col-lg-3">
+        <label class="form-label">Total Allowance</label>
+        <input type="text" class="form-control" value="10000" readonly />
+      </div>
+      <div class="col-lg-3">
+        <label class="form-label">Total Deduction</label>
+        <input type="text" class="form-control" value="2000" readonly />
+      </div>
+      <div class="col-lg-3">
+        <label class="form-label">Overtime Total Hours</label>
+        <input type="text" class="form-control" />
+      </div>
+      <div class="col-lg-3">
+        <label class="form-label">Overtime Amount</label>
+        <input type="text" class="form-control" value="0" readonly />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3">
+        <label class="form-label">Net Salary</label>
+        <input type="text" class="form-control" value="12000" readonly />
+      </div>
+      <div class="col-lg-3">
+        <label class="form-label">Pay Via <span class="error">*</span></label>
+        <select class="form-select form-control">
+          <option disabled value="select">Select Payment Mode</option>
+          <option
+            *ngFor="let options of [].constructor(3); index as i"
+            [value]="i"
+          >
+            Option {{ i }}
+          </option>
+        </select>
+      </div>
+      <div class="col-lg-3">
+        <label class="form-label">Account <span class="error">*</span></label>
+        <select class="form-select form-control">
+          <option disabled value="select">Select Account</option>
+          <option
+            *ngFor="let options of [].constructor(3); index as i"
+            [value]="i"
+          >
+            Option {{ i }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 mt-2">
+        <label class="form-label">Remarks</label>
+        <textarea cols="30" rows="8" class="form-control"></textarea>
+      </div>
+    </div>
+    <div class="header-txt col-md-12 mt-3"></div>
+    <div class="row mt-3 mb-3">
+      <div class="offset-md-10 col-md-2">
+        <button
+          type="button"
+          class="save_button btn"
+          (click)="onSubmitPayment()"
+          [disabled]="false"
+        >
+          Paid
+        </button>
+      </div>
+    </div>
+  </div>
 </app-layout>

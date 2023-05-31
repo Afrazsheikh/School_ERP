@@ -6,9 +6,9 @@
 //     border: 1px solid #dee2e6;
 //     margin-left: -10 !important ;  /* Add this line to remove the left margin */
 //   }
-//   .CArd{ 
+//   .CArd{
 //     margin-left: 20%;
-//   } 
+//   }
 //   .custom-card h5 {
 //     margin-bottom: 15px;
 //   }
@@ -20,12 +20,100 @@
 //     border-radius: 4px;
 //     border: 1px solid #dee2e6;
 //   }
-  
+
 //   .custom-card h5 {
 //     margin-bottom: 15px;
 //   }
-  
+
 //   .custom-card + .custom-card {
 //     margin-left: 20px;
 //   }
- 
+
+.form_card {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 1.77rem;
+  padding: 25px;
+  height: 45rem;
+}
+.Student_text {
+  color: blueviolet;
+  font-size: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.right_line {
+  transform: translate(192px, -15px);
+  height: 2px;
+  width: 1060px;
+  background-color: blueviolet;
+}
+.cards_common {
+  border-radius: 0.77rem;
+  border: 1px solid lightgray;
+  padding: 5px;
+}
+.modal-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 1rem;
+  border-bottom: 2px solid blueviolet !important;
+  .header-txt {
+    border: none;
+  }
+}
+.save_button {
+  border: 0;
+  background-color: #2ace40;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 0.77rem;
+  padding-left: 17px;
+  padding-right: 17px;
+}
+.form-control {
+  //   border-radius: 5.77rem !important;
+  border: 1px solid blueviolet !important;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+th {
+  border: 1px solid #dddddd !important;
+  background-color: #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+td {
+  border: 1px solid #dddddd !important;
+  text-align: left;
+  padding: 8px;
+}
+.setting_icon {
+  color: black;
+  border: 1px solid gray;
+  padding: 3px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+.delete_icon {
+  color: white;
+  background: red;
+  padding: 3px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+@media only screen and (max-width: 767px) and (min-width: 300px) {
+  .right_line {
+    width: 189px;
+  }
+  .cards_common {
+    width: 24rem !important;
+  }
+}
