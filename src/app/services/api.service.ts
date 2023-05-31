@@ -138,6 +138,11 @@ export class ApiService {
       .post(environment.apiBaseUrl + '/student/search', postData)
       .pipe(catchError(this.errorHandler));
   }
+  updateInvoiceStudentModeWise(postData: any): Observable<any> {
+    return this.httpClient
+      .put(environment.apiBaseUrl + '/updateModeStatus', postData)
+      .pipe(catchError(this.errorHandler));
+  }
   allocationReportSearch(postData: any): Observable<any> {
     return this.httpClient
       .post(environment.apiBaseUrl + '/student/vehicleRoutes/search', postData)
@@ -1012,6 +1017,21 @@ export class ApiService {
   deleteTransportFee(id: any): Observable<any> {
     return this.httpClient
       .delete(environment.apiBaseUrl + '/transportfee/delete/' + id)
+      .pipe(catchError(this.errorHandler));
+  }
+  getAllFeeMode(): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/getAllMode')
+      .pipe(catchError(this.errorHandler));
+  }
+  studenWiseFeeCategoryStore(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/createFeeConcession', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  getAllFeeMonth(id: string): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/allFeeMonth/' + id)
       .pipe(catchError(this.errorHandler));
   }
   isEmptyObject(obj) {

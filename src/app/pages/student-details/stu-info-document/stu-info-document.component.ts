@@ -24,10 +24,10 @@ export class StuInfoDocumentComponent {
   }
  ngOnInit() {
   this.studentId = this.studentData['_id'];
-  this.guardianDocu_pre = this.studentData['guardian']['idProofDocument'];
-  this.guardianImg_pre = this.studentData['guardian']['image'];
-  this.idcard_pre= this.studentData['idCardDocument'];
-  this.profile_pre = this.studentData['image'];
+  this.guardianDocu_pre = this.studentData?.guardian?.idProofDocument;
+  this.guardianImg_pre = this.studentData?.guardian?.image;
+  this.idcard_pre= this.studentData?.idCardDocument;
+  this.profile_pre = this.studentData?.image;
 
  }
  onFilesDropped(files: NgxFileDropEntry[], imgType: string)

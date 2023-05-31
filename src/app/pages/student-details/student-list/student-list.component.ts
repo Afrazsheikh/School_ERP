@@ -5,6 +5,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import { StudentService} from '../student.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
@@ -21,7 +22,7 @@ export class StudentListComponent implements OnInit {
   studentSelRow:any;
   aceYear :any[] =[];
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService,
-    private studentService:StudentService
+    private studentService:StudentService, private spinner: NgxSpinnerService
 ) {
    this.aceYear = this.studentService.aceYear;
    this.addForm();
@@ -87,11 +88,14 @@ export class StudentListComponent implements OnInit {
       section: reportForm.value.section,
       studentClass: reportForm.value.studentClass,
     }
+    this.spinner.show();
     this.api.studentList(data).subscribe(data => {
+      this.spinner.hide();
       this.studentData = data['students'];
       this.studentService.studentDetailBackAction.isBack = false;
     },
     (err) =>{
+      this.spinner.hide();
       this.studentData =[];
       this.toastr.error(err);
     })
