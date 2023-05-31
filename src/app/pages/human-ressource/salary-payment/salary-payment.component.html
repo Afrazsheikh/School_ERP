@@ -1,23 +1,24 @@
-
-
 <app-layout>
-
-    <div class="container p-5">
-        <!-- <div class="py-2 " style="border: solid;"> -->
-        <div class="py-2 ">
-
-
-<div class="col-12">
-<div class="row">
-    <div class="col-6">
-      <label class="form-label">Designation *</label>
-      <!-- <label class="form-label">Class *</label> -->
-      <select class="form-select" [(ngModel)]="designFilter" (change)="getFilteredEmployees()">
-        <option disabled value="select">Select</option>
-        <option *ngFor="let sec of designations" [value]="sec._id">{{sec.name}}</option>
-      </select>
-    </div>
-    <!-- <div class="col">
+  <div class="container p-5">
+    <!-- <div class="py-2 " style="border: solid;"> -->
+    <div class="py-2">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-6">
+            <label class="form-label">Designation *</label>
+            <!-- <label class="form-label">Class *</label> -->
+            <select
+              class="form-select"
+              [(ngModel)]="designFilter"
+              (change)="getFilteredEmployees()"
+            >
+              <option disabled value="select">Select</option>
+              <option *ngFor="let sec of designations" [value]="sec._id">
+                {{ sec.name }}
+              </option>
+            </select>
+          </div>
+          <!-- <div class="col">
 
         <label class="form-label">Months *</label>
         <div class="input-group">
@@ -27,55 +28,55 @@
 
     </div> -->
 
-    <div class="col-12 text-end px-0 pt-4">
-
-        <div class="button pe-5 pt-1 pb-1"><button type="button"
-                class="btn button_color">Filter</button></div>
-
-    </div>
-</div>
-</div>
-</div>
-
-      <div class="tab-container">
-          <div class="pt-4">
-          <p class="table-heading "><b>Staff List</b></p>
+          <div class="col-12 text-end px-0 pt-4">
+            <div class="button pe-5 pt-1 pb-1">
+              <button type="button" class="btn button_color">Filter</button>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
 
+    <div class="tab-container">
+      <div class="pt-4">
+        <p class="table-heading"><b>Staff List</b></p>
+      </div>
 
       <!--  -->
       <table class="table mt-3 py-4">
-      <thead>
-      <tr>
-
-        <th scope="col"> Staff Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Designation</th>
-        <th scope="col">Department</th>
-        <th scope="col">Mobile No</th>
-        <th scope="col">Salary Grade</th>
-        <th scope="col"> Basic Salary </th>
-        <th scope="col"> Status </th>
-
-
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let emp of filteredEmployees">
-        <td>{{emp._id | slice:-4}}</td>
-        <td>{{emp.name}}</td>
-        <td>{{emp.designation?.name}}</td>
-        <td>{{emp.department?.name}}</td>
-        <td>{{emp.number}}</td>
-        <td>{{emp.salaryDetails?.salaryGrade}}</td>
-        <td>₹{{emp.salaryDetails?.basicSalary}}</td>
-        <td><button routerLink="/human-resource/salary-payroll-create">Payroll</button></td>
-      </tr>
-      </tbody>
+        <thead>
+          <tr>
+            <th scope="col">Staff Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Designation</th>
+            <th scope="col">Department</th>
+            <th scope="col">Mobile No</th>
+            <th scope="col">Salary Grade</th>
+            <th scope="col">Basic Salary</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emp of filteredEmployees">
+            <td>{{ emp._id | slice : -4 }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.designation?.name }}</td>
+            <td>{{ emp.department?.name }}</td>
+            <td>{{ emp.number }}</td>
+            <td>{{ emp.salaryDetails?.salaryGrade }}</td>
+            <td>₹{{ emp.salaryDetails?.basicSalary }}</td>
+            <td>
+              <button
+                [routerLink]="
+                  '/human-resource/salary-payroll-create/' + emp._id
+                "
+              >
+                Payroll
+              </button>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
-
-    </div>
-
-
+  </div>
 </app-layout>
