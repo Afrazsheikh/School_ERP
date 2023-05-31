@@ -32,6 +32,21 @@ export class EmpBankDetailComponent {
  }
 
  updateInfo(formData){
-  console.log(formData.value);
+  const payload = {
+    employeeId : formData.value.id,
+    bankName: formData.value.bankName, 
+    holderName :formData.value.holderName,
+    bankBranch : formData.value.bankBranch, 
+    bankAddress :formData.value.bankAddress, 
+    ifscCode :formData.value.ifscCode, 
+    accountNumber :formData.value.accountNumber
+  }
+  this.api.updateEmpployee(payload).subscribe(resp => {
+     this.toastr.success(resp[0].msg, " Updated Successfully");
+  },
+    (err) => {
+      this.toastr.error(err, " update failed");
+    });
+
  }
 }

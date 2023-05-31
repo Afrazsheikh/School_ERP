@@ -8,10 +8,22 @@
         <div class="col-6">
             <label class="form-label">Bank Name <span class="error">*</span></label>
             <input type="text" class="form-control"  formControlName="bankName">
+        <div *ngIf="empBForm.controls['bankName'].invalid && (empBForm.controls['bankName'].dirty || empBForm.controls['bankName'].touched)"
+            class="error mt-2">
+            <div *ngIf="empBForm.controls['bankName'].errors['required']">
+                Bank Name is required
+            </div>
+        </div>
         </div>
         <div class="col-6">
             <label class="form-label">Bank Branch<span class="error">*</span></label>
             <input type="text" class="form-control"  formControlName="bankBranch">
+            <div *ngIf="empBForm.controls['bankBranch'].invalid && (empBForm.controls['bankBranch'].dirty || empBForm.controls['bankBranch'].touched)"
+            class="error mt-2">
+            <div *ngIf="empBForm.controls['bankBranch'].errors['required']">
+                Bank Branch is required
+            </div>
+        </div>
         </div>
         
     </div>
@@ -19,21 +31,45 @@
       
         <div class="col-12">
             <label class="form-label">Bank Address <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="bankAddress">
+            <textarea class="form-control"  rows="4"  formControlName="bankAddress"></textarea>
+            <div *ngIf="empBForm.controls['bankAddress'].invalid && (empBForm.controls['bankAddress'].dirty || empBForm.controls['bankAddress'].touched)"
+            class="error mt-2">
+            <div *ngIf="empBForm.controls['bankAddress'].errors['required']">
+                Bank Address is required
+            </div>
+        </div>
         </div>
     </div>
     <div class="row mt-2 mb-3">
         <div class="col-4">
             <label class="form-label">IFSC Code <span class="error">*</span></label>
             <input type="text" class="form-control"  formControlName="ifscCode">
+            <div *ngIf="empBForm.controls['ifscCode'].invalid && (empBForm.controls['ifscCode'].dirty || empBForm.controls['ifscCode'].touched)"
+            class="error mt-2">
+            <div *ngIf="empBForm.controls['ifscCode'].errors['required']">
+                IFSC Code is required
+            </div>
+        </div>
         </div>
         <div class="col-4">
             <label class="form-label">Holder Name <span class="error">*</span></label>
             <input type="text" class="form-control"  formControlName="holderName">
+            <div *ngIf="empBForm.controls['holderName'].invalid && (empBForm.controls['holderName'].dirty || empBForm.controls['holderName'].touched)"
+            class="error mt-2">
+            <div *ngIf="empBForm.controls['holderName'].errors['required']">
+                Holder Name  is required
+            </div>
+        </div>
         </div>
         <div class="col-4">
             <label class="form-label">Account Number <span class="error">*</span></label>
             <input type="text" class="form-control"  formControlName="accountNumber">
+            <div *ngIf="empBForm.controls['accountNumber'].invalid && (empBForm.controls['accountNumber'].dirty || empBForm.controls['accountNumber'].touched)"
+            class="error mt-2">
+            <div *ngIf="empBForm.controls['accountNumber'].errors['required']">
+                Account Number  is required
+            </div>
+        </div>
         </div>
     </div>
     <div class="row mt-3 mb-3 ">

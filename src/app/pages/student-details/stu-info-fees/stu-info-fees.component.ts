@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { StudentService } from '../student.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from  '../../../services/api.service';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-stu-info-fees',
   templateUrl: './stu-info-fees.component.html',
@@ -10,116 +12,254 @@ import { Router } from '@angular/router';
 })
 
 export class StuInfoFeesComponent {
-  @Input() studentData: any ;
+  @Input() studentDataAll: any ;
+  studentData:any;
   studentFee:any;
   addForm:any;
   categoryList: any[] =[];
-  concessionList:any[] = [];
   feeModeList:any[] =[];
+  transportList:any[] = [];
   row = {"isExpand": false , 'mode':''}
   rows: FormArray;
-  optionsForQuaterly: any[] = [
-    {value:'Q1',months:['Jan','Feb','Mar']},
-    {value:'Q2',months:['Apr','May','Jun']},
-    {value:'Q3',months:['Jul','Aug','Sep']},
-    {value:'Q4',months:['Oct','Nov','Dec']}
-  ];
-  availableMonths = [{ months: 'January', value: 1 , date: 'Jan-2023'},{ months: 'February', value: 2 ,date: 'Feb-2023'}, { months: 'March', value: 3 }, { months: 'April', value: 4 }, { months: 'May', value: 5 }, { months: 'June', value: 6 }, { months: 'July', value: 7 }, { months: 'August', value: 8 }, { months: 'September', value: 9 }, { months: 'October', value: 10 }, { months: 'November', value: 11}, { months: 'December', value: 12}]
-
-  constructor(public fb: FormBuilder, private studentService:StudentService,private api: ApiService,private router: Router) {
-    this.concessionList = this.studentService.concessionList;
-    this.feeModeList = this.studentService.feeMode;
+  invoceRow: FormArray;
+  paymentMethod:any[] = [];
+  accountMethod:any[] = [];
+  modalRef!: BsModalRef;
+  invoiceRowSingleData :any;
+  invoiceRowSingleIndex:any;
+   constructor(public fb: FormBuilder, private studentService:StudentService,private api: ApiService,private router: Router,private modalService: BsModalService,) {
     this.rows = this.fb.array([]);
+    this.invoceRow = this.fb.array([]);
+    this.paymentMethod = this.studentService.paymentMethod;
+    this.accountMethod = this.studentService.AccountMethod;
   }
-  calculatePerc(i){
-    const controlData = this.addForm.get('rows') as FormArray;
-    var totalA = 0 ;
-    const obje = controlData.controls[i];
-    const perct =  (obje.value.amount / 100) * obje.value.concession;
-    totalA = obje.value.amount - perct;
-    obje.patchValue({
-      totalAmount: totalA
-    })
-    
-  }
-  onCheckChange(e, i){
-   const controlData = this.addForm.get('rows') as FormArray;
-    const obje = controlData.controls[i];
-    obje.patchValue({
-      isChecked: e.target.checked
-    });
-    this.calculateAmount();
-  }
-  calculateAmount(){
-    var totalAmount =0
-    const controlData = this.addForm.get('rows') as FormArray;
-    controlData.controls.forEach(element =>{
-     if(element.value.isChecked) {
-      totalAmount = totalAmount + element.value.totalAmount
-     }
-    });
-    this.addForm.patchValue({
-      totalFinalAmount: totalAmount
-    });
-  }
+  
  ngOnInit() {
   console.log(this.studentData);
-  this.studentFee = this.studentData['fees'];
-  this.getCategoryData();
+  this.studentData = this.studentDataAll['studentResponse'];  
   this.createForm();
   this.addForm.addControl('rows', this.rows);
-
+  this.addForm.addControl('invoceRow', this.invoceRow);
+  if(!this.api.isEmptyObject(this.studentDataAll?.feeData)){
+    this.studentFee = this.studentDataAll?.feeData;
+    this.getExistingFee();
+  } else{
+    this.getCategoryData();
+  }
+  this.getFeeMode();  
+ 
+ 
  }
+ getTransporation(){
+  const payload = {
+    year: this.studentData?.academic?.academicYear
+  }
+  this.api.getYearWiseTransportationList(payload).subscribe(data =>{
+    this.transportList = data.allData;
+   },
+   (err) => {
+    this.transportList = [];
+    // this.toastr.error(err, " add failed");
+     console.error(err);
+   });
+}
+ getFeeMode(){
+  this.api.getAllFeeMode().subscribe(data =>{
+    this.feeModeList =  data['allMode'];
+  },(err) => {
+     this.feeModeList = [];
+      console.error(err);
+    });
+ }
+ clearDataRestore(data){
+  const controlData = this.addForm.get('rows') as FormArray;
+  controlData.clear();
 
+  data?.feeConcessionData?.allFee.forEach(element =>{
+    this.onAddRow(element, true);
+  });
+  data?.feeConcessionData?.allMode.forEach(element => {
+      this.onAddInvoiceRow(element);
+  });
+  this.addForm.controls['totalFinalAmount'].disable();
+  this.addForm.controls['feeMode'].disable();
+  this.addForm.updateValueAndValidity();
+  this.row.isExpand = true;
+ }
+ getExistingFee(){
+  this.addForm.patchValue({
+    id :this.studentFee?._id,
+    feeMode:this.studentFee?.feemode,
+    academicYear:this.studentFee?.academicYear,
+    studentClass:this.studentFee?.studentClass,
+    totalFinalAmount:this.studentFee?.totalFinalAmount
+  });
+  this.addForm.controls['totalFinalAmount'].disable();
+  this.addForm.controls['feeMode'].disable();
+  this.addForm.updateValueAndValidity();
+  this.studentFee.allFee.forEach(element =>{
+    this.onAddRow(element, true);
+  });
+  this.studentFee.allMode.forEach(element => {
+      this.onAddInvoiceRow(element);
+  });
+  this.row.isExpand = true;
+ }
+ 
+ onAddInvoiceRow(data) {     
+  this.invoceRow.push(this.createInvoiceFormGroup(data));
+}
+ createInvoiceFormGroup(data): FormGroup {
+  
+    return this.fb.group({
+      id:  [data?.id],
+      modeId:  [data?.modeId],
+      month:  [data?.month],
+      date:  [data?.date],
+      status: [data?.status],
+      amount: [data?.amount],
+      paymentMethod: [{value:data?.paymentMode, disabled:((data?.status).toLowerCase() === 'paid'? true: false)}, Validators.required],
+      paymentBy: ['']
+    });
+}
+invoiceModelPopup(template: TemplateRef<any>, data: any, index){
+  this.invoiceRowSingleData =data;
+  this.invoiceRowSingleIndex =index;
+  this.modalRef = this.modalService.show(template);
+}
+updateInvoice(data, index){ 
+  const payload = {
+    feeConcessionId : this.studentFee?._id,
+    modeID: data.value.modeId, 
+    paymentMode :data.value?.paymentMethod
+  }
+  this.api.updateInvoiceStudentModeWise(payload).subscribe(resp => {
+    const controlData = this.addForm.get('invoceRow') as FormArray;
+    const obje = controlData.controls[index];
+     obje.patchValue({
+      paymentMethod: data.value?.paymentMethod,
+      status:'Paid'
+    })
+    controlData.controls[index].get('paymentMethod').disable();
+    this.addForm.updateValueAndValidity();
+  },
+    (err) => {
+      
+      console.error(err);
+    });
+
+  this.closePopup();
+}
  getCategoryData(){
   const payload = {
     year: this.studentData?.academic?.academicYear,
     classId:this.studentData?.academic?.studentClass?._id
   }
-  this.api.getFeeTypeClassandYearWise(payload).subscribe(data =>{
-   this.categoryList =  data['data'][0]['feeCategory'];
-    if(this.api.isEmptyObject(this.studentFee)){
-      this.categoryList.forEach(element => {
-        this.onAddRow(element);
-      });
-    } else {
-      //we need to update amount
-    }
-   },
-   (err) => {
-    this.categoryList = [];
-    // this.toastr.error(err, " add failed");
-     console.error(err);
-   });
+
+  forkJoin([
+    this.api.getFeeTypeClassandYearWise(payload),
+    this.api.getYearWiseTransportationList(payload)
+  ]).subscribe(res => {
+      this.categoryList =res[0]['data'][0]['feeCategory'];
+      this.transportList = res[1]['allData'];
+
+    this.transportList.forEach(element => {
+      this.categoryList.push({id: element._id, categoryName:element.distance+" KM", code: element.code, amount: element.amount});
+    });
+   this.categoryList.forEach(element => {
+        this.onAddRow(element, false);
+      });    
+    }); //forkJOIN closing tag
+
+  
   }
-    onAddRow(data) {     
-      this.rows.push(this.createItemFormGroup(data));
+ calculatePerc(i){
+  const controlData = this.addForm.get('rows') as FormArray;
+  var totalA = 0 ;
+  const obje = controlData.controls[i];
+  const perct =  (obje.value.amount / 100) * obje.value.concession;
+  totalA = obje.value.amount - perct;
+  obje.patchValue({
+    totalAmount: totalA
+  })
+  
+}
+onCheckChange(e, i){
+ const controlData = this.addForm.get('rows') as FormArray;
+  const obje = controlData.controls[i];
+  obje.patchValue({
+    isChecked: e.target.checked
+  });
+  this.calculateAmount();
+}
+calculateAmount(){
+  var totalAmount =0
+  const controlData = this.addForm.get('rows') as FormArray;
+  controlData.controls.forEach(element =>{
+   if(element.value.isChecked) {
+    totalAmount = totalAmount + element.value.totalAmount
+   }
+  });
+  this.addForm.patchValue({
+    totalFinalAmount: totalAmount
+  });
+}
+
+    onAddRow(data, disabledMode) {     
+      this.rows.push(this.createItemFormGroup(data, disabledMode));
     }
     payNowClick(formData){
-      console.log(formData.value);
     this.row.isExpand = true;
     this.row.mode = this.addForm.feeMode;
-
-
-    this.api.getFeeTypeClassandYearWise(formData.value).subscribe(data =>{
-      this.categoryList =  data['data'][0]['feeCategory'];
-       if(this.api.isEmptyObject(this.studentFee)){
-         this.categoryList.forEach(element => {
-           this.onAddRow(element);
-         });
-       } else {
-         //we need to update amount
-       }
+    const payload = {
+      "studentId":this.studentData?._id,
+      "feemode":formData.value.feeMode,
+      "academicYear":formData.value.academicYear,
+      "studentClass":formData.value.studentClass,
+      "totalFinalAmount":(formData.value.totalFinalAmount).toString(),
+      "allFee": formData.value.rows
+    }
+    this.api.studenWiseFeeCategoryStore(payload).subscribe(data =>{
+        this.clearDataRestore(data);
       },
       (err) => {
        this.categoryList = [];
        // this.toastr.error(err, " add failed");
         console.error(err);
       });
-    
+  
+//this.getDueDatebyMode(formData);
     }
-    createItemFormGroup(data): FormGroup {
-      console.log(data);
+    getDueDatebyMode(formData){
+      this.api.getAllFeeMonth(formData.value.feeMode).subscribe(data =>{
+        console.log(data)
+        },
+        (err) => {
+         this.categoryList = [];
+         // this.toastr.error(err, " add failed");
+          console.error(err);
+        });  
+    }
+    createItemFormGroup(data, disabledMode): FormGroup {
+      if(data?.amount){
+        data.amount = Number(data.amount) 
+      }
+      if(data.hasOwnProperty('totalAmount')){  
+        data.totalAmount = Number(data.totalAmount)     
+      }else {
+        data.totalAmount = Number(data.amount) 
+      }
+      if(disabledMode){
+        return this.fb.group({
+          id:  [data?.id],
+          categoryName:  [data?.categoryName],
+          code:  [data?.code],
+          amount:  [data?.amount],
+          concession: [{value:data?.concession, disabled:true}],
+          totalAmount: [{value:data?.totalAmount,disabled:true}],
+          isChecked: [{value:data?.isChecked, disabled:true}]
+        });
+      } else {       
       return this.fb.group({
         id:  [data?.id],
         categoryName:  [data?.categoryName],
@@ -129,6 +269,10 @@ export class StuInfoFeesComponent {
         totalAmount: [data?.amount],
         isChecked: [false]
       });
+      }
+      
+
+  
     }
  createForm(){
   this.addForm = this.fb.group({ 
@@ -148,6 +292,9 @@ export class StuInfoFeesComponent {
   this.router.navigate(["/student-acconting/pay-fees/"+this.studentData._id]);
  }
  checkValue(event){
-console.log(event.target.value)
+
  }
+ closePopup(){
+  this.modalRef.hide();
+}
 }

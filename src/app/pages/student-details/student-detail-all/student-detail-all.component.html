@@ -1,6 +1,6 @@
 <app-layout>
  
-    <ng-container *ngIf="student">
+    <ng-container *ngIf="isShow">
         <div class="container p-5" >
             <app-stud-info-picture [studentData]="student"></app-stud-info-picture>            
             <accordion [isAnimated]="true" class="mt-3">
@@ -8,7 +8,7 @@
                     <app-stu-info-basic  [studentData]="student"></app-stu-info-basic>
                 </accordion-group>
                 <accordion-group heading="Fees" class="mt-3">
-                  <app-stu-info-fees [studentData]="student"></app-stu-info-fees>
+                  <app-stu-info-fees [studentDataAll]="studentAll"></app-stu-info-fees>
                 </accordion-group>
                 <accordion-group heading="Exam Result" class="mt-3">
                  <app-stu-info-exam-result [studentData]="student"></app-stu-info-exam-result>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +19,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 @NgModule({
     declarations: [
       AppComponent,
@@ -26,11 +28,10 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
       ReportsComponent,
       DashboardComponent,
     ],
-    providers: [BsModalService],
-    bootstrap: [AppComponent],
     imports: [
       BrowserModule,
       BrowserAnimationsModule,
+      NgxSpinnerModule,
       AppRoutingModule,
       HttpClientModule,
       AppRoutingModule,
@@ -44,6 +45,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
       SelectDropDownModule,
       ToastrModule.forRoot({positionClass: 'toast-center-center'}),
       ModalModule.forRoot()
-    ]
+    ],
+    providers: [BsModalService],
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

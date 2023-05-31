@@ -1,9 +1,323 @@
 
-
+<form [formGroup]="empB1Form">
     <div class="row">
         <div class="col-md-12 header-txt" >
             <span>Academic Details</span>
         </div>
+    </div>  
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-4">
+            <label class="form-label">Department <span class="error">*</span></label>
+            <select class="form-select" formControlName="department">
+                <option  value="">Select</option>
+                <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>
+              </select>
+              <div *ngIf="empB1Form.controls['department'].invalid && (empB1Form.controls['department'].dirty || empB1Form.controls['department'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['department'].errors['required']">
+                Department is required
+              </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <label class="form-label">Designation<span class="error">*</span></label>
+            <select class="form-select" formControlName="designation">
+                <option value="">Select</option>
+                <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
+              </select>  
+              <div *ngIf="empB1Form.controls['designation'].invalid && (empB1Form.controls['designation'].dirty || empB1Form.controls['designation'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['designation'].errors['required']">
+                Designation is required
+              </div>
+            </div> 
+        </div>
+        <div class="col-4">
+            <label class="form-label">Joining Date<span class="error">*</span></label>
+            <div class="input-group">
+                <div class="mr-2 tooglePicker">  
+                   <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle >
+                   </div>
+                   <input matInput class="form-control" [matDatepicker]="picker"
+                   placeholder="dd-mm-yyyy" formControlName="joiningDate" >
+         
+              <mat-datepicker #picker></mat-datepicker>
+          
+              
+                 </div>
+                 <div *ngIf="empB1Form.controls['joiningDate'].invalid && (empB1Form.controls['joiningDate'].dirty || empB1Form.controls['joiningDate'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['joiningDate'].errors['required']">
+                Joining Date is required
+              </div>
+            </div> 
+        </div>        
+    </div>
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-4">
+            <label class="form-label">Qualification <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="qualification">
+            <div *ngIf="empB1Form.controls['qualification'].invalid && (empB1Form.controls['qualification'].dirty || empB1Form.controls['qualification'].touched)"
+            class="error mt-2">
+            <div *ngIf="empB1Form.controls['qualification'].errors['required']">
+                Qualification is required
+            </div>
+          </div> 
+        </div>
+        <div class="col-4">
+            <label class="form-label">Experience Details<span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="experienceDetails">
+            <div *ngIf="empB1Form.controls['experienceDetails'].invalid && (empB1Form.controls['experienceDetails'].dirty || empB1Form.controls['experienceDetails'].touched)"
+            class="error mt-2">
+            <div *ngIf="empB1Form.controls['experienceDetails'].errors['required']">
+                Experience Details is required
+            </div>
+          </div> 
+        </div>
+        <div class="col-4">
+            <label class="form-label">Total Experience <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="totalExperience">
+            <div *ngIf="empB1Form.controls['totalExperience'].invalid && (empB1Form.controls['totalExperience'].dirty || empB1Form.controls['totalExperience'].touched)"
+            class="error mt-2">
+            <div *ngIf="empB1Form.controls['totalExperience'].errors['required']">
+                Total Experience is required
+            </div>
+          </div> 
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col-md-12 header-txt" >
+            <span>Employee Details</span>
+        </div>
+    </div>
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-4">
+            <label class="form-label">Gender <span class="error">*</span></label>
+            <select class="form-select" formControlName="gender">
+                <option  value="">Select</option>
+                <option *ngFor="let genderD of genderList" value="{{genderD._id}}">{{genderD.name}}</option>
+              </select>
+              <div *ngIf="empB1Form.controls['gender'].invalid && (empB1Form.controls['gender'].dirty || empB1Form.controls['gender'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['gender'].errors['required']">
+                Gender is required
+              </div>
+            </div> 
+        </div>
+        <div class="col-4">
+            <label class="form-label">Name <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="name">
+            <div *ngIf="empB1Form.controls['name'].invalid && (empB1Form.controls['name'].dirty || empB1Form.controls['name'].touched)"
+            class="error mt-2">
+            <div *ngIf="empB1Form.controls['name'].errors['required']">
+                Name is required
+            </div>
+          </div> 
+        </div>
+        <div class="col-4">
+            <label class="form-label">Date Of Birth<span class="error">*</span></label>
+            <div class="input-group">
+                <div class="tooglePicker">
+                    <mat-datepicker-toggle  matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  </div>
+                    <input matInput class="form-control" [matDatepicker]="picker1"
+                    placeholder="dd-mm-yyyy" formControlName="dob" >          
+               <mat-datepicker #picker1></mat-datepicker>
+                 
+                  </div>
+            <div *ngIf="empB1Form.controls['dob'].invalid && (empB1Form.controls['dob'].dirty || empB1Form.controls['dob'].touched)"
+            class="error mt-2">
+            <div *ngIf="empB1Form.controls['dob'].errors['required']">
+                Date Of Birth is required
+            </div>
+        </div> 
+        </div>        
+    </div>
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-4">
+            <label class="form-label">Religion <span class="error">*</span></label>
+            <select class="form-select" formControlName="religion">
+                <option  value="">Select</option>
+                <option *ngFor="let day of religionList" value="{{day._id}}">{{day.name}}</option>
+              </select>
+              <div *ngIf="empB1Form.controls['religion'].invalid && (empB1Form.controls['religion'].dirty || empB1Form.controls['religion'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['religion'].errors['required']">
+                Religion is required
+              </div>
+          </div> 
+        </div>
+        <div class="col-4">
+            <label class="form-label">Blood Group <span class="error">*</span></label>
+            <select class="form-select" formControlName="bloodGroup">
+                <option  value="">Select</option>
+                <option *ngFor="let day of bloodGrList" value="{{day._id}}">{{day.name}}</option>
+              </select>
+              <div *ngIf="empB1Form.controls['bloodGroup'].invalid && (empB1Form.controls['bloodGroup'].dirty || empB1Form.controls['bloodGroup'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['bloodGroup'].errors['required']">
+                Blood Group is required
+              </div>
+          </div> 
+        </div>
+        <div class="col-4">
+            <label class="form-label">Phone No.<span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="number">
+            <div *ngIf="empB1Form.controls['number'].invalid && (empB1Form.controls['number'].dirty || empB1Form.controls['number'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['number'].errors['required']">
+                Phone No is required
+              </div>
+          </div> 
+        </div>        
+    </div>
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-12">
+            <label class="form-label">Email <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="email">
+            <div *ngIf="empB1Form.controls['email'].invalid && (empB1Form.controls['email'].dirty || empB1Form.controls['email'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['email'].errors['required']">
+                Email is required
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 header-txt" >
+            <span>Address Detail</span>
+        </div>
+    </div>
+    <div class="row mb-3 mt-3">
+        <div class="col-md-6">
+                <div class="row">
+                    <div class="col-4">
+                        <label class="form-label">House No</label>
+                        <input type="text" class="form-control"  formControlName="houseNo" (focusout)="updatePermenentAdd()">  
+                      </div>
+                      <div class="col-8">
+                          <label class="form-label">Apartment Name</label>
+                          <input type="text" class="form-control"  formControlName="apartment" (focusout)="updatePermenentAdd()">  
+                        </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8 ">
+                        <label class="form-label">Street / landmark</label>
+                        <input type="text" class="form-control"  formControlName="landmark" (focusout)="updatePermenentAdd()">  
+                
+                      </div>
+                      <div class="col-4">
+                        <label class="form-label">ZipCode</label>
+                        <input type="text" class="form-control"  formControlName="zipcode" (focusout)="updatePermenentAdd()">  
+                      </div>
+                </div>                 
+        </div>
+        <div class="col-md-6">
+            <div class="col-12">
+                <label class="form-label">Present Address <span class="error">*</span></label>
+                <textarea class="form-control"  rows="4"  formControlName="presentAddress"></textarea>
+                <div *ngIf="empB1Form.controls['presentAddress'].invalid && (empB1Form.controls['presentAddress'].dirty || empB1Form.controls['presentAddress'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['presentAddress'].errors['required']">
+                Present Address is required
+              </div>
+          </div>
+            </div>
+        </div>  
+      </div>
+      <div class="row" >
+        <div class="col-md-12" style="border-bottom:1px solid #ccc ;">
+            <mat-checkbox (change)="getVAlue($event)" formControlName="isSameAddress"><b> Same As Present Address </b></mat-checkbox>
+        </div>
+      </div>
+    
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-md-6">
+                <div class="row">
+                    <div class="col-4">
+                        <label class="form-label">House No</label>
+                        <input type="text" class="form-control"  formControlName="houseNo1" (focusout)="updatePersentAdd()">  
+                      </div>
+                      <div class="col-8">
+                          <label class="form-label">Apartment Name</label>
+                          <input type="text" class="form-control"  formControlName="apartment1" (focusout)="updatePersentAdd()">  
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-8 ">
+                        <label class="form-label">Street / landmark</label>
+                        <input type="text" class="form-control"  formControlName="landmark1" (focusout)="updatePersentAdd()">  
+                
+                      </div>
+                      <div class="col-4">
+                        <label class="form-label">ZipCode</label>
+                        <input type="text" class="form-control"  formControlName="zipcode1" (focusout)="updatePersentAdd()">  
+                      </div>
+                </div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Permanent Address <span class="error">*</span></label>
+            <textarea class="form-control"  rows="4"  formControlName="permanentAddress"></textarea>
+            <div *ngIf="empB1Form.controls['permanentAddress'].invalid && (empB1Form.controls['permanentAddress'].dirty || empB1Form.controls['permanentAddress'].touched)"
+              class="error mt-2">
+              <div *ngIf="empB1Form.controls['permanentAddress'].errors['required']">
+                Permanent Address is required
+              </div>
+          </div>
+        </div>
+    </div>    
+    <div class="row mb-3">
+        <div class="col-6">
+            <label class="form-label">City</label>
+            <input type="text" class="form-control"  formControlName="city">
+          </div>
+          <div class="col-6">
+              <label class="form-label">State</label>
+              <input type="text" class="form-control"  formControlName="state">
+            </div>
+      </div>
+    <div class="row">
+        <div class="col-md-12 header-txt" >
+            <span>Social Links</span>
+        </div>
+    </div>
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-4">
+            <label class="form-label">Facebook </label>
+            <input type="text" class="form-control"  formControlName="facebook">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Twitter</label>
+            <input type="text" class="form-control"  formControlName="twitter">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Linkedin</label>
+            <input type="text" class="form-control"  formControlName="linkedin">
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col-md-12 header-txt" >
+            <span>Login Details</span>
+        </div>
+    </div>
+    <div class="row mt-2 mb-3 mt-3">
+        <div class="col-6">
+            <label class="form-label">UserName </label>
+            <input type="text" class="form-control"  formControlName="userName">
+        </div>
+        <div class="col-6">
+            <label class="form-label">Password</label>
+            <input type="text" class="form-control"  formControlName="password">
+        </div>    
+    </div>
+    <div class="row mt-3 mb-3 ">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+            <button type="button" class="save_button btn" (click)="updateInfo(empB1Form)" [disabled]="!empB1Form.valid">Save</button>
+        </div>
+      
     </div>
 
+</form>
         

@@ -25,15 +25,15 @@ export class EmpPictureInfoComponent {
   this.isUploadImage = value;
  }  
  SaveImage(){
- /* let postData = new FormData();
+  let postData = new FormData();
   if(this.image) {
-    postData.append("image", this.image);
-    this.api.editStudent(postData, this.studentData._id).subscribe(resp => {
-      this.toastr.success(resp.message, "Updated  Successfully");
-      this.student.image =resp[0]['data']['image'];
+    postData.append("file", this.image);
+    postData.append("employeeId", this.employee?._id);
+    this.api.updateEmpployee(postData).subscribe(resp => {
+      this.toastr.success(resp[0].msg, "Updated  Successfully");
+     this.employee.image =resp[0]['data']['image'];
       this.isUploadImage = false;
       this.image=null
-     // this.router.navigate(['/student-details/student-list']);
      },
      (err) => {
        this.toastr.error(err, " update failed");
@@ -41,7 +41,7 @@ export class EmpPictureInfoComponent {
      })
   } else {
     this.toastr.error("Make sure the image is uploaded correctly");
-  }*/
+  }
  }
  onFilesDropped(files: NgxFileDropEntry[], imgType: string)
  {
