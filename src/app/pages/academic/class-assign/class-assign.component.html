@@ -72,12 +72,14 @@
               <tr *ngFor="let suData of subjectList ; index as i ">
 
                 <td>{{i + 1 }}</td>
-                <td>six</td>
-                <td>b</td>
+                <td>{{className}}</td>
+                <td>{{sectionName}}</td>
                 <td>
-                  <div  *ngFor="let suData of subjectList">
-                    {{suData.subjectName}}
+                  <div >
+                    {{ suData.subjectName }}
+                    <br>
                   </div>
+                
                 </td>
             
               

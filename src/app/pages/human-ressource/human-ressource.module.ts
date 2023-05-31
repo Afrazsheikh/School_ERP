@@ -17,6 +17,7 @@ import { SalaryEditComponent } from './salary-templete/salary-edit/salary-edit.c
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-create/salary-payroll-create.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     LeaveCategoryComponent,
     LeaveApplicationComponent,
     LeaveManageApplicationComponent,
-    SalaryEditComponent
+    SalaryEditComponent,
+    SalaryPayrollCreateComponent
   ],
   imports: [
     CommonModule,

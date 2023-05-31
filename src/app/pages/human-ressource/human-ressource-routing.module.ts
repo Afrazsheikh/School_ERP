@@ -9,6 +9,7 @@ import { SalaryAssignComponent } from './salary-assign/salary-assign.component';
 import { SalaryPaymentComponent } from './salary-payment/salary-payment.component';
 import { SalaryEditComponent } from './salary-templete/salary-edit/salary-edit.component';
 import { SalaryTempleteComponent } from './salary-templete/salary-templete.component';
+import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-create/salary-payroll-create.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'leave-manage-app',
     component: LeaveManageApplicationComponent
+  },
+  {
+    path: 'salary-payroll-create',
+    component: SalaryPayrollCreateComponent
   },
 
 

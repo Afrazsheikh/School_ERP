@@ -124,7 +124,10 @@ concatenatedValue: string;
     this.religionList = this.studentService.religionList;
     route.params.subscribe(param => {
       if (router.getCurrentNavigation()?.extras.state) {
+     
+        
         this.editEmploye = router.getCurrentNavigation()?.extras.state?.['data'];
+        console.log(this.editEmploye);
         this.employeeId = this.editEmploye.employeeId;
 
 
@@ -236,7 +239,11 @@ concatenatedValue: string;
         image: new FormControl(null, [Validators.required]),
         // 
      
- 
+        house_no: new FormControl(null, [Validators.required]),
+        Street: new FormControl(null, [Validators.required]),
+        zipcode: new FormControl(null, [Validators.required]),
+        city: new FormControl(null, [Validators.required]),
+        
        
 
 
@@ -470,6 +477,10 @@ city: new FormControl(null, [Validators.required]),
     console.log(this.employeeId);
     this.employeeId;
 
+console.log(this
+ .editEmploye.concatenatedValue);
+ console.log(this.concatenatedValue);
+ 
 
     this.addEmployee = new FormGroup({
 

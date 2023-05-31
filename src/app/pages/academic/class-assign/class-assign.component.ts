@@ -25,6 +25,9 @@ classAssignForm: FormGroup
   academic: any[]=[];
   academicID: any;
   selectedID: any;
+  className: any;
+  sectionName: any;
+  subjectArray: any[];
 
 
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,    private studentService:StudentService)
@@ -191,6 +194,11 @@ getAllStudent(){
       console.log(data);
       
       this.subjectList = data['academics']['subjects'];
+      // Convert subjectList object to an array
+// this.subjectArray = Object.values(this.subjectList);
+
+      this.className = data['academics']['class'];
+      this.sectionName = data['academics']['section'];
       console.log(this.subjectList);
       
 

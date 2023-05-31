@@ -151,12 +151,12 @@
       </div>
       <div class="col-2 offset-2">
         <label class="form-label">House No./House Flat</label>
-        <input type="text" [(ngModel)]="Pinput1" (input)="updateFourthFieldP()" [value]="checkedhouse? checkedhouse:'' " class="form-control">
+        <input type="text"[value]="checkedhouse? checkedhouse:'' " class="form-control">
 
       </div>
       <div class="col-2 ">
         <label class="form-label">Street /Landmarek</label>
-        <input type="text" [(ngModel)]="Pinput2" (input)="updateFourthFieldP()"  [value]="checkedstreet? checkedstreet:''" class="form-control">
+        <input type="text"  [value]="checkedstreet? checkedstreet:''" class="form-control">
 
       </div>
     </div>
@@ -173,12 +173,12 @@
       </div>
       <div class="col-2 offset-2">
         <label class="form-label">ZipCode</label>
-        <input type="text" [(ngModel)]="Pinput3" (input)="updateFourthFieldP()"  [value]="checkedZipCode? checkedZipCode:''" class="form-control">
+        <input type="text" [value]="checkedZipCode? checkedZipCode:''" class="form-control">
 
       </div>
       <div class="col-2">
         <label class="form-label">City State</label>
-        <input type="text" [(ngModel)]="Pinput4" (input)="updateFourthFieldP()" [value]="cityChecked? cityChecked:''" class="form-control">
+        <input type="text"  [value]="cityChecked? cityChecked:''" class="form-control">
 
       </div>
 
@@ -186,7 +186,7 @@
     <div class="row mb-3">
       <div class="col-4">
         <label class="form-label">Permanent Address</label>
-        <textarea type="text" class="form-control"  rows="3"  [value]="concatenatedValue"formControlName="permanentAddress" > </textarea>
+        <textarea type="text" class="form-control"  rows="3"  [value]="concatenatedValue" formControlName="permanentAddress" > </textarea>
 
       </div>
       <div class="col-4 offset-2">
