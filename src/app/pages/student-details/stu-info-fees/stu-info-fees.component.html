@@ -72,7 +72,10 @@
   </div>
   <div class="row" *ngIf="row.isExpand">
     <div class="col-md-12 header-txt" >
-        <span>Pay Invoice</span>
+      <div class="row">
+        <div class="col-md-6"> <span>Pay Invoice</span></div>
+        <div class="col-md-6 mb-2 text-end"> <button class="btn" (click)="printInvoice()">Print Invoice</button></div>
+      </div>       
     </div>
 </div> 
   <div class="row" *ngIf="row.isExpand">

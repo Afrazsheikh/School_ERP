@@ -11,6 +11,7 @@ export enum routes {
   FEES_CATEGORY = '/fees/category',
   FEES_TYPE = '/fees/fee-list',
   FEES_TRANSPORT = '/fees/transport-fee-list',
+  STUDENT_HISTORY ='/fees/student-history',
   STUDNT_LIST ='/student-details/student-list',
   STUDNT_DETAIL='/student-details',
   STUDNT_INFO='/student-details/student-info',

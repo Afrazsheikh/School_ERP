@@ -14,7 +14,9 @@ import { AssignFeeTypeOneComponent } from './assign-fee-type-one/assign-fee-type
 import { AssignFeeTypeTwoComponent } from './assign-fee-type-two/assign-fee-type-two.component';
 import { TransportFeeListComponent } from './transport-fee-list/transport-fee-list.component';
 import { TransportFeeAddComponent } from './transport-fee-add/transport-fee-add.component';
-
+import { PrintInvoiceComponent } from './print-invoice/print-invoice.component';
+import { StudentHistoryComponent } from './student-history/student-history.component';
+import { NgxPrintModule } from 'ngx-print';
 @NgModule({
   declarations: [
     FeeCategoryComponent,
@@ -25,10 +27,13 @@ import { TransportFeeAddComponent } from './transport-fee-add/transport-fee-add.
     AssignFeeTypeOneComponent,
     AssignFeeTypeTwoComponent,
     TransportFeeListComponent,
-    TransportFeeAddComponent
+    TransportFeeAddComponent,
+    PrintInvoiceComponent,
+    StudentHistoryComponent
   ],
   imports: [
     CommonModule,
+    NgxPrintModule,
     ReactiveFormsModule,    
     MatDatepickerModule,
     SharedModule,

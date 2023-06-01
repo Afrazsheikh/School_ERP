@@ -1,0 +1,89 @@
+<app-layout>
+<ng-container *ngIf="isShow">
+    <div class="container p-5" id="print-section">
+        <div class="card">
+            <div class="card-body">
+             <div class="row">
+                <div class="col-md-6">
+                    <span class="invoice-lbl">{{schoolInfo?.name}} </span>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="invoice-lbl">Invoice No #0001</div>
+                    <div class="invoice-lbl-lg">Date:</div>
+                    <div class="invoice-lbl-lg">Status: </div>
+                </div>
+             </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12 acd-detai">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="50%" style="vertical-align: top;"><div class="col-md-12 text-weight">Invoice To :</div>
+                                <div class="col-md-12 text-wrap">{{studentInfo?.firstName}} {{studentInfo?.lastName}}</div>
+                                <div class="col-md-12 ">Register No : {{studentInfo?.registerNo}}</div>
+                                <div class="col-md-12" style="overflow-wrap: break-word;"><span>{{studentInfo?.presentAddress}}</span></div>
+                                <div class="col-md-12 text-wrap">Class : {{studentInfo?.academic?.studentClass?.className}} ({{studentInfo?.academic?.section?.name}})</div>
+                                <div class="col-md-12 text-wrap">Father Name : {{studentInfo?.guardian?.fatherName}}</div></td>
+                            <td style="text-align:right;vertical-align: top;">                    <div class="col-md-12 text-weight">Academic :</div>
+                                <div class="col-md-12 text-wrap">{{schoolInfo?.name}}</div>
+                                <div class="col-md-12 text-wrap">{{schoolInfo?.address}}</div>
+                                <div class="col-md-12 text-wrap">{{schoolInfo?.phoneNo}}</div>
+                                <div class="col-md-12 text-wrap">{{schoolInfo?.email}}</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <table class="table ">
+                <thead class="table-secondary">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">InvoiceNo</th>
+                      <th scope="col">Month</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Payment Method</th>
+                      <th scope="col">Status</th>                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let feeData of feePayload?.allMode; let i = index">
+                        <tr>
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{feeData?.invoice}}</td>
+                            <td>{{feeData?.month}}</td>
+                            <td>{{feeData?.date}}</td>
+                            <td>{{feeData?.amount}}</td>
+                            <td>{{feeData?.paymentMode}}</td>
+                            <td><span class="red-border" *ngIf="((feeData?.status).toLowerCase() === 'unpaid')">{{feeData?.status}}</span>
+                                <span class="green-border" *ngIf="(feeData?.status).toLowerCase() === 'paid'">{{feeData?.status}}</span>
+                            </td>
+                            <td></td>
+                          </tr>
+                    </ng-container>                   
+                  </tbody>
+            </table>
+        </div>
+    </div>  
+        <div class="row mt-3">
+            <div class="col-md-7"></div>
+            <div class="col-md-5 text-end">
+                <div class="col-md-12 grey-box"><strong>Final Amount :</strong> {{feePayload?.totalFinalAmount}}</div>                 
+                <div class="col-md-12 grey-box"><strong>Total Paid :</strong>{{totalPaid}} </div>
+                <div class="col-md-12 grey-box"><strong>Balance : </strong> {{remainingAmount}} </div>
+            </div>
+        </div>
+        <div class="row" id="printBtn">
+           
+            <div class="col-md-12"> <button printSectionId="print-section" [useExistingCss]="true" ngxPrint class="btn">print</button></div>
+        </div>
+</div>
+
+</ng-container>
+</app-layout>
+
+

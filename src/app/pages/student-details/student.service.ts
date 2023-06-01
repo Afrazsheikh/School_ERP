@@ -4,6 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StudentService {
+  schoolInfo={
+    "name":"ERP School & College",
+    "address":"Chyakunjo, Moylapotha, New York",
+    "phoneNo":"(91) 123456789",
+    "email":"school@gmail.com"
+  };
   paymentMethod = [{ _id: "Card", name: "Card" }, { _id: "Cash", name: "Cash" },{ _id: "Cheque", name: "Cheque" },{ _id: "Bank Transfer", name: "Bank Transfer" },
   { _id: "Other", name: "Other" },{ _id: "Paypal", name: "Paypal" },{ _id: "Stripe", name: "Stripe" },{ _id: "PayUmoney", name: "PayUmoney" },{ _id: "Paystack", name: "Paystack" },
   { _id: "Razorpay", name: "Razorpay" },{ _id: "SSLcommerz", name: "SSLcommerz" },{ _id: "Jazzcash", name: "Jazzcash" },{ _id: "Midtrans", name: "Midtrans" },{ _id: "Flutter Wave", name: "Flutter Wave" }

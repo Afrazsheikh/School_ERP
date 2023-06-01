@@ -20,7 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NgxSpinnerModule } from "ngx-spinner";
-
+import {NgxPrintModule} from 'ngx-print';
 @NgModule({
     declarations: [
       AppComponent,
@@ -43,6 +43,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
       MatDatepickerModule,
       MatNativeDateModule,
       SelectDropDownModule,
+      NgxPrintModule,
       ToastrModule.forRoot({positionClass: 'toast-center-center'}),
       ModalModule.forRoot()
     ],

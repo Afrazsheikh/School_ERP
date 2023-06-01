@@ -324,4 +324,7 @@ calculateAmount(){
  closePopup(){
   this.modalRef.hide();
 }
+printInvoice(){
+  this.router.navigate(["/fees/print-invoice/"+this.studentData._id]);
+}
 }
