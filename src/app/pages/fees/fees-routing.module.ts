@@ -43,7 +43,7 @@ const routes: Routes = [
     path: 'student-history',   component: StudentHistoryComponent
   },
   {
-    path: 'print-invoice/:id',   component: PrintInvoiceComponent
+    path: 'print-invoice/:id/:year',   component: PrintInvoiceComponent
   },
 ];
 

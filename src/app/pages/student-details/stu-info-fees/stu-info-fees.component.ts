@@ -132,7 +132,7 @@ invoiceModelPopup(template: TemplateRef<any>, data: any, index){
 updateInvoice(data, index){ 
   const payload = {
     feeConcessionId : this.studentFee?._id,
-    modeID: data.value.modeId, 
+    modeID: data.value.id, 
     paymentMode :data.value?.paymentMethod
   }
   this.api.updateInvoiceStudentModeWise(payload).subscribe(resp => {
@@ -325,6 +325,6 @@ calculateAmount(){
   this.modalRef.hide();
 }
 printInvoice(){
-  this.router.navigate(["/fees/print-invoice/"+this.studentData._id]);
+  this.router.navigate(["/fees/print-invoice/"+this.studentData._id+"/"+this.studentData?.academic?.academicYear]);
 }
 }
