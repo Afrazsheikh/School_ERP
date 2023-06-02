@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +15,8 @@ export class SalaryPayrollCreateComponent implements OnInit {
   constructor(
     _route: ActivatedRoute,
     private _apiService: ApiService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _location: Location
   ) {
     _route.params.subscribe({
       next: (routeParam) => {
@@ -80,5 +82,9 @@ export class SalaryPayrollCreateComponent implements OnInit {
       '-' +
       new Date().toISOString().split('T')[0].split('-')[0]
     );
+  }
+
+  backButtonClick() {
+    this._location.back();
   }
 }

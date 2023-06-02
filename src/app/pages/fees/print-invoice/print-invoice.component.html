@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-md-6 text-end">
                     <div class="invoice-lbl">Invoice No #0001</div>
-                    <div class="invoice-lbl-lg">Date:</div>
-                    <div class="invoice-lbl-lg">Status: </div>
+                    <div class="invoice-lbl-lg">Date: {{currentDate | date :'dd/MM/YYYY'}}</div>
+                    <div class="invoice-lbl-lg">Year: {{studentYear}} </div>
                 </div>
              </div>
             </div>
@@ -59,8 +59,8 @@
                             <td>{{feeData?.date}}</td>
                             <td>{{feeData?.amount}}</td>
                             <td>{{feeData?.paymentMode}}</td>
-                            <td><span class="red-border" *ngIf="((feeData?.status).toLowerCase() === 'unpaid')">{{feeData?.status}}</span>
-                                <span class="green-border" *ngIf="(feeData?.status).toLowerCase() === 'paid'">{{feeData?.status}}</span>
+                            <td><div class="red-border" *ngIf="((feeData?.status).toLowerCase() === 'unpaid')">{{feeData?.status}}</div>
+                                <div class="green-border" *ngIf="(feeData?.status).toLowerCase() === 'paid'">{{feeData?.status}}</div>
                             </td>
                             <td></td>
                           </tr>

@@ -70,6 +70,6 @@ callReport(reportForm){
   })
 }
 viewFeeReport(student){
-  this.router.navigate(["/fees/print-invoice/"+student._id]);
+  this.router.navigate(["/fees/print-invoice/"+student._id+"/"+student?.academic?.academicYear]);
   }
 }
