@@ -1,259 +1,404 @@
 <form [formGroup]="studentForm">
-    <div class="row">
-        <div class="col-md-12 header-txt" >
-            <span>Academic Details</span>
-        </div>
+  <div class="row">
+    <div class="col-md-12 header-txt">
+      <span>Academic Details</span>
     </div>
-    <div class="row mt-2 mb-3">
-        <div class="col-3">
-          <label class="form-label">Class <span class="error">*</span></label>
-          <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
-          </select>
-        </div>
-        <div class="col-3">
-            <label class="form-label">Section <span class="error">*</span></label>
-            <select class="form-select" formControlName="section">
-              <option disabled value="select">Select</option>
-              <option *ngFor="let sec of sections" value="{{sec._id}}">{{sec.name}}</option>
-            </select>
-        </div>
-        <div class="col-3">
-            <label class="form-label">Year <span class="error">*</span></label>
-            <select class="form-select" formControlName="academicYear">
-              <option disabled value="select">Select</option>
-              <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
-            </select>
-          </div>
-          <div class="col-3">
-            <label class="form-label">Category <span class="error">*</span></label>
-            <select class="form-select" formControlName="category">
-              <option disabled value="select">Select</option>
-              <option *ngFor="let day of categoryData" value="{{day._id}}">{{day.categoryName}}</option>
-            </select>
-          </div>
+  </div>
+  <div class="row mt-2 mb-3">
+    <div class="col-3">
+      <label class="form-label">Class <span class="error">*</span></label>
+      <select
+        class="form-select"
+        formControlName="studentClass"
+        (change)="onChangeClass($event)"
+      >
+        <option disabled value="select">Select</option>
+        <option *ngFor="let sec of classes" value="{{ sec._id }}">
+          {{ sec.className }}
+        </option>
+      </select>
     </div>
-    <div class="row mt-3 mb-3">
-        <div class="col-3">
-            <label class="form-label">Register No <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="registerNo">
-        </div>
-        <div class="col-3">
-            <label class="form-label">RollNo No <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="rollNo">
-        </div>
-        <div class="col-3">
-            <label class="form-label">Admission Date <span class="error">*</span></label>
-            <div class="input-group ">
-                <input matInput class="form-control me-3" [matDatepicker]="picker"
-                placeholder="dd-mm-yyyy"  formControlName="admissionDate">
-                <div class="mr-2 tooglePicker">  
-                 <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle >
-                 </div>
-           <mat-datepicker #picker></mat-datepicker>
-              </div>
-        </div>
-        <div class="col-3">
-            <label class="form-label">Type <span class="error">*</span></label>
-            <select class="form-select" formControlName="type">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let tdata of typeList" value="{{tdata._id}}">{{tdata.name}}</option>
-              </select>
-        </div>
+    <div class="col-3">
+      <label class="form-label">Section <span class="error">*</span></label>
+      <select class="form-select" formControlName="section">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let sec of sections" value="{{ sec._id }}">
+          {{ sec.name }}
+        </option>
+      </select>
     </div>
-    <div class="row">
-        <div class="col-md-12 header-txt" >
-            <span>Student Details</span>
-        </div>
+    <div class="col-3">
+      <label class="form-label">Year <span class="error">*</span></label>
+      <select class="form-select" formControlName="academicYear">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of aceYear" value="{{ day._id }}">
+          {{ day.name }}
+        </option>
+      </select>
     </div>
-    <div class="row mt-3 mb-3">
-        <div class="col-3">
-            <label class="form-label">First Name <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="firstName">
-        </div>
-        <div class="col-3">
-            <label class="form-label">Last Name <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="lastName">
-        </div>
-        <div class="col-3">
-            <label class="form-label">Gender <span class="error">*</span></label>
-            <select class="form-select" formControlName="gender">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let genderD of genderList" value="{{genderD._id}}">{{genderD.name}}</option>
-              </select>
-        </div>
-        <div class="col-3">
-            <label class="form-label">Date Of Birth <span class="error">*</span></label>
-            <div class="input-group ">
-                <input matInput class="form-control me-3" [matDatepicker]="picker2"
-                placeholder="mm/dd/yyyy"  formControlName="dob">
-                <div class="mr-2 tooglePicker">  
-                 <mat-datepicker-toggle  matSuffix [for]="picker2"></mat-datepicker-toggle >
-                 </div>
-           <mat-datepicker #picker2></mat-datepicker>
-              </div>
-        </div>
+    <div class="col-3">
+      <label class="form-label">Category <span class="error">*</span></label>
+      <select class="form-select" formControlName="category">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of categoryData" value="{{ day._id }}">
+          {{ day.categoryName }}
+        </option>
+      </select>
     </div>
-    <div class="row mt-3 mb-3">
-        <div class="col-3">
-            <label class="form-label">Blood group <span class="error">*</span></label>
-            <select class="form-select" formControlName="bloodGroup">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let day of bloodGrList" value="{{day._id}}">{{day.name}}</option>
-              </select>
-        </div>
-        <div class="col-3">
-            <label class="form-label">Mother Tongue <span class="error">*</span></label>
-            <select class="form-select" formControlName="motherTongue">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let day of motherToungLanList" value="{{day._id}}">{{day.name}}</option>
-              </select>
-        </div>
-        <div class="col-3">
-            <label class="form-label">Religion <span class="error">*</span></label>
-            <select class="form-select" formControlName="religion">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let day of religionList" value="{{day._id}}">{{day.name}}</option>
-              </select>
-        </div>
-        <div class="col-3">
-            <label class="form-label">Caste <span class="error">*</span></label>
-            <select class="form-select" formControlName="caste">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let day of castList" value="{{day._id}}">{{day.name}}</option>
-              </select>
-        </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-3">
+      <label class="form-label">Register No <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="registerNo" />
     </div>
-    <div class="row mt-3 mb-3">
-        <div class="col-3">
-            <label class="form-label">Mobile No <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="mobileNumber">
-        </div>
-        <div class="col-3">
-            <label class="form-label">Email <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="email">
-        </div>
-        <div class="col-3">
-            <label class="form-label">City <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="city">
-        </div>
-        <div class="col-3">
-            <label class="form-label">State <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="state">
-        </div>
+    <div class="col-3">
+      <label class="form-label">Roll No <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="rollNo" />
     </div>
-    <div class="row mt-3 mb-3">
-        <div class="col-6">
-            <label class="form-label">Present Address <span class="error">*</span></label>
-            <textarea type="text" class="form-control"  rows="3"  formControlName="presentAddress" > </textarea>
+    <div class="col-3">
+      <label class="form-label"
+        >Admission Date <span class="error">*</span></label
+      >
+      <div class="input-group">
+        <input
+          matInput
+          class="form-control me-3"
+          [matDatepicker]="picker"
+          placeholder="dd-mm-yyyy"
+          formControlName="admissionDate"
+        />
+        <div class="mr-2 tooglePicker">
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
         </div>
-        <div class="col-6">
-            <label class="form-label">Permanent Address <span class="error">*</span></label>
-            <textarea type="text" class="form-control"  rows="3"  formControlName="permanentAddress" > </textarea>
-        </div>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
     </div>
-   
-    <div class="row" >
-        <div class="col-md-12 header-txt" >
-            <span>Guardian Details</span>
-        </div>
+    <div class="col-3">
+      <label class="form-label">Type <span class="error">*</span></label>
+      <select class="form-select" formControlName="type">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let tdata of typeList" value="{{ tdata._id }}">
+          {{ tdata.name }}
+        </option>
+      </select>
     </div>
-    <ng-container formGroupName="guardian">
-    <div class="row mt-3 mb-3" >
-        <div class="col-6">
-            <label class="form-label">Name <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="name">
-        </div>             
+  </div>
+  <div class="row">
+    <div class="col-md-12 header-txt">
+      <span>Student Details</span>
     </div>
-    <div class="row mt-3 mb-3" >
-        <div class="col-4">
-            <label class="form-label">Relation  <span class="error">*</span></label>
-            <select class="form-select" formControlName="relation">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let sec of relationShipList" value="{{sec._id}}">{{sec.name}}</option>
-              </select>
-        </div>
-        <div class="col-4">
-            <label class="form-label">Father Name  <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="fatherName">
-        </div> 
-        <div class="col-4">
-            <label class="form-label">Mother Name  <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="motherName">
-        </div>
-       
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-3">
+      <label class="form-label">First Name <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="firstName" />
     </div>
-    <div class="row mt-3 mb-3" >
-        <div class="col-4">
-            <label class="form-label">Occupation <span class="error">*</span></label>
-            <select class="form-select" formControlName="occupation">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let sec of occupationsList" value="{{sec._id}}">{{sec.name}}</option>
-              </select>
-        </div>
-        <div class="col-4">
-            <label class="form-label">Education <span class="error">*</span></label>
-            <select class="form-select" formControlName="education">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let sec of educationList" value="{{sec._id}}">{{sec.name}}</option>
-              </select>
-        </div>       
-        <div class="col-4">
-            <label class="form-label">email  <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="email">
-        </div>
+    <div class="col-3">
+      <label class="form-label">Last Name <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="lastName" />
     </div>
-    <div class="row mt-3 mb-3" >
-        <div class="col-4">
-            <label class="form-label">Mobile No  <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="mobileNumber">
-        </div>  
-        <div class="col-4">
-            <label class="form-label">State  <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="state">
-        </div>
-        <div class="col-4">
-            <label class="form-label">City  <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="city">
-        </div>
-        
+    <div class="col-3">
+      <label class="form-label">Gender <span class="error">*</span></label>
+      <select class="form-select" formControlName="gender">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let genderD of genderList" value="{{ genderD._id }}">
+          {{ genderD.name }}
+        </option>
+      </select>
     </div>
-    <div class="row mt-3 mb-3" >
-        <div class="col-12">
-            <label class="form-label">Permanent address  <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="permanentAddress">
+    <div class="col-3">
+      <label class="form-label"
+        >Date Of Birth <span class="error">*</span></label
+      >
+      <div class="input-group">
+        <input
+          matInput
+          class="form-control me-3"
+          [matDatepicker]="picker2"
+          placeholder="mm/dd/yyyy"
+          formControlName="dob"
+        />
+        <div class="mr-2 tooglePicker">
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
         </div>
+        <mat-datepicker #picker2></mat-datepicker>
+      </div>
     </div>
-</ng-container>
-<div class="row" >
-    <div class="col-md-12 header-txt" >
-        <span>Previous School Details</span>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-3">
+      <label class="form-label">Blood group <span class="error">*</span></label>
+      <select class="form-select" formControlName="bloodGroup">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of bloodGrList" value="{{ day._id }}">
+          {{ day.name }}
+        </option>
+      </select>
     </div>
-</div>
-<div class="row mt-3 mb-3">
+    <div class="col-3">
+      <label class="form-label"
+        >Mother Tongue <span class="error">*</span></label
+      >
+      <select class="form-select" formControlName="motherTongue">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of motherToungLanList" value="{{ day._id }}">
+          {{ day.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-3">
+      <label class="form-label">Religion <span class="error">*</span></label>
+      <select class="form-select" formControlName="religion">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of religionList" value="{{ day._id }}">
+          {{ day.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-3">
+      <label class="form-label">Caste <span class="error">*</span></label>
+      <select class="form-select" formControlName="caste">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of castList" value="{{ day._id }}">
+          {{ day.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-3">
+      <label class="form-label">Mobile No <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="mobileNumber" />
+    </div>
+    <div class="col-3">
+      <label class="form-label">Email <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="email" />
+    </div>
+    <div class="col-3">
+      <label class="form-label">City <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="city" />
+    </div>
+    <div class="col-3">
+      <label class="form-label">State <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="state" />
+    </div>
+  </div>
+  <div class="row mt-3 mb-3">
     <div class="col-6">
-        <label class="form-label">School Name </label>
-        <input type="text" class="form-control"  rows="3"  formControlName="previousSchoolName" > 
+      <label class="form-label"
+        >Present Address <span class="error">*</span></label
+      >
+      <textarea
+        type="text"
+        class="form-control"
+        rows="3"
+        formControlName="presentAddress"
+      >
+      </textarea>
     </div>
     <div class="col-6">
-        <label class="form-label">Qualification </label>
-        <input type="text" class="form-control"  rows="3"  formControlName="previousQualification" > 
+      <label class="form-label"
+        >Permanent Address <span class="error">*</span></label
+      >
+      <textarea
+        type="text"
+        class="form-control"
+        rows="3"
+        formControlName="permanentAddress"
+      >
+      </textarea>
     </div>
-</div>
-<div class="row mt-3 mb-3">
-    <div class="col-12">
-        <label class="form-label">Remarks </label>
-        <textarea type="text" class="form-control"  rows="3"  formControlName="previousRemarks" > </textarea>
-    </div>
-</div>
+  </div>
 
-<div class="header-txt col-md-12"></div>
-<div class="row mt-3 mb-3 ">
+  <div class="row">
+    <div class="col-md-12 header-txt">
+      <span>Guardian Details</span>
+    </div>
+  </div>
+  <ng-container formGroupName="guardian">
+    <!-- ===== BEGINS:: Guardina 1 ===== -->
+    <div class="border-bottom py-2">
+      <strong>Relation 1:</strong>
+    </div>
+    <div class="row mt-3 mb-3">
+      <div class="col-4">
+        <label class="form-label">Relation <span class="error">*</span></label>
+        <select class="form-select" formControlName="relation">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let sec of relationShipList" value="{{ sec._id }}">
+            {{ sec.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-3 mb-3">
+      <div class="col-6">
+        <label class="form-label">Name <span class="error">*</span></label>
+        <input type="text" class="form-control" formControlName="name" />
+      </div>
+      <div class="col-4">
+        <label class="form-label">Mobile No <span class="error">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="mobileNumber"
+        />
+      </div>
+      <!-- <div class="col-4">
+              <label class="form-label">Father Name  <span class="error">*</span></label>
+              <input type="text" class="form-control"  formControlName="fatherName">
+          </div> 
+          <div class="col-4">
+              <label class="form-label">Mother Name  <span class="error">*</span></label>
+              <input type="text" class="form-control"  formControlName="motherName">
+          </div> -->
+    </div>
+    <div class="row mt-3 mb-3">
+      <!-- <div class="col-4">
+              <label class="form-label">Education <span class="error">*</span></label>
+              <select class="form-select" formControlName="education">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let sec of educationList" value="{{sec._id}}">{{sec.name}}</option>
+                </select>
+          </div>        -->
+      <div class="col-4">
+        <label class="form-label">Email <span class="error">*</span></label>
+        <input type="text" class="form-control" formControlName="email" />
+      </div>
+      <div class="col-4">
+        <label class="form-label"
+          >Occupation <span class="error">*</span></label
+        >
+        <select class="form-select" formControlName="occupation">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let sec of occupationsList" value="{{ sec._id }}">
+            {{ sec.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <!-- <div class="row mt-3 mb-3" >
+          <div class="col-4">
+              <label class="form-label">State  <span class="error">*</span></label>
+              <input type="text" class="form-control"  formControlName="state">
+          </div>
+          <div class="col-4">
+              <label class="form-label">City  <span class="error">*</span></label>
+              <input type="text" class="form-control"  formControlName="city">
+          </div>
+      </div>
+      <div class="row mt-3 mb-3" >
+          <div class="col-12">
+              <label class="form-label">Permanent address  <span class="error">*</span></label>
+              <input type="text" class="form-control"  formControlName="permanentAddress">
+          </div>
+      </div> -->
+    <!-- ===== ENDS:: Guardina 1 ===== -->
+
+    <!-- ===== BEGINS:: Guardina 2 ===== -->
+    <div class="border-bottom py-2">
+      <strong>Relation 2:</strong>
+    </div>
+    <div class="row mt-3 mb-3">
+      <div class="col-4">
+        <label class="form-label">Relation <span class="error">*</span></label>
+        <select class="form-select" formControlName="relation">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let sec of relationShipList" value="{{ sec._id }}">
+            {{ sec.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-3 mb-3">
+      <div class="col-6">
+        <label class="form-label">Name <span class="error">*</span></label>
+        <input type="text" class="form-control" formControlName="name" />
+      </div>
+      <div class="col-4">
+        <label class="form-label">Mobile No <span class="error">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="mobileNumber"
+        />
+      </div>
+    </div>
+    <div class="row mt-3 mb-3">
+      <div class="col-4">
+        <label class="form-label">Email <span class="error">*</span></label>
+        <input type="text" class="form-control" formControlName="email" />
+      </div>
+      <div class="col-4">
+        <label class="form-label"
+          >Occupation <span class="error">*</span></label
+        >
+        <select class="form-select" formControlName="occupation">
+          <option disabled value="select">Select</option>
+          <option *ngFor="let sec of occupationsList" value="{{ sec._id }}">
+            {{ sec.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <!-- ===== ENDS:: Guardina 2 ===== -->
+  </ng-container>
+  <div class="row">
+    <div class="col-md-12 header-txt">
+      <span>Previous School Details</span>
+    </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-6">
+      <label class="form-label">School Name </label>
+      <input
+        type="text"
+        class="form-control"
+        rows="3"
+        formControlName="previousSchoolName"
+      />
+    </div>
+    <div class="col-6">
+      <label class="form-label">Qualification </label>
+      <input
+        type="text"
+        class="form-control"
+        rows="3"
+        formControlName="previousQualification"
+      />
+    </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-12">
+      <label class="form-label">Remarks </label>
+      <textarea
+        type="text"
+        class="form-control"
+        rows="3"
+        formControlName="previousRemarks"
+      >
+      </textarea>
+    </div>
+  </div>
+
+  <div class="header-txt col-md-12"></div>
+  <div class="row mt-3 mb-3">
     <div class="col-md-10"></div>
     <div class="col-md-2">
-        <button type="button" class="save_button btn" (click)="updateInfo(studentForm)" [disabled]="!studentForm.valid">Save</button>
+      <button
+        type="button"
+        class="save_button btn"
+        (click)="updateInfo(studentForm)"
+        [disabled]="!studentForm.valid"
+      >
+        Save
+      </button>
     </div>
-  
-</div>
+  </div>
 </form>
