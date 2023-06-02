@@ -9,6 +9,8 @@ import { AssignFeeTypeOneComponent } from './assign-fee-type-one/assign-fee-type
 import { AssignFeeTypeTwoComponent } from './assign-fee-type-two/assign-fee-type-two.component';
 import { TransportFeeListComponent } from './transport-fee-list/transport-fee-list.component';
 import { TransportFeeAddComponent } from './transport-fee-add/transport-fee-add.component';
+import { PrintInvoiceComponent } from './print-invoice/print-invoice.component';
+import { StudentHistoryComponent } from './student-history/student-history.component';
 const routes: Routes = [
   {
     path: 'category', component: FeeCategoryComponent
@@ -36,6 +38,12 @@ const routes: Routes = [
   },
   {
     path: 'transport-fee-add',   component: TransportFeeAddComponent
+  },
+  {
+    path: 'student-history',   component: StudentHistoryComponent
+  },
+  {
+    path: 'print-invoice/:id',   component: PrintInvoiceComponent
   },
 ];
 

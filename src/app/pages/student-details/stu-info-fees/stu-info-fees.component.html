@@ -18,13 +18,31 @@
     </thead>
     <tbody> 
         <ng-container *ngFor="let row of addForm.get('rows')['controls']; let i = index">
-             <tr>
+             <tr *ngIf="row.get('type').value !== '$$KM@@'">
                        <td><input type="checkbox" class="form-check-input" [formControl]="row.get('isChecked')" (change)="onCheckChange($event, i)" /></td>
                         <td>{{row.get('categoryName').value}}</td>
                        <td>{{row.get('code').value}}</td>
                         <td>{{row.get('amount').value}}</td>
-                        <td><input type="text" class="form-control" [formControl]="row.get('concession')" style="width:80px" (focusout)='calculatePerc(i)'></td>
+                        <td><input type="text" class="form-control" [formControl]="row.get('concession')" style="width:80px" (focusout)='calculatePerc(i)' maxlength="2"></td>
                         <td><input type="text" class="form-control" [formControl]="row.get('totalAmount')" style="width:120px"></td>
+                </tr>
+                
+                <tr *ngIf="row.get('type').value === '$$KM@@'">
+                  <td>
+                    <ng-container *ngIf="row.get('code').value !== ''">
+                      <input type="checkbox" class="form-check-input" [formControl]="row.get('isChecked')" (change)="onCheckChange($event, i)" />
+                    </ng-container>
+                    </td>
+                  <td>
+                    <label>Transportation</label>
+                    <select  [formControl]="row.get('transporationId')" class="form-select" (change)="onChangeTransporation($event, i)">
+                    <option disabled value="">Select  Distance</option>
+                    <option *ngFor="let sec of transportList" [value]="sec?._id">{{sec.distance}}</option>
+                  </select></td>
+                 <td>{{row.get('code').value}}</td>
+                  <td>{{row.get('amount').value}}</td>
+                  <td><input type="text" class="form-control" [formControl]="row.get('concession')" style="width:80px" (focusout)='calculatePerc(i)' maxlength="2"></td>
+                  <td><input type="text" class="form-control" [formControl]="row.get('totalAmount')" style="width:120px"></td>
                 </tr>
         </ng-container> 
         
@@ -48,13 +66,16 @@
         Fee Mode is required.
       </div></div>
     </div>
-    <div class="col-md-3 mt-2" *ngIf="!row.isExpand">
+    <div class="col-md-3 mt-2"  *ngIf="!row.isExpand">
       <button (click)="payNowClick(addForm)" class="btn mt-4"  [disabled]="!addForm.valid">Save and Get Invoice</button>
     </div>
   </div>
   <div class="row" *ngIf="row.isExpand">
     <div class="col-md-12 header-txt" >
-        <span>Pay Invoice</span>
+      <div class="row">
+        <div class="col-md-6"> <span>Pay Invoice</span></div>
+        <div class="col-md-6 mb-2 text-end"> <button class="btn" (click)="printInvoice()">Print Invoice</button></div>
+      </div>       
     </div>
 </div> 
   <div class="row" *ngIf="row.isExpand">
