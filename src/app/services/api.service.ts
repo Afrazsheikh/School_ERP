@@ -138,6 +138,11 @@ export class ApiService {
       .post(environment.apiBaseUrl + '/student/search', postData)
       .pipe(catchError(this.errorHandler));
   }
+  studentSearchByYearAndClass(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/student/searchByYearandClass', postData)
+      .pipe(catchError(this.errorHandler));
+  }
   updateInvoiceStudentModeWise(postData: any): Observable<any> {
     return this.httpClient
       .put(environment.apiBaseUrl + '/updateModeStatus', postData)
@@ -987,6 +992,11 @@ export class ApiService {
   getFeeTypeYearwise(postData: any) {
     return this.httpClient
       .post(environment.apiBaseUrl + '/getfeetype/year', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  getFeeDataYearwise(postData: any) {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/feeData/studentIdandyearWise', postData)
       .pipe(catchError(this.errorHandler));
   }
   getFeeTypeClassandYearWise(postData: any) {
