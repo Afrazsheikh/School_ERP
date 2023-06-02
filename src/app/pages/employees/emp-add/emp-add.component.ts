@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
@@ -50,6 +50,8 @@ concatenatedValue: string;
   Pinput3: string;
   Pinput4: string;
   concatenatedValueP: string;
+  address:FormGroup;
+
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -116,7 +118,7 @@ concatenatedValue: string;
   employeeId: string
   abc: any
 
-  constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute,
+  constructor(private api: ApiService, private toastr: ToastrService, private route: ActivatedRoute, public fb: FormBuilder,
     private router: Router,
     private studentService: StudentService,) {
     this.genderList = this.studentService.genderList;
@@ -124,11 +126,11 @@ concatenatedValue: string;
     this.religionList = this.studentService.religionList;
     route.params.subscribe(param => {
       if (router.getCurrentNavigation()?.extras.state) {
-     
-        
         this.editEmploye = router.getCurrentNavigation()?.extras.state?.['data'];
         console.log(this.editEmploye);
         this.employeeId = this.editEmploye.employeeId;
+        console.log(  this.employeeId);
+        
 
 
         // this._setValue();
@@ -238,16 +240,11 @@ concatenatedValue: string;
         abc: new FormControl(null, [Validators.required]),
         image: new FormControl(null, [Validators.required]),
         // 
-     
-        house_no: new FormControl(null, [Validators.required]),
-        Street: new FormControl(null, [Validators.required]),
-        zipcode: new FormControl(null, [Validators.required]),
-        city: new FormControl(null, [Validators.required]),
-        
-       
-
-
       });
+
+
+
+   
 
     }
     this.addEmployee = new FormGroup({
@@ -284,13 +281,24 @@ concatenatedValue: string;
       accountNumber: new FormControl(null, [Validators.required]),
       abc: new FormControl(null, [Validators.required]),
       image: new FormControl(null, [Validators.required]),
+ 
+      // address:  this.fb.group({
+         
+        presentAddressZipCode: new FormControl(null, [Validators.required]),
+        presentAddressHouseNo: new FormControl(null, [Validators.required]),
+        presentAddressStreet: new FormControl(null, [Validators.required]),
+        presentAddressCity: new FormControl(null, [Validators.required]),
+        presentAddressState: new FormControl(null, [Validators.required]),
+        premanentAddressHouseNo: new FormControl(null,  [Validators.required]),
+        premanentAddressStreet: new FormControl(null, [Validators.required]),
+        premanentAddressZipCode: new FormControl(null, [Validators.required]),
+        premanentAddressCity: new FormControl(null, [Validators.required]),
+        premanentAddressState: new FormControl(null, [Validators.required]),
+        
+        // })
 // 
-house_no: new FormControl(null, [Validators.required]),
-Street: new FormControl(null, [Validators.required]),
-zipcode: new FormControl(null, [Validators.required]),
-city: new FormControl(null, [Validators.required]),
-
-    });
+});
+  
   }
 
   getDesignations() {
@@ -380,6 +388,8 @@ city: new FormControl(null, [Validators.required]),
       })
   }
   addEmployees() {
+    console.log(this.addEmployee.value);
+    
     //  Create a new date object
     let joiningDate: Date = new Date();
 
@@ -429,7 +439,11 @@ city: new FormControl(null, [Validators.required]),
     postData.append("department", this.addEmployee.value.department);
     postData.append("employeeId", this.addEmployee.value.employeeId);
     postData.append("image", this.addEmployee.value.image);
-
+    postData.append("presentAddressZipCode", this.addEmployee.value.presentAddressZipCode);
+    postData.append("presentAddressHouseNo", this.addEmployee.value.presentAddressHouseNo);
+    postData.append("presentAddressStreet", this.addEmployee.value.presentAddressStreet);
+    postData.append("presentAddressCity", this.addEmployee.value.presentAddressCity);
+    postData.append("presentAddressState", this.addEmployee.value.presentAddressState);
 
     if (this.fileData) {
       postData.append("file", this.fileData);
@@ -514,6 +528,19 @@ console.log(this
       ifscCode: new FormControl(this.editEmploye.ifscCode, [Validators.required]),
       accountNumber: new FormControl(this.editEmploye.accountNumber, [Validators.required]),
 
+      presentAddressZipCode: new FormControl(this.editEmploye.presentAddressZipCode, [Validators.required]),
+      presentAddressHouseNo: new FormControl(this.editEmploye.presentAddressHouseNo, [Validators.required]),
+      presentAddressStreet: new FormControl(this.editEmploye.presentAddressStreet, [Validators.required]),
+      presentAddressCity: new FormControl(this.editEmploye.presentAddressCity, [Validators.required]),
+      presentAddressState: new FormControl(this.editEmploye.presentAddressState, [Validators.required]),
+
+      premanentAddressHouseNo: new FormControl(this.editEmploye.presentAddressZipCode, [Validators.required]),
+      premanentAddressStreet: new FormControl(this.editEmploye.presentAddressHouseNo, [Validators.required]),
+      premanentAddressZipCode: new FormControl(this.editEmploye.presentAddressStreet, [Validators.required]),
+      premanentAddressCity: new FormControl(this.editEmploye.presentAddressCity, [Validators.required]),
+      premanentAddressState: new FormControl(this.editEmploye.presentAddressState, [Validators.required]),
+
+    
     });
 
   }
@@ -523,8 +550,7 @@ console.log(this
 
     console.log(event);
     if (event.target.option) {
-      console.log("inside if");
-
+   
       this.loginDeatils = true
     } else {
       this.loginDeatils = false
@@ -576,16 +602,36 @@ console.log(this
       // Additional logic...
     }
   }
-  
+
+
+  onBlurCopyAddre(event){
+    if(event.checked == true){
+    const presentAddressHouseNo = this.addEmployee.controls['presentAddressHouseNo'].value;
+    const presentAddressZipCode = this.addEmployee.controls['presentAddressZipCode'].value;
+    const presentAddressStreet = this.addEmployee.controls['presentAddressStreet'].value;
+    const presentAddressCity = this.addEmployee.controls['presentAddressCity'].value;
+    const presentAddressState = this.addEmployee.controls['presentAddressState'].value;
+ 
+    
+    this.addEmployee.patchValue({ premanentAddressHouseNo: presentAddressHouseNo, premanentAddressStreet: presentAddressStreet, premanentAddressZipCode: presentAddressZipCode, premanentAddressCity :presentAddressCity, premanentAddressState: presentAddressState });
+
+  }
+  if(event.checked ==false ){
+    this.addEmployee.patchValue({ premanentAddressHouseNo: "", premanentAddressStreet: '', premanentAddressZipCode: '', premanentAddressCity :'' ,});
+   
+  }
+    // const username =  this.studentForm.controls['guardian'].get('email')?.value;
+  }
   
   getVAlue(event){
     console.log(event.checked);
     if(event.checked==true){
-      this.checkedhouse = this.addEmployee.value.house_no
-      this.checkedstreet=this.addEmployee.value.Street
-      this.checkedZipCode = this.addEmployee.value.zipcode
-      this.cityChecked = this.addEmployee.value.city
-      this.permanentAddrressChecked = this.concatenatedValue
+
+      // this.checkedhouse = this.addEmployee.value.house_no
+      // this.checkedstreet=this.addEmployee.value.Street
+      // this.checkedZipCode = this.addEmployee.value.zipcode
+      // this.cityChecked = this.addEmployee.value.city
+      // this.permanentAddrressChecked = this.concatenatedValue
     }
     if(event.checked ==false ){
       this.checkedhouse = ''
@@ -596,6 +642,7 @@ console.log(this
 
 
     }
+  
   
   
 let data= {

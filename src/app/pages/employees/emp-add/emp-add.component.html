@@ -133,7 +133,7 @@
       <div class="col-6">  <h5>Present Address</h5></div>
     
         <div class="col-2">  <h5>Permanent Address</h5> </div>
-        <div class="col-4">    <mat-checkbox (change)="getVAlue($event)"><b> Same As Present Address </b></mat-checkbox></div>
+        <div class="col-4">    <mat-checkbox (change)="getVAlue($event)" (change)="onBlurCopyAddre($event)"><b> Same As Present Address </b></mat-checkbox></div>
 
     </div>
     <div class="row mb-3">
@@ -141,61 +141,69 @@
       <div class="col-2">
       
         <label class="form-label">House No./House Flat</label>
-        <input type="text" [(ngModel)]="input1" (input)="updateFourthField()"formControlName="house_no" class="form-control">
+        <input type="text" formControlName="presentAddressHouseNo" class="form-control">
 
       </div>
       <div class="col-2">
         <label class="form-label">Street /Landmarek</label>
-        <input type="text" [(ngModel)]="input2" (input)="updateFourthField()" formControlName="Street" class="form-control">
+        <input type="text" formControlName="presentAddressStreet" class="form-control">
 
       </div>
+      
       <div class="col-2 offset-2">
         <label class="form-label">House No./House Flat</label>
-        <input type="text"[value]="checkedhouse? checkedhouse:'' " class="form-control">
+        <input type="text" formControlName="premanentAddressHouseNo" class="form-control">
 
       </div>
       <div class="col-2 ">
         <label class="form-label">Street /Landmarek</label>
-        <input type="text"  [value]="checkedstreet? checkedstreet:''" class="form-control">
+        <input type="text"  formControlName="premanentAddressStreet" class="form-control">
 
       </div>
     </div>
     <div class="row mb-3">
       <div class="col-2">
         <label class="form-label">ZipCode</label>
-        <input type="text" [(ngModel)]="input3" (input)="updateFourthField()"  formControlName="zipcode" class="form-control">
+        <input type="text"  formControlName="presentAddressZipCode" class="form-control">
 
       </div>
+     
       <div class="col-2">
-        <label class="form-label">City State</label>
-        <input type="text" [(ngModel)]="input4" (input)="updateFourthField()"  formControlName="city" class="form-control">
+        <label class="form-label"> State</label>
+        <input type="text" formControlName="presentAddressCity" class="form-control">
 
       </div>
       <div class="col-2 offset-2">
         <label class="form-label">ZipCode</label>
-        <input type="text" [value]="checkedZipCode? checkedZipCode:''" class="form-control">
+        <input type="text"formControlName="premanentAddressZipCode"class="form-control">
 
       </div>
       <div class="col-2">
         <label class="form-label">City State</label>
-        <input type="text"  [value]="cityChecked? cityChecked:''" class="form-control">
+        <input type="text" formControlName="premanentAddressCity"class="form-control">
 
       </div>
 
     </div>
     <div class="row mb-3">
-      <div class="col-4">
+      <!-- <div class="col-4">
         <label class="form-label">Permanent Address</label>
         <textarea type="text" class="form-control"  rows="3"  [value]="concatenatedValue" formControlName="permanentAddress" > </textarea>
 
-      </div>
-      <div class="col-4 offset-2">
-        <label class="form-label">Present Address</label>
-        <textarea type="text" class="form-control"  rows="3" [value]="permanentAddrressChecked ? permanentAddrressChecked : '' " formControlName="permanentAddress" > </textarea>
+      </div> -->
+      <div class="col-2">
+        <label class="form-label"> State</label>
+        <input type="text" formControlName="presentAddressState"class="form-control">
 
       </div>
+      <div class="col-2  offset-4">
+        <label class="form-label"> State</label>
+        <input type="text" formControlName="premanentAddressState"class="form-control">
+
+      </div>
+    
     </div>
-  
+
     <div class="mb-3 py-2">
       <label class="form-label">Profile Picture <span class="error">*</span></label>
       <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event)">
