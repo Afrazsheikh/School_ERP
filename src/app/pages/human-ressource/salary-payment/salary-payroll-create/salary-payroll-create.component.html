@@ -41,19 +41,25 @@
               </tr>
             </table>
           </div>
-          <div class="col-lg-5 mt-2">
+          <div *ngIf="isSalaryDetailAvailable" class="col-lg-5 mt-2">
             <table>
               <tr>
                 <th width="15%">Salary Grade</th>
-                <td width="25%">Grade A</td>
+                <td width="25%">
+                  {{ employeeDetail?.salaryGrade?.salaryGrade }}
+                </td>
               </tr>
               <tr>
                 <th width="15%">Basic Salary</th>
-                <td width="25%">$3000.00</td>
+                <td width="25%">
+                  ${{ employeeDetail?.salaryGrade?.basicSalary }}
+                </td>
               </tr>
               <tr>
                 <th width="15%">Overtime Rate (Per Hour)</th>
-                <td width="25%">$25.00</td>
+                <td width="25%">
+                  ${{ employeeDetail?.salaryGrade?.overTimeRatePerHr }}
+                </td>
               </tr>
             </table>
           </div>
@@ -61,8 +67,11 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-6 p-0 px-2">
+    <div *ngIf="isSalaryDetailAvailable" class="row">
+      <div
+        class="col-lg-6 p-0 px-2"
+        *ngIf="employeeDetail?.salaryGrade?.allowances"
+      >
         <div class="modal-header">
           <h6 class="modal-title header-txt">
             <i _ngcontent-dan-c162="" class="fa-solid fa-money-bill"></i
@@ -75,15 +84,20 @@
               <th width="15%">Name</th>
               <th width="25%">Amount</th>
             </tr>
-            <tr *ngFor="let item of [].constructor(3); index as i">
-              <td>House Rent</td>
-              <td>${{ i + 1 }}00.00</td>
+            <tr
+              *ngFor="
+                let allowance of employeeDetail?.salaryGrade?.allowances;
+                index as i
+              "
+            >
+              <td>{{ allowance.name }}</td>
+              <td>${{ allowance.amount }}</td>
             </tr>
           </table>
         </div>
       </div>
 
-      <div class="col-lg-6 p-0">
+      <div class="col-lg-6 p-0" *ngIf="employeeDetail?.salaryGrade?.deductions">
         <div class="modal-header">
           <h6 class="modal-title header-txt">
             <i _ngcontent-dan-c162="" class="fa-solid fa-square-minus"></i
@@ -96,9 +110,14 @@
               <th width="15%">Name</th>
               <th width="25%">Amount</th>
             </tr>
-            <tr *ngFor="let item of [].constructor(1); index as i">
-              <td>Provident</td>
-              <td>${{ i + 1 }}00.00</td>
+            <tr
+              *ngFor="
+                let deduction of employeeDetail?.salaryGrade?.deductions;
+                index as i
+              "
+            >
+              <td>{{ deduction.name }}</td>
+              <td>${{ deduction.amount }}</td>
             </tr>
           </table>
         </div>
@@ -111,60 +130,79 @@
         >&nbsp;&nbsp;<span>Payment Details</span>
       </div>
     </div>
-    <div class="row mt-3 mb-3">
-      <div class="col-lg-3">
-        <label class="form-label">Total Allowance</label>
-        <input type="text" class="form-control" value="10000" readonly />
+    <form [formGroup]="paymentFormGroup">
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-3">
+          <label class="form-label">Total Allowance</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="totalAllowance"
+            readonly
+          />
+        </div>
+        <div class="col-lg-3">
+          <label class="form-label">Total Deduction</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="totalDeductions"
+            readonly
+          />
+        </div>
+        <div *ngIf="!isAlreadyPaid" class="col-lg-3">
+          <label class="form-label">Overtime Total Hours</label>
+          <input
+            type="number"
+            (input)="onEnterOvertimeHr($event)"
+            formControlName="overtimeHrs"
+            class="form-control"
+          />
+        </div>
+        <div class="col-lg-3">
+          <label class="form-label">Overtime Amount</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="overtimeAmount"
+            readonly
+          />
+        </div>
       </div>
-      <div class="col-lg-3">
-        <label class="form-label">Total Deduction</label>
-        <input type="text" class="form-control" value="2000" readonly />
+      <div class="row">
+        <div class="col-lg-3">
+          <label class="form-label">Net Salary</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="netSalary"
+            readonly
+          />
+        </div>
+        <div class="col-lg-3">
+          <label class="form-label">Pay Via <span class="error">*</span></label>
+          <select formControlName="payVia" class="form-select form-control">
+            <option disabled value="select">Select Payment Mode</option>
+            <option
+              *ngFor="let option of paymentModes; index as i"
+              [value]="option"
+            >
+              {{ option }}
+            </option>
+          </select>
+        </div>
+        <div class="col-lg-3">
+          <label class="form-label">Bank Account</label>
+          <input formControlName="account" type="text" class="form-control" />
+        </div>
       </div>
-      <div class="col-lg-3">
-        <label class="form-label">Overtime Total Hours</label>
-        <input type="text" class="form-control" />
-      </div>
-      <div class="col-lg-3">
-        <label class="form-label">Overtime Amount</label>
-        <input type="text" class="form-control" value="0" readonly />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-3">
-        <label class="form-label">Net Salary</label>
-        <input type="text" class="form-control" value="12000" readonly />
-      </div>
-      <div class="col-lg-3">
-        <label class="form-label">Pay Via <span class="error">*</span></label>
-        <select class="form-select form-control">
-          <option disabled value="select">Select Payment Mode</option>
-          <option
-            *ngFor="let options of [].constructor(3); index as i"
-            [value]="i"
-          >
-            Option {{ i }}
-          </option>
-        </select>
-      </div>
-      <div class="col-lg-3">
-        <label class="form-label">Account <span class="error">*</span></label>
-        <select class="form-select form-control">
-          <option disabled value="select">Select Account</option>
-          <option
-            *ngFor="let options of [].constructor(3); index as i"
-            [value]="i"
-          >
-            Option {{ i }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="row">
+    </form>
+    <!-- <div class="row">
       <div class="col-lg-12 mt-2">
         <label class="form-label">Remarks</label>
         <textarea cols="30" rows="8" class="form-control"></textarea>
       </div>
-    </div>
+    </div> -->
     <div class="header-txt col-md-12 mt-3"></div>
     <div class="row mt-3 mb-3">
       <div class="offset-md-10 col-md-2">
@@ -172,9 +210,9 @@
           type="button"
           class="save_button btn"
           (click)="onSubmitPayment()"
-          [disabled]="false"
+          [disabled]="!paymentFormGroup.valid || isAlreadyPaid"
         >
-          Paid
+          {{ isAlreadyPaid ? "Already Paid" : "Paid" }}
         </button>
       </div>
     </div>

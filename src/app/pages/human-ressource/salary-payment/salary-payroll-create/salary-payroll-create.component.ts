@@ -1,5 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
@@ -12,11 +18,26 @@ import { ApiService } from 'src/app/services/api.service';
 export class SalaryPayrollCreateComponent implements OnInit {
   employeeId!: string;
   employeeDetail: any;
+  isSalaryDetailAvailable = false;
+  paymentFormGroup!: FormGroup;
+  paymentModes = [
+    'UPI',
+    'NEFT',
+    'RTGS',
+    'IMPS',
+    'CREDIT-CARD',
+    'DEBIT-CARD',
+    'CASH',
+  ];
+  salaryReceiptDetail: any;
+  isAlreadyPaid = false;
+
   constructor(
     _route: ActivatedRoute,
     private _apiService: ApiService,
     private toastr: ToastrService,
-    private _location: Location
+    private _location: Location,
+    private _formBuilder: FormBuilder
   ) {
     _route.params.subscribe({
       next: (routeParam) => {
@@ -29,13 +50,39 @@ export class SalaryPayrollCreateComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.buildForm();
+  }
+
+  buildForm() {
+    this.paymentFormGroup = this._formBuilder.group({
+      status: 'PAID',
+      totalAllowance: new FormControl(),
+      totalDeductions: new FormControl(),
+      overtimeHrs: new FormControl(null),
+      overtimeAmount: new FormControl(0, [Validators.required]),
+      payVia: new FormControl(null, Validators.required),
+      account: new FormControl(null),
+      netSalary: new FormControl(),
+    });
+  }
 
   fetchEmployeeDetail() {
     this._apiService.getAllEmployeesById(this.employeeId).subscribe({
       next: (res) => {
-        console.log(res);
         this.employeeDetail = res.employee;
+        if (this.employeeDetail.hasOwnProperty('salaryGrade')) {
+          this.isSalaryDetailAvailable = true;
+          this.paymentFormGroup.patchValue({
+            totalAllowance: this.employeeDetail.salaryGrade.totalAllowance,
+            totalDeductions: this.employeeDetail.salaryGrade.totalDeductions,
+            netSalary: this.employeeDetail.salaryGrade.netSalary,
+            account:
+              this.employeeDetail.bankName +
+              '-' +
+              this.employeeDetail.accountNumber,
+          });
+        }
       },
       error: (err) => {
         this.toastr.error(JSON.stringify(err));
@@ -45,15 +92,15 @@ export class SalaryPayrollCreateComponent implements OnInit {
   }
 
   onSubmitPayment() {
+    this.paymentFormGroup.value.salaryPaidMonth = this.currentMonthAndYear;
+    this.paymentFormGroup.value.employee = this.employeeId;
     this._apiService
-      .createSalaryReceipt({
-        status: 'PAID',
-        salaryPaidMonth: this.currentMonthAndYear,
-        employee: this.employeeId,
-      })
+      .createSalaryReceipt(this.paymentFormGroup.value)
       .subscribe({
         next: (res) => {
           this.toastr.success('Salary record added successfully!');
+          this.fetchReceipt();
+          this._location.back();
         },
         error: (err) => {
           this.toastr.error(JSON.stringify(err));
@@ -67,13 +114,30 @@ export class SalaryPayrollCreateComponent implements OnInit {
       .getSalaryMonthAndEmpWise(this.employeeId, this.currentMonthAndYear)
       .subscribe({
         next: (res) => {
-          console.log(res);
+          if (res) {
+            this.salaryReceiptDetail = res.salary_receipts;
+            this.isAlreadyPaid =
+              this.salaryReceiptDetail.salaryStatus === 'PAID' ? true : false;
+          }
         },
         error: (err) => {
           this.toastr.error(JSON.stringify(err));
         },
         complete: () => {},
       });
+  }
+
+  onEnterOvertimeHr(e: any) {
+    console.log(e.target.value);
+    this.paymentFormGroup.patchValue({
+      overtimeAmount:
+        +e.target.value * +this.employeeDetail.salaryGrade.overTimeRatePerHr,
+    });
+    this.paymentFormGroup.patchValue({
+      netSalary:
+        +this.employeeDetail.salaryGrade.netSalary +
+        this.paymentFormGroup.value.overtimeAmount,
+    });
   }
 
   get currentMonthAndYear(): string {
