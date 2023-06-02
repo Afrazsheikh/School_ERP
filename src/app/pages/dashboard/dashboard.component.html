@@ -1,5 +1,166 @@
 <app-layout>
-    <div class="body_content bg-light pt-5 ps-5">
-        <h3>Welcome to School ERP</h3>
+  <div class="body_content bg-light p-2">
+    <div class="stats__wrapper bg-light">
+      <div class="col-xl-3 col-md-6 col-12 p-2">
+        <div class="box bg-white">
+          <div class="box-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h4 class="text-fade">Total Students</h4>
+                <h4 class="fw-600">1,542</h4>
+                <p class="mb-0">
+                  <span class="text-success">12%</span> Increase
+                </p>
+              </div>
+              <div>
+                <img
+                  src="../../../assets/images/dashboard-01.svg"
+                  class="w-100"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-12 p-2">
+        <div class="box bg-white">
+          <div class="box-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h4 class="text-fade">New Students</h4>
+                <h4 class="fw-600">542</h4>
+                <p class="mb-0">
+                  <span class="text-success">09%</span> Increase
+                </p>
+              </div>
+              <div>
+                <img
+                  src="../../../assets/images/dashboard-02.svg"
+                  class="w-100"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-12 p-2">
+        <div class="box bg-white">
+          <div class="box-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h4 class="text-fade">Fees Collection</h4>
+                <h4 class="fw-600">$542</h4>
+                <p class="mb-0"><span class="text-success">49%</span> Total</p>
+              </div>
+              <div>
+                <img
+                  src="../../../assets/images/dashboard-03.svg"
+                  class="w-100"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 col-12 p-2">
+        <div class="box bg-white">
+          <div class="box-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h4 class="text-fade">Fees Pending</h4>
+                <h4 class="fw-600">$542</h4>
+                <p class="mb-0"><span class="text-danger">-51%</span> Total</p>
+              </div>
+              <div>
+                <img
+                  src="../../../assets/images/dashboard-04.svg"
+                  class="w-100"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="main__wrapper mt-1">
+      <div class="col-xl-8 col-md-8 col-12 p-2">
+        <div class="box bg-white">
+          <div class="box-header px-3 pt-3 pb-2">
+            <h4>New Admission Report</h4>
+          </div>
+          <div class="box-body p-3">
+            <div id="chart">
+              <apx-chart
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [dataLabels]="chartOptions.dataLabels"
+                [plotOptions]="chartOptions.plotOptions"
+                [yaxis]="chartOptions.yaxis"
+                [xaxis]="chartOptions.xaxis"
+                [fill]="chartOptions.fill"
+                [title]="chartOptions.title"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+        <div class="box bg-white mt-3">
+          <div class="box-header px-3 pt-3 pb-2">
+            <h4>Fees Collection Report</h4>
+          </div>
+          <div class="box-body p-3">
+            <div id="chart">
+              <apx-chart
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [dataLabels]="chartOptions.dataLabels"
+                [plotOptions]="chartOptions.plotOptions"
+                [yaxis]="chartOptions.yaxis"
+                [xaxis]="chartOptions.xaxis"
+                [fill]="chartOptions.fill"
+                [title]="chartOptions.title"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4 col-12 p-2">
+        <div class="box bg-white">
+          <div class="box-header px-3 pt-3 pb-2">
+            <h4>Complaint Report</h4>
+          </div>
+          <div class="box-body p-3">
+            <div class="box-scroll">
+              <div
+                class="box no-shadow mb-3"
+                *ngFor="let complaint of [].constructor(6)"
+              >
+                <div class="box-body">
+                  <div class="d-flex align-items-center">
+                    <div class="me-15">
+                      <img
+                        src="../../../assets/images/complaint-01.svg"
+                        alt=""
+                        class="w-100"
+                      />
+                    </div>
+                    <div class="ps-2">
+                      <h5 class="mb-1">
+                        A teacher has been picking on your child.
+                      </h5>
+                      <p class="text-fade m-0">15 minutes ago</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </app-layout>

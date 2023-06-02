@@ -1,0 +1,57 @@
+.text-fade {
+  color: #7e8299;
+}
+h4 {
+  font-size: 1.2rem;
+}
+.stats {
+  &__wrapper {
+    display: flex;
+    // .box {
+    //   border-radius: 10px;
+    //   box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+    //   border: 1px solid #efeffd;
+    //   &-body {
+    //     padding: 1.5rem;
+    //     img {
+    //       max-width: 100px;
+    //     }
+    //   }
+    // }
+  }
+}
+
+.main {
+  &__wrapper {
+    display: flex;
+  }
+}
+
+.box {
+  border-radius: 10px;
+  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #efeffd;
+  &.no-shadow {
+    box-shadow: none;
+  }
+  &-header {
+    border-bottom: 1px solid #efeffd;
+  }
+  &-scroll {
+    position: relative;
+    overflow: scroll;
+    width: auto;
+    height: 436px;
+  }
+  &-body {
+    padding: 1.5rem;
+    img {
+      max-width: 100px;
+    }
+  }
+}
+
+#chart {
+  max-width: 650px;
+  margin: 35px auto;
+}
