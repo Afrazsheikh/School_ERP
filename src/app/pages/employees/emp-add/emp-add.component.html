@@ -10,8 +10,8 @@
     <div class="row mb-3">
 
       <div class="col-4">
-        <label class="form-label">Deaprtment <span class="error">*</span></label>
-        <select class="form-select" formControlName="department">
+        <label class="form-label">Department <span class="error">*</span></label>
+        <select class="form-select" formControlName="department" (change)="onChangeDepart($event)">
           <option disabled value="select">Select</option>
           <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>
         </select>

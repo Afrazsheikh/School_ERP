@@ -64,7 +64,7 @@
                 <div class="row">
                 <div class="col-6 mb-3">
                   <label class="form-label"> Select Department*</label>
-              <select class="form-select" formControlName="sections">
+              <select class="form-select" formControlName="department" >
                 <option disabled value="select">Select</option>
                 <option *ngFor="let dept of departments" [value]="dept._id">{{dept.name}}</option>
               </select>
@@ -91,6 +91,7 @@
                   <tr>
                     <th scope="col">SL</th>
                     <th scope="col">Id</th>
+                    <th scope="col">Department Name</th>
 
                     <th scope="col">Name</th>
                     <th scope="col">Action</th>
@@ -100,12 +101,14 @@
                   <tr *ngFor="let design of designations; index as i">
                     <td>{{i + 1}}</td>
                     <td>{{design._id}}</td>
+                    <td>{{design.department?.name}}</td>
                     <td>{{design.name}}</td>
+
                     <td>
-                      <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#editPrompt"
+                      <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#editPromptD"
                         (click)="setDesignation(design)">
                         <i class="fa-solid fa-pencil"></i>
-                      </button>
+                      </button>        
                       <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePromptD"
                         (click)="selectedDesign=design;">
                         <i class="fa-solid fa-trash-can"></i>
@@ -181,6 +184,10 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="editDesign">
+          <div class="mb-3">
+            <label class="form-label">Designation Name *</label>
+            <input type="text" class="form-control" formControlName="department">
+          </div>
           <div class="mb-3">
             <label class="form-label">Designation Name *</label>
             <input type="text" class="form-control" formControlName="name">

@@ -663,5 +663,46 @@ console.log(data);
     this.Paddress = name
    
   }
+
+  // onChangeClass(event){
+  //   console.log(event);
+    
+  //   this.designations =[];
+  //   this.addEmployee.patchValue({designation: 'select'});
+  //   const id = event.target.value;
+  //   console.log(id);
+    
+  //   this.departments.forEach(element => {
+  //       if(element._id === id) {
+  //         console.log(element.designations);
+          
+  //         console.log("inside");
+  //         this.designations = element.designations;
+  //         console.log(this.designations);
+          
+  //       }
+  //   });
+  // }
+  onChangeDepart(event) {
+    console.log(event);
+  
+    this.designations = [];
+    this.addEmployee.patchValue({ designation: 'select' });
+    const id = event.target.value;
+    console.log(id);
+  
+    const selectedDepartment = this.designations.find(element => element.department._id === id);
+    console.log(selectedDepartment);
+    
+    
+    if (selectedDepartment) {
+      console.log(selectedDepartment.designations);
+      console.log("inside");
+      this.designations = selectedDepartment.designations;
+      console.log(this.designations);
+    }
+  }
+
+
   
 }

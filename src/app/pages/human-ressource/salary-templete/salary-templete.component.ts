@@ -41,16 +41,27 @@ export class SalaryTempleteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSalaryTemplates()
+ this.getSalaryTemplatesA()
   }
 
   getSalaryTemplates()
   {
     this.api.getSalaryTemplates().subscribe(resp => {
+      console.log(resp);
+      
       this.salaries = resp.feeGroups;
     })
   }
 
+
+  getSalaryTemplatesA()
+  {
+    this.api.getSalaryTemplates().subscribe(resp => {
+      console.log(resp);
+      
+      this.salaries = resp.feeGroups;
+    })
+  }
   get allowancesFields() {
     return this.salaryForm.get('allowances') as FormArray;
   }

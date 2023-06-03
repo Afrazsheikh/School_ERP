@@ -24,18 +24,25 @@ export class EmpDeptComponent {
 
   constructor(private api: ApiService, private toastr: ToastrService) {
     this.deptForm = new FormGroup({
-      name: new FormControl(null, [Validators.required])
+      name: new FormControl(null, [Validators.required]),
+
     });
 
     this.editDept = new FormGroup({
-      name: new FormControl(null, [Validators.required])
+      name: new FormControl(null, [Validators.required]),
+      department: new FormControl(null, [Validators.required])
+
     });
     this.designForm = new FormGroup({
-      name: new FormControl(null, [Validators.required])
+      name: new FormControl(null, [Validators.required]),
+      department: new FormControl(null, [Validators.required])
+
     });
 
     this.editDesign = new FormGroup({
-      name: new FormControl(null, [Validators.required])
+      name: new FormControl(null, [Validators.required]),
+      department: new FormControl(null, [Validators.required])
+
     });
   
   }
@@ -126,13 +133,15 @@ export class EmpDeptComponent {
 
   addDesignation()
   {
+    console.log(this.designForm.value);
+    
     this.isLoading = true;
     this.api.addDesignation(this.designForm.value).subscribe(resp => {
       console.log(resp);
 
       this.isLoading = false;
 
-      this.toastr.success(resp.message, "Department add success");
+      this.toastr.success(resp.message, "Designation  add success");
       this.designForm.reset();
       this.getDesignations();
     ;
@@ -147,7 +156,7 @@ export class EmpDeptComponent {
   setDesignation(dept: any)
   {
     this.selectedDesign = dept;
-    this.editDesign.patchValue({name: dept.name});
+    this.editDesign.patchValue({name: dept.name, department : dept.department?.name});
   }
 
   updateDesignation()
@@ -183,6 +192,19 @@ export class EmpDeptComponent {
       this.isLoading = false;
       console.error(err);
     })
+  }
+
+  onChangeClass(event){
+    this.designations =[];
+    this.designForm.patchValue({department: 'select'});
+    const id = event.target.value;
+    this.departments.forEach(element => {
+        if(element._id === id) {
+          this.designations = element.designations;
+          console.log(this.designations);
+          
+        }
+    });
   }
 
 }

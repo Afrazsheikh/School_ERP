@@ -41,6 +41,8 @@ export class AssignTeacherComponent {
     this.sections =[];
     this.TeacherForm.patchValue({section: 'select'});
     const id = event.target.value;
+    console.log(id);
+    
     this.classes.forEach(element => {
         if(element._id === id) {
           this.sections = element.sections;
@@ -56,6 +58,8 @@ export class AssignTeacherComponent {
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {
       this.classes = resp.classes;
+      console.log(this.classes);
+      
     });
   }
   callReport(reportForm){    

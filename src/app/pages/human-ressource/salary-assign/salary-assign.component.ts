@@ -54,6 +54,8 @@ export class SalaryAssignComponent implements OnInit {
   {
     this.api.getSalaryTemplates().subscribe(resp => {
       this.salaries = resp.feeGroups;
+      console.log(this.salaries);
+      
       this.patchEmpSal();
     })
   }
