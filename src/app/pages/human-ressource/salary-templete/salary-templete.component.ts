@@ -59,7 +59,8 @@ export class SalaryTempleteComponent implements OnInit {
     this.api.getSalaryTemplates().subscribe(resp => {
       console.log(resp);
       
-      this.salaries = resp.feeGroups;
+      this.salaries = resp.salaries;
+
     })
   }
   get allowancesFields() {

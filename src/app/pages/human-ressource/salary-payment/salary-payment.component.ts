@@ -53,7 +53,7 @@ export class SalaryPaymentComponent {
   getAllSalaries()
   {
     this.api.getSalaryTemplates().subscribe(resp => {
-      this.salaries = resp.feeGroups;
+      this.salaries = resp.salaries;
       this.patchEmpSal();
     })
   }

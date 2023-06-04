@@ -51,6 +51,7 @@ concatenatedValue: string;
   Pinput4: string;
   concatenatedValueP: string;
   address:FormGroup;
+  selectedDesgingation:any[] = [];
 
 
   public dropped(files: NgxFileDropEntry[]) {
@@ -620,7 +621,6 @@ console.log(this
     this.addEmployee.patchValue({ premanentAddressHouseNo: "", premanentAddressStreet: '', premanentAddressZipCode: '', premanentAddressCity :'' ,});
    
   }
-    // const username =  this.studentForm.controls['guardian'].get('email')?.value;
   }
   
   getVAlue(event){
@@ -683,26 +683,17 @@ console.log(data);
   //       }
   //   });
   // }
-  onChangeDepart(event) {
-    console.log(event);
-  
-    this.designations = [];
-    this.addEmployee.patchValue({ designation: 'select' });
-    const id = event.target.value;
-    console.log(id);
-  
-    const selectedDepartment = this.designations.find(element => element.department._id === id);
-    console.log(selectedDepartment);
-    
-    
-    if (selectedDepartment) {
-      console.log(selectedDepartment.designations);
-      console.log("inside");
-      this.designations = selectedDepartment.designations;
-      console.log(this.designations);
-    }
-  }
-
+ 
+onChangeDepart(event) {
+  this.selectedDesgingation =[];
+   this.addEmployee.patchValue({ designation: 'select' });
+   const id = event.target.value;
+   this.designations.forEach(element => {
+     if ( element?.department?._id === id) {
+       this.selectedDesgingation.push(element) ;
+     }
+   });    
+ }
 
   
 }

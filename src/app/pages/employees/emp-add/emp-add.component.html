@@ -20,7 +20,7 @@
           <label class="form-label">Designation <span class="error">*</span></label>
           <select class="form-select" formControlName="designation" (change)="DisableDetails($event)">
             <option disabled value="select">Select</option>
-            <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
+            <option *ngFor="let designation of selectedDesgingation " [value]="designation._id">{{designation.name}}</option>
           </select>   
       </div>
       <!-- <div class="col-4">

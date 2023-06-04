@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
@@ -72,8 +72,8 @@ export class CreateStudentComponent {
     this.getAllCateogy();
     this.getGuardenList();
     this.createForm();
-  }
-
+  }       
+    
   getGuardenList() {
     this.api.getGuardianAll().subscribe(resp => {
       this.guadianList = resp.guardians;
@@ -149,6 +149,17 @@ export class CreateStudentComponent {
       }),
       presentAddress: ['', Validators.required],
       permanentAddress: ['', Validators.required],
+      
+      presentAddressZipCode: new FormControl(null, [Validators.required]),
+      presentAddressHouseNo: new FormControl(null, [Validators.required]),
+      presentAddressStreet: new FormControl(null, [Validators.required]),
+      presentAddressCity: new FormControl(null, [Validators.required]),
+      presentAddressState: new FormControl(null, [Validators.required]),
+      premanentAddressHouseNo: new FormControl(null,  [Validators.required]),
+      premanentAddressStreet: new FormControl(null, [Validators.required]),
+      premanentAddressZipCode: new FormControl(null, [Validators.required]),
+      premanentAddressCity: new FormControl(null, [Validators.required]),
+      premanentAddressState: new FormControl(null, [Validators.required]),
     });
   }
   selectedGua(event) {
@@ -284,16 +295,32 @@ export class CreateStudentComponent {
         console.error(err);
       })
   }
-  onBlurEmail() {
+  onBlurEmail() {  
     const password = this.generatePassword();
     const username =  this.studentForm.controls['guardian'].get('email')?.value;
     this.studentForm.controls['guardian'].patchValue({ userName: username, password: password });
     this.studentForm.updateValueAndValidity();
   }
+ 
   searchChange($event) {
     console.log($event);
   }
   generatePassword() {
     return (Math.random().toString(36).slice(-8));
+  }
+  onBlurCopyAddre(event){
+    if(event.checked == true){
+    const presentAddressHouseNo = this.studentForm.controls['presentAddressHouseNo'].value;
+    const presentAddressZipCode = this.studentForm.controls['presentAddressZipCode'].value;
+    const presentAddressStreet = this.studentForm.controls['presentAddressStreet'].value;
+    const presentAddressCity = this.studentForm.controls['presentAddressCity'].value;
+    const presentAddressState = this.studentForm.controls['presentAddressState'].value;
+    this.studentForm.patchValue({ premanentAddressHouseNo: presentAddressHouseNo, premanentAddressStreet: presentAddressStreet, premanentAddressZipCode: presentAddressZipCode, premanentAddressCity :presentAddressCity, premanentAddressState: presentAddressState });
+
+  }
+  if(event.checked ==false ){
+    this.studentForm.patchValue({ premanentAddressHouseNo: "", premanentAddressStreet: '', premanentAddressZipCode: '', premanentAddressCity :'' ,});
+   
+  }
   }
 }
