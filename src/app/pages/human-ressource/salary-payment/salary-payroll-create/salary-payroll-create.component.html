@@ -150,7 +150,7 @@
             readonly
           />
         </div>
-        <div *ngIf="!isAlreadyPaid" class="col-lg-3">
+        <div class="col-lg-3">
           <label class="form-label">Overtime Total Hours</label>
           <input
             type="number"
@@ -210,9 +210,9 @@
           type="button"
           class="save_button btn"
           (click)="onSubmitPayment()"
-          [disabled]="!paymentFormGroup.valid || isAlreadyPaid"
+          [disabled]="!paymentFormGroup.valid"
         >
-          {{ isAlreadyPaid ? "Already Paid" : "Paid" }}
+          {{ isAlreadyPaid ? "Print Receipt" : "Paid" }}
         </button>
       </div>
     </div>
