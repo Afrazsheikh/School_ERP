@@ -111,43 +111,69 @@ onChangeClass(event){
       previousQualification:[this.studentBasic?.previousSchoolName],
       previousSchoolName:[this.studentBasic?.previousQualification],
       previousRemarks:[this.studentBasic?.previousRemarks],
-      guardian: this.fb.group({
-           id:[this.studentBasic?.guardian?._id],
-           name: [this.studentBasic?.guardian?.firstName],
-           relation:[this.studentBasic?.guardian?.relation],
-           fatherName:[this.studentBasic?.guardian?.fatherName],
-           motherName:[this.studentBasic?.guardian?.motherName],
-           occupation:[this.studentBasic?.guardian?.occupation],
-           education:[this.studentBasic?.guardian?.education],
-           mobileNumber:[this.studentBasic?.guardian?.number],
-           email:[this.studentBasic?.guardian?.email],
-           city:[this.studentBasic?.guardian?.city],
-           state:[this.studentBasic?.guardian?.state],
-           permanentAddress:[this.studentBasic?.guardian?.permanentAddress],
-           userName:[this.studentBasic?.guardian?.userName],
-           password:[this.studentBasic?.guardian?.password]
+      guardian1:this.fb.group({
+        relation: ['', Validators.required],
+        setAsPrimaryGuradian:[''],
+        fullName: ['', Validators.required],
+        mobileNumber: ['', Validators.required],
+        email: ['', Validators.required],
+        occupation: ['', Validators.required]
       }),
-      presentAddress: [this.studentBasic?.presentAddress, Validators.required],
-      permanentAddress: [this.studentBasic?.permanentAddress, Validators.required],
+      guardian2:this.fb.group({
+        relation: [''],
+        setAsPrimaryGuradian:[''],
+        fullName: [''],
+        mobileNumber: [''],
+        email: [''],
+        occupation: ['']
+      
+      }), 
+      userName: [this.studentBasic?.guardian?.userName, Validators.required],
+      password: [this.studentBasic?.guardian?.password, Validators.required],     
+      presentAddressHouseNo: [this.studentBasic?.presentAddressHouseNo,Validators.required],
+      presentAddressStreet: [this.studentBasic?.presentAddressStreet, Validators.required],
+      presentAddressZipCode: [this.studentBasic?.presentAddressZipCode,Validators.required],
+      presentAddressState: [this.studentBasic?.presentAddressState, Validators.required],
+      presentAddressCity: [this.studentBasic?.presentAddressCity, Validators.required],    
+      permanentAddressHouseNo: [this.studentBasic?.premanentAddressHouseNo, Validators.required],
+      permanentAddressStreet: [this.studentBasic?.premanentAddressStreet, Validators.required],
+      permanentAddressZipCode: [this.studentBasic?.premanentAddressZipCode, Validators.required],
+      permanentAddressCity: [this.studentBasic?.premanentAddressCity, Validators.required],
+      permanentAddressState:[this.studentBasic?.premanentAddressState, Validators.required],
     });
     console.log( this.studentForm);
  }
  updateInfo(formData:any){
-  const gauValue = formData.value.guardian;
-  const guardianArr ={
-    _id:gauValue.id,
-    firstName: gauValue.name,
-    relation:gauValue.relation,
-    fatherName:gauValue.fatherName,
-    motherName:gauValue.motherName,
-    occupation:gauValue.occupation,
-    number:gauValue.mobileNumber,
-    email:gauValue.email,
-    city:gauValue.city,
-    state:gauValue.state,
-    permanentAddress:gauValue.permanentAddress,
-    userName:gauValue.userName,
-    education:gauValue.education
+  const gauValue1 = formData.value.guardian1;
+  const gauValue2 = formData.value.guardian2;
+  const guardianArr1 ={
+    _id:gauValue1.id,
+    relation: gauValue1.relation,
+    setAsPrimaryGuradian: gauValue1.setAsPrimaryGuradian,
+    fullName: gauValue1.fullName,
+    number: gauValue1.mobileNumber,
+    email: gauValue1.email,
+    occupation: gauValue1.occupation,
+    // firstName: gauValue.name,
+    // relation:gauValue.relation,
+    // fatherName:gauValue.fatherName,
+    // motherName:gauValue.motherName,
+    // occupation:gauValue.occupation,
+    // number:gauValue.mobileNumber,
+    // email:gauValue.email,
+    // city:gauValue.city,
+    // state:gauValue.state,
+    // permanentAddress:gauValue.permanentAddress,
+    // userName:gauValue.userName,
+    // education:gauValue.education
+  }
+  const guardianArr2 = {
+    relation: gauValue2.relation,
+    setAsPrimaryGuradian: gauValue2.setAsPrimaryGuradian,
+    fullName: gauValue2.fullName,
+    number: gauValue2.mobileNumber,
+    email: gauValue2.email,
+    occupation:gauValue2.occupation,
   }
   const payload ={
     academicYear : formData.value.academicYear,    
@@ -173,7 +199,19 @@ onChangeClass(event){
     previousQualification:formData.value.previousQualification,
     previousSchoolName:formData.value.previousSchoolName,
     previousRemarks:formData.value.previousRemarks,
-    guardian:guardianArr
+    guardian1:guardianArr1,
+    guardian2:guardianArr2,
+    presentAddressHouseNo: formData.value.presentAddressHouseNo,
+    presentAddressStreet:formData.value.presentAddressStreet,
+    presentAddressZipCode: formData.value.presentAddressZipCode,
+    presentAddressCity: formData.value.presentAddressCity,
+    presentAddressState:formData.value.presentAddressState,
+    premanentAddressHouseNo: formData.value.permanentAddressHouseNo,
+    premanentAddressStreet: formData.value.permanentAddressStreet,
+    premanentAddressZipCode: formData.value.permanentAddressZipCode,
+    premanentAddressCity: formData.value.permanentAddressCity,
+    premanentAddressState: formData.value.permanentAddressState,
+
   }
   this.api.editStudent(payload,this.studentBasic._id).subscribe(resp => {
     this.toastr.success(resp.message, "Updated Successfully");
@@ -184,4 +222,27 @@ onChangeClass(event){
     console.error(err);
   })
  }
+ getVAlue(event){
+  /*console.log(event.checked);
+ 
+   if (event.checked === true) {
+     const presentA = this.empB1Form.get('presentAddressHouseNo')?.value;
+     this.empB1Form.patchValue({
+      permanentAddressHouseNo: this.empB1Form.get('presentAddressHouseNo')?.value,
+      permanentAddressStreet: this.empB1Form.get('presentAddressStreet')?.value,
+      permanentAddressZipCode: this.empB1Form.get('presentAddressZipCode')?.value,
+      permanentAddressCity: this.empB1Form.get('presentAddressCity')?.value,
+      permanentAddressState: this.empB1Form.get('presentAddressState')?.value,
+     });
+   } else {
+     this.empB1Form.patchValue({
+      permanentAddressHouseNo: this.empBasic?.premanentAddressHouseNo,
+      permanentAddressStreet: this.empBasic?.premanentAddressStreet,
+      permanentAddressZipCode: this.empBasic?.premanentAddressZipCode,
+      permanentAddressCity: this.empBasic?.premanentAddressCity,
+      permanentAddressState: this.empBasic?.premanentAddressState
+     });
+   }
+   this.empB1Form.updateValueAndValidity(); */
+}
 }

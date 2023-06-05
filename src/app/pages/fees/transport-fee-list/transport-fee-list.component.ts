@@ -16,6 +16,7 @@ export class TransportFeeListComponent {
   transportList:any[] =[];
   reportForm:any;
   aceYear :any[] =[];
+  totalAmount =0;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private modalService: BsModalService, private studentService:StudentService){
     this.aceYear = this.studentService.aceYear;
   }
@@ -36,6 +37,12 @@ export class TransportFeeListComponent {
     }
     this.api.getYearWiseTransportationList(payload).subscribe(data =>{
       this.transportList = data.allData;
+       if(!this.api.isEmptyObject(this.transportList)){
+        this.transportList.forEach(element =>{
+          this.totalAmount = this.totalAmount + Number(element?.amount);
+        });
+        console.log(this.totalAmount);
+       }
      },
      (err) => {
       this.transportList = [];

@@ -189,31 +189,134 @@
       <input type="text" class="form-control" formControlName="state" />
     </div>
   </div>
-  <div class="row mt-3 mb-3">
-    <div class="col-6">
-      <label class="form-label"
-        >Present Address <span class="error">*</span></label
-      >
-      <textarea
-        type="text"
-        class="form-control"
-        rows="3"
-        formControlName="presentAddress"
-      >
-      </textarea>
+  <div class="row">
+    <div class="col-md-12 header-txt" >
+        <span>Address Detail</span>
     </div>
-    <div class="col-6">
-      <label class="form-label"
-        >Permanent Address <span class="error">*</span></label
-      >
-      <textarea
-        type="text"
-        class="form-control"
-        rows="3"
-        formControlName="permanentAddress"
-      >
-      </textarea>
+</div>
+  <div class="row">
+    <div class="col-md-12 mt-3" >
+        <h6>Present Address</h6>
     </div>
+</div>
+  <div class="row mt-2 mb-3 mt-3">
+    <div class="col-4">
+      <label class="form-label">House No <span class="error">*</span></label>
+      <input type="text" class="form-control"  formControlName="presentAddressHouseNo" > 
+      <div *ngIf="studentForm.controls['presentAddressHouseNo'].invalid && (studentForm.controls['presentAddressHouseNo'].dirty || studentForm.controls['presentAddressHouseNo'].touched)"
+          class="error mt-2">
+          <div *ngIf="studentForm.controls['presentAddressHouseNo'].errors['required']">
+            House No is required
+          </div>
+      </div> 
+    </div>
+    <div class="col-5">
+      <label class="form-label">Apartment Name / Street <span class="error">*</span></label>
+      <input type="text" class="form-control"  formControlName="presentAddressStreet" >  
+      <div *ngIf="studentForm.controls['presentAddressStreet'].invalid && (studentForm.controls['presentAddressStreet'].dirty || studentForm.controls['presentAddressStreet'].touched)"
+      class="error mt-2">
+      <div *ngIf="studentForm.controls['presentAddressStreet'].errors['required']">
+       Apartment Name / Street is required
+      </div>
+  </div> 
+    </div>
+    <div class="col-3">
+      <label class="form-label">ZipCode <span class="error">*</span></label>
+      <input type="text" class="form-control"  formControlName="presentAddressZipCode" >  
+      <div *ngIf="studentForm.controls['presentAddressZipCode'].invalid && (studentForm.controls['presentAddressZipCode'].dirty || studentForm.controls['presentAddressZipCode'].touched)"
+      class="error mt-2">
+      <div *ngIf="studentForm.controls['presentAddressZipCode'].errors['required']">
+        ZipCode is required
+      </div>
+  </div> 
+    </div>
+  </div>    
+  <div class="row mt-2 mb-3 mt-3">
+    <div class="col-4">
+      <label class="form-label">City <span class="error">*</span></label>
+      <input type="text" class="form-control"  formControlName="presentAddressCity" > 
+      <div *ngIf="studentForm.controls['presentAddressCity'].invalid && (studentForm.controls['presentAddressCity'].dirty || studentForm.controls['presentAddressCity'].touched)"
+      class="error mt-2">
+      <div *ngIf="studentForm.controls['presentAddressCity'].errors['required']">
+        City is required
+      </div>
+  </div>  
+    </div>
+    <div class="col-5">
+      <label class="form-label">State <span class="error">*</span></label>
+      <input type="text" class="form-control"  formControlName="presentAddressState" >  
+      <div *ngIf="studentForm.controls['presentAddressState'].invalid && (studentForm.controls['presentAddressState'].dirty || studentForm.controls['presentAddressState'].touched)"
+      class="error mt-2">
+      <div *ngIf="studentForm.controls['presentAddressState'].errors['required']">
+        State is required
+      </div>
+  </div> 
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-3" style="border-bottom:1px solid #ccc ;">
+          <h6>Permanent Address</h6>
+      </div>
+  </div>
+  <div class="row" >
+    <div class="col-md-12" >
+        <mat-checkbox (change)="getVAlue($event)" formControlName="isSameAddress"><b> Same As Present Address </b></mat-checkbox>
+    </div>
+  </div>
+
+<div class="row mt-2 mb-3 mt-3">
+  <div class="col-4">
+    <label class="form-label">House No <span class="error">*</span></label>
+    <input type="text" class="form-control"  formControlName="permanentAddressHouseNo" >  
+    <div *ngIf="studentForm.controls['permanentAddressHouseNo'].invalid && (studentForm.controls['permanentAddressHouseNo'].dirty || studentForm.controls['permanentAddressHouseNo'].touched)"
+    class="error mt-2">
+    <div *ngIf="studentForm.controls['permanentAddressHouseNo'].errors['required']">
+      House No is required
+    </div>
+</div> 
+  </div>
+  <div class="col-5">
+    <label class="form-label">Apartment Name / Street <span class="error">*</span></label>
+    <input type="text" class="form-control"  formControlName="permanentAddressStreet" >  
+    <div *ngIf="studentForm.controls['permanentAddressStreet'].invalid && (studentForm.controls['permanentAddressStreet'].dirty || studentForm.controls['permanentAddressStreet'].touched)"
+    class="error mt-2">
+    <div *ngIf="studentForm.controls['permanentAddressStreet'].errors['required']">
+      Apartment Name / Street is required
+    </div>
+</div> 
+  </div>
+  <div class="col-3">
+    <label class="form-label">ZipCode <span class="error">*</span></label>
+    <input type="text" class="form-control"  formControlName="permanentAddressZipCode" > 
+    <div *ngIf="studentForm.controls['permanentAddressZipCode'].invalid && (studentForm.controls['permanentAddressZipCode'].dirty || studentForm.controls['permanentAddressZipCode'].touched)"
+    class="error mt-2">
+    <div *ngIf="studentForm.controls['permanentAddressZipCode'].errors['required']">
+      ZipCode is required
+    </div>
+</div>  
+  </div>
+</div>    
+<div class="row mt-2 mb-3 mt-3">
+  <div class="col-4">
+    <label class="form-label">City <span class="error">*</span></label>
+    <input type="text" class="form-control"  formControlName="permanentAddressCity" > 
+    <div *ngIf="studentForm.controls['permanentAddressCity'].invalid && (studentForm.controls['permanentAddressCity'].dirty || studentForm.controls['permanentAddressCity'].touched)"
+    class="error mt-2">
+    <div *ngIf="studentForm.controls['permanentAddressCity'].errors['required']">
+      City is required
+    </div>
+</div>   
+  </div>
+  <div class="col-5">
+    <label class="form-label">State <span class="error">*</span></label>
+    <input type="text" class="form-control"  formControlName="permanentAddressState" > 
+    <div *ngIf="studentForm.controls['permanentAddressState'].invalid && (studentForm.controls['permanentAddressState'].dirty || studentForm.controls['permanentAddressState'].touched)"
+    class="error mt-2">
+    <div *ngIf="studentForm.controls['permanentAddressState'].errors['required']">
+      State is required
+    </div>
+</div> 
+  </div>
   </div>
 
   <div class="row">
@@ -221,7 +324,7 @@
       <span>Guardian Details</span>
     </div>
   </div>
-  <ng-container formGroupName="guardian">
+  <ng-container formGroupName="guardian1">
     <!-- ===== BEGINS:: Guardina 1 ===== -->
     <div class="border-bottom py-2">
       <strong>Relation 1:</strong>
@@ -240,7 +343,7 @@
     <div class="row mt-3 mb-3">
       <div class="col-6">
         <label class="form-label">Full Name <span class="error">*</span></label>
-        <input type="text" class="form-control" formControlName="name" />
+        <input type="text" class="form-control" formControlName="fullName" />
       </div>
       <div class="col-4">
         <label class="form-label">Mobile No <span class="error">*</span></label>
@@ -250,23 +353,8 @@
           formControlName="mobileNumber"
         />
       </div>
-      <!-- <div class="col-4">
-              <label class="form-label">Father Name  <span class="error">*</span></label>
-              <input type="text" class="form-control"  formControlName="fatherName">
-          </div> 
-          <div class="col-4">
-              <label class="form-label">Mother Name  <span class="error">*</span></label>
-              <input type="text" class="form-control"  formControlName="motherName">
-          </div> -->
     </div>
     <div class="row mt-3 mb-3">
-      <!-- <div class="col-4">
-              <label class="form-label">Education <span class="error">*</span></label>
-              <select class="form-select" formControlName="education">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let sec of educationList" value="{{sec._id}}">{{sec.name}}</option>
-                </select>
-          </div>        -->
       <div class="col-6">
         <label class="form-label">Email <span class="error">*</span></label>
         <input type="text" class="form-control" formControlName="email" />
@@ -283,25 +371,11 @@
         </select>
       </div>
     </div>
-    <!-- <div class="row mt-3 mb-3" >
-          <div class="col-4">
-              <label class="form-label">State  <span class="error">*</span></label>
-              <input type="text" class="form-control"  formControlName="state">
-          </div>
-          <div class="col-4">
-              <label class="form-label">City  <span class="error">*</span></label>
-              <input type="text" class="form-control"  formControlName="city">
-          </div>
-      </div>
-      <div class="row mt-3 mb-3" >
-          <div class="col-12">
-              <label class="form-label">Permanent address  <span class="error">*</span></label>
-              <input type="text" class="form-control"  formControlName="permanentAddress">
-          </div>
-      </div> -->
+  </ng-container>
     <!-- ===== ENDS:: Guardina 1 ===== -->
 
     <!-- ===== BEGINS:: Guardina 2 ===== -->
+    <ng-container formGroupName="guardian2">
     <div class="border-bottom py-2">
       <strong>Relation 2:</strong>
     </div>
@@ -319,7 +393,7 @@
     <div class="row mt-3 mb-3">
       <div class="col-6">
         <label class="form-label">Full Name <span class="error">*</span></label>
-        <input type="text" class="form-control" formControlName="name" />
+        <input type="text" class="form-control" formControlName="fullName" />
       </div>
       <div class="col-4">
         <label class="form-label">Mobile No <span class="error">*</span></label>
@@ -386,7 +460,33 @@
       </textarea>
     </div>
   </div>
-
+  <div class="row">
+    <div class="col-md-12 header-txt">
+      <span>Login Details</span>
+    </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-4">
+      <label class="form-label"
+        >Username <span class="error">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        formControlName="userName"
+      />
+    </div>
+    <div class="col-4">
+      <label class="form-label"
+        >Password <span class="error">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        formControlName="password"
+      />
+    </div>
+  </div>
   <div class="header-txt col-md-12"></div>
   <div class="row mt-3 mb-3">
     <div class="col-md-10"></div>

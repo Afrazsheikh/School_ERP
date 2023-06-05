@@ -49,7 +49,7 @@ const tabIndex = event.index;
       this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'ADMIN')
     }
     else if (tabIndex == 1) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Teacher')
+      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Senior Teacher')
     }
     else if (tabIndex == 1) {
       this.filteredEmp = this.employees.filter(emp => emp.designation?.name == "TEACHER")

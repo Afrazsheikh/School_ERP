@@ -37,11 +37,12 @@
                 <table class="table mt-3">
                     <thead>
                       <tr>
-                        <th width="15%">S. No</th>
-                        <th width="20%">Class</th>
+                        <th width="8%" class="top-align">S. No</th>
+                        <th width="10%" class="top-align">Class</th>
                         <ng-container *ngFor="let row of categoryList">
-                          <th>{{row.categoryName}}</th>
-                        </ng-container>                        
+                          <th class="top-align">{{row.categoryName}}</th>
+                        </ng-container>  
+                        <th class="top-align">Total Amount</th>                      
                       </tr>
                       </thead>
                       <tbody>
@@ -52,6 +53,7 @@
                                 <ng-container *ngFor="let subRow of categoryList">
                                   <td>{{row[subRow?.categoryName]}}</td>
                                 </ng-container>
+                                <td><span class="f-w-400">{{row?.totalAmount}}</span></td>
                             </tr>
                         </ng-container>
                       </tbody>                     

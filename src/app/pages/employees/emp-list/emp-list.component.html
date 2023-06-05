@@ -20,7 +20,7 @@
               </div>
 
               <div class="add-emp">
-                <button class="btn" routerLink="/employee/add">
+                <button class="btn" routerLink="/employee/create">
                   <i class="fa-solid fa-user-plus"></i>
                   Add Employee
                 </button>
@@ -114,7 +114,7 @@
                   <td>{{teacher.email}}</td>
                   <td>{{teacher.number}}</td>
                   <td>
-                    <button class="btn emp-edit me-1" (click)="editTeacherEm(teacher)"  routerLink="'/employee/add' + employee._id"  ><i class="fa-solid fa-pencil"></i></button>
+                    <button class="btn emp-edit me-1"  (click)="detailClick(teacher)"  ><i class="fa-solid fa-pencil"></i></button>
                      
                     <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePrompt"
                     (click)="emplyee=teacher">

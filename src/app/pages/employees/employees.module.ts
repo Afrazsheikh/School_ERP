@@ -23,6 +23,7 @@ import { EmpPictureInfoComponent } from './emp-picture-info/emp-picture-info.com
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { EmpBankDetailComponent } from './emp-bank-detail/emp-bank-detail.component';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { CreateEmpComponent } from './create-emp/create-emp.component';
 const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -45,7 +46,8 @@ const MY_FORMATS = {
     EmpBaiscComponent,
     EmpSalaryComponent,
     EmpPictureInfoComponent,
-    EmpBankDetailComponent
+    EmpBankDetailComponent,
+    CreateEmpComponent
   ],
   imports: [
     CommonModule,
