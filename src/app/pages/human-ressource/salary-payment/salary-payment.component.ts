@@ -90,7 +90,7 @@ export class SalaryPaymentComponent {
 
   getFilteredEmployees() {
     this.filteredEmployees = this.employees.filter(
-      (emp) => emp.designation?._id === this.designFilter
+      (emp) => emp.designationId === this.designFilter
     );
   }
 
@@ -119,6 +119,7 @@ export class SalaryPaymentComponent {
       .getEmployeeSalaryWithStatusBYMonth(this.date.value.format('MM-YYYY'))
       .subscribe((resp) => {
         this.filteredEmployees = resp.salary_receipts;
+        this.employees = resp.salary_receipts;
         // this.filteredEmployees = resp.employees;
         // this.getAllSalaries();
       });
