@@ -77,7 +77,7 @@
           <td>{{student.registerNo}}</td>
           <td>{{student.rollNo}}</td>
           <td>{{student.dob | date :"MM/dd/yyyy"}}</td>
-          <td>{{student.guardian.firstName}}</td>
+          <td>{{student.guardian?.firstName}}</td>
           <td><div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                 <span>0%</span>

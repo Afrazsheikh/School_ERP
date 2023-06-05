@@ -48,18 +48,7 @@ getDesignations() {
   if(this.empBasic?.dob !== '' && this.empBasic?.dob !== null && this.empBasic?.dob !== undefined) {
     this.empBasic.dob = new Date(this.empBasic.dob);
   }
-  if(!this.api.isEmptyObject(this.empBasic?.presentAddress)){
-   const myArray = this.empBasic?.presentAddress.split(',');
-   if(!this.api.isEmptyObject(myArray)) {
-    this.address.present = myArray;
-   }
-  }
-  if(!this.api.isEmptyObject(this.empBasic?.permanentAddress)){
-    const myArray1 = this.empBasic?.permanentAddress.split(',');
-    if(!this.api.isEmptyObject(myArray1)) {
-     this.address.permanent = myArray1;
-    }
-  }
+ 
   this.empB1Form = this.fb.group({ 
       id:[this.empBasic._id],
       department: [this.empBasic?.department?._id, Validators.required],
@@ -75,19 +64,17 @@ getDesignations() {
       bloodGroup: [this.empBasic?.bloodGroup, Validators.required],
       number: [this.empBasic?.number, Validators.required],
       email: [this.empBasic?.email, Validators.required],
-      houseNo: [this.address?.present[0]],
-      apartment: [this.address?.present[1]],
-      landmark: [this.address?.present[2]],
-      zipcode: [this.address?.present[3]],
-      houseNo1: [this.address?.permanent[0]],
-      apartment1: [this.address?.permanent[1]],
-      landmark1: [this.address?.permanent[2]],
-      zipcode1: [this.address?.permanent[3]],
+      presentAddressHouseNo: [this.empBasic?.presentAddressHouseNo,Validators.required],
+      presentAddressStreet: [this.empBasic?.presentAddressStreet, Validators.required],
+      presentAddressZipCode: [this.empBasic?.presentAddressZipCode,Validators.required],
+      presentAddressState: [this.empBasic?.presentAddressState, Validators.required],
+      presentAddressCity: [this.empBasic?.presentAddressCity, Validators.required],    
+      permanentAddressHouseNo: [this.empBasic?.premanentAddressHouseNo, Validators.required],
+      permanentAddressStreet: [this.empBasic?.premanentAddressStreet, Validators.required],
+      permanentAddressZipCode: [this.empBasic?.premanentAddressZipCode, Validators.required],
+      permanentAddressCity: [this.empBasic?.premanentAddressCity, Validators.required],
+      permanentAddressState:[this.empBasic?.premanentAddressState, Validators.required],
       isSameAddress:[false],
-      city: [this.empBasic?.city],
-      state: [this.empBasic?.state],
-      presentAddress: [this.empBasic?.presentAddress, Validators.required],
-      permanentAddress: [this.empBasic?.permanentAddress, Validators.required],
       facebook: [this.empBasic?.facebook],      
       twitter: [this.empBasic?.twitter],
       linkedin: [this.empBasic?.linkedin],
@@ -175,13 +162,22 @@ getDesignations() {
   console.log(event.checked);
  
    if (event.checked === true) {
-     const presentA = this.empB1Form.get('presentAddress')?.value;
+     const presentA = this.empB1Form.get('presentAddressHouseNo')?.value;
      this.empB1Form.patchValue({
-       permanentAddress: presentA
+      permanentAddressHouseNo: this.empB1Form.get('presentAddressHouseNo')?.value,
+      permanentAddressStreet: this.empB1Form.get('presentAddressStreet')?.value,
+      permanentAddressZipCode: this.empB1Form.get('presentAddressZipCode')?.value,
+      permanentAddressCity: this.empB1Form.get('presentAddressCity')?.value,
+      permanentAddressState: this.empB1Form.get('presentAddressState')?.value,
      });
    } else {
      this.empB1Form.patchValue({
-       permanentAddress: ''
+      permanentAddressHouseNo: '',
+      permanentAddressStreet:'',
+      permanentAddressZipCode:'',
+      permanentAddressCity:'',
+      permanentAddressState:''
+
      });
    }
    this.empB1Form.updateValueAndValidity();
