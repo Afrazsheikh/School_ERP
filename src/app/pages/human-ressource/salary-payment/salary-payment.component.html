@@ -4,20 +4,6 @@
     <div class="py-2">
       <div class="col-12">
         <div class="row">
-          <div class="col-3">
-            <label class="form-label">Designation </label>
-            <!-- <label class="form-label">Class *</label> -->
-            <select
-              class="form-select"
-              [(ngModel)]="designFilter"
-              (change)="getFilteredEmployees()"
-            >
-              <option disabled value="select">Select</option>
-              <option *ngFor="let sec of designations" [value]="sec._id">
-                {{ sec.name }}
-              </option>
-            </select>
-          </div>
           <div class="col-6">
             <label class="form-label">Months And Year*</label>
             <div class="input-group">
@@ -40,6 +26,21 @@
                 #picker
               ></mat-datepicker>
             </div>
+          </div>
+
+          <div class="col-3">
+            <label class="form-label">Designation </label>
+            <!-- <label class="form-label">Class *</label> -->
+            <select
+              class="form-select"
+              [(ngModel)]="designFilter"
+              (change)="getFilteredEmployees()"
+            >
+              <option disabled value="select">Select</option>
+              <option *ngFor="let sec of designations" [value]="sec._id">
+                {{ sec.name }}
+              </option>
+            </select>
           </div>
 
           <div class="col-12 text-end px-0 pt-4">
