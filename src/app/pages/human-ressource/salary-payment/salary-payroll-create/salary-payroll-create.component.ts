@@ -114,11 +114,14 @@ export class SalaryPayrollCreateComponent implements OnInit {
       .getSalaryMonthAndEmpWise(this.employeeId, this.currentMonthAndYear)
       .subscribe({
         next: (res) => {
-          if (res) {
-            this.salaryReceiptDetail = res.salary_receipts;
-            this.isAlreadyPaid =
-              this.salaryReceiptDetail.salaryStatus === 'PAID' ? true : false;
-          }
+          // if (res) {
+          //   this.salaryReceiptDetail = res.salary_receipts;
+          //   this.isAlreadyPaid =
+          //     this.salaryReceiptDetail.salaryStatus === 'PAID' ? true : false;
+          //   if (this.isAlreadyPaid) {
+          //     this.paymentFormGroup.patchValue(res.salary_receipts);
+          //   }
+          // }
         },
         error: (err) => {
           this.toastr.error(JSON.stringify(err));

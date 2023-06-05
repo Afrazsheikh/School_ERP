@@ -735,9 +735,9 @@ export class ApiService {
     return this.httpClient
       .get(
         environment.apiBaseUrl +
-          '/salaryReceipt/employee/' +
-          employeeId +
-          '/' +
+          // '/salaryReceipt/employee/' +
+          // employeeId +
+          '/salaryReceipt/' +
           monthAndYear
       )
       .pipe(catchError(this.errorHandler));
