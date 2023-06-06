@@ -89,11 +89,7 @@
             <!-- <td>₹{{ emp.salaryDetails?.basicSalary }}</td> -->
             <td>₹{{ emp.salaryGrade?.basicSalary }}</td>
             <td>
-              <button
-                [routerLink]="
-                  '/human-resource/salary-payroll-create/' + emp._id
-                "
-              >
+              <button (click)="navigateToSalaryCreate(emp)">
                 {{ emp.salaryStatus === "PAID" ? "Salary Paid" : "Pay Now" }}
               </button>
             </td>

@@ -14,6 +14,7 @@ import { ApiService } from 'src/app/services/api.service';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import { Moment } from 'moment';
+import { Router } from '@angular/router';
 
 const moment = _moment;
 export const MY_FORMATS = {
@@ -50,7 +51,7 @@ export class SalaryPaymentComponent {
   designations: any[] = [];
   designFilter: string = 'select';
   date = new FormControl(moment());
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAllEmployees();
@@ -123,5 +124,14 @@ export class SalaryPaymentComponent {
         // this.filteredEmployees = resp.employees;
         // this.getAllSalaries();
       });
+  }
+
+  navigateToSalaryCreate(emp: any) {
+    this.router.navigateByUrl(
+      '/human-resource/salary-payroll-create/' +
+        emp._id +
+        '/' +
+        this.date.value.format('MM-YYYY')
+    );
   }
 }

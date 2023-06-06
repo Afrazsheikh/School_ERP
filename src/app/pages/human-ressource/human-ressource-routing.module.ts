@@ -49,7 +49,7 @@ const routes: Routes = [
     component: LeaveManageApplicationComponent,
   },
   {
-    path: 'salary-payroll-create/:id',
+    path: 'salary-payroll-create/:id/:monthAndYear',
     component: SalaryPayrollCreateComponent,
   },
 ];
