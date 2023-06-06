@@ -31,6 +31,7 @@ export class SalaryPayrollCreateComponent implements OnInit {
   ];
   salaryReceiptDetail: any;
   isAlreadyPaid = false;
+  monthAndYear!: string;
 
   constructor(
     _route: ActivatedRoute,
@@ -41,9 +42,12 @@ export class SalaryPayrollCreateComponent implements OnInit {
   ) {
     _route.params.subscribe({
       next: (routeParam) => {
+        console.log(routeParam);
+
         if (routeParam.hasOwnProperty('id')) {
           this.employeeId = routeParam['id'];
           this.fetchEmployeeDetail();
+          this.monthAndYear = routeParam['monthAndYear'];
           this.fetchReceipt();
         }
       },
@@ -116,7 +120,7 @@ export class SalaryPayrollCreateComponent implements OnInit {
 
   fetchReceipt() {
     this._apiService
-      .getSalaryMonthAndEmpWise(this.employeeId, this.currentMonthAndYear)
+      .getSalaryMonthAndEmpWise(this.employeeId, this.monthAndYear)
       .subscribe({
         next: (res) => {
           if (res) {

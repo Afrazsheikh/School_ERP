@@ -52,14 +52,18 @@
               <tr>
                 <th width="15%">Basic Salary</th>
                 <td width="25%">
-                  ${{ employeeDetail?.salaryGrade?.basicSalary }}
+                  ₹{{ employeeDetail?.salaryGrade?.basicSalary }}
                 </td>
               </tr>
               <tr>
                 <th width="15%">Overtime Rate (Per Hour)</th>
                 <td width="25%">
-                  ${{ employeeDetail?.salaryGrade?.overTimeRatePerHr }}
+                  ₹{{ employeeDetail?.salaryGrade?.overTimeRatePerHr }}
                 </td>
+              </tr>
+              <tr>
+                <th width="15%">Salary month</th>
+                <td width="25%">{{ monthAndYear }}</td>
               </tr>
             </table>
           </div>
@@ -91,7 +95,7 @@
               "
             >
               <td>{{ allowance.name }}</td>
-              <td>${{ allowance.amount }}</td>
+              <td>₹{{ allowance.amount }}</td>
             </tr>
           </table>
         </div>
@@ -117,7 +121,7 @@
               "
             >
               <td>{{ deduction.name }}</td>
-              <td>${{ deduction.amount }}</td>
+              <td>₹{{ deduction.amount }}</td>
             </tr>
           </table>
         </div>
