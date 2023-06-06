@@ -1,51 +1,15 @@
 <app-layout>
   <div class="container p-5">
-    <div class="row">
-      <div class="col-md-12 header-txt"><i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;Student Admission</div>
-    </div>
     <form [formGroup]="studentForm">
-      <div class="row mt-2 mb-3">
-        <div class="col-4">
-          <label class="form-label">Admission Date <span class="error">*</span></label>
-          <div class="input-group">
-       
-            <input matInput class="form-control me-3" [matDatepicker]="picker" placeholder="dd-mm-yyyy"
-              formControlName="admissionDate"/>
-            <div class="mr-2 tooglePicker">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            </div>
-            <mat-datepicker #picker></mat-datepicker>
-          </div>
-          <div
-            *ngIf="studentForm.controls['admissionDate'].invalid && (studentForm.controls['admissionDate'].dirty || studentForm.controls['admissionDate'].touched)"
-            class="error mt-2">
-            <div *ngIf="studentForm.controls['admissionDate'].errors['required']">
-              Admission Date is required.
-            </div>
-          </div>
-        </div>
-        
-        <div class="col-4">
-          <label class="form-label">Register No <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="registerNo" readonly />
-          <div
-            *ngIf="studentForm.controls['registerNo'].invalid && (studentForm.controls['registerNo'].dirty || studentForm.controls['registerNo'].touched)"
-            class="error mt-2">
-            <div *ngIf="studentForm.controls['registerNo'].errors['required']">
-              Register No is required.
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="row">
-        <div class="col-md-12 header-txt" >
-          <i _ngcontent-dan-c162="" class="fas fa-school"></i>&nbsp;&nbsp;<span>Academic Details</span>
+        <div class="col-md-12 header-txt">
+          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Academic Details</span>
         </div>
       </div>
 
       <div class="row mt-2 mb-3">
 
-        <div class="col-4">
+        <div class="col-3">
           <label class="form-label">Class <span class="error">*</span></label>
           <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
             <option disabled value="select">Select</option>
@@ -62,7 +26,7 @@
           </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-3">
           <label class="form-label">Section <span class="error">*</span></label>
           <select class="form-select" formControlName="section">
             <option disabled value="select">Select</option>
@@ -79,7 +43,7 @@
           </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-3">
           <label class="form-label">Year <span class="error">*</span></label>
           <select class="form-select" formControlName="academicYear">
             <option disabled value="select">Select</option>
@@ -95,11 +59,8 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="row mt-3 mb-3">
-
-        <div class="col-4">
+        <div class="col-3">
           <label class="form-label">Category <span class="error">*</span></label>
           <select class="form-select" formControlName="category">
             <option disabled value="select">Select</option>
@@ -116,7 +77,23 @@
           </div>
         </div>
 
-        <div class="col-4">
+      </div>
+
+      <div class="row mt-3 mb-3">
+
+        <div class="col-3">
+          <label class="form-label">Register No <span class="error">*</span></label>
+          <input type="text" class="form-control" formControlName="registerNo" readonly />
+          <div
+            *ngIf="studentForm.controls['registerNo'].invalid && (studentForm.controls['registerNo'].dirty || studentForm.controls['registerNo'].touched)"
+            class="error mt-2">
+            <div *ngIf="studentForm.controls['registerNo'].errors['required']">
+              Register No is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3">
           <label class="form-label">RollNo No <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="rollNo" />
           <div
@@ -128,8 +105,26 @@
           </div>
         </div>
 
+        <div class="col-3">
+          <label class="form-label">Admission Date <span class="error">*</span></label>
+          <div class="input-group">
+            <input matInput class="form-control me-3" [matDatepicker]="picker" placeholder="dd-mm-yyyy"
+              formControlName="admissionDate" />
+            <div class="mr-2 tooglePicker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            </div>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+          <div
+            *ngIf="studentForm.controls['admissionDate'].invalid && (studentForm.controls['admissionDate'].dirty || studentForm.controls['admissionDate'].touched)"
+            class="error mt-2">
+            <div *ngIf="studentForm.controls['admissionDate'].errors['required']">
+              Admission Date is required.
+            </div>
+          </div>
+        </div>
 
-        <div class="col-4">
+        <div class="col-3">
           <label class="form-label">Type</label>
           <select class="form-select" formControlName="type">
             <option disabled value="select">Select</option>
@@ -143,7 +138,7 @@
 
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fas fa-user-check"></i>&nbsp;&nbsp;<span>Student Details</span>
+          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Student Details</span>
         </div>
       </div>
 
@@ -337,7 +332,7 @@
 
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fa-solid fa-location-dot fa-fw"></i>&nbsp;&nbsp;<span>Address Details</span>
+          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Address Details</span>
         </div>
       </div>
 
@@ -485,7 +480,7 @@
       <!-- *************new address form end**************************  -->
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;&nbsp;<span>Upload Document</span>
+          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Upload Document</span>
         </div>
       </div>
 
@@ -533,7 +528,7 @@
 
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fas fa-user-tie"></i>&nbsp;&nbsp;<span>Guardian Details</span>
+          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Guardian Details</span>
         </div>
       </div>
 
@@ -546,7 +541,7 @@
         <div class="col-6" *ngIf="studentForm.controls['isGuardianExist'].value">
           <label class="form-label"> Guardian</label>
           <ngx-select-dropdown [instanceId]="'dropdown_1'" (searchChange)="searchChange($event)" tabindex="0"
-            [multiple]="false" [config]="config" [options]="options"
+            [multiple]="false" [config]="config" [options]="options" 
             (change)="selectedGua($event)"></ngx-select-dropdown>
         </div>
       </div>
@@ -607,6 +602,26 @@
               </div>
             </div>
           </div>
+          <!-- <div class="col-4">
+              <label class="form-label"
+                >Father Name <span class="error">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="fatherName"
+              />
+            </div>
+            <div class="col-4">
+              <label class="form-label"
+                >Mother Name <span class="error">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                formControlName="motherName"
+              />
+            </div> -->
         </div>
         <div class="row mt-3 mb-3">
 
@@ -933,7 +948,7 @@
 
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fas fa-user-lock"></i>&nbsp;&nbsp;<span>Login Details</span>
+          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Login Details</span>
         </div>
       </div>
 

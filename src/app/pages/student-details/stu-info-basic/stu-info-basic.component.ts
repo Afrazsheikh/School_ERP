@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import { StudentService} from '../student.service';
+import { MatCheckbox } from '@angular/material/checkbox';
 @Component({
   selector: 'app-stu-info-basic',
   templateUrl: './stu-info-basic.component.html',
@@ -26,7 +27,9 @@ export class StuInfoBasicComponent {
   relationShipList:any[] =[];
   occupationsList:any[] = [];
   educationList:any[] =[];
-
+  @ViewChild('guardian2PrimaryGuard') private guardian2PrimaryGuard: MatCheckbox;
+  @ViewChild('guardian1PrimaryGuard') private guardian1PrimaryGuard: MatCheckbox;
+  isRequiredSign:boolean=false;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder, private studentService:StudentService) {
     this.aceYear = this.studentService.aceYear;
     this.genderList = this.studentService.genderList;
@@ -111,7 +114,7 @@ onChangeClass(event){
       previousRemarks:[this.studentBasic?.previousRemarks],
       guardian1:this.fb.group({
         relation: [this.studentBasic?.guardian?.relation, Validators.required],
-        setAsPrimaryGuradian:[''],
+        setAsPrimaryGuradian:[this.studentBasic?.guardian?.isPrimary],
         fullName: [this.studentBasic?.guardian?.firstName, Validators.required],
         mobileNumber: [this.studentBasic?.guardian?.number, Validators.required],
         email: [this.studentBasic?.guardian?.email, Validators.required],
@@ -120,7 +123,7 @@ onChangeClass(event){
       }),
       guardian2:this.fb.group({
         relation: [this.studentBasic?.guardian2?.relation],
-        setAsPrimaryGuradian:[''],
+        setAsPrimaryGuradian:[this.studentBasic?.guardian2?.isPrimary],
         fullName: [this.studentBasic?.guardian2?.firstName],
         mobileNumber: [this.studentBasic?.guardian2?.number],
         email: [this.studentBasic?.guardian2?.email],
@@ -149,7 +152,7 @@ onChangeClass(event){
   const guardianArr1 ={
     _id:gauValue1.id,
     relation: gauValue1.relation,
-    setAsPrimaryGuradian: gauValue1.setAsPrimaryGuradian,
+    isPrimary: gauValue1.setAsPrimaryGuradian,
     firstName: gauValue1.fullName,
     number: gauValue1.mobileNumber,
     email: gauValue1.email,
@@ -160,7 +163,7 @@ onChangeClass(event){
   }
   const guardianArr2 = {
     relation: gauValue2.relation,
-    setAsPrimaryGuradian: gauValue2.setAsPrimaryGuradian,
+    isPrimary: gauValue2.setAsPrimaryGuradian,
     firstName: gauValue2.fullName,
     number: gauValue2.mobileNumber,
     email: gauValue2.email,
@@ -235,4 +238,89 @@ onChangeClass(event){
    }
    this.studentForm.updateValueAndValidity();
 }
+primaryGuradianChange(Id)
+  {
+    if(Id=="guardian1PrimaryGuard")
+    {
+      if(this.guardian1PrimaryGuard.checked==false)
+      {
+        this.guardian1PrimaryGuard.checked=false;
+        this.isRequireSignfalse();
+        this.dynamicValidationApplyRemoveinGuardian(false);
+        this.addValidationGuardin1PrimaryGuradian();
+      }
+      else
+      {
+        this.guardian1PrimaryGuard.checked=true;
+        this.isRequireSignfalse();
+        this.dynamicValidationApplyRemoveinGuardian(false);
+        this.removeValidationguardin1PrimaryGuradian();
+      }
+      this.guardian2PrimaryGuard.checked=false;
+      this.studentForm.value.guardian2.setAsPrimaryGuradian=false;
+    }
+    else
+    {
+      if(this.guardian2PrimaryGuard.checked==false)
+      {
+        this.guardian2PrimaryGuard.checked=false;
+        this.isRequireSignfalse();
+        this.dynamicValidationApplyRemoveinGuardian(false);
+        this.addValidationGuardin1PrimaryGuradian();
+      }
+      else
+      {
+        this.guardian2PrimaryGuard.checked=true;
+        this.isRequireSignTrue();
+        this.dynamicValidationApplyRemoveinGuardian(true);
+        this.removeValidationguardin1PrimaryGuradian();
+      }
+      this.guardian1PrimaryGuard.checked=false;
+      this.studentForm.value.guardian1.setAsPrimaryGuradian=false;
+    }
+  }
+
+  isRequireSignTrue()
+  {
+    this.isRequiredSign=true;
+  }
+  isRequireSignfalse()
+  {
+    this.isRequiredSign=false;
+  }
+  dynamicValidationApplyRemoveinGuardian(isapply) {
+    if (isapply) {
+      this.studentForm.get('guardian2.fullName').addValidators(Validators.required);//apply validation
+      this.studentForm.get('guardian2.fullName').updateValueAndValidity();//update value and validation on controller.
+      this.studentForm.get('guardian2.mobileNumber').addValidators(Validators.required);
+      this.studentForm.get('guardian2.mobileNumber').updateValueAndValidity();
+      this.studentForm.get('guardian2.email').addValidators(Validators.required);
+      this.studentForm.get('guardian2.email').updateValueAndValidity();
+      this.studentForm.get('guardian2.occupation').addValidators(Validators.required);
+      this.studentForm.get('guardian2.occupation').updateValueAndValidity();
+      this.studentForm.get('guardian2.setAsPrimaryGuradian').addValidators(Validators.required);
+      this.studentForm.get('guardian2.setAsPrimaryGuradian').updateValueAndValidity();
+    }
+    else {
+      this.studentForm.get('guardian2.fullName').clearValidators();//validation remove 
+      this.studentForm.get('guardian2.fullName').setErrors(null);//remove validation message
+      this.studentForm.get('guardian2.mobileNumber').clearValidators();
+      this.studentForm.get('guardian2.mobileNumber').setErrors(null);
+      this.studentForm.get('guardian2.email').clearValidators();
+      this.studentForm.get('guardian2.email').setErrors(null);
+      this.studentForm.get('guardian2.occupation').clearValidators();
+      this.studentForm.get('guardian2.occupation').setErrors(null);
+      this.studentForm.get('guardian2.setAsPrimaryGuradian').clearValidators();
+    }
+  }
+  removeValidationguardin1PrimaryGuradian()
+  {
+    this.studentForm.get('guardian1.setAsPrimaryGuradian').clearValidators();
+    this.studentForm.get('guardian1.setAsPrimaryGuradian').setErrors(null);
+  }
+  addValidationGuardin1PrimaryGuradian()
+  {
+    this.studentForm.get('guardian1.setAsPrimaryGuradian').addValidators(Validators.required);
+      this.studentForm.get('guardian1.setAsPrimaryGuradian').updateValueAndValidity();
+  }
 }

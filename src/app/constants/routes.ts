@@ -53,6 +53,7 @@ export enum routes {
   ACADE_CLASS_SCH='/academic/class-schedule',
   ACADE_CLASS_SCH_ADD='/academic/class-schedule/add',
   ACADE_TEACHER_SCH='/academic/teacher-schedule',
+  ACADE_STUDENT_PROMOTION='/academic/student-promotion',
   STUD_ACCOUNTING='/student-acconting/fees-type',
   STUD_FEES_GROUP='/student-acconting/fees-group',
   STUD_FINE_SETUP='/student-acconting/fine-setup',

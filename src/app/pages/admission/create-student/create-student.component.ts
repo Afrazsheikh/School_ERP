@@ -36,7 +36,7 @@ export class CreateStudentComponent {
   guardianProf: any;
   singleSelect: any = [];
   config = {
-    displayFn:(item: any) => { return item?.guardian?.userName; },
+    //displayFn:(item: any) => { return item?.guardian?.userName; },
     displayKey: "userName",
     height: "250px",
     search: true,
@@ -81,8 +81,16 @@ export class CreateStudentComponent {
     
   getGuardenList() {
     this.api.getGuardianAll().subscribe(resp => {
-      this.guadianList = resp.guardians;
-      this.options = this.guadianList;
+      this.guadianList =resp.guardians;
+      
+      this.guadianList.forEach(element => {
+        this.options.push({
+          userName: element.guardian?.userName +" "+"("+element.guardian?.firstName+")",
+          guardian:element?.guardian,
+          guardian2:element?.guardian2
+        });
+      });
+      
     });
   }
   getAllSection() {
@@ -185,20 +193,20 @@ export class CreateStudentComponent {
     //   alreadyExists: data.alreadyExists,
     // });
     this.studentForm.controls['guardian1'].patchValue({
-      relation:data.relation,
-      setAsPrimaryGuradian:data.setAsPrimaryGuradian,
-      fullName:data.fullName,
-      number:data.number,
-      email:data.email,
-      occupation:data.occupation
+      relation:data.guardian?.relation,
+      setAsPrimaryGuradian:data.guardian?.isPrimary,
+      fullName:data.guardian?.firstName,
+      mobileNumber:data.guardian?.number,
+      email:data.guardian?.email,
+      occupation:data.guardian?.occupation
     });
     this.studentForm.controls['guardian2'].patchValue({
-      relation:data.relation,
-      setAsPrimaryGuradian:data.setAsPrimaryGuradian,
-      fullName:data.fullName,
-      number:data.number,
-      email:data.email,
-      occupation:data.occupation
+      relation:data.guardian2?.relation,
+      setAsPrimaryGuradian:data.guardian2?.isPrimary,
+      fullName:data.guardian2?.firstName,
+      mobileNumber:data.guardian2?.number,
+      email:data.guardian2?.email,
+      occupation:data.guardian2?.occupation
     });
 
     this.studentForm.updateValueAndValidity();
@@ -380,6 +388,7 @@ export class CreateStudentComponent {
         this.removeValidationguardin1PrimaryGuradian();
       }
       this.guardian2PrimaryGuard.checked=false;
+      this.studentForm.value.guardian2.setAsPrimaryGuradian=false;
     }
     else
     {
@@ -398,6 +407,7 @@ export class CreateStudentComponent {
         this.removeValidationguardin1PrimaryGuradian();
       }
       this.guardian1PrimaryGuard.checked=false;
+      this.studentForm.value.guardian1.setAsPrimaryGuradian=false;
     }
   }
 
