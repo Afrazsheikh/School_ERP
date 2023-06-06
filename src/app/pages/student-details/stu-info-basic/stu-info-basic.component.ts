@@ -92,7 +92,7 @@ onChangeClass(event){
       studentClass: [this.studentBasic?.academic?.studentClass?._id, Validators.required],
       section: [this.studentBasic?.academic?.section?._id, Validators.required],
       category: [this.studentBasic?.category?._id, Validators.required],      
-      registerNo: [this.studentBasic?.registerNo, Validators.required],
+      registerNo: [{value:this.studentBasic?.registerNo,disabled:true }, Validators.required],
       rollNo: [this.studentBasic?.rollNo, Validators.required],
       admissionDate: [this.studentBasic?.admissionDate, Validators.required],
       type: [this.studentBasic?.type, Validators.required],
@@ -106,28 +106,28 @@ onChangeClass(event){
       caste: [this.studentBasic?.caste, Validators.required],
       email: [this.studentBasic?.email, Validators.required],
       mobileNumber: [this.studentBasic?.number, Validators.required],
-      city: [this.studentBasic?.city, Validators.required],
-      state: [this.studentBasic?.state, Validators.required],
       previousQualification:[this.studentBasic?.previousSchoolName],
       previousSchoolName:[this.studentBasic?.previousQualification],
       previousRemarks:[this.studentBasic?.previousRemarks],
       guardian1:this.fb.group({
-        relation: ['', Validators.required],
+        relation: [this.studentBasic?.guardian?.relation, Validators.required],
         setAsPrimaryGuradian:[''],
-        fullName: ['', Validators.required],
-        mobileNumber: ['', Validators.required],
-        email: ['', Validators.required],
-        occupation: ['', Validators.required]
+        fullName: [this.studentBasic?.guardian?.firstName, Validators.required],
+        mobileNumber: [this.studentBasic?.guardian?.number, Validators.required],
+        email: [this.studentBasic?.guardian?.email, Validators.required],
+        occupation: [this.studentBasic?.guardian?.occupation, Validators.required],
+        alreadyExists:[this.studentBasic?.guardian?.alreadyExists]
       }),
       guardian2:this.fb.group({
-        relation: [''],
+        relation: [this.studentBasic?.guardian2?.relation],
         setAsPrimaryGuradian:[''],
-        fullName: [''],
-        mobileNumber: [''],
-        email: [''],
-        occupation: ['']
+        fullName: [this.studentBasic?.guardian2?.firstName],
+        mobileNumber: [this.studentBasic?.guardian2?.number],
+        email: [this.studentBasic?.guardian2?.email],
+        occupation: [this.studentBasic?.guardian2?.occupation]
       
       }), 
+      isSameAddress:[false],
       userName: [this.studentBasic?.guardian?.userName, Validators.required],
       password: [this.studentBasic?.guardian?.password, Validators.required],     
       presentAddressHouseNo: [this.studentBasic?.presentAddressHouseNo,Validators.required],
@@ -150,27 +150,18 @@ onChangeClass(event){
     _id:gauValue1.id,
     relation: gauValue1.relation,
     setAsPrimaryGuradian: gauValue1.setAsPrimaryGuradian,
-    fullName: gauValue1.fullName,
+    firstName: gauValue1.fullName,
     number: gauValue1.mobileNumber,
     email: gauValue1.email,
+    alreadyExists:gauValue1.alreadyExists,
     occupation: gauValue1.occupation,
-    // firstName: gauValue.name,
-    // relation:gauValue.relation,
-    // fatherName:gauValue.fatherName,
-    // motherName:gauValue.motherName,
-    // occupation:gauValue.occupation,
-    // number:gauValue.mobileNumber,
-    // email:gauValue.email,
-    // city:gauValue.city,
-    // state:gauValue.state,
-    // permanentAddress:gauValue.permanentAddress,
-    // userName:gauValue.userName,
-    // education:gauValue.education
+    userName:formData.value.userName,
+    password:formData.value.password
   }
   const guardianArr2 = {
     relation: gauValue2.relation,
     setAsPrimaryGuradian: gauValue2.setAsPrimaryGuradian,
-    fullName: gauValue2.fullName,
+    firstName: gauValue2.fullName,
     number: gauValue2.mobileNumber,
     email: gauValue2.email,
     occupation:gauValue2.occupation,
@@ -199,8 +190,8 @@ onChangeClass(event){
     previousQualification:formData.value.previousQualification,
     previousSchoolName:formData.value.previousSchoolName,
     previousRemarks:formData.value.previousRemarks,
-    guardian1:guardianArr1,
-    guardian2:guardianArr2,
+    guardian:guardianArr1,
+    guardian1:guardianArr2,
     presentAddressHouseNo: formData.value.presentAddressHouseNo,
     presentAddressStreet:formData.value.presentAddressStreet,
     presentAddressZipCode: formData.value.presentAddressZipCode,
@@ -223,26 +214,25 @@ onChangeClass(event){
   })
  }
  getVAlue(event){
-  /*console.log(event.checked);
  
    if (event.checked === true) {
-     const presentA = this.empB1Form.get('presentAddressHouseNo')?.value;
-     this.empB1Form.patchValue({
-      permanentAddressHouseNo: this.empB1Form.get('presentAddressHouseNo')?.value,
-      permanentAddressStreet: this.empB1Form.get('presentAddressStreet')?.value,
-      permanentAddressZipCode: this.empB1Form.get('presentAddressZipCode')?.value,
-      permanentAddressCity: this.empB1Form.get('presentAddressCity')?.value,
-      permanentAddressState: this.empB1Form.get('presentAddressState')?.value,
+     const presentA = this.studentForm.get('presentAddressHouseNo')?.value;
+     this.studentForm.patchValue({
+      permanentAddressHouseNo: this.studentForm.get('presentAddressHouseNo')?.value,
+      permanentAddressStreet: this.studentForm.get('presentAddressStreet')?.value,
+      permanentAddressZipCode: this.studentForm.get('presentAddressZipCode')?.value,
+      permanentAddressCity: this.studentForm.get('presentAddressCity')?.value,
+      permanentAddressState: this.studentForm.get('presentAddressState')?.value,
      });
    } else {
-     this.empB1Form.patchValue({
-      permanentAddressHouseNo: this.empBasic?.premanentAddressHouseNo,
-      permanentAddressStreet: this.empBasic?.premanentAddressStreet,
-      permanentAddressZipCode: this.empBasic?.premanentAddressZipCode,
-      permanentAddressCity: this.empBasic?.premanentAddressCity,
-      permanentAddressState: this.empBasic?.premanentAddressState
+     this.studentForm.patchValue({
+      permanentAddressHouseNo: this.studentBasic?.premanentAddressHouseNo,
+      permanentAddressStreet: this.studentBasic?.premanentAddressStreet,
+      permanentAddressZipCode: this.studentBasic?.premanentAddressZipCode,
+      permanentAddressCity: this.studentBasic?.premanentAddressCity,
+      permanentAddressState: this.studentBasic?.premanentAddressState
      });
    }
-   this.empB1Form.updateValueAndValidity(); */
+   this.studentForm.updateValueAndValidity();
 }
 }

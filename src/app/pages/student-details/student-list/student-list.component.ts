@@ -36,7 +36,7 @@ export class StudentListComponent implements OnInit {
   addForm() {
     this.reportForm = new FormGroup({
       studentClass: new FormControl(null, [Validators.required]),
-      section: new FormControl(null, [Validators.required]),
+      section: new FormControl(null),
       academicYear: new FormControl(null, [Validators.required])
     })
   }
@@ -52,13 +52,14 @@ export class StudentListComponent implements OnInit {
   }
   onChangeClass(event){
     this.sections =[];
-    this.reportForm.patchValue({section: 'select'});
     const id = event.target.value;
     this.classes.forEach(element => {
         if(element._id === id) {
           this.sections = element.sections;
+          this.reportForm.patchValue({section: element?.sections[0]?._id});
         }
     });
+    console.log(event.target.value['section']);
   }
   getAllSection() {
     this.api.getAllSection().subscribe(resp => {

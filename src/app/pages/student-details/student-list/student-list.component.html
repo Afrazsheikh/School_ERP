@@ -2,36 +2,24 @@
 
     <div class="container tab-container p-5">
 
+      <div class="row header-txt">
+        <div class="col-md-12"><span>Student List</span></div>     
+    </div>
       <form [formGroup]="reportForm">
-        <div class="row mt-3">
+        <div class="row mt-3 grey-border">
           <div class="mb-3 col-md-4">
             <label class="form-label">Class <span class="error">*</span></label>
          
             <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
               <option disabled value="select">Select</option>
-              <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
+              <option *ngFor="let sec of classes" [value]="sec._id">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}</option>
             </select>
             <div *ngIf="reportForm.controls['studentClass'].invalid && (reportForm.controls['studentClass'].dirty || reportForm.controls['studentClass'].touched)"
             class="error mt-2">
             <div *ngIf="reportForm.controls['studentClass'].errors['required']">
               Class is required.
             </div>
-          </div></div>
-    
-          <div class="mb-3 col-md-4">
-            <label class="form-label">Section <span class="error">*</span></label>
-          
-            <select class="form-select" formControlName="section">
-              <option disabled value="select">Select</option>
-              <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-            </select>
-            <div *ngIf="reportForm.controls['section'].invalid && (reportForm.controls['section'].dirty || reportForm.controls['section'].touched)"
-            class="error mt-2">
-            <div *ngIf="reportForm.controls['section'].errors['required']">
-              Section is required.
-            </div>
-          </div>
-          </div>
+          </div></div>  
           <div class="mb-3 col-md-4">
             <label class="form-label">Year <span class="error">*</span></label>
             <select class="form-select" formControlName="academicYear">
@@ -44,23 +32,20 @@
               Year is required.
             </div></div>
           </div>
-        </div>
-       
-      <div class="text-end mb-5">
-        <button class="btn" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+            
+      <div class="col-md-4 mt-4">
+        <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
       </div>
-    </form>
-    <p class="table-heading"> Student List</p>
+        </div>             
+    </form>   
     <table class="table mt-3">
       <thead>
         <tr>
           <th scope="col">Photo</th>
-            <th scope="col" style="width:110px;">Name</th>
+            <th scope="col" style="width:120px;">Name / DOB</th>
             <th scope="col">Class</th>
-            <th scope="col">Section</th>
             <th scope="col">Register No</th>
-            <th scope="col">Roll</th>
-            <th scope="col">DOB</th>
+            <th scope="col">Roll No</th>
             <th scope="col">Guardian Name</th>
             <th scope="col">Fees Pregress</th>
             <th width="13%">Action</th>
@@ -71,12 +56,10 @@
           <tr>
           <td>  <img class="image" [src]="student?.image? student.image: 'assets/images/no-profile.jpg'"
             alt=""></td>
-          <td>{{student.firstName + " " + student.lastName}}</td>         
-          <td>{{student.class}}</td>
-          <td>{{student.section}}</td>
+          <td>{{student.firstName + " " + student.lastName}} {{student.dob | date :"MM/dd/yyyy"}}</td>         
+          <td>{{student.class}} ({{student.section}})</td>
           <td>{{student.registerNo}}</td>
           <td>{{student.rollNo}}</td>
-          <td>{{student.dob | date :"MM/dd/yyyy"}}</td>
           <td>{{student.guardian?.firstName}}</td>
           <td><div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">

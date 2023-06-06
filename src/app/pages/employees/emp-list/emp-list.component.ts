@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService } from '../../../services/api.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-emp-list',
@@ -9,119 +11,79 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./emp-list.component.scss']
 })
 export class EmpListComponent {
-
+  modalRef!: BsModalRef;
   employees: any[] = [];
-  filteredEmp: any[] = []
-  emplyee: any;
+  filterByDes:any[] = [];
+  designations: any[] = [];
   isLoading: boolean;
-  selectedDesign: any;
-
-  constructor(private api: ApiService,
+  employeeId:any;
+  departmentDrp = -1;
+  constructor(private api: ApiService,private modalService: BsModalService,
     private toastr: ToastrService,
-
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {
 
   }
 
   ngOnInit(): void {
-    this.getEmployees();
+    this.getDesignations();
+    this.getEmployees();    
   }
-
-  getEmployees() {
-    this.api.getAllEmployees().subscribe(resp => {
-      this.employees = resp.employees;
-      console.log(this.employees);
-
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Admin');
+  getDesignations() {
+    this.api.getDesignations().subscribe(resp => {
+      this.designations = resp.designations;
     });
   }
-
-  filterEmployee(event: any) {
-    console.log(this.filteredEmp);
-const tabIndex = event.index;
-    if (tabIndex == 0) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Admin')
-      console.log();
-      
-    }
-    if (tabIndex == 0) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'ADMIN')
-    }
-    else if (tabIndex == 1) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Senior Teacher')
-    }
-    else if (tabIndex == 1) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == "TEACHER")
-    }
-    else if (tabIndex == 2) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Accountant')
-    }
-    else if (tabIndex == 3) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Librarian')
-    }
-    else if (tabIndex == 4) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name == 'Receptionist')
-    }
-    else if (tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Teacher')
-    }
-    else if (tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'TEACHER')
-    }
-    else if (tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Admin')
-
-
-    } else if (tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Accountant')
-
-
-    } else if (tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Librarian')
-
-
-    } else if (tabIndex == 5) {
-      this.filteredEmp = this.employees.filter(emp => emp.designation?.name != 'Receptionist')
-
-
-    }
-
+  getEmployees() {
+    this.spinner.show();
+    this.api.getAllEmployees().subscribe(resp => {
+      this.spinner.hide();      
+      this.employees = resp.employees;  
+      this.filterByDesignation("-1");    
+    }, (err) =>{
+      this.spinner.hide();
+      this.employees =[];
+      this.toastr.error(err);
+    })
   }
-
-  editTeacherEm(route: any) {
-    console.log("tevdafgc");
-
-    console.log(route);
-
-    this.emplyee = route;
-    const navExtras: NavigationExtras = {
-      state: {
-        data: this.emplyee
-      }
-    };
-
-    this.router.navigate(["/employee/add", this.emplyee._id], navExtras);
+  filterByDesignation(id){
+    if(id === '-1'){
+      this.filterByDes = this.employees;
+    } else {
+      this.filterByDes = this.employees.filter(emp => emp.designation?._id == id)
+    }
   }
-
+  multipleImport(){
+    this.router.navigate(["/employee/add"]);
+  }
+  addEmployee(){
+    this.router.navigate(["/employee/create"]);
+  }
+  openDeleteModal(template: TemplateRef<any>, data: any){
+    this.employeeId = data._id;
+    this.modalRef = this.modalService.show(template);
+  }
   deleteEmpl() {
-    console.log(this.emplyee._id);
-    this.isLoading = true;
-    this.api.deleteEmployee(this.emplyee._id).subscribe(resp => {
-      console.log(resp);
-      this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
+    this.api.deleteEmployee(this.employeeId ).subscribe(resp => {
+      this.closePopup();
       this.toastr.success(resp.message, "Employee  Deleted successFully");
-  // this.getEmployees()
+      this.getEmployees()
     },
       (err) => {
         this.isLoading = false;
         console.error(err);
       })
   }
+  closePopup(){
+    this.modalRef.hide();
+  }
   detailClick(employee){
     this.router.navigate(["/employee/detail/"+ employee._id]);
   }
-
+  onChangeDepart(event){
+    this.filterByDes = [];
+    this.filterByDesignation(event.target.value);
+  }
 
 }
