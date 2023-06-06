@@ -44,10 +44,11 @@ export class AssignFeeListComponent {
     this.api.getFeeTypeYearwise(payload).subscribe(data =>{
       this.feeListClassWiseRow = data['data'];
       this.feeListClassWiseRow.forEach(element =>{
-        const rowData ={ "class": element.class, "year": element.year}
+        const rowData ={ "class": element.class, "year": element.year, "totalAmount":0}
          this.categoryList.forEach(cate =>{
           var userName = element.feeCategory.find(x => x.categoryName === cate.categoryName);
           if(userName !== undefined){
+            rowData['totalAmount'] =  rowData['totalAmount'] + Number(userName.amount);
             rowData[cate.categoryName] =userName.amount
           } else {
             rowData[cate.categoryName] = 0;

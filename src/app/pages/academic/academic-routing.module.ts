@@ -9,6 +9,8 @@ import { EditClassComponent } from './control-class/edit-class/edit-class.compon
 import { SubjectComponent } from './subject/subject.component';
 import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
 import { ClassTeacherAssignComponent } from './class-teacher-assign/class-teacher-assign.component';
+import { StudentPromotionComponent } from './student-promotion/student-promotion.component';
+
 const routes: Routes = [
   {
     path: "class",
@@ -49,6 +51,10 @@ const routes: Routes = [
   {
     path: "class/:id",
     component: ControlClassComponent
+  },
+  {
+    path: "student-promotion",
+    component: StudentPromotionComponent
   },
 ];
 

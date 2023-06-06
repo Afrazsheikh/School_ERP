@@ -19,11 +19,22 @@ import { StudInfoPictureComponent } from './stud-info-picture/stud-info-picture.
 import { StudentDetailAllComponent } from './student-detail-all/student-detail-all.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { StudVehicleRouteComponent } from './stud-vehicle-route/stud-vehicle-route.component';
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MM-YYYY',
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [
@@ -54,6 +65,9 @@ import { StudVehicleRouteComponent } from './stud-vehicle-route/stud-vehicle-rou
     NgxMaterialTimepickerModule,
     NgxFileDropModule,
     MatCheckboxModule
+  ],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ]
 })
 export class StudentDetailsModule { }

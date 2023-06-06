@@ -2,7 +2,7 @@
 <form [formGroup]="addForm">
   <div class="row">
       <div class="col-md-12 header-txt" >
-          <span>Fee Mode Details</span>
+        <i class="fa-solid fa-bag-shopping"></i>&nbsp;&nbsp; <span>Fee Mode Details</span>
       </div>
   </div> 
   <table class="table">
@@ -73,7 +73,7 @@
   <div class="row" *ngIf="row.isExpand">
     <div class="col-md-12 header-txt" >
       <div class="row">
-        <div class="col-md-6"> <span>Pay Invoice</span></div>
+        <div class="col-md-6"> <i class="fa-regular fa-credit-card"></i>&nbsp;&nbsp;<span>Pay Invoice</span></div>
         <div class="col-md-6 mb-2 text-end"> <button class="btn" (click)="printInvoice()">Print Invoice</button></div>
       </div>       
     </div>

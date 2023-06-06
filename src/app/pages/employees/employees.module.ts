@@ -22,7 +22,19 @@ import { EmpSalaryComponent } from './emp-salary/emp-salary.component';
 import { EmpPictureInfoComponent } from './emp-picture-info/emp-picture-info.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { EmpBankDetailComponent } from './emp-bank-detail/emp-bank-detail.component';
-
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { CreateEmpComponent } from './create-emp/create-emp.component';
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MM-YYYY',
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [
@@ -34,7 +46,8 @@ import { EmpBankDetailComponent } from './emp-bank-detail/emp-bank-detail.compon
     EmpBaiscComponent,
     EmpSalaryComponent,
     EmpPictureInfoComponent,
-    EmpBankDetailComponent
+    EmpBankDetailComponent,
+    CreateEmpComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +64,9 @@ import { EmpBankDetailComponent } from './emp-bank-detail/emp-bank-detail.compon
     MatFormFieldModule,
     MatCheckboxModule,
     MatSelectModule
+  ],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ]
 })
 export class EmployeesModule { }

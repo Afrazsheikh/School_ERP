@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -7,6 +7,7 @@ import { StudentService } from '../../student-details/student.service';
 import { NgxFileDropEntry } from 'ngx-file-drop';
 import { SelectDropDownService } from "ngx-select-dropdown";
 import * as moment from 'moment';
+import { MatCheckbox } from '@angular/material/checkbox';
 @Component({
   selector: 'app-create-student',
   templateUrl: './create-student.component.html',
@@ -35,6 +36,7 @@ export class CreateStudentComponent {
   guardianProf: any;
   singleSelect: any = [];
   config = {
+    //displayFn:(item: any) => { return item?.guardian?.userName; },
     displayKey: "userName",
     height: "250px",
     search: true,
@@ -52,6 +54,9 @@ export class CreateStudentComponent {
   }
   guadianList: any[] = [];
   options:any[] = [];
+  @ViewChild('guardian2PrimaryGuard') private guardian2PrimaryGuard: MatCheckbox;
+  @ViewChild('guardian1PrimaryGuard') private guardian1PrimaryGuard: MatCheckbox;
+  isRequiredSign:boolean=false;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder,
     private drodownService: SelectDropDownService, private studentService:StudentService) {
     this.aceYear = this.studentService.aceYear;
@@ -76,8 +81,16 @@ export class CreateStudentComponent {
     
   getGuardenList() {
     this.api.getGuardianAll().subscribe(resp => {
-      this.guadianList = resp.guardians;
-      this.options = this.guadianList;
+      this.guadianList =resp.guardians;
+      
+      this.guadianList.forEach(element => {
+        this.options.push({
+          userName: element.guardian?.userName +" "+"("+element.guardian?.firstName+")",
+          guardian:element?.guardian,
+          guardian2:element?.guardian2
+        });
+      });
+      
     });
   }
   getAllSection() {
@@ -114,7 +127,7 @@ export class CreateStudentComponent {
       category: ['', Validators.required],
       registerNo: ['VXPIS'],
       rollNo: ['', Validators.required],
-      admissionDate: ['', Validators.required],
+      admissionDate: [new Date(), Validators.required],
       type: [''],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -126,59 +139,76 @@ export class CreateStudentComponent {
       caste: ['', Validators.required],
       email: ['', Validators.required],
       mobileNumber: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
+      presentAddressHouseNo: ['',Validators.required],
+      presentAddressStreet: ['', Validators.required],
+      presentAddressZipCode: ['',Validators.required],
+      presentAddressState: ['', Validators.required],
+      presentAddressCity: ['', Validators.required],    
+      permanentAddressHouseNo: ['', Validators.required],
+      permanentAddressStreet: ['', Validators.required],
+      permanentAddressZipCode: ['', Validators.required],
+      permanentAddressCity: ['', Validators.required],
+      permanentAddressState:['', Validators.required],
       previousQualification: ['', Validators.required],
       previousSchoolName: ['', Validators.required],
+      isSameAddress:[false],
       isGuardianExist: [false],
-      guardian: this.fb.group({
-        name: ['', Validators.required],
+      alreadyExists: [false],
+      guardian1:this.fb.group({
         relation: ['', Validators.required],
-        fatherName: ['', Validators.required],
-        motherName: ['', Validators.required],
-        occupation: ['', Validators.required],
-        education: ['', Validators.required],
+        setAsPrimaryGuradian:[false,Validators.required],
+        fullName: ['', Validators.required],
         mobileNumber: ['', Validators.required],
         email: ['', Validators.required],
-        city: ['', Validators.required],
-        state: ['', Validators.required],
-        permanentAddress: ['', Validators.required],
-        userName: ['', Validators.required],
-        password: ['', Validators.required],
-        alreadyExists: [true]
+        occupation: ['', Validators.required],
       }),
-      presentAddress: ['', Validators.required],
-      permanentAddress: ['', Validators.required],
-      
-      presentAddressZipCode: new FormControl(null, [Validators.required]),
-      presentAddressHouseNo: new FormControl(null, [Validators.required]),
-      presentAddressStreet: new FormControl(null, [Validators.required]),
-      presentAddressCity: new FormControl(null, [Validators.required]),
-      presentAddressState: new FormControl(null, [Validators.required]),
-      premanentAddressHouseNo: new FormControl(null,  [Validators.required]),
-      premanentAddressStreet: new FormControl(null, [Validators.required]),
-      premanentAddressZipCode: new FormControl(null, [Validators.required]),
-      premanentAddressCity: new FormControl(null, [Validators.required]),
-      premanentAddressState: new FormControl(null, [Validators.required]),
+      guardian2:this.fb.group({
+        relation: [''],
+        setAsPrimaryGuradian:[false],
+        fullName: [''],
+        mobileNumber: [''],
+        email: [''],
+        occupation: [''],
+      }),
+      // permanentAddress: ['', Validators.required],
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
   selectedGua(event) {
     const data = event.value;
-    this.studentForm.controls['guardian'].patchValue({
-      name: data.firstName,
-      relation: data.relation,
-      fatherName: data.fatherName,
-      motherName: data.motherName,
-      occupation: data.occupation,
-      mobileNumber: data.number,
-      email: data.email,
-      city: data.city,
-      state: data.state,
-      permanentAddress: data.permanentAddress,
-      userName: data.userName,
-      password: data.password,
-      alreadyExists: data.alreadyExists,
+    // this.studentForm.controls['guardian'].patchValue({
+    //   name: data.firstName,
+    //   relation: data.relation,
+    //   fatherName: data.fatherName,
+    //   motherName: data.motherName,
+    //   occupation: data.occupation,
+    //   mobileNumber: data.number,
+    //   email: data.email,
+    //   city: data.city,
+    //   state: data.state,
+    //   permanentAddress: data.permanentAddress,
+    //   userName: data.userName,
+    //   password: data.password,
+    //   alreadyExists: data.alreadyExists,
+    // });
+    this.studentForm.controls['guardian1'].patchValue({
+      relation:data.guardian?.relation,
+      setAsPrimaryGuradian:data.guardian?.isPrimary,
+      fullName:data.guardian?.firstName,
+      mobileNumber:data.guardian?.number,
+      email:data.guardian?.email,
+      occupation:data.guardian?.occupation
     });
+    this.studentForm.controls['guardian2'].patchValue({
+      relation:data.guardian2?.relation,
+      setAsPrimaryGuradian:data.guardian2?.isPrimary,
+      fullName:data.guardian2?.firstName,
+      mobileNumber:data.guardian2?.number,
+      email:data.guardian2?.email,
+      occupation:data.guardian2?.occupation
+    });
+
     this.studentForm.updateValueAndValidity();
   }
   onFilesDropped(files: NgxFileDropEntry[], imgType: string) {
@@ -211,23 +241,27 @@ export class CreateStudentComponent {
     }
   }
   createInfo(_form) {
-    const gauValue = _form.value.guardian;
-    const guardianArr = {
-      firstName: gauValue.name,
-      relation: gauValue.relation,
-      fatherName: gauValue.fatherName,
-      motherName: gauValue.motherName,
-      occupation: gauValue.occupation,
-      number: gauValue.mobileNumber,
-      email: gauValue.email,
-      city: gauValue.city,
-      state: gauValue.state,
-      permanentAddress: gauValue.permanentAddress,
-      userName: gauValue.userName,
-      password: gauValue.password,
-      image: this.GuardianImage,
-      idProofDocument: this.guardianProf,
-      alreadyExists: gauValue.alreadyExists
+    
+    const gauValue1 = _form.value.guardian1;
+    const gauValue2 = _form.value.guardian2;
+    const guardianArr1 = {
+      userName:_form.value.userName,
+      password:_form.value.password,
+      firstName: gauValue1.fullName,
+      relation: gauValue1.relation,
+      alreadyExists:_form.value.alreadyExists,
+      occupation:gauValue1.occupation,
+      number: gauValue1.mobileNumber,
+      email: gauValue1.email,
+      setAsPrimaryGuradian: gauValue1.setAsPrimaryGuradian,
+    }
+    const guardianArr2 = {
+      relation: gauValue2.relation,
+      setAsPrimaryGuradian: gauValue2.setAsPrimaryGuradian,
+      firstName: gauValue2.fullName,
+      number: gauValue2.mobileNumber,
+      email: gauValue2.email,
+      occupation:gauValue2.occupation,
     }
     let postData = new FormData();
 
@@ -236,15 +270,11 @@ export class CreateStudentComponent {
     postData.append("category", _form.value.category);
     postData.append("studentClass", _form.value.studentClass);
     postData.append("registerNo", _form.value.registerNo);
-    // postData.append("admissionDate", _form.value.admissionDate);
+    postData.append("rollNo", _form.value.rollNo);
     postData.append("admissionDate", moment(_form.value.admissionDate).format("YYYY-MM-DD"));
     postData.append("firstName", _form.value.firstName);
-    postData.append("rollNo", _form.value.rollNo);
-
     postData.append("type", _form.value.type);
-    // postData.append("dob", _form.value.dob);
     postData.append("dob", moment(_form.value.dob).format("YYYY-MM-DD"));
-
     postData.append("number", _form.value.mobileNumber);
     postData.append("email", _form.value.email);
     postData.append("lastName", _form.value.lastName);
@@ -253,26 +283,33 @@ export class CreateStudentComponent {
     postData.append("motherTongue", _form.value.motherTongue);
     postData.append("religion", _form.value.religion);
     postData.append("caste", _form.value.caste);
-    postData.append("city", _form.value.city);
-    postData.append("state", _form.value.state);
-    postData.append("presentAddress", _form.value.presentAddress);
-    postData.append("permanentAddress", _form.value.permanentAddress);
-
-    postData.append("guardian[previousSchoolName]", _form.value.previousSchoolName);
-    postData.append("guardian[previousQualification]", _form.value.previousQualification);
-    postData.append("guardian[userName]", guardianArr.userName);
-    postData.append("guardian[password]", guardianArr.password);
-    postData.append("guardian[firstName]", guardianArr.firstName);
-    postData.append("guardian[relation]", guardianArr.relation);
-    postData.append("guardian[fatherName]", guardianArr.fatherName);
-    postData.append("guardian[motherName]", guardianArr.motherName);
-    postData.append("guardian[alreadyExists]", guardianArr.alreadyExists);
-    postData.append("guardian[occupation]", guardianArr.occupation);
-    postData.append("guardian[number]", guardianArr.number);
-    postData.append("guardian[email]", guardianArr.email);
-    postData.append("guardian[city]", guardianArr.city);
-    postData.append("guardian[state]", guardianArr.state);
-    postData.append("guardian[permanentAddress]", guardianArr.permanentAddress);
+    postData.append("previousSchoolName", _form.value.previousSchoolName);
+    postData.append("previousQualification", _form.value.previousQualification);
+    postData.append("guardian[userName]", guardianArr1.userName);
+    postData.append("guardian[password]", guardianArr1.password);
+    postData.append("guardian[firstName]", guardianArr1.firstName);
+    postData.append("guardian[relation]", guardianArr1.relation);
+    postData.append("guardian[alreadyExists]", guardianArr1.alreadyExists);
+    postData.append("guardian[occupation]", guardianArr1.occupation);
+    postData.append("guardian[number]", guardianArr1.number);
+    postData.append("guardian[email]", guardianArr1.email);
+   // postData.append("guardian1[setAsPrimaryGuradian]", guardianArr1.setAsPrimaryGuradian);
+    postData.append("guardian1[relation]", guardianArr2.relation);
+    postData.append("guardian1[firstName]", guardianArr2.firstName);
+    postData.append("guardian1[number]", guardianArr2.number);
+    postData.append("guardian1[email]", guardianArr2.email);
+    postData.append("guardian1[occupation]", guardianArr2.occupation);
+    //postData.append("guardian2[setAsPrimaryGuradian]", guardianArr2.setAsPrimaryGuradian);
+    postData.append("presentAddressCity", _form.value.presentAddressCity);
+    postData.append("presentAddressState", _form.value.presentAddressState);
+    postData.append("presentAddressHouseNo", _form.value.presentAddressHouseNo);
+    postData.append("presentAddressStreet", _form.value.presentAddressStreet);
+    postData.append("presentAddressZipCode", _form.value.presentAddressZipCode);
+    postData.append("premanentAddressCity", _form.value.permanentAddressCity);
+    postData.append("premanentAddressState", _form.value.permanentAddressState);
+    postData.append("premanentAddressHouseNo", _form.value.permanentAddressHouseNo);
+    postData.append("premanentAddressStreet", _form.value.permanentAddressStreet);
+    postData.append("premanentAddressZipCode", _form.value.permanentAddressZipCode);
 
     if (this.image) {
       postData.append("image", this.image);
@@ -288,17 +325,18 @@ export class CreateStudentComponent {
     }
     this.api.addAdmission(postData).subscribe(resp => {
       this.toastr.success(resp.message, "Addmission add success");
-      this.router.navigate(['/student-details/student-list']);
+      this.router.navigate(['/student-details/student-view/'+ resp?.student?._id]);
     },
       (err) => {
         this.toastr.error(err, " add failed");
         console.error(err);
       })
+      
   }
   onBlurEmail() {  
     const password = this.generatePassword();
-    const username =  this.studentForm.controls['guardian'].get('email')?.value;
-    this.studentForm.controls['guardian'].patchValue({ userName: username, password: password });
+    const username =  this.studentForm.get('guardian1.email').value;
+    this.studentForm.patchValue({ userName: username, password: password });
     this.studentForm.updateValueAndValidity();
   }
  
@@ -308,19 +346,112 @@ export class CreateStudentComponent {
   generatePassword() {
     return (Math.random().toString(36).slice(-8));
   }
-  onBlurCopyAddre(event){
-    if(event.checked == true){
-    const presentAddressHouseNo = this.studentForm.controls['presentAddressHouseNo'].value;
-    const presentAddressZipCode = this.studentForm.controls['presentAddressZipCode'].value;
-    const presentAddressStreet = this.studentForm.controls['presentAddressStreet'].value;
-    const presentAddressCity = this.studentForm.controls['presentAddressCity'].value;
-    const presentAddressState = this.studentForm.controls['presentAddressState'].value;
-    this.studentForm.patchValue({ premanentAddressHouseNo: presentAddressHouseNo, premanentAddressStreet: presentAddressStreet, premanentAddressZipCode: presentAddressZipCode, premanentAddressCity :presentAddressCity, premanentAddressState: presentAddressState });
+   getVAlue(event){   
+     if (event.checked === true) {
+       const presentA = this.studentForm.get('presentAddressHouseNo')?.value;
+       this.studentForm.patchValue({
+        permanentAddressHouseNo: this.studentForm.get('presentAddressHouseNo')?.value,
+        permanentAddressStreet: this.studentForm.get('presentAddressStreet')?.value,
+        permanentAddressZipCode: this.studentForm.get('presentAddressZipCode')?.value,
+        permanentAddressCity: this.studentForm.get('presentAddressCity')?.value,
+        permanentAddressState: this.studentForm.get('presentAddressState')?.value,
+       });
+     } else {
+       this.studentForm.patchValue({
+        permanentAddressHouseNo: '',
+        permanentAddressStreet:'',
+        permanentAddressZipCode:'',
+        permanentAddressCity:'',
+        permanentAddressState:''
+  
+       });
+     }
+     this.studentForm.updateValueAndValidity();
+    
+  }
+  primaryGuradianChange(Id)
+  {
+    if(Id=="guardian1PrimaryGuard")
+    {
+      if(this.guardian1PrimaryGuard.checked==false)
+      {
+        this.guardian1PrimaryGuard.checked=false;
+        this.isRequireSignfalse();
+        this.dynamicValidationApplyRemoveinGuardian(false);
+        this.addValidationGuardin1PrimaryGuradian();
+      }
+      else
+      {
+        this.guardian1PrimaryGuard.checked=true;
+        this.isRequireSignfalse();
+        this.dynamicValidationApplyRemoveinGuardian(false);
+        this.removeValidationguardin1PrimaryGuradian();
+      }
+      this.guardian2PrimaryGuard.checked=false;
+      this.studentForm.value.guardian2.setAsPrimaryGuradian=false;
+    }
+    else
+    {
+      if(this.guardian2PrimaryGuard.checked==false)
+      {
+        this.guardian2PrimaryGuard.checked=false;
+        this.isRequireSignfalse();
+        this.dynamicValidationApplyRemoveinGuardian(false);
+        this.addValidationGuardin1PrimaryGuradian();
+      }
+      else
+      {
+        this.guardian2PrimaryGuard.checked=true;
+        this.isRequireSignTrue();
+        this.dynamicValidationApplyRemoveinGuardian(true);
+        this.removeValidationguardin1PrimaryGuradian();
+      }
+      this.guardian1PrimaryGuard.checked=false;
+      this.studentForm.value.guardian1.setAsPrimaryGuradian=false;
+    }
+  }
 
+  isRequireSignTrue()
+  {
+    this.isRequiredSign=true;
   }
-  if(event.checked ==false ){
-    this.studentForm.patchValue({ premanentAddressHouseNo: "", premanentAddressStreet: '', premanentAddressZipCode: '', premanentAddressCity :'' ,});
-   
+  isRequireSignfalse()
+  {
+    this.isRequiredSign=false;
   }
+  dynamicValidationApplyRemoveinGuardian(isapply) {
+    if (isapply) {
+      this.studentForm.get('guardian2.fullName').addValidators(Validators.required);//apply validation
+      this.studentForm.get('guardian2.fullName').updateValueAndValidity();//update value and validation on controller.
+      this.studentForm.get('guardian2.mobileNumber').addValidators(Validators.required);
+      this.studentForm.get('guardian2.mobileNumber').updateValueAndValidity();
+      this.studentForm.get('guardian2.email').addValidators(Validators.required);
+      this.studentForm.get('guardian2.email').updateValueAndValidity();
+      this.studentForm.get('guardian2.occupation').addValidators(Validators.required);
+      this.studentForm.get('guardian2.occupation').updateValueAndValidity();
+      this.studentForm.get('guardian2.setAsPrimaryGuradian').addValidators(Validators.required);
+      this.studentForm.get('guardian2.setAsPrimaryGuradian').updateValueAndValidity();
+    }
+    else {
+      this.studentForm.get('guardian2.fullName').clearValidators();//validation remove 
+      this.studentForm.get('guardian2.fullName').setErrors(null);//remove validation message
+      this.studentForm.get('guardian2.mobileNumber').clearValidators();
+      this.studentForm.get('guardian2.mobileNumber').setErrors(null);
+      this.studentForm.get('guardian2.email').clearValidators();
+      this.studentForm.get('guardian2.email').setErrors(null);
+      this.studentForm.get('guardian2.occupation').clearValidators();
+      this.studentForm.get('guardian2.occupation').setErrors(null);
+      this.studentForm.get('guardian2.setAsPrimaryGuradian').clearValidators();
+    }
+  }
+  removeValidationguardin1PrimaryGuradian()
+  {
+    this.studentForm.get('guardian1.setAsPrimaryGuradian').clearValidators();
+    this.studentForm.get('guardian1.setAsPrimaryGuradian').setErrors(null);
+  }
+  addValidationGuardin1PrimaryGuradian()
+  {
+    this.studentForm.get('guardian1.setAsPrimaryGuradian').addValidators(Validators.required);
+      this.studentForm.get('guardian1.setAsPrimaryGuradian').updateValueAndValidity();
   }
 }

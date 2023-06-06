@@ -1,0 +1,29 @@
+.box {
+  border-radius: 10px;
+  box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #efeffd;
+  min-width: 360px;
+  background-color: #fff;
+  &-wrapper {
+    height: 100vh;
+    background-color: #efeffd;
+  }
+  &-header {
+    border-bottom: 1px solid #efeffd;
+    h4 {
+      color: #7f5ea3;
+    }
+  }
+  &-scroll {
+    position: relative;
+    overflow: scroll;
+    width: auto;
+    height: 436px;
+  }
+  &-body {
+    padding: 1.5rem;
+    img {
+      max-width: 100px;
+    }
+  }
+}

@@ -43,13 +43,17 @@
                       </tr>
                       </thead>
                       <tbody>
-                        <ng-container *ngFor="let row of transportList; let i = index">
+                        <ng-container *ngFor="let row of transportList; let i = index;let last = last">
                             <tr>
-                                <td>{{i+1}}</td>
+                                <td>{{i+1}} </td>
                                 <td >{{row.code}}</td>
                                 <td>{{row?.distance}}</td>
                                  <td >{{row.amount}}</td> 
-                                 
+                            </tr>
+                            <tr *ngIf="last">
+                               <td colspan="2"></td>
+                                <td><b>Total Amount</b></td>
+                                <td class="f-w-400">{{totalAmount}}</td>
                             </tr>
                         </ng-container>
                       </tbody>                     

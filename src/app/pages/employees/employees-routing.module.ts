@@ -5,6 +5,7 @@ import { EmpDeptComponent } from './emp-dept/emp-dept.component';
 import { EmpDesgComponent } from './emp-desg/emp-desg.component';
 import { EmpListComponent } from './emp-list/emp-list.component';
 import { EmpDetailComponent } from './emp-detail/emp-detail.component';
+import { CreateEmpComponent } from './create-emp/create-emp.component';
 const routes: Routes = [
   {
     path: 'list',
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'detail/:id',
     component: EmpDetailComponent
+  },
+  {
+    path: 'create',
+    component: CreateEmpComponent
   }
 ];
 

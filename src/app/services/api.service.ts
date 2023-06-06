@@ -731,6 +731,11 @@ export class ApiService {
       .get(environment.apiBaseUrl + '/salaryReceipt/' + month + '/' + year)
       .pipe(catchError(this.errorHandler));
   }
+  getEmployeeSalaryWithStatusBYMonth(monthAndYear): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/salaryReceipt/' + monthAndYear)
+      .pipe(catchError(this.errorHandler));
+  }
   getSalaryMonthAndEmpWise(employeeId, monthAndYear): Observable<any> {
     return this.httpClient
       .get(

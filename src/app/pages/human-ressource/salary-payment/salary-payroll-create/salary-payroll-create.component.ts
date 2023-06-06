@@ -31,6 +31,7 @@ export class SalaryPayrollCreateComponent implements OnInit {
   ];
   salaryReceiptDetail: any;
   isAlreadyPaid = false;
+  monthAndYear!: string;
 
   constructor(
     _route: ActivatedRoute,
@@ -41,9 +42,12 @@ export class SalaryPayrollCreateComponent implements OnInit {
   ) {
     _route.params.subscribe({
       next: (routeParam) => {
+        console.log(routeParam);
+
         if (routeParam.hasOwnProperty('id')) {
           this.employeeId = routeParam['id'];
           this.fetchEmployeeDetail();
+          this.monthAndYear = routeParam['monthAndYear'];
           this.fetchReceipt();
         }
       },
@@ -92,6 +96,11 @@ export class SalaryPayrollCreateComponent implements OnInit {
   }
 
   onSubmitPayment() {
+    if (this.isAlreadyPaid) {
+      window.print();
+
+      return;
+    }
     this.paymentFormGroup.value.salaryPaidMonth = this.currentMonthAndYear;
     this.paymentFormGroup.value.employee = this.employeeId;
     this._apiService
@@ -111,13 +120,16 @@ export class SalaryPayrollCreateComponent implements OnInit {
 
   fetchReceipt() {
     this._apiService
-      .getSalaryMonthAndEmpWise(this.employeeId, this.currentMonthAndYear)
+      .getSalaryMonthAndEmpWise(this.employeeId, this.monthAndYear)
       .subscribe({
         next: (res) => {
           if (res) {
             this.salaryReceiptDetail = res.salary_receipts;
             this.isAlreadyPaid =
               this.salaryReceiptDetail.salaryStatus === 'PAID' ? true : false;
+            if (this.isAlreadyPaid) {
+              this.paymentFormGroup.patchValue(res.salary_receipts);
+            }
           }
         },
         error: (err) => {

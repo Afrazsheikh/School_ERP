@@ -5,13 +5,14 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { StudentService } from '../../student-details/student.service';
 import * as moment from 'moment';
+
+
 @Component({
-  selector: 'app-emp-baisc',
-  templateUrl: './emp-baisc.component.html',
-  styleUrls: ['./emp-baisc.component.scss']
+  selector: 'app-create-emp',
+  templateUrl: './create-emp.component.html',
+  styleUrls: ['./create-emp.component.scss']
 })
-export class EmpBaiscComponent {
-  @Input() employeeData: any ;
+export class CreateEmpComponent {
   empB1Form:FormGroup;
   empBasic:any;
   bloodGrList: any[] = [];
@@ -26,7 +27,6 @@ export class EmpBaiscComponent {
     this.religionList = this.studentService.religionList;
   }
  ngOnInit() {
-  this.empBasic = this.employeeData;
   this.getDepartments();
   this.getDesignations();
   this.createFrom();
@@ -50,42 +50,47 @@ getDesignations() {
   }
  
   this.empB1Form = this.fb.group({ 
-      id:[this.empBasic._id],
-      department: [this.empBasic?.department?._id, Validators.required],
-      designation: [this.empBasic?.designation?._id, Validators.required],
-      joiningDate: [this.empBasic?.joiningDate, Validators.required],
-      qualification: [this.empBasic?.qualification, Validators.required],      
-      experienceDetails: [this.empBasic?.experienceDetails, Validators.required],
-      totalExperience: [this.empBasic?.totalExperience, Validators.required],
-      gender: [this.empBasic?.gender, Validators.required],
-      name: [this.empBasic?.name, Validators.required],
-      dob: [this.empBasic?.dob, Validators.required],
-      religion: [this.empBasic?.religion, Validators.required],      
-      bloodGroup: [this.empBasic?.bloodGroup, Validators.required],
-      number: [this.empBasic?.number, Validators.required],
-      email: [this.empBasic?.email, Validators.required],
-      presentAddressHouseNo: [this.empBasic?.presentAddressHouseNo,Validators.required],
-      presentAddressStreet: [this.empBasic?.presentAddressStreet, Validators.required],
-      presentAddressZipCode: [this.empBasic?.presentAddressZipCode,Validators.required],
-      presentAddressState: [this.empBasic?.presentAddressState, Validators.required],
-      presentAddressCity: [this.empBasic?.presentAddressCity, Validators.required],    
-      permanentAddressHouseNo: [this.empBasic?.premanentAddressHouseNo, Validators.required],
-      permanentAddressStreet: [this.empBasic?.premanentAddressStreet, Validators.required],
-      permanentAddressZipCode: [this.empBasic?.premanentAddressZipCode, Validators.required],
-      permanentAddressCity: [this.empBasic?.premanentAddressCity, Validators.required],
-      permanentAddressState:[this.empBasic?.premanentAddressState, Validators.required],
+      department: ['', Validators.required],
+      designation: ['', Validators.required],
+      joiningDate: ['', Validators.required],
+      qualification: ['', Validators.required],      
+      experienceDetails: ['', Validators.required],
+      totalExperience: ['', Validators.required],
+      gender: ['', Validators.required],
+      name: ['', Validators.required],
+      dob: ['', Validators.required],
+      religion: ['', Validators.required],      
+      bloodGroup: ['', Validators.required],
+      number: ['', Validators.required],
+      email: ['', Validators.required],
+      presentAddressHouseNo: ['',Validators.required],
+      presentAddressStreet: ['', Validators.required],
+      presentAddressZipCode: ['',Validators.required],
+      presentAddressState: ['', Validators.required],
+      presentAddressCity: ['', Validators.required],    
+      permanentAddressHouseNo: ['', Validators.required],
+      permanentAddressStreet: ['', Validators.required],
+      permanentAddressZipCode: ['', Validators.required],
+      permanentAddressCity: ['', Validators.required],
+      permanentAddressState:['', Validators.required],
       isSameAddress:[false],
-      facebook: [this.empBasic?.facebook],      
-      twitter: [this.empBasic?.twitter],
-      linkedin: [this.empBasic?.linkedin],
-      userName: [this.empBasic?.userName],
-      password: [this.empBasic?.password],
+      facebook: [''],      
+      twitter: [''],
+      linkedin: [''],
+      userName: [''],
+      password: [''],
+      bankName: [''],
+      holderName: [''],
+      bankBranch: [''],
+      bankAddress: [''],      
+      ifscCode: [''],
+      accountNumber: [''],
+      skipBankDetails: [false]
     });
  }
 
- updateInfo(formData){
+ createInfo(formData){
   const payload = {
-    employeeId : formData.value.id,
     designation: formData.value.desiganation, 
     department :formData.value.department,
     joiningDate: moment(formData.value.joiningDate).format('MM/DD/YYYY'), 
@@ -115,13 +120,19 @@ getDesignations() {
     password :formData.value.password, 
     facebook: formData.value.facebook, 
     twitter: formData.value.twitter, 
-    linkedin:formData.value.linkedin
+    linkedin:formData.value.linkedin,
+    bankName: formData.value.bankName, 
+    holderName :formData.value.holderName,
+    bankBranch : formData.value.bankBranch, 
+    bankAddress :formData.value.bankAddress, 
+    ifscCode :formData.value.ifscCode, 
+    accountNumber :formData.value.accountNumber
   }
-  this.api.updateEmpployee(payload).subscribe(resp => {
-   this.toastr.success(resp[0].msg, " Updated Successfully");
+  this.api.addEmpployee(payload).subscribe(resp => {
+   this.toastr.success(resp?.message, "Added Successfully");
   },
     (err) => {
-      this.toastr.error(err, " update failed");
+      this.toastr.error(err, " Added failed");
     });
  }
  updatePermenentAdd(){
@@ -189,5 +200,16 @@ getDesignations() {
    }
    this.empB1Form.updateValueAndValidity();
 }
-   
+onBlurEmail() {  
+  const password = this.generatePassword();
+  const username =  this.empB1Form.get('email')?.value;
+  this.empB1Form.patchValue({
+    userName: username,
+    password: password
+   });
+  this.empB1Form.updateValueAndValidity();
+}
+generatePassword() {
+  return (Math.random().toString(36).slice(-8));
+}
 }
