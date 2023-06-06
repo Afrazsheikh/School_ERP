@@ -22,12 +22,14 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxPrintModule } from 'ngx-print';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { LoginComponent } from './pages/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
     HumanRessourceComponent,
     ReportsComponent,
     DashboardComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
