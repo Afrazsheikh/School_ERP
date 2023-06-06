@@ -36,6 +36,7 @@ export class CreateStudentComponent {
   guardianProf: any;
   singleSelect: any = [];
   config = {
+    displayFn:(item: any) => { return item?.guardian?.userName; },
     displayKey: "userName",
     height: "250px",
     search: true,
