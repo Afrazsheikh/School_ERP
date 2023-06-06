@@ -11,6 +11,14 @@ import { environment } from 'src/environments/environment';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
+  // Login
+
+  loginMethod(postData): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/employee/teacher/login', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+
   // Exam Master
   createExam(postData: FormData): Observable<any> {
     return this.httpClient.post(environment.apiBaseUrl + '/exam', postData);
