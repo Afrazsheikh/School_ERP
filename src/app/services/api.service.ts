@@ -229,6 +229,12 @@ export class ApiService {
       .get(environment.apiBaseUrl + '/employee/' + id)
       .pipe(catchError(this.errorHandler));
   }
+  getAllEmployeesBySalaryData(id: string): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/salaryReceipt/employees/' + id)
+      .pipe(catchError(this.errorHandler));
+  }
+  
   fineSetupListById(id: string) {
     return this.httpClient
       .get(environment.apiBaseUrl + '/fineSetup/' + id)
