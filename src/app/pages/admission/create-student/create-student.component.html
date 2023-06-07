@@ -1,20 +1,57 @@
 <app-layout>
   <div class="container p-5">
+    <div class="row">
+      <div class="col-md-12 header-txt">
+        <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Student Admission</span>
+      </div>
+    </div>
     <form [formGroup]="studentForm">
+      <div class="row mt-4">
+        <div class="col-4">
+          <label class="form-label">Register No <span class="error">*</span></label>
+          <input type="text" class="form-control" formControlName="registerNo" readonly />
+          <div
+            *ngIf="studentForm.controls['registerNo'].invalid && (studentForm.controls['registerNo'].dirty || studentForm.controls['registerNo'].touched)"
+            class="error mt-2">
+            <div *ngIf="studentForm.controls['registerNo'].errors['required']">
+              Register No is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <label class="form-label">Admission Date <span class="error">*</span></label>
+          <div class="input-group">
+            <input matInput class="form-control me-3" [matDatepicker]="picker" placeholder="dd-mm-yyyy"
+              formControlName="admissionDate" />
+            <div class="mr-2 tooglePicker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            </div>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+          <div
+            *ngIf="studentForm.controls['admissionDate'].invalid && (studentForm.controls['admissionDate'].dirty || studentForm.controls['admissionDate'].touched)"
+            class="error mt-2">
+            <div *ngIf="studentForm.controls['admissionDate'].errors['required']">
+              Admission Date is required.
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Academic Details</span>
+          <i _ngcontent-dan-c162="" class="fas fa-school"></i>&nbsp;&nbsp;<span>Academic Details</span>
         </div>
       </div>
 
       <div class="row mt-2 mb-3">
 
-        <div class="col-3">
+        <div class="col-4">
           <label class="form-label">Class <span class="error">*</span></label>
           <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
             <option disabled value="select">Select</option>
-            <option *ngFor="let sec of classes" value="{{ sec._id }}">
-              {{ sec.className }}
+            <option *ngFor="let sec of classes"  [ngValue]="sec">
+              {{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}
             </option>
           </select>
           <div
@@ -25,25 +62,7 @@
             </div>
           </div>
         </div>
-
-        <div class="col-3">
-          <label class="form-label">Section <span class="error">*</span></label>
-          <select class="form-select" formControlName="section">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let sec of sections" value="{{ sec._id }}">
-              {{ sec.name }}
-            </option>
-          </select>
-          <div
-            *ngIf="studentForm.controls['section'].invalid && (studentForm.controls['section'].dirty || studentForm.controls['section'].touched)"
-            class="error mt-2">
-            <div *ngIf="studentForm.controls['section'].errors['required']">
-              Section is required.
-            </div>
-          </div>
-        </div>
-
-        <div class="col-3">
+        <div class="col-4">
           <label class="form-label">Year <span class="error">*</span></label>
           <select class="form-select" formControlName="academicYear">
             <option disabled value="select">Select</option>
@@ -60,7 +79,7 @@
           </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-4">
           <label class="form-label">Category <span class="error">*</span></label>
           <select class="form-select" formControlName="category">
             <option disabled value="select">Select</option>
@@ -81,20 +100,9 @@
 
       <div class="row mt-3 mb-3">
 
-        <div class="col-3">
-          <label class="form-label">Register No <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="registerNo" readonly />
-          <div
-            *ngIf="studentForm.controls['registerNo'].invalid && (studentForm.controls['registerNo'].dirty || studentForm.controls['registerNo'].touched)"
-            class="error mt-2">
-            <div *ngIf="studentForm.controls['registerNo'].errors['required']">
-              Register No is required.
-            </div>
-          </div>
-        </div>
-
-        <div class="col-3">
-          <label class="form-label">RollNo No <span class="error">*</span></label>
+       
+        <div class="col-4">
+          <label class="form-label">RollNo No</label>
           <input type="text" class="form-control" formControlName="rollNo" />
           <div
             *ngIf="studentForm.controls['rollNo'].invalid && (studentForm.controls['rollNo'].dirty || studentForm.controls['rollNo'].touched)"
@@ -105,26 +113,8 @@
           </div>
         </div>
 
-        <div class="col-3">
-          <label class="form-label">Admission Date <span class="error">*</span></label>
-          <div class="input-group">
-            <input matInput class="form-control me-3" [matDatepicker]="picker" placeholder="dd-mm-yyyy"
-              formControlName="admissionDate" />
-            <div class="mr-2 tooglePicker">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            </div>
-            <mat-datepicker #picker></mat-datepicker>
-          </div>
-          <div
-            *ngIf="studentForm.controls['admissionDate'].invalid && (studentForm.controls['admissionDate'].dirty || studentForm.controls['admissionDate'].touched)"
-            class="error mt-2">
-            <div *ngIf="studentForm.controls['admissionDate'].errors['required']">
-              Admission Date is required.
-            </div>
-          </div>
-        </div>
 
-        <div class="col-3">
+        <div class="col-4">
           <label class="form-label">Type</label>
           <select class="form-select" formControlName="type">
             <option disabled value="select">Select</option>
@@ -138,7 +128,7 @@
 
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Student Details</span>
+          <i _ngcontent-dan-c162="" class="fas fa-user-check"></i>&nbsp;&nbsp;<span>Student Details</span>
         </div>
       </div>
 
@@ -302,28 +292,33 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12 header-txt"><i class="fas fa-bezier-curve"></i>&nbsp;&nbsp;
+          <span>Previous School Details</span>
+        </div>
+      </div>
 
-      <div class="row mt-3 mb-3">
+      <div class="row mt-3 mb-4">
         <div class="col-6">
-          <label class="form-label">Previous School <span class="error">*</span></label>
+          <label class="form-label">School Name <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="previousSchoolName" />
           <div
             *ngIf="studentForm.controls['previousSchoolName'].invalid && (studentForm.controls['previousSchoolName'].dirty || studentForm.controls['previousSchoolName'].touched)"
             class="error mt-2">
             <div *ngIf="studentForm.controls['previousSchoolName'].errors['required']">
-              Previous School is required.
+              School Name is required.
             </div>
           </div>
         </div>
 
         <div class="col-6">
-          <label class="form-label">Previous Qualification <span class="error">*</span></label>
+          <label class="form-label">Qualification <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="previousQualification" />
           <div
             *ngIf="studentForm.controls['previousQualification'].invalid && (studentForm.controls['previousQualification'].dirty || studentForm.controls['previousQualification'].touched)"
             class="error mt-2">
             <div *ngIf="studentForm.controls['previousQualification'].errors['required']">
-              Previous Qualification is required.
+              Qualification is required.
             </div>
           </div>
         </div>
@@ -332,7 +327,7 @@
 
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Address Details</span>
+          <i _ngcontent-dan-c162="" class="fa-solid fa-location-dot fa-fw"></i>&nbsp;&nbsp;<span>Address Details</span>
         </div>
       </div>
 
@@ -344,7 +339,7 @@
 
       <div class="row mt-2 mb-3 mt-3">
         <div class="col-4">
-          <label class="form-label">House No</label>
+          <label class="form-label">House No <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="presentAddressHouseNo">
           <div
             *ngIf="studentForm.controls['presentAddressHouseNo'].invalid && (studentForm.controls['presentAddressHouseNo'].dirty || studentForm.controls['presentAddressHouseNo'].touched)"
@@ -355,7 +350,7 @@
           </div>
         </div>
         <div class="col-5">
-          <label class="form-label">Apartment Name / Street</label>
+          <label class="form-label">Apartment Name / Street <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="presentAddressStreet">
           <div
             *ngIf="studentForm.controls['presentAddressStreet'].invalid && (studentForm.controls['presentAddressStreet'].dirty || studentForm.controls['presentAddressStreet'].touched)"
@@ -366,7 +361,7 @@
           </div>
         </div>
         <div class="col-3">
-          <label class="form-label">ZipCode</label>
+          <label class="form-label">ZipCode <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="presentAddressZipCode">
           <div
             *ngIf="studentForm.controls['presentAddressZipCode'].invalid && (studentForm.controls['presentAddressZipCode'].dirty || studentForm.controls['presentAddressZipCode'].touched)"
@@ -380,7 +375,7 @@
 
       <div class="row mt-2 mb-3 mt-3">
         <div class="col-4">
-          <label class="form-label">City</label>
+          <label class="form-label">City <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="presentAddressCity">
           <div
             *ngIf="studentForm.controls['presentAddressCity'].invalid && (studentForm.controls['presentAddressCity'].dirty || studentForm.controls['presentAddressCity'].touched)"
@@ -391,7 +386,7 @@
           </div>
         </div>
         <div class="col-5">
-          <label class="form-label">State</label>
+          <label class="form-label">State <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="presentAddressState">
           <div
             *ngIf="studentForm.controls['presentAddressState'].invalid && (studentForm.controls['presentAddressState'].dirty || studentForm.controls['presentAddressState'].touched)"
@@ -404,7 +399,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-12 mt-3" style="border-bottom:1px solid #ccc ;">
+        <div class="col-md-12 mt-3 grey-border" >
           <h6>Permanent Address</h6>
         </div>
       </div>
@@ -418,7 +413,7 @@
 
       <div class="row mt-2 mb-3 mt-3">
         <div class="col-4">
-          <label class="form-label">House No</label>
+          <label class="form-label">House No  <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="permanentAddressHouseNo">
           <div
             *ngIf="studentForm.controls['permanentAddressHouseNo'].invalid && (studentForm.controls['permanentAddressHouseNo'].dirty || studentForm.controls['permanentAddressHouseNo'].touched)"
@@ -429,7 +424,7 @@
           </div>
         </div>
         <div class="col-5">
-          <label class="form-label">Apartment Name / Street</label>
+          <label class="form-label">Apartment Name / Street  <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="permanentAddressStreet">
           <div
             *ngIf="studentForm.controls['permanentAddressStreet'].invalid && (studentForm.controls['permanentAddressStreet'].dirty || studentForm.controls['permanentAddressStreet'].touched)"
@@ -440,7 +435,7 @@
           </div>
         </div>
         <div class="col-3">
-          <label class="form-label">ZipCode</label>
+          <label class="form-label">ZipCode  <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="permanentAddressZipCode">
           <div
             *ngIf="studentForm.controls['permanentAddressZipCode'].invalid && (studentForm.controls['permanentAddressZipCode'].dirty || studentForm.controls['permanentAddressZipCode'].touched)"
@@ -454,7 +449,7 @@
 
       <div class="row mt-2 mb-3 mt-3">
         <div class="col-4">
-          <label class="form-label">City</label>
+          <label class="form-label">City  <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="permanentAddressCity">
           <div
             *ngIf="studentForm.controls['permanentAddressCity'].invalid && (studentForm.controls['permanentAddressCity'].dirty || studentForm.controls['permanentAddressCity'].touched)"
@@ -465,7 +460,7 @@
           </div>
         </div>
         <div class="col-5">
-          <label class="form-label">State</label>
+          <label class="form-label">State  <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="permanentAddressState">
           <div
             *ngIf="studentForm.controls['permanentAddressState'].invalid && (studentForm.controls['permanentAddressState'].dirty || studentForm.controls['permanentAddressState'].touched)"
@@ -480,7 +475,7 @@
       <!-- *************new address form end**************************  -->
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Upload Document</span>
+          <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;&nbsp;<span>Upload Document</span>
         </div>
       </div>
 
@@ -528,7 +523,7 @@
 
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Guardian Details</span>
+          <i _ngcontent-dan-c162="" class="fas fa-user-tie"></i>&nbsp;&nbsp;<span>Guardian Details</span>
         </div>
       </div>
 
@@ -602,26 +597,6 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col-4">
-              <label class="form-label"
-                >Father Name <span class="error">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                formControlName="fatherName"
-              />
-            </div>
-            <div class="col-4">
-              <label class="form-label"
-                >Mother Name <span class="error">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                formControlName="motherName"
-              />
-            </div> -->
         </div>
         <div class="row mt-3 mb-3">
 
@@ -654,118 +629,8 @@
             </div>
           </div>
 
-          <!-- <div class="col-4">
-              <label class="form-label"
-                >Education <span class="error">*</span></label
-              >
-              <select class="form-select" formControlName="education">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let sec of educationList" value="{{ sec._id }}">
-                  {{ sec.name }}
-                </option>
-              </select>
-            </div> -->
         </div>
       </ng-container>
-
-      <!-- <div class="row mt-3 mb-3">
-            <div class="col-4">
-              <label class="form-label">State <span class="error">*</span></label>
-              <input type="text" class="form-control" formControlName="state" />
-            </div>
-            <div class="col-4">
-              <label class="form-label">City <span class="error">*</span></label>
-              <input type="text" class="form-control" formControlName="city" />
-            </div>
-          </div>
-          <div class="row mt-3 mb-3">
-            <div class="col-12">
-              <label class="form-label"
-                >Permanent address <span class="error">*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                formControlName="permanentAddress"
-              />
-            </div>
-          </div> -->
-      <!-- <div class="row">
-            <div class="row mt-3 mb-3">
-              <div class="col-md-6">
-                <label>Guardian Proof</label>
-                <div class="upload-cont">
-                  <ngx-file-drop
-                    [multiple]="false"
-                    [directory]="false"
-                    (onFileDrop)="onFilesDropped($event, 'guardianProf')"
-                  >
-                    <ng-template
-                      ngx-file-drop-content-tmp
-                      let-openFileSelector="openFileSelector"
-                    >
-                      <ng-container *ngIf="!guardianProf">
-                        drop
-                        <a
-                          class="p-1 btn btn-link"
-                          type="button"
-                          (click)="openFileSelector()"
-                        >
-                          Files</a
-                        >
-                      </ng-container>
-                      <ng-container *ngIf="guardianProf">
-                        {{ guardianProf.name }}
-                        <a
-                          class="p-1 btn btn-link"
-                          style="color: #f44336"
-                          type="button"
-                          (click)="guardianProf = null"
-                        >
-                          Remove
-                        </a>
-                      </ng-container>
-                    </ng-template>
-                  </ngx-file-drop>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <label>Guardian Image</label>
-                <ngx-file-drop
-                  [multiple]="false"
-                  [directory]="false"
-                  (onFileDrop)="onFilesDropped($event, 'GuardianImage')"
-                >
-                  <ng-template
-                    ngx-file-drop-content-tmp
-                    let-openFileSelector="openFileSelector"
-                  >
-                    <ng-container *ngIf="!GuardianImage">
-                      Upload Profile
-                      <a
-                        class="p-1 btn btn-link"
-                        type="button"
-                        (click)="openFileSelector()"
-                      >
-                        Files</a
-                      >
-                    </ng-container>
-                    <ng-container *ngIf="GuardianImage">
-                      {{ GuardianImage.name }}
-                      <a
-                        class="p-1 btn btn-link"
-                        style="color: #f44336"
-                        type="button"
-                        (click)="GuardianImage = null"
-                      >
-                        Remove
-                      </a>
-                    </ng-container>
-                  </ng-template>
-                </ngx-file-drop>
-              </div>
-            </div>
-          </div> -->
       <!-- ===== ENDS:: Guardian 1 ===== -->
 
       <!-- ===== BEGINS:: Guardian 2 ===== -->
@@ -814,26 +679,6 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col-4">
-                <label class="form-label"
-                  >Father Name <span class="error">*</span></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="fatherName"
-                />
-              </div>
-              <div class="col-4">
-                <label class="form-label"
-                  >Mother Name <span class="error">*</span></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="motherName"
-                />
-              </div> -->
         </div>
         <div class="row mt-3 mb-3">
           <div class="col-6">
@@ -864,42 +709,8 @@
               </div>
             </div>
           </div>
-
-          <!-- <div class="col-4">
-                <label class="form-label"
-                  >Education <span class="error">*</span></label
-                >
-                <select class="form-select" formControlName="education">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let sec of educationList" value="{{ sec._id }}">
-                    {{ sec.name }}
-                  </option>
-                </select>
-              </div> -->
         </div>
       </ng-container>
-      <!-- <div class="row mt-3 mb-3">
-              <div class="col-4">
-                <label class="form-label">State <span class="error">*</span></label>
-                <input type="text" class="form-control" formControlName="state" />
-              </div>
-              <div class="col-4">
-                <label class="form-label">City <span class="error">*</span></label>
-                <input type="text" class="form-control" formControlName="city" />
-              </div>
-            </div>
-            <div class="row mt-3 mb-3">
-              <div class="col-12">
-                <label class="form-label"
-                  >Permanent address <span class="error">*</span></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="permanentAddress"
-                />
-              </div>
-            </div> -->
       <div class="row">
         <div class="row mt-3 mb-3">
           <div class="col-md-6">
@@ -948,7 +759,7 @@
 
       <div class="row">
         <div class="col-md-12 header-txt">
-          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Login Details</span>
+          <i _ngcontent-dan-c162="" class="fas fa-user-lock"></i>&nbsp;&nbsp;<span>Login Details</span>
         </div>
       </div>
 
