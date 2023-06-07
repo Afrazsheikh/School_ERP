@@ -18,8 +18,10 @@ import { StudInfoBooksComponent } from './stud-info-books/stud-info-books.compon
 import { StudInfoPictureComponent } from './stud-info-picture/stud-info-picture.component';
 import { StudentDetailAllComponent } from './student-detail-all/student-detail-all.component';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -61,10 +63,14 @@ const MY_FORMATS = {
     SharedModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
+    MatFormFieldModule,
     NgxMaterialTimepickerModule,
     NgxFileDropModule,
     MatCheckboxModule
+
+
+    
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },

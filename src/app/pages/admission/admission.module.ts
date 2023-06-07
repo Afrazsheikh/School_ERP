@@ -11,13 +11,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AdmissionComponent } from './admission.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CreateStudentComponent } from './create-student/create-student.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const MY_FORMATS = {
   parse: {
@@ -43,7 +45,8 @@ const MY_FORMATS = {
     CommonModule,
     ReactiveFormsModule,    
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
+    MatFormFieldModule,
     NgxMaterialTimepickerModule,
     NgxFileDropModule,
     MatCheckboxModule,

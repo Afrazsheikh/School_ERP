@@ -1,1 +1,30 @@
-<p>emp-salary works!</p>
+<table class="table mt-3">
+    <thead>
+      <tr>
+        <th scope="col">Photo</th>
+          <th scope="col" >Month Of Salary</th>
+          <th scope="col">Basic Salary</th>
+          <th scope="col">Allowances (+)</th>
+          <th scope="col">Deductions (-)</th>
+          <th scope="col">Paid Amount</th>
+          <th scope="col">Payment Type</th>
+          <th width="13%">Payslip</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let empSa of salaryData; let i = index">
+        <tr>
+        <td> {{i+1}} </td>
+        <td>{{empSa?.salaryPaidMonth }}</td>         
+        <td>{{empSa?.basicSalary}}</td>
+        <td>{{empSa?.totalAllowance}}</td>
+        <td>{{empSa?.totalDeductions}}</td>
+        <td>{{empSa?.netSalary}}</td>
+        <td>{{empSa?.payVia}}</td>
+        <td >
+         <button class="btn" (click)="paySlipClick(empSa)">Pay Slip</button>
+        </td>
+      </tr>
+      </ng-container>
+    </tbody>
+  </table>
