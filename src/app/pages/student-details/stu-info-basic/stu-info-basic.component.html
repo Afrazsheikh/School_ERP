@@ -1,5 +1,36 @@
 <form [formGroup]="studentForm">
-
+  <div class="row mb-3">
+    <div class="col-4">
+      <label class="form-label">Register No <span class="error">*</span></label>
+      <input type="text" class="form-control" formControlName="registerNo" />
+      <div
+        *ngIf="studentForm.controls['registerNo'].invalid && (studentForm.controls['registerNo'].dirty || studentForm.controls['registerNo'].touched)"
+        class="error mt-2">
+        <div *ngIf="studentForm.controls['registerNo'].errors['required']">
+          Register No is required.
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-4">
+      <label class="form-label">Admission Date <span class="error">*</span></label>
+      <div class="input-group">
+        <input matInput class="form-control me-3" [matDatepicker]="picker" placeholder="dd-mm-yyyy"
+          formControlName="admissionDate" />
+        <div class="mr-2 tooglePicker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        </div>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+      <div
+        *ngIf="studentForm.controls['admissionDate'].invalid && (studentForm.controls['admissionDate'].dirty || studentForm.controls['admissionDate'].touched)"
+        class="error mt-2">
+        <div *ngIf="studentForm.controls['admissionDate'].errors['required']">
+          Admission Date is required.
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-12 header-txt">
       <i _ngcontent-dan-c162="" class="fas fa-school"></i>&nbsp;&nbsp;<span>Academic Details</span>
@@ -8,12 +39,12 @@
 
   <div class="row mt-2 mb-3">
 
-    <div class="col-3">
+    <div class="col-4">
       <label class="form-label">Class <span class="error">*</span></label>
-      <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+      <select class="form-select" formControlName="studentClass">
         <option disabled value="select">Select</option>
-        <option *ngFor="let sec of classes" value="{{ sec._id }}">
-          {{ sec.className }}
+        <option *ngFor="let sec of classes"  value="{{sec?._id}}">
+          {{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}
         </option>
       </select>
       <div
@@ -24,25 +55,7 @@
         </div>
       </div>
     </div>
-
-    <div class="col-3">
-      <label class="form-label">Section <span class="error">*</span></label>
-      <select class="form-select" formControlName="section">
-        <option disabled value="select">Select</option>
-        <option *ngFor="let sec of sections" value="{{ sec._id }}">
-          {{ sec.name }}
-        </option>
-      </select>
-      <div
-        *ngIf="studentForm.controls['section'].invalid && (studentForm.controls['section'].dirty || studentForm.controls['section'].touched)"
-        class="error mt-2">
-        <div *ngIf="studentForm.controls['section'].errors['required']">
-          Section is required.
-        </div>
-      </div>
-    </div>
-
-    <div class="col-3">
+    <div class="col-4">
       <label class="form-label">Year <span class="error">*</span></label>
       <select class="form-select" formControlName="academicYear">
         <option disabled value="select">Select</option>
@@ -59,7 +72,7 @@
       </div>
     </div>
 
-    <div class="col-3">
+    <div class="col-4">
       <label class="form-label">Category <span class="error">*</span></label>
       <select class="form-select" formControlName="category">
         <option disabled value="select">Select</option>
@@ -80,19 +93,9 @@
 
   <div class="row mt-3 mb-3">
 
-    <div class="col-3">
-      <label class="form-label">Register No <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="registerNo" />
-      <div
-        *ngIf="studentForm.controls['registerNo'].invalid && (studentForm.controls['registerNo'].dirty || studentForm.controls['registerNo'].touched)"
-        class="error mt-2">
-        <div *ngIf="studentForm.controls['registerNo'].errors['required']">
-          Register No is required.
-        </div>
-      </div>
-    </div>
+  
 
-    <div class="col-3">
+    <div class="col-4">
       <label class="form-label">Roll No <span class="error">*</span></label>
       <input type="text" class="form-control" formControlName="rollNo" />
       <div
@@ -104,27 +107,9 @@
       </div>
     </div>
 
-    <div class="col-3">
-      <label class="form-label">Admission Date <span class="error">*</span></label>
-      <div class="input-group">
-        <input matInput class="form-control me-3" [matDatepicker]="picker" placeholder="dd-mm-yyyy"
-          formControlName="admissionDate" />
-        <div class="mr-2 tooglePicker">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        </div>
-        <mat-datepicker #picker></mat-datepicker>
-      </div>
-      <div
-        *ngIf="studentForm.controls['admissionDate'].invalid && (studentForm.controls['admissionDate'].dirty || studentForm.controls['admissionDate'].touched)"
-        class="error mt-2">
-        <div *ngIf="studentForm.controls['admissionDate'].errors['required']">
-          Admission Date is required.
-        </div>
-      </div>
-    </div>
 
-    <div class="col-3">
-      <label class="form-label">Type <span class="error">*</span></label>
+    <div class="col-4">
+      <label class="form-label">Type</label>
       <select class="form-select" formControlName="type">
         <option disabled value="select">Select</option>
         <option *ngFor="let tdata of typeList" value="{{ tdata._id }}">
