@@ -8,31 +8,18 @@
               <div class="mb-3 col-md-4">
                 <label class="form-label">Class <span class="error">*</span></label>
              
-                <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+                <select class="form-select" formControlName="studentClass" >
                   <option disabled value="select">Select</option>
-                  <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
-                </select>
+                  <option *ngFor="let sec of classes"  [ngValue]="sec">
+                    {{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}
+                  </option>  </select>
                 <div *ngIf="reportForm.controls['studentClass'].invalid && (reportForm.controls['studentClass'].dirty || reportForm.controls['studentClass'].touched)"
                 class="error mt-2">
                 <div *ngIf="reportForm.controls['studentClass'].errors['required']">
                   Class is required.
                 </div>
-              </div></div>
-        
-              <div class="mb-3 col-md-4">
-                <label class="form-label">Section <span class="error">*</span></label>
-              
-                <select class="form-select" formControlName="section">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-                </select>
-                <div *ngIf="reportForm.controls['section'].invalid && (reportForm.controls['section'].dirty || reportForm.controls['section'].touched)"
-                class="error mt-2">
-                <div *ngIf="reportForm.controls['section'].errors['required']">
-                  Section is required.
-                </div>
-              </div>
-              </div>
+              </div></div>        
+             
               <div class="mb-3 col-md-4">
                 <label class="form-label">Year <span class="error">*</span></label>
                 <select class="form-select" formControlName="academicYear">
@@ -45,11 +32,12 @@
                   Year is required.
                 </div></div>
               </div>
+              <div class="col-md-3 mb-5 mt-4 pt-2">
+                <button class="btn" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+              </div>
             </div>
            
-          <div class="text-end mb-5">
-            <button class="btn" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
-          </div>
+          
         </form>
 
 

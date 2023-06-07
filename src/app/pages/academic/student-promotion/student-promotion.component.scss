@@ -1,0 +1,16 @@
+.panel-heading + .panel-body {
+    border-radius: 0 0 5px 5px;
+}
+.panel-body {
+    background: #fdfdfd;
+    -webkit-box-shadow: none;
+    border-radius: 5px;
+    border: 1px solid var(--bs-border-color-translucent);
+    margin-bottom: 15px;
+    
+}
+
+.alert-subl {
+    color: #31708f;
+    font-size: 14px;
+}
