@@ -1,181 +1,316 @@
-
 <app-layout>
-    <div class="container p-4">
-      <div class="tab-container">
-        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedTabChange)="tabChange($event)">
-          <mat-tab label="Banner">
-            <form [formGroup]="bannerForm" (ngSubmit)="addBanner()">
-              <div class="row my-3">
-                <div class="col-6">
-                  <label for="exampleInputEmail1" class="form-label">Title</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    width="200px"
-                    formControlName="title"
+  <div class="container p-4">
+    <div class="tab-container">
+      <mat-tab-group
+        mat-stretch-tabs="false"
+        mat-align-tabs="start"
+        (selectedTabChange)="tabChange($event)"
+      >
+        <mat-tab label="Banner">
+          <form [formGroup]="bannerForm" (ngSubmit)="addBanner()">
+            <div class="row my-3">
+              <div class="col-4">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  width="200px"
+                  formControlName="title"
+                />
+              </div>
+              <div class="col-4">
+                <label class="form-label">Banner Image</label>
+                <ngx-file-drop
+                  [multiple]="false"
+                  [directory]="false"
+                  (onFileDrop)="onFilesDropped($event, 'banner')"
+                >
+                  <ng-template
+                    ngx-file-drop-content-tmp
+                    let-openFileSelector="openFileSelector"
+                  >
+                    <ng-container *ngIf="!bannerFile">
+                      Drag and drop or
+                      <a
+                        class="p-1 btn btn-link"
+                        type="button"
+                        (click)="openFileSelector()"
+                        >Browse Files</a
+                      >
+                    </ng-container>
+                    <ng-container *ngIf="bannerFile">
+                      {{ bannerFile.name }}
+                      <a
+                        class="p-1 btn btn-link"
+                        style="color: #f44336"
+                        type="button"
+                        (click)="bannerFile = bannerImage = null"
+                      >
+                        Remove
+                      </a>
+                    </ng-container>
+                  </ng-template>
+                </ngx-file-drop>
+                <img
+                  *ngIf="bannerImage"
+                  [src]="bannerImage"
+                  class="img-fluid"
+                  alt="Responsive image"
+                  height="150px"
+                  width="250px"
+                />
+              </div>
+              <div class="col-4">
+                <label class="form-label">Type </label>
+                <!-- <label class="form-label">Class *</label> -->
+                <select class="form-select" formControlName="type">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let type of types" [value]="type">
+                    {{ type }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="text-end">
+              <button
+                type="submit"
+                class="text-end btn btn-primary"
+                [disabled]="!bannerForm.valid || isLoading || !bannerFile"
+              >
+                <span
+                  *ngIf="isLoading"
+                  class="spinner-border text-light"
+                ></span>
+                <span *ngIf="!isLoading">Save</span>
+              </button>
+            </div>
+          </form>
+
+          <table class="table mt-3">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Banner Image</th>
+                <th scope="col">type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let banner of banners; index as i">
+                <td>{{ banner.bannerName }}</td>
+                <td>
+                  <img
+                    class="img-fluid tableImg"
+                    [src]="banner.bannerImage"
+                    alt=""
                   />
-                </div>
-                <div class="col-6">
-                  <label class="form-label">Banner Image</label>
-                  <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event, 'banner')">
-                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                        <ng-container *ngIf="!bannerFile">
-                          Drag and drop or
-                          <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
-                        </ng-container>
-                        <ng-container *ngIf="bannerFile">
-                          {{bannerFile.name}}
-                          <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="bannerFile=bannerImage=null;">
-                            Remove
-                          </a>
-                        </ng-container>
-                    </ng-template>
-                  </ngx-file-drop>
-                  <img *ngIf="bannerImage" [src]="bannerImage" class="img-fluid" alt="Responsive image" height="150px" width="250px">
-                </div>
+                </td>
+                <td>{{ banner?.type }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+
+        <mat-tab label="Notice Board">
+          <form [formGroup]="noticeForm" (ngSubmit)="addNotice()">
+            <div class="row my-3">
+              <div class="col-3">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  width="200px"
+                  formControlName="name"
+                />
+              </div>
+              <div class="col-3">
+                <label class="form-label">Image</label>
+                <ngx-file-drop
+                  [multiple]="false"
+                  [directory]="false"
+                  (onFileDrop)="onFilesDropped($event, 'notice')"
+                >
+                  <ng-template
+                    ngx-file-drop-content-tmp
+                    let-openFileSelector="openFileSelector"
+                  >
+                    <ng-container *ngIf="!noticeFile">
+                      Drag and drop or
+                      <a
+                        class="p-1 btn btn-link"
+                        type="button"
+                        (click)="openFileSelector()"
+                        >Browse Files</a
+                      >
+                    </ng-container>
+                    <ng-container *ngIf="noticeFile">
+                      {{ noticeFile.name }}
+                      <a
+                        class="p-1 btn btn-link"
+                        style="color: #f44336"
+                        type="button"
+                        (click)="noticeFile = noticeImage = null"
+                      >
+                        Remove
+                      </a>
+                    </ng-container>
+                  </ng-template>
+                </ngx-file-drop>
+                <img
+                  *ngIf="noticeImage"
+                  [src]="noticeImage"
+                  class="img-fluid"
+                  alt="Responsive image"
+                  height="150px"
+                  width="250px"
+                />
+              </div>
+              <div class="col-3">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Description</label
+                >
+                <textarea
+                  class="form-control col-md-6 input-lg"
+                  id="exampleFormControlTextarea2"
+                  rows="5"
+                  formControlName="description"
+                ></textarea>
               </div>
 
-              <div class="text-end">
-                <button type="submit" class="text-end btn btn-primary" [disabled]="!bannerForm.valid || isLoading || !bannerFile">
-                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                  <span *ngIf="!isLoading">Save</span>
-                </button>
+              <div class="col-3">
+                <label class="form-label">Type </label>
+                <!-- <label class="form-label">Class *</label> -->
+                <select class="form-select" formControlName="type">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let type of types" [value]="type">
+                    {{ type }}
+                  </option>
+                </select>
               </div>
-            </form>
+            </div>
 
-            <table class="table mt-3">
-              <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Banner Image</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let banner of banners; index as i">
-                  <td>{{banner.bannerName}}</td>
-                  <td><img class="img-fluid tableImg" [src]="banner.bannerImage" alt=""></td>
-                </tr>
-              </tbody>
-            </table>
-          </mat-tab>
+            <div class="text-end">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!noticeForm.valid || isLoading || !noticeFile"
+              >
+                <span
+                  *ngIf="isLoading"
+                  class="spinner-border text-light"
+                ></span>
+                <span *ngIf="!isLoading">Save</span>
+              </button>
+            </div>
+          </form>
 
-          <mat-tab label="Notice Board">
-            <form [formGroup]="noticeForm" (ngSubmit)="addNotice()">
-              <div class="row my-3">
-                <div class="col-4">
-                  <label for="exampleInputEmail1" class="form-label">Title</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    width="200px"
-                    formControlName="name"
+          <table class="table mt-3">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Banner Image</th>
+                <th scope="col">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let notice of notices; index as i">
+                <td>{{ notice.name }}</td>
+                <td>{{ notice.description }}</td>
+                <td>{{ notice.noticeDate | date }}</td>
+                <td>
+                  <img
+                    class="img-fluid tableImg"
+                    [src]="notice.imageAttachment"
+                    alt=""
                   />
-                </div>
-                <div class="col-4">
-                  <label class="form-label">Image</label>
-                  <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event, 'notice')">
-                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                        <ng-container *ngIf="!noticeFile">
-                          Drag and drop or
-                          <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
-                        </ng-container>
-                        <ng-container *ngIf="noticeFile">
-                          {{noticeFile.name}}
-                          <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="noticeFile=noticeImage=null;">
-                            Remove
-                          </a>
-                        </ng-container>
-                    </ng-template>
-                  </ngx-file-drop>
-                  <img *ngIf="noticeImage" [src]="noticeImage" class="img-fluid" alt="Responsive image" height="150px" width="250px">
-                </div>
-                <div class="col-4">
-                  <label for="exampleInputEmail1" class="form-label">Description</label>
-                  <textarea class="form-control col-md-6 input-lg" id="exampleFormControlTextarea2" rows="5"
-                    formControlName="description"></textarea>
-                </div>
+                </td>
+                <td>{{ notice.type }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+
+        <mat-tab label=" Notification">
+          <form [formGroup]="notificationForm" (ngSubmit)="addNotification()">
+            <div class="row my-3">
+              <div class="col-4">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  width="200px"
+                  formControlName="title"
+                />
               </div>
-
-              <div class="text-end">
-                <button type="submit" class="btn btn-primary" [disabled]="!noticeForm.valid || isLoading || !noticeFile">
-                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                  <span *ngIf="!isLoading">Save</span>
-                </button>
+              <div class="col-6">
+                <label for="exampleInputEmail1" class="form-label"
+                  >Description</label
+                >
+                <textarea
+                  class="form-control col-md-6 input-lg"
+                  id="exampleFormControlTextarea2"
+                  rows="5"
+                  formControlName="description"
+                ></textarea>
               </div>
-            </form>
-
-            <table class="table mt-3">
-              <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Banner Image</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let notice of notices; index as i">
-                  <td>{{notice.name}}</td>
-                  <td>{{notice.description}}</td>
-                  <td>{{notice.noticeDate | date}}</td>
-                  <td><img class="img-fluid tableImg" [src]="notice.imageAttachment" alt=""></td>
-                </tr>
-              </tbody>
-            </table>
-          </mat-tab>
-
-          <mat-tab label=" Notification">
-            <form [formGroup]="notificationForm" (ngSubmit)="addNotification()">
-              <div class="row my-3">
-                <div class="col-6">
-                  <label for="exampleInputEmail1" class="form-label">Title</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    width="200px"
-                    formControlName="title"
-                  />
-                </div>
-                <div class="col-6">
-                  <label for="exampleInputEmail1" class="form-label">Description</label>
-                  <textarea class="form-control col-md-6 input-lg" id="exampleFormControlTextarea2" rows="5"
-                    formControlName="description"></textarea>
-                </div>
+              <div class="col-2">
+                <label class="form-label">Type </label>
+                <!-- <label class="form-label">Class *</label> -->
+                <select class="form-select" formControlName="type">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let type of types" [value]="type">
+                    {{ type }}
+                  </option>
+                </select>
               </div>
+            </div>
 
-              <div class="text-end">
-                <button type="submit" class="btn btn-primary" [disabled]="!notificationForm.valid || isLoading">
-                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                  <span *ngIf="!isLoading">Push</span>
-                </button>
-              </div>
-            </form>
+            <div class="text-end">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!notificationForm.valid || isLoading"
+              >
+                <span
+                  *ngIf="isLoading"
+                  class="spinner-border text-light"
+                ></span>
+                <span *ngIf="!isLoading">Push</span>
+              </button>
+            </div>
+          </form>
 
-            <table class="table mt-3">
-              <thead>
-                <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let notice of notifications; index as i">
-                  <td>{{notice.title}}</td>
-                  <td>{{notice.description}}</td>
-                </tr>
-              </tbody>
-            </table>
+          <table class="table mt-3">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let notice of notifications; index as i">
+                <td>{{ notice.title }}</td>
+                <td>{{ notice.description }}</td>
+                <td>{{ notice.type }}</td>
+              </tr>
+            </tbody>
+          </table>
         </mat-tab>
 
         <mat-tab label="Raised Ticket">
-          <div class="mb-3" style="width:15%; margin-top: 5%;" >
-            <label for="exampleInputEmail1" class="form-label">Search By Date</label>
+          <div class="mb-3" style="width: 15%; margin-top: 5%">
+            <label for="exampleInputEmail1" class="form-label"
+              >Search By Date</label
+            >
             <input
               type="email"
               class="form-control"
@@ -192,6 +327,7 @@
                 <th scope="col">From</th>
                 <th scope="col">Class</th>
                 <th scope="col">Support Type</th>
+                <th scope="col">Type</th>
                 <th scope="col">View Details</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
@@ -199,24 +335,37 @@
             </thead>
             <tbody>
               <tr *ngFor="let ticket of raisedTickets; index as i">
-                <td>{{ticket.sendTo}}</td>
-                <td>{{ticket.student.firstName + " " + ticket.student.lastName}}</td>
-                <td>{{ticket.student.academic?.studentClass?.className + '-' + ticket.student.academic?.section?.name}}</td>
-                <td>{{ticket.supportType}}</td>
-                <td>{{ticket.description}}</td>
-                <td>{{ticket.status}}</td>
+                <td>{{ ticket.sendTo }}</td>
                 <td>
-                  <button class="btn me-1" data-bs-toggle="modal" data-bs-target="#viewTicket"
-                    (click)="setTicket(ticket)">
+                  {{ ticket.student.firstName + " " + ticket.student.lastName }}
+                </td>
+                <td>
+                  {{
+                    ticket.student.academic?.studentClass?.className +
+                      "-" +
+                      ticket.student.academic?.section?.name
+                  }}
+                </td>
+                <td>{{ ticket.supportType }}</td>
+                <td>{{ ticket.raiseType }}</td>
+                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.status }}</td>
+                <td>
+                  <button
+                    class="btn me-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#viewTicket"
+                    (click)="setTicket(ticket)"
+                  >
                     <i class="fa-solid fa-pencil"></i>
                   </button>
                 </td>
               </tr>
             </tbody>
-            </table>
+          </table>
         </mat-tab>
 
-         <!-- <mat-tab label="Leave">
+        <!-- <mat-tab label="Leave">
           <div class="mb-3" style="width:15%; margin-top: 5%;" >
             <label for="exampleInputEmail1" class="form-label">Search By Date</label>
             <input
@@ -272,52 +421,72 @@
           <div class="col-3">
             <div>
               To :
-              <br>
+              <br />
               Support Type :
-              <br>
+              <br />
               Description :
-              <br>
+              <br />
               Status :
             </div>
           </div>
           <div class="col-9">
             <div>
-              {{selectedTicket?.sendTo}}
-              <br>
-              {{selectedTicket?.supportType}}
-              <br>
-              {{selectedTicket?.description}}
-              <br>
+              {{ selectedTicket?.sendTo }}
+              <br />
+              {{ selectedTicket?.supportType }}
+              <br />
+              {{ selectedTicket?.description }}
+              <br />
               <form [formGroup]="ticketStatus">
                 <div class="ticket-status d-flex">
-                    <div class="form-check me-1">
-                      <input class="form-check-input" type="radio" formControlName="status" id="pending"
-                        value="PENDING">
-                      <label class="form-check-label" for="pending">
-                        Pending
-                      </label>
-                    </div>
-                    <div class="form-check me-1">
-                      <input class="form-check-input" type="radio" formControlName="status" id="approve"
-                        value="RESOLVED">
-                      <label class="form-check-label" for="approve">
-                        Resolved
-                      </label>
-                    </div>
+                  <div class="form-check me-1">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      formControlName="status"
+                      id="pending"
+                      value="PENDING"
+                    />
+                    <label class="form-check-label" for="pending">
+                      Pending
+                    </label>
+                  </div>
+                  <div class="form-check me-1">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      formControlName="status"
+                      id="approve"
+                      value="RESOLVED"
+                    />
+                    <label class="form-check-label" for="approve">
+                      Resolved
+                    </label>
+                  </div>
                 </div>
               </form>
-              </div>
+            </div>
           </div>
         </div>
-
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="updateTicketStatus()"
-          [disabled]="isLoading">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="updateTicketStatus()"
+          [disabled]="isLoading"
+        >
           <span *ngIf="isLoading" class="spinner-border text-light"></span>
           <span *ngIf="!isLoading">Apply</span>
         </button>
-        <button id="updateStatusModal" type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        <button
+          id="updateStatusModal"
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
       </div>
     </div>
   </div>

@@ -1,23 +1,40 @@
 <mat-list>
-  <mat-list-item routerLink="{{routes.DASHBOARD}}" routerLinkActive="active">
+  <mat-list-item routerLink="{{ routes.DASHBOARD }}" routerLinkActive="active">
     <mat-icon matListItemIcon>border_all</mat-icon> Dashboard
   </mat-list-item>
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/admission') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/admission') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/admission') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/admission') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>group_work</mat-icon> Admission
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.C_ADMISSION" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.C_ADMISSION"
+        routerLinkActive="sub-active"
+      >
         Create Admission
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.CAT_ADMISSION" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.CAT_ADMISSION"
+        routerLinkActive="sub-active"
+      >
         Category
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.MUL_ADMISSION" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.MUL_ADMISSION"
+        routerLinkActive="sub-active"
+      >
         Multiple Import
       </mat-list-item>
     </div>
@@ -26,7 +43,10 @@
   <mat-list-item>
     <mat-icon matListItemIcon>add_home</mat-icon> Attendance
   </mat-list-item>
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/fees') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/fees') ? true : false"
+  >
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/fees') ? 'active' : ''">
         <mat-icon matListItemIcon>group_work</mat-icon> Fees
@@ -34,57 +54,113 @@
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.FEES_CATEGORY" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.FEES_CATEGORY"
+        routerLinkActive="sub-active"
+      >
         Fee Category
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.FEES_TYPE" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.FEES_TYPE"
+        routerLinkActive="sub-active"
+      >
         Fee List
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.FEES_TRANSPORT" routerLinkActive="sub-active">
-       Transport List
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.FEES_TRANSPORT"
+        routerLinkActive="sub-active"
+      >
+        Transport List
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.STUDENT_HISTORY" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.STUDENT_HISTORY"
+        routerLinkActive="sub-active"
+      >
         Student History
-       </mat-list-item>
-      
+      </mat-list-item>
     </div>
   </mat-expansion-panel>
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/academic') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/academic') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/academic') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/academic') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>account_balance</mat-icon>Academic
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.ACADE_CLASS" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.ACADE_CLASS"
+        routerLinkActive="sub-active"
+      >
         Control Classes
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.ACADE_ASSIGN" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.ACADE_ASSIGN"
+        routerLinkActive="sub-active"
+      >
         Assign Class Teacher
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.ACADE_SUB" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.ACADE_SUB"
+        routerLinkActive="sub-active"
+      >
         Subject
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.ACADE_CLASS_ASSIGN" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.ACADE_CLASS_ASSIGN"
+        routerLinkActive="sub-active"
+      >
         Class Assign
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.ACADE_CLASS_SCH" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.ACADE_CLASS_SCH"
+        routerLinkActive="sub-active"
+      >
         Class Schedule
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.ACADE_TEACHER_SCH" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.ACADE_TEACHER_SCH"
+        routerLinkActive="sub-active"
+      >
         Teacher Schedule
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.ACADE_STUDENT_PROMOTION" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.ACADE_STUDENT_PROMOTION"
+        routerLinkActive="sub-active"
+      >
         Promotion
       </mat-list-item>
-      
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/student-details/student-list') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="
+      currentUrl.includes('/student-details/student-list') ? true : false
+    "
+  >
     <mat-expansion-panel-header>
-      <mat-list-item matListItemIcon [routerLink]="routes.STUDNT_LIST" routerLinkActive="active">
+      <mat-list-item
+        matListItemIcon
+        [routerLink]="routes.STUDNT_LIST"
+        routerLinkActive="active"
+      >
         <mat-icon matListItemIcon>photo_alum</mat-icon>Student List
       </mat-list-item>
 
@@ -94,7 +170,7 @@
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-    <!-- 
+      <!-- 
       
       
       <mat-list-item class="sub-menu" [routerLink]="routes.STUDNT_LIST" routerLinkActive="sub-active">
@@ -106,65 +182,117 @@
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/employee/') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/employee/') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/employee/') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/employee/') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>photo_alum</mat-icon>Employees
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.EMP_LIST" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.EMP_LIST"
+        routerLinkActive="sub-active"
+      >
         Employee Lists
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.EMP_DEPT" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.EMP_DEPT"
+        routerLinkActive="sub-active"
+      >
         Add Department
       </mat-list-item>
       <!-- <mat-list-item class="sub-menu" [routerLink]="routes.EMP_DES" routerLinkActive="sub-active">
         Add Designation
       </mat-list-item> -->
-      <mat-list-item class="sub-menu" [routerLink]="routes.EMP_ADD" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.EMP_ADD"
+        routerLinkActive="sub-active"
+      >
         Add Employee
       </mat-list-item>
     </div>
   </mat-expansion-panel>
   <!-- reception -->
-  <mat-expansion-panel hideToggle="true"  hideToggle="true" [expanded]="currentUrl.includes('/student-acconting') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/student-acconting') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/student-acconting') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/student-acconting') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>photo_alum</mat-icon>Student Accounting
       </mat-list-item>
     </mat-expansion-panel-header>
 
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.STUD_ACCOUNTING" routerLinkActive="sub-active">
-      Fees Type
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.STUD_ACCOUNTING"
+        routerLinkActive="sub-active"
+      >
+        Fees Type
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.STUD_FEES_GROUP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.STUD_FEES_GROUP"
+        routerLinkActive="sub-active"
+      >
         Fees Group
-        </mat-list-item>
-        <mat-list-item class="sub-menu" [routerLink]="routes.STUD_FINE_SETUP" routerLinkActive="sub-active">
-          Fine Setup
-          </mat-list-item>
-          <mat-list-item class="sub-menu" [routerLink]="routes.STUD_FESS_ALLOC" routerLinkActive="sub-active">
-          Fees Allocation
-            </mat-list-item>
-            <mat-list-item class="sub-menu" [routerLink]="routes.STUD_FESS_PAY_INVOI" routerLinkActive="sub-active">
-              Fees Pay/Invoice
-                </mat-list-item>
-                <mat-list-item class="sub-menu" [routerLink]="routes.STUD_DUE_FEES_INVOI" routerLinkActive="sub-active">
-                Dues Fess/Invoice
-                    </mat-list-item>
-                    <mat-list-item class="sub-menu" [routerLink]="routes.STUD_FEES_REMAINDER" routerLinkActive="sub-active">
-                    Fees Remainder
-                          </mat-list-item>
-
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.STUD_FINE_SETUP"
+        routerLinkActive="sub-active"
+      >
+        Fine Setup
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.STUD_FESS_ALLOC"
+        routerLinkActive="sub-active"
+      >
+        Fees Allocation
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.STUD_FESS_PAY_INVOI"
+        routerLinkActive="sub-active"
+      >
+        Fees Pay/Invoice
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.STUD_DUE_FEES_INVOI"
+        routerLinkActive="sub-active"
+      >
+        Dues Fess/Invoice
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.STUD_FEES_REMAINDER"
+        routerLinkActive="sub-active"
+      >
+        Fees Remainder
+      </mat-list-item>
     </div>
   </mat-expansion-panel>
 
-
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/cert') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/cert') ? true : false"
+  >
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/cert') ? 'active' : ''">
         <mat-icon matListItemIcon>photo_alum</mat-icon>Certificate
@@ -172,19 +300,34 @@
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.CERT_TEMP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.CERT_TEMP"
+        routerLinkActive="sub-active"
+      >
         Certificate Template
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.CERT_STUD" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.CERT_STUD"
+        routerLinkActive="sub-active"
+      >
         Generate Student
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.CERT_EMP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.CERT_EMP"
+        routerLinkActive="sub-active"
+      >
         Generate Employee
       </mat-list-item>
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/marks') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/marks') ? true : false"
+  >
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/marks') ? 'active' : ''">
         <mat-icon matListItemIcon>photo_alum</mat-icon>Exam Master
@@ -192,25 +335,44 @@
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.MARKS_ENTRY" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.MARKS_ENTRY"
+        routerLinkActive="sub-active"
+      >
         Marks Entries
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.GRADE_RANGE" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.GRADE_RANGE"
+        routerLinkActive="sub-active"
+      >
         Grades Range
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.MARKS_EXAM_TERM" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.MARKS_EXAM_TERM"
+        routerLinkActive="sub-active"
+      >
         Exam Term/Distribution
       </mat-list-item>
       <!-- <mat-list-item class="sub-menu" [routerLink]="routes.DIST" routerLinkActive="sub-active">
       Disturbution
       </mat-list-item> -->
-      <mat-list-item class="sub-menu" [routerLink]="routes.EXAM_SETUP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.EXAM_SETUP"
+        routerLinkActive="sub-active"
+      >
         Exam Setup
-        </mat-list-item>
+      </mat-list-item>
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/report') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/report') ? true : false"
+  >
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/report') ? 'active' : ''">
         <mat-icon matListItemIcon>photo_alum</mat-icon>Reports
@@ -218,51 +380,99 @@
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.REP_STUD_ST_REP" routerLinkActive="sub-active">
-     Student Strength Report
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.REP_STUD_ST_REP"
+        routerLinkActive="sub-active"
+      >
+        Student Strength Report
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.REP_STUD_adm_REP" routerLinkActive="sub-active">
-      Admission Details Reports
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.REP_STUD_adm_REP"
+        routerLinkActive="sub-active"
+      >
+        Admission Details Reports
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.REP_INACTIVE_ST_REP" routerLinkActive="sub-active">
-      Inactive Student Report
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.REP_INACTIVE_ST_REP"
+        routerLinkActive="sub-active"
+      >
+        Inactive Student Report
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.REP_STUD_FESSCONS_REP" routerLinkActive="sub-active">
-      Fess Consession Report
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.REP_STUD_FESSCONS_REP"
+        routerLinkActive="sub-active"
+      >
+        Fess Consession Report
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.REP_STUD_CLASS_TEACH_REP" routerLinkActive="sub-active">
-     Class Teacher List
-        </mat-list-item>
-        <mat-list-item class="sub-menu" [routerLink]="routes.REP_STUD_SUB_TEACH_REP" routerLinkActive="sub-active">
-          Subject Teacher List
-          </mat-list-item>
-          <mat-list-item class="sub-menu" [routerLink]="routes.REP_STUD_ATTEN_REP" routerLinkActive="sub-active">
-          Student Attendance
-            </mat-list-item>
-            <mat-list-item class="sub-menu" [routerLink]="routes.EXAM_SETUP" routerLinkActive="sub-active">
-              Exam Setup
-              </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.REP_STUD_CLASS_TEACH_REP"
+        routerLinkActive="sub-active"
+      >
+        Class Teacher List
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.REP_STUD_SUB_TEACH_REP"
+        routerLinkActive="sub-active"
+      >
+        Subject Teacher List
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.REP_STUD_ATTEN_REP"
+        routerLinkActive="sub-active"
+      >
+        Student Attendance
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.EXAM_SETUP"
+        routerLinkActive="sub-active"
+      >
+        Exam Setup
+      </mat-list-item>
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/homework') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/homework') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/homework') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/homework') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>photo_alum</mat-icon>Homework
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.WORK_LIST" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.WORK_LIST"
+        routerLinkActive="sub-active"
+      >
         Homework
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.EVAL_REPORT" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.EVAL_REPORT"
+        routerLinkActive="sub-active"
+      >
         Evaluation Report
       </mat-list-item>
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/bulk') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/bulk') ? true : false"
+  >
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/bulk') ? 'active' : ''">
         <mat-icon matListItemIcon>photo_alum</mat-icon>Bulk SMS and Email
@@ -270,48 +480,97 @@
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.BULK_SEND_SMS" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.BULK_SEND_SMS"
+        routerLinkActive="sub-active"
+      >
         Send SMS / Email
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.BULK_SMS_REPORT" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.BULK_SMS_REPORT"
+        routerLinkActive="sub-active"
+      >
         SMS / Email Report
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.BULK_SMS_TEMP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.BULK_SMS_TEMP"
+        routerLinkActive="sub-active"
+      >
         SMS Template
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.BULK_EMAIL_TEMP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.BULK_EMAIL_TEMP"
+        routerLinkActive="sub-active"
+      >
         Email Template
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.BULK_STUD_BIRTH" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.BULK_STUD_BIRTH"
+        routerLinkActive="sub-active"
+      >
         Student Birthday Wishes
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.BULK_STAFF_BIRTH" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.BULK_STAFF_BIRTH"
+        routerLinkActive="sub-active"
+      >
         Staff Birthday Wishes
       </mat-list-item>
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/transport') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/transport') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/transport') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/transport') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>photo_alum</mat-icon>Transport
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.TRANS_ROUTE" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.TRANS_ROUTE"
+        routerLinkActive="sub-active"
+      >
         Route Master
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.TRANS_VEHICLE" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.TRANS_VEHICLE"
+        routerLinkActive="sub-active"
+      >
         Vehicle Master
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.TRANS_STOP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.TRANS_STOP"
+        routerLinkActive="sub-active"
+      >
         Stop Page
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.TRANS_ASSIGN" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.TRANS_ASSIGN"
+        routerLinkActive="sub-active"
+      >
         Assign Vehicle
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.TRANS_REPORT" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.TRANS_REPORT"
+        routerLinkActive="sub-active"
+      >
         Allocation Report
       </mat-list-item>
       <!-- <mat-list-item class="sub-menu" [routerLink]="routes.TRANS_EXPENSE" routerLinkActive="sub-active">
@@ -321,88 +580,139 @@
   </mat-expansion-panel>
 
   <!-- Human resourcea -->
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/human-resource') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/human-resource') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/human-resource') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/human-resource') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>photo_alum</mat-icon>Human Ressource
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.HR_SAL_TEMP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.HR_SAL_TEMP"
+        routerLinkActive="sub-active"
+      >
         Salary Templete
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.HR_SAL_ASSIGN" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.HR_SAL_ASSIGN"
+        routerLinkActive="sub-active"
+      >
         Salary Assign
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.HR_SAL_PAYMENT" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.HR_SAL_PAYMENT"
+        routerLinkActive="sub-active"
+      >
         Salary Payment
       </mat-list-item>
-     <!-- <mat-list-item class="sub-menu" [routerLink]="routes.HR_ADVAN_SALARY" routerLinkActive="sub-active">
+      <!-- <mat-list-item class="sub-menu" [routerLink]="routes.HR_ADVAN_SALARY" routerLinkActive="sub-active">
         My Application
       </mat-list-item> -->
-      <mat-list-item class="sub-menu" [routerLink]="routes.HR_MAN_APP" routerLinkActive="sub-active">
-     Manage Application
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.HR_MAN_APP"
+        routerLinkActive="sub-active"
+      >
+        Manage Application
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.HR_LEAVE_CAT" routerLinkActive="sub-active">
-      Leave Category
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.HR_LEAVE_CAT"
+        routerLinkActive="sub-active"
+      >
+        Leave Category
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.HR_LEAVE_APP" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.HR_LEAVE_APP"
+        routerLinkActive="sub-active"
+      >
         Leave/ Application
-        </mat-list-item>
-        <mat-list-item class="sub-menu" [routerLink]="routes.HR_LEAVE_MAN_APP" routerLinkActive="sub-active">
-          Leave/Manage Application
-          </mat-list-item>
-
-
+      </mat-list-item>
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.HR_LEAVE_MAN_APP"
+        routerLinkActive="sub-active"
+      >
+        Leave/Manage Application
+      </mat-list-item>
     </div>
   </mat-expansion-panel>
   <!--  -->
 
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/reception') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/reception') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/reception') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/reception') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>photo_alum</mat-icon>Reception
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.RECEP_ENQUIRY" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.RECEP_ENQUIRY"
+        routerLinkActive="sub-active"
+      >
         Admission Enquiry
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.RECEP_CALLLOG" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.RECEP_CALLLOG"
+        routerLinkActive="sub-active"
+      >
         Call Log
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.RECEP_VISITORLOG" routerLinkActive="sub-active">
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.RECEP_VISITORLOG"
+        routerLinkActive="sub-active"
+      >
         Visitor Log
       </mat-list-item>
     </div>
   </mat-expansion-panel>
 
-
-  
-  <mat-expansion-panel hideToggle="true" [expanded]="currentUrl.includes('/reception') ? true : false">
+  <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/reception') ? true : false"
+  >
     <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/reception') ? 'active' : ''">
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/reception') ? 'active' : ''"
+      >
         <mat-icon matListItemIcon>photo_alum</mat-icon> App Settings
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item class="sub-menu" [routerLink]="routes.PARENTAPP" routerLinkActive="sub-active">
-   Parent App
+      <mat-list-item
+        class="sub-menu"
+        [routerLink]="routes.PARENTAPP"
+        routerLinkActive="sub-active"
+      >
+        Parent App
       </mat-list-item>
-      <mat-list-item class="sub-menu" [routerLink]="routes.TEACHERAPP" routerLinkActive="sub-active">
+      <!-- <mat-list-item class="sub-menu" [routerLink]="routes.TEACHERAPP" routerLinkActive="sub-active">
         teacher App
-           </mat-list-item>
-   
-   
+           </mat-list-item> -->
     </div>
   </mat-expansion-panel>
 
-
-  <mat-list-item routerLink="{{routes.CAREERS}}" routerLinkActive="active">
+  <mat-list-item routerLink="{{ routes.CAREERS }}" routerLinkActive="active">
     <mat-icon matListItemIcon>library_books</mat-icon> Reports
   </mat-list-item>
 </mat-list>
-
