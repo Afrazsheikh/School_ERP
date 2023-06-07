@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
@@ -9,6 +9,10 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./emp-dept.component.scss']
 })
 export class EmpDeptComponent {
+  
+  @ViewChild('closeButton') closeButton;
+  @ViewChild('closeButtonDelete') closeButtonDelete;
+
 
   departments: any[] = [];
   isLoading: boolean;
@@ -40,9 +44,9 @@ export class EmpDeptComponent {
     });
 
     this.editDesign = new FormGroup({
+      id:new FormControl(null),
       name: new FormControl(null, [Validators.required]),
       department: new FormControl(null, [Validators.required])
-
     });
   
   }
@@ -156,19 +160,28 @@ export class EmpDeptComponent {
   setDesignation(dept: any)
   {
     this.selectedDesign = dept;
-    this.editDesign.patchValue({name: dept.name, department : dept.department?.name});
+    this.editDesign.patchValue({
+      id:dept?._id,
+      name: dept.name, department : dept.department?.name});
   }
 
   updateDesignation()
   {
     this.isLoading = true;
-    this.api.updateDesignation(this.selectedDesign._id, this.editDesign.value).subscribe(resp => {
+    const payload = {
+      id :this.selectedDesign?._id,
+      name:this.editDesign.value?.name,
+     description:'',
+     department:this.selectedDesign?.department
+    };
+    this.api.updateDesignation(this.selectedDesign._id,payload).subscribe(resp => {
       console.log(resp);
 
       this.isLoading = false;
 
-      document.getElementById('editModalDismissBtn')?.click();
+      // document.getElementById('editModalDismissBtn')?.click();
       this.toastr.success(resp.message, "Designations update success");
+      this.closeButton.nativeElement?.click();
       this.getDesignations();
     ;
     },
@@ -185,7 +198,7 @@ export class EmpDeptComponent {
     this.api.deleteDesignation(this.selectedDesign._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
+      this.closeButtonDelete.nativeElement?.click();
       this.getDesignations();
     },
     (err) => {

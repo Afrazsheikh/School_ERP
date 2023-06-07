@@ -517,10 +517,10 @@ export class ApiService {
       .pipe(catchError(this.errorHandler));
   }
 
-  updateDesignation(deptId: string, postData: any): Observable<any> {
-    postData['id'] = deptId;
+  updateDesignation(deptId: string, postData: any,): Observable<any> {
+    postData['id'] = deptId; 
     return this.httpClient
-      .put(environment.apiBaseUrl + '/designation', postData)
+      .put(environment.apiBaseUrl + '/designation', postData )
       .pipe(catchError(this.errorHandler));
   }
 

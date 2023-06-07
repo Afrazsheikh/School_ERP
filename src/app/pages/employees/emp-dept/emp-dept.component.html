@@ -241,7 +241,7 @@
       <div class="modal-body">
         <form [formGroup]="editDesign">
           <div class="mb-3">
-            <label class="form-label">Designation Name *</label>
+            <label class="form-label">Department Name *</label>
             <input
               type="text"
               class="form-control"
@@ -260,6 +260,7 @@
           type="button"
           class="btn btn-primary"
           data-bs-dismiss="modal"
+          #closeButton
         >
           Cancel
         </button>
@@ -293,6 +294,7 @@
           type="button"
           class="btn btn-primary"
           data-bs-dismiss="modal"
+          #closeButtonDelete
         >
           Cancel
         </button>
