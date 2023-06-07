@@ -23,6 +23,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxPrintModule } from 'ngx-print';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LoginComponent } from './pages/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +51,7 @@ import { LoginComponent } from './pages/login/login.component';
     NgApexchartsModule,
     ToastrModule.forRoot({ positionClass: 'toast-center-center' }),
     ModalModule.forRoot(),
+    ReactiveFormsModule,
   ],
   providers: [BsModalService],
   bootstrap: [AppComponent],

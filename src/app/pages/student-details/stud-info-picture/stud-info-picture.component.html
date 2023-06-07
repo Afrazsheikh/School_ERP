@@ -41,12 +41,13 @@
       <div class="col-md-7">
           <div class="row profile">
             <div><h5>{{student.firstName + " " + student.lastName}}</h5></div>
-            <div><div class="icon-menu" title="Guardian Name"><i class="fa fa-users"></i></div><label>{{student?.guardian?.fatherName}}</label>  </div>
+            <div><div class="icon-menu" title="Guardian Name"><i class="fa fa-users"></i></div><label>{{student?.guardian?.firstName}}</label>  </div>
             <div><div class="icon-menu" title="Date Of Birth"><i class="fa fa-birthday-cake"></i></div> <label>{{student.dob | date: 'dd/MM/yyyy'}}</label> </div>
             <div><div class="icon-menu" title="Class"><i class="fa fa-school"></i></div><label>{{student.academic?.studentClass?.className}}({{student.academic?.section?.name}})</label> </div>
             <div><div class="icon-menu" title="Mobile Number"><i class="fa fa-phone-volume"></i></div><label> {{student.number}}</label> </div>
             <div><div class="icon-menu" title="Email Address"><i class="fa fa-envelope"></i></div><label>{{student.email}}</label> </div>
-            <div><div class="icon-menu" title="Present Address"><i class="fa fa-home"></i></div><label>{{student.presentAddress}}</label> </div>
+            <div><div class="icon-menu" title="Present Address"><i class="fa fa-home"></i></div><label>{{student?.presentAddressHouseNo}},{{student?.presentAddressStreet}}, {{student?.presentAddressZipCode}}, {{student?.presentAddressCity}}, {{student?.presentAddressState}}
+            </label> </div>
           </div>
       </div>
     </div>

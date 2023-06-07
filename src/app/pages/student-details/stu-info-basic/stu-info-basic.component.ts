@@ -89,16 +89,17 @@ onChangeClass(event){
   if(this.studentBasic?.dob !== '' && this.studentBasic?.dob !== null && this.studentBasic?.dob !== undefined) {
     this.studentBasic.dob = new Date(this.studentBasic.dob);
   }
+  
   this.studentForm = this.fb.group({ 
       id:[this.studentBasic._id],
       academicYear: [this.studentBasic?.academic?.academicYear, Validators.required],
       studentClass: [this.studentBasic?.academic?.studentClass?._id, Validators.required],
-      section: [this.studentBasic?.academic?.section?._id, Validators.required],
+      section: [this.studentBasic?.academic?.section?._id],
       category: [this.studentBasic?.category?._id, Validators.required],      
       registerNo: [{value:this.studentBasic?.registerNo,disabled:true }, Validators.required],
       rollNo: [this.studentBasic?.rollNo, Validators.required],
       admissionDate: [this.studentBasic?.admissionDate, Validators.required],
-      type: [this.studentBasic?.type, Validators.required],
+      type: [this.studentBasic?.type],
       firstName: [this.studentBasic?.firstName, Validators.required],
       lastName: [this.studentBasic?.lastName, Validators.required],
       gender: [this.studentBasic?.gender, Validators.required],
@@ -109,8 +110,8 @@ onChangeClass(event){
       caste: [this.studentBasic?.caste, Validators.required],
       email: [this.studentBasic?.email, Validators.required],
       mobileNumber: [this.studentBasic?.number, Validators.required],
-      previousQualification:[this.studentBasic?.previousSchoolName],
-      previousSchoolName:[this.studentBasic?.previousQualification],
+      previousQualification:[this.studentBasic?.previousQualification],
+      previousSchoolName:[this.studentBasic?.previousSchoolName],
       previousRemarks:[this.studentBasic?.previousRemarks],
       guardian1:this.fb.group({
         relation: [this.studentBasic?.guardian?.relation, Validators.required],
@@ -169,9 +170,19 @@ onChangeClass(event){
     email: gauValue2.email,
     occupation:gauValue2.occupation,
   }
+  var sectionId = formData.value.section;
+  if(!this.api.isEmptyObject(formData.value.studentClass)){
+    this.classes.forEach(element => {
+      if(element._id === formData.value.studentClass) {
+        this.sections = element.sections;
+        sectionId = element?.sections[0]?._id;
+      }
+  });
+ 
+  }
   const payload ={
     academicYear : formData.value.academicYear,    
-    section: formData.value.section, 
+    section: sectionId, 
     category:formData.value.category,
     studentClass: formData.value.studentClass,
     registerNo: formData.value.registerNo,    

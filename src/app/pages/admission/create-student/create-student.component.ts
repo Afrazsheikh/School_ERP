@@ -123,10 +123,10 @@ export class CreateStudentComponent {
       id: [''],
       academicYear: ['', Validators.required],
       studentClass: ['', Validators.required],
-      section: ['', Validators.required],
+      section: [''],
       category: ['', Validators.required],
       registerNo: ['VXPIS'],
-      rollNo: ['', Validators.required],
+      rollNo: [''],
       admissionDate: [new Date(), Validators.required],
       type: [''],
       firstName: ['', Validators.required],
@@ -177,28 +177,17 @@ export class CreateStudentComponent {
   }
   selectedGua(event) {
     const data = event.value;
-    // this.studentForm.controls['guardian'].patchValue({
-    //   name: data.firstName,
-    //   relation: data.relation,
-    //   fatherName: data.fatherName,
-    //   motherName: data.motherName,
-    //   occupation: data.occupation,
-    //   mobileNumber: data.number,
-    //   email: data.email,
-    //   city: data.city,
-    //   state: data.state,
-    //   permanentAddress: data.permanentAddress,
-    //   userName: data.userName,
-    //   password: data.password,
-    //   alreadyExists: data.alreadyExists,
-    // });
     this.studentForm.controls['guardian1'].patchValue({
       relation:data.guardian?.relation,
       setAsPrimaryGuradian:data.guardian?.isPrimary,
       fullName:data.guardian?.firstName,
       mobileNumber:data.guardian?.number,
       email:data.guardian?.email,
-      occupation:data.guardian?.occupation
+      occupation:data.guardian?.occupation,     
+    });
+    this.studentForm.patchValue({
+      userName:data.guardian?.userName,
+      password:data.guardian?.password
     });
     this.studentForm.controls['guardian2'].patchValue({
       relation:data.guardian2?.relation,
@@ -266,9 +255,9 @@ export class CreateStudentComponent {
     let postData = new FormData();
 
     postData.append("academicYear", _form.value.academicYear);
-    postData.append("section", _form.value.section);
+    postData.append("section", _form.value.studentClass?.sections[0]?._id);
     postData.append("category", _form.value.category);
-    postData.append("studentClass", _form.value.studentClass);
+    postData.append("studentClass", _form.value.studentClass?._id);
     postData.append("registerNo", _form.value.registerNo);
     postData.append("rollNo", _form.value.rollNo);
     postData.append("admissionDate", moment(_form.value.admissionDate).format("YYYY-MM-DD"));

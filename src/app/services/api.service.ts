@@ -11,6 +11,14 @@ import { environment } from 'src/environments/environment';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
+  // Login
+
+  loginMethod(postData): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/employee/teacher/login', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+
   // Exam Master
   createExam(postData: FormData): Observable<any> {
     return this.httpClient.post(environment.apiBaseUrl + '/exam', postData);
@@ -229,6 +237,12 @@ export class ApiService {
       .get(environment.apiBaseUrl + '/employee/' + id)
       .pipe(catchError(this.errorHandler));
   }
+  getEmployeesIdWiseSalaryData(id: string): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/salaryReceipt/employees/' + id)
+      .pipe(catchError(this.errorHandler));
+  }
+  
   fineSetupListById(id: string) {
     return this.httpClient
       .get(environment.apiBaseUrl + '/fineSetup/' + id)
