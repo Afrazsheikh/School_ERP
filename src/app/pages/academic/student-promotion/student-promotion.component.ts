@@ -33,32 +33,21 @@ export class StudentPromotionComponent implements OnInit {
   addForm() {
     this.filterForm = new FormGroup({
       studentClass: new FormControl(null, [Validators.required]),
-      section: new FormControl(null, [Validators.required]),
+      section: new FormControl(null),
       academicYear: new FormControl(null, [Validators.required]),
     })
   }
   promotionaddForm() {
     this.promotionForm = new FormGroup({
       studentClass: new FormControl(null, [Validators.required]),
-      section: new FormControl(null, [Validators.required]),
+      section: new FormControl(null),
       academicYear: new FormControl(null, [Validators.required]),
       studentData: new FormControl(null, [Validators.required]),
     })
   }
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {
-      this.classes = resp.classes;
-      if (this.studentService.studentDetailBackAction.isBack) {
-        this.setClass(this.studentService.studentDetailBackAction.studentClass);
-        this.filterForm.patchValue({
-          studentClass: this.studentService.studentDetailBackAction.studentClass,
-          section: this.studentService.studentDetailBackAction.section,
-          academicYear: this.studentService.studentDetailBackAction.academicYear
-        });
-
-        this.filterForm.updateValueAndValidity();
-        this.callReport(this.filterForm);
-      }
+      this.classes = resp.classes;     
     });
   }
   setClass(classId) {
@@ -91,8 +80,8 @@ export class StudentPromotionComponent implements OnInit {
   callReport(reportForm) {
     const data = {
       academicYear: reportForm.value.academicYear,
-      section: reportForm.value.section,
-      studentClass: reportForm.value.studentClass,
+      section:  reportForm.value.studentClass?.sections[0]?._id,
+      studentClass: reportForm.value.studentClass?._id,
     }
     this.spinner.show();
     this.api.studentList(data).subscribe(data => {

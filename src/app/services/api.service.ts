@@ -229,7 +229,12 @@ export class ApiService {
 
   getAllEmployees(): Observable<any> {
     return this.httpClient
-      .get(environment.apiBaseUrl + '/employee/all')
+      .get(environment.apiBaseUrl + '/employee/all/')
+      .pipe(catchError(this.errorHandler));
+  }
+  getEmployeesByPageNo(pageNo: number): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/employee/all/'+pageNo)
       .pipe(catchError(this.errorHandler));
   }
   getAllEmployeesById(id: string): Observable<any> {

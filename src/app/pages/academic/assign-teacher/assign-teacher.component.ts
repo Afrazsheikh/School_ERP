@@ -46,6 +46,7 @@ export class AssignTeacherComponent {
     this.classes.forEach(element => {
         if(element._id === id) {
           this.sections = element.sections;
+          this.TeacherForm.controls['section'].patchValue(this.sections[0]._id);
         }
     });
   }

@@ -11,11 +11,11 @@
                   <label class="form-label">Classss <span class="error">*</span></label>
                   <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
                     <option disabled value="select">Select</option>
-                    <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
+                    <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}</option>
                   </select>
                 </div>
             </div>
-            <div class="row mt-2 mb-3">
+           <!-- <div class="row mt-2 mb-3">
                 <div class="col-4 offset-md-3">
                     <label class="form-label">Section <span class="error">*</span></label>
                     <select class="form-select" formControlName="section">
@@ -23,7 +23,7 @@
                       <option *ngFor="let sec of sections" value="{{sec._id}}">{{sec.name}}</option>
                     </select>
                 </div>
-            </div>
+            </div> -->
             <div class="row mt-2 mb-3">
                 <div class="col-4 offset-md-3">
                     <label class="form-label">Year <span class="error">*</span></label>

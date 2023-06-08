@@ -64,6 +64,7 @@ classAssignForm: FormGroup
     this.classes.forEach(element => {
       if (element._id === id) {
         this.sections = element.sections;
+        this.classAssignForm.controls['section'].patchValue(this.sections[0]._id);
       }
     });
   }
@@ -163,18 +164,20 @@ getAllStudent(){
 
 }
   AssignClassTeacher(){
-    console.log(this.classAssignForm.value);
-    // console.log(postData);
-    this.api.AssignSubject(this.classAssignForm.value ).subscribe(resp => {
-    console.log(resp);
-  
+   const payload ={
+      academicYear: this.classAssignForm.value?.academicYear,
+      studentClass: this.classAssignForm.value?.studentClass?._id,
+      section: this.classAssignForm.value?.studentClass?.sections[0]?._id,
+      subjects:  this.classAssignForm.value?.subjects
+    }   
+    this.api.AssignSubject(payload).subscribe(resp => {
       this.isLoading = false;
-      this.toastr.success(resp.message, "Add  success");
-
+      this.toastr.success(resp.message, "Added  Successfully");
+      this.classAssignForm.reset();
     },
     (err) => {
       this.isLoading = false;
-      this.toastr.error(err, " add failed");
+      this.toastr.error(err, " Add  Failed");
     })
   }
 

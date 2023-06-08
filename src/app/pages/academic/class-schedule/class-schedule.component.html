@@ -9,14 +9,7 @@
         <label class="form-label">Class <span class="error">*</span></label>
         <select class="form-select" formControlName="class" (change)="onChangeClass($event)">
           <option disabled value="select">Select</option>
-          <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
-        </select>
-      </div>
-      <div class="col-4">
-        <label class="form-label">Section <span class="error">*</span></label>
-        <select class="form-select" formControlName="section">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let sec of sections" value="{{sec._id}}">{{sec.name}}</option>
+          <option *ngFor="let sec of classes" [value]="sec._id">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}</option>
         </select>
       </div>
       <div class="col-4">
@@ -26,10 +19,11 @@
           <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
         </select>
       </div>
+      <div class="col-4" style="margin-top:29px;">
+        <button class="btn" (click)="clickFilter(addForm)">Filter</button>
+      </div>
     </div>
-    <div class="text-end mb-5">
-      <button class="btn" (click)="clickFilter(addForm)">Filter</button>
-    </div>
+   
   </form>
     <h6 class="table-heading mb-4">Schedule List</h6>
     

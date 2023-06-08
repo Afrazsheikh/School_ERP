@@ -38,6 +38,7 @@ export class ClassScheduleComponent {
     this.classes.forEach(element => {
         if(element._id === id) {
           this.sections = element.sections;
+          this.addForm.controls['section'].patchValue(this.sections[0]?._id);
         }
     });
   }

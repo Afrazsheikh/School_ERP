@@ -41,11 +41,12 @@ export class ClassTeacherAssignComponent {
   }
   onChangeClass(event) {
     this.sections = [];
-    this.teacherForm.patchValue({ section: 'select' });
+   // this.teacherForm.patchValue({ section: 'select' });
     const id = event.target.value;
     this.classes.forEach(element => {
       if (element._id === id) {
         this.sections = element.sections;
+        this.teacherForm.patchValue({section: element?.sections[0]?._id});
       }
     });
   }

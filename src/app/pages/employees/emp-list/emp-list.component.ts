@@ -18,6 +18,7 @@ export class EmpListComponent {
   isLoading: boolean;
   employeeId:any;
   departmentDrp = -1;
+  pageNo = 0;
   constructor(private api: ApiService,private modalService: BsModalService,
     private toastr: ToastrService,
     private router: Router,
@@ -37,7 +38,7 @@ export class EmpListComponent {
   }
   getEmployees() {
     this.spinner.show();
-    this.api.getAllEmployees().subscribe(resp => {
+    this.api.getEmployeesByPageNo(this.pageNo).subscribe(resp => {
       this.spinner.hide();      
       this.employees = resp.employees;  
       this.filterByDesignation("-1");    

@@ -32,26 +32,15 @@
               
               </div>
               <div class="col-3">
-            
                 <label class="form-label">Class <span class="error">*</span></label>
                 <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
                   <option disabled value="select">Select</option>
-                  <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
+                  <option *ngFor="let sec of classes" [value]="sec._id">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}</option>
                 </select>
               </div>
-              <div class="col-3 ">
-                <label class="form-label">Section *</label>
-                <select class="form-select" formControlName="section">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-                </select>
+              <div class="col-3" style="margin-top: 29px;">
+                <button class="btn" (click) = "callReport(classAssignForm)">filter</button>
               </div>
-            </div>
-    
-  
-         
-            <div class="text-end mb-5">
-              <button class="btn" (click) = "callReport(classAssignForm)">filter</button>
             </div>
             </form>
           <!--  -->
@@ -95,48 +84,47 @@
 
       <mat-tab label="Assign">
         <form [formGroup]="classAssignForm"  (ngSubmit)="AssignClassTeacher()">
-        <div class="row mt-5 mb-3">
-        
-          <div class="col-3">         
-              <label class="form-label">Year <span class="error">*</span></label>
-              <select class="form-select" formControlName="academicYear">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
-              </select>
           
-          </div>
-          <div class="col-3">
+        <div class="row mt-5 mb-3">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                  <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Year <span class="error">*</span></label>
+                              <select class="form-select" formControlName="academicYear">
+                                <option disabled value="select">Select</option>
+                                <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
+                              </select>
+                        </div>
+                  </div>
+                  <div class="row mt-3">
+                      <div class="col-md-12">
+                        <label class="form-label">Class <span class="error">*</span></label>
+                        <select class="form-select" formControlName="studentClass" > <!--(change)="onChangeClass($event)"-->
+                          <option disabled value="select">Select</option>
+                          <option *ngFor="let sec of classes" [ngValue]="sec">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <mat-form-field appearance="fill">
+                       <mat-label>Select Subjects</mat-label>
+                       <mat-select formControlName="subjects" multiple>
+                         <mat-option *ngFor="let sec of subjects" [value]="sec._id">{{sec.subjectName}}</mat-option>
+                       </mat-select>
+                     </mat-form-field>
+           
+                   
+                     </div>
+                  </div>
+              </div>
         
-            <label class="form-label">Class <span class="error">*</span></label>
-            <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
-              <option disabled value="select">Select</option>
-              <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
-            </select>
-          </div>
-          <div class="col-3 ">
-            <label class="form-label">Section *</label>
-            <select class="form-select" formControlName="section">
-              <option disabled value="select">Select</option>
-              <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- <div class="row mt-5 mb-3"> -->
-          <div class="col-3">
-           <mat-form-field appearance="fill">
-            <mat-label>Select Subjects</mat-label>
-            <mat-select formControlName="subjects" multiple>
-              <mat-option *ngFor="let sec of subjects" [value]="sec._id">{{sec.subjectName}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-        
-          </div>
-        <!-- </div> -->
-        <div class="text-end mb-5">
-          <button class="btn">Save</button>
-        </div>
+         </div>
+         <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6"> <button class="btn">Save</button></div>
+         </div>
         </form>
       </mat-tab>
     </mat-tab-group>
