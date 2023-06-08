@@ -1,107 +1,145 @@
 <app-layout>
-  <div class="container p-4">
-    <div class="row mt-5 mb-3">
+  <div>
+    <form [formGroup]="addForm">
+      <div class="container-flud p-5">
+        <div class="row">
+          <div class="col-md-12 header-txt">
+            <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Student Marks Entry
+            </span>
+          </div>
+        </div>
 
-      <div class="col-4">
-        <label class="form-label">Exam *</label>
-        <select class="form-select" [(ngModel)]="filter.examId">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let exam of exams" [value]="exam._id">
-            {{exam.name}}
-          </option>
-        </select>
+        <div class="row mt-5 mb-3">
+
+          <div class="col-4">
+            <label class="form-label">Exam *</label>
+            <select class="form-select" formControlName="examId">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let exam of exams" [value]="exam._id">
+                {{exam.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="addForm.controls['examId'].invalid && (addForm.controls['examId'].dirty || addForm.controls['examId'].touched)"
+              class="error mt-2">
+              <div *ngIf="addForm.controls['examId'].errors['required']">
+                Exam is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Class *</label>
+            <select class="form-select" formControlName="classId" (change)="onChangeClass($event)">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let sec of classes" [value]="sec._id">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}})
+                {{sec.className}}</option>
+            </select>
+            <div
+              *ngIf="addForm.controls['classId'].invalid && (addForm.controls['classId'].dirty || addForm.controls['classId'].touched)"
+              class="error mt-2">
+              <div *ngIf="addForm.controls['classId'].errors['required']">
+                Class is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Academic Year *</label>
+            <select class="form-select" formControlName="academicYear">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let class of academics" [value]="class._id">
+                {{class.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="addForm.controls['academicYear'].invalid && (addForm.controls['academicYear'].dirty || addForm.controls['academicYear'].touched)"
+              class="error mt-2">
+              <div *ngIf="addForm.controls['academicYear'].errors['required']">
+                Academic Year is required.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row mb-3">
+
+          <div class="col-4">
+            <label class="form-label">Subject *</label>
+            <select class="form-select" formControlName="subject">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let class of subjects" [value]="class._id">
+                {{class.subjectName}}
+              </option>
+            </select>
+            <div
+              *ngIf="addForm.controls['subject'].invalid && (addForm.controls['subject'].dirty || addForm.controls['subject'].touched)"
+              class="error mt-2">
+              <div *ngIf="addForm.controls['subject'].errors['required']">
+                Subject is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4" style="margin-top: 29px;">
+            <button class="btn" (click)="clickFilter(addForm)">Filter </button>
+          </div>
+
+        </div>
       </div>
-      <div class="col-4">
-        <label class="form-label">Class *</label>
 
-        <select class="form-select" [(ngModel)]="filter.class"  (change)="onChangeClass($event)">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let class of classes" [value]="class._id">
-            {{class.className}}
-          </option>
-        </select>
+      <div class="container-flud p-5 pt-3" *ngIf="isShowMarkEntiries">
+        <div class="card">
+          <div class="card-header">
+            Marks Entries
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="table-responsive" style="height: 450px;">
+                <table class="table mt-4 table-condensed nowrap table-hover table-bordered tbr-top">
+                  <thead>
+                    <tr>
+                      <th scope="col">SL</th>
+                      <th scope="col">Student Name</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Register No.</th>
+                      <th scope="col">Is Absent</th>
+                      <th scope="col">Practical (40)</th>
+                      <th scope="col">Written (60)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of addForm.get('rows')['controls']; let i = index">
+                      <td>{{i + 1}}</td>
+                      <td>{{row.get('firstName').value}} {{row.get('lastName').value}}</td>
+                      <td>{{row.get('caste').value}}</td>
+                      <td>{{row.get('registerNo').value}}</td>
+                      <td>
+                        <mat-checkbox class="example-margin" [checked]="row.get('isAbsent').value"
+                          (change)="row.get('isAbsent').value = !row.get('isAbsent').value"></mat-checkbox>
+                      </td>
+                      <td>
+                        <input class="form-control marks" [formControl]="row.get('practical')" type="number"
+                          value="{{row.get('practical').value}}">
+                      </td>
+                      <td>
+                        <input class="form-control marks" type="number" [formControl]="row.get('written')"
+                          value="{{row.get('written').value}}">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-5" style="margin-left: auto;text-align:right;">
+                <button class="btn col-md-4 mt-4" [disabled]="!addForm.valid"
+                  (click)="updateMarks(addForm)">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-4">
-        <label class="form-label">Academic Year *</label>
-
-        <select class="form-select" [(ngModel)]="filter.academicYear">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let class of academics" [value]="class._id">
-            {{class.name}}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-4">
-        <label class="form-label">Section *</label>
-        <select class="form-select" [(ngModel)]="filter.section">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let sec of sections" [value]="sec._id">
-            {{sec.name}}
-          </option>
-        </select>
-      </div>
-
-      <div class="col-4">
-        <label class="form-label">Subject *</label>
-        <select class="form-select" [(ngModel)]="filter.subject">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let class of subjects" [value]="class._id">
-            {{class.subjectName}}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="text-end mb-5">
-      <button class="btn" (click)="clickFilter()">Filter </button>
-    </div>
-
-    <p class="table-heading">Marks Entries</p>
-    <table class="table mt-3">
-      <thead>
-        <tr>
-          <th scope="col">SL</th>
-          <th scope="col">Student Name</th>
-          <th scope="col">Category</th>
-          <th scope="col">Register No.</th>
-          <th scope="col">Roll</th>
-          <th scope="col">Is Absent</th>
-          <th scope="col">Practical (40)</th>
-          <th scope="col">Written (60)</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let marks of filteredMarks; index as i">
-          <td>{{i + 1}}</td>
-          <td>{{marks.student.firstName + ' ' + marks.student.lastName}}</td>
-          <td>{{marks.student.caste}}</td>
-          <td>{{marks.student.registerNo}}</td>
-          <td>{{marks.student.rollNo}}</td>
-          <td>
-            <mat-checkbox class="example-margin" [checked]="marks.isAbsent" (change)="marks.isAbsent = !marks.isAbsent"></mat-checkbox>
-          </td>
-          <td>
-            <input class="form-control marks" type="number" [(ngModel)]="marks.practical">
-          </td>
-          <td>
-            <input class="form-control marks" type="number" [(ngModel)]="marks.written">
-          </td>
-          <td>
-            <button class="btn" (click)="marks.isLoading=true; updateMarks(marks);" [disabled]="marks.isLoading">
-              <span *ngIf="marks.isLoading" class="spinner-border text-light"></span>
-              <span *ngIf="!marks.isLoading">Save</span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- <div class="text-end mb-5">
-      <button class="btn">Save </button>
-    </div> -->
+    </form>
   </div>
-
 
 </app-layout>
