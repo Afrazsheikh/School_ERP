@@ -26,7 +26,7 @@
   <table class="table mt-3">
     <thead>
       <tr>
-        <th scope="col">SL</th>
+        <!-- <th scope="col">SL</th> -->
         <th scope="col">Name</th>
         <th scope="col">Designation</th>
         <th scope="col">Department</th>
@@ -36,8 +36,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let teacher of filterByDes; index as i">
-        <td>{{i + 1}}</td>
+      <tr *ngFor="let teacher of filterByDes|  paginate: pagingConfig; index as i">
+        <!-- <td>{{i + 1}}</td> -->
         <td>{{teacher.name}}</td>
         <td>{{teacher.designation?.name}}</td>
         <td>{{teacher.department?.name}}</td>
@@ -50,6 +50,8 @@
       </tr>
     </tbody>
   </table>
+  <!-- <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls> -->
+  <pagination-controls  (pageChange)="pageChanged($event)"> </pagination-controls>
   </div>
 </app-layout>
 <ng-template #deletemplate>

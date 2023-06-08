@@ -18,7 +18,13 @@ export class EmpListComponent {
   isLoading: boolean;
   employeeId:any;
   departmentDrp = -1;
-  pageNo = 0;
+  pageNo = 1;
+  p: number = 1;
+  pagingConfig = {
+    'currentPage'  : 1,
+    'itemsPerPage': 5,
+    'totalItems' : 0
+  }
   constructor(private api: ApiService,private modalService: BsModalService,
     private toastr: ToastrService,
     private router: Router,
@@ -38,10 +44,13 @@ export class EmpListComponent {
   }
   getEmployees() {
     this.spinner.show();
-    this.api.getEmployeesByPageNo(this.pageNo).subscribe(resp => {
+    this.pageNo =this.pagingConfig.currentPage;
+    this.api.getEmployeesByPageNo(this.pageNo-1).subscribe(resp => {
       this.spinner.hide();      
       this.employees = resp.employees;  
-      this.filterByDesignation("-1");    
+      this.filterByDes = this.employees;
+      this.pagingConfig.totalItems = resp['totalCount'];
+      // this.filterByDesignation("-1");    
     }, (err) =>{
       this.spinner.hide();
       this.employees =[];
@@ -86,5 +95,9 @@ export class EmpListComponent {
     this.filterByDes = [];
     this.filterByDesignation(event.target.value);
   }
+  pageChanged(event: any): void {
+    this.pagingConfig.currentPage  = event;
+    this.getEmployees();
+   }
 
 }

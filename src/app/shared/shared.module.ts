@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [LayoutComponent, HeaderComponent, SidebarComponent],
@@ -24,8 +25,9 @@ import { MatMenuModule } from '@angular/material/menu';
     MatExpansionModule,
     RouterModule,
     MatMenuModule,
+    NgxPaginationModule
   ],
   providers: [],
-  exports: [LayoutComponent, SidebarComponent, HeaderComponent],
+  exports: [LayoutComponent, SidebarComponent, HeaderComponent, NgxPaginationModule],
 })
 export class SharedModule {}
