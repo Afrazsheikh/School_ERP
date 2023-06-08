@@ -14,7 +14,7 @@
             <div class="row mt-2 mb-3 mt-3">
                 <div class="col-4">
                     <label class="form-label">Department <span class="error">*</span></label>
-                    <select class="form-select" formControlName="department">
+                     <select class="form-select" formControlName="department" (change)="onChangeDepart($event)">
                         <option  value="">Select</option>
                         <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>
                       </select>
@@ -28,8 +28,8 @@
                 <div class="col-4">
                     <label class="form-label">Designation<span class="error">*</span></label>
                     <select class="form-select" formControlName="designation">
-                        <option value="">Select</option>
-                        <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
+                      <option disabled value="select">Select</option>
+                        <option *ngFor="let designation of selectedDesgingation" [value]="designation._id">{{designation.name}}</option>
                       </select>  
                       <div *ngIf="empB1Form.controls['designation'].invalid && (empB1Form.controls['designation'].dirty || empB1Form.controls['designation'].touched)"
                       class="error mt-2">

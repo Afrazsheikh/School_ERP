@@ -17,7 +17,7 @@ export enum routes {
   STUDNT_INFO='/student-details/student-info',
   EMP_LIST='/employee/list',
   EMP_DEPT='/employee/department',
-  EMP_DES='/employee/designation',
+  EMP_MUL='/employee/multipleImport',
   EMP_ADD='/employee/add',
   CERT_TEMP='/cert/template',
   CERT_STUD='/cert/student',

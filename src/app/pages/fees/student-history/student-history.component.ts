@@ -27,25 +27,9 @@ ngOnInit(): void {
 addForm() {
   this.reportForm = new FormGroup({
     studentClass: new FormControl(null, [Validators.required]),
-    section: new FormControl(null, [Validators.required]),
+    section: new FormControl(null),
     academicYear: new FormControl(null, [Validators.required])
   })
-}
-onChangeClass(event){
-  this.sections =[];
-  this.reportForm.patchValue({section: 'select'});
-  const id = event.target.value;
-  this.classes.forEach(element => {
-      if(element._id === id) {
-        this.sections = element.sections;
-      }
-  });
-}
-getAllSection() {
-  this.api.getAllSection().subscribe(resp => {
-    this.sections = resp.sections;
-    
-  });
 }
 getAllClass() {
   this.api.getAllClass().subscribe(resp => {
@@ -55,8 +39,8 @@ getAllClass() {
 callReport(reportForm){
   const data = {
     academicYear: reportForm.value.academicYear,
-    section: reportForm.value.section,
-    studentClass: reportForm.value.studentClass,
+    section:  reportForm.value.studentClass?.sections[0]?._id,
+    studentClass: reportForm.value.studentClass?._id,
   }
   this.spinner.show();
   this.api.studentList(data).subscribe(data => {

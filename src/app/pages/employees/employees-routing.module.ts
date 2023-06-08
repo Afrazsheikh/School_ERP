@@ -6,6 +6,8 @@ import { EmpDesgComponent } from './emp-desg/emp-desg.component';
 import { EmpListComponent } from './emp-list/emp-list.component';
 import { EmpDetailComponent } from './emp-detail/emp-detail.component';
 import { CreateEmpComponent } from './create-emp/create-emp.component';
+import { EmpMultipleImportComponent } from './emp-multiple-import/emp-multiple-import.component';
+
 const routes: Routes = [
   {
     path: 'list',
@@ -16,8 +18,8 @@ const routes: Routes = [
     component: EmpDeptComponent
   },
   {
-    path: 'designation',
-    component: EmpDesgComponent
+    path: 'multipleImport',
+    component: EmpMultipleImportComponent
   },
   {
     path: 'add',

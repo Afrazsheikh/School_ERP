@@ -1,0 +1,109 @@
+<app-layout>
+    <div class="container p-5">
+      <div class="mb-5">
+        <div class="f-heading">
+          <h4>
+            <i class="fa-solid fa-graduation-cap"></i>
+            Multiple Report
+          </h4>
+        </div>
+  
+        <div class="row py-3">
+          <form [formGroup]="csvForm">
+          <div class="col-6">
+            <div class="row pb-3">
+              <div class="col-6">
+                <div class="form-group">
+                 
+            <label class="form-label">Designation *</label>
+            <select class="form-select" formControlName="designation">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
+            </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                    <label class="form-label">Deaprtment *</label>
+                    <select class="form-select" formControlName="department">
+                      <option disabled value="select">Select</option>
+                      <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>
+                    </select>
+                </div>
+              </div>
+  
+  
+           
+            </div>
+  
+            <div class="row pb-3">
+              <div class="col-12">
+                <div class="form-group">
+                  <label>Select CSV File</label>
+                  <div class="uploads">
+                    <div class="upload-cont">
+  
+  <ngx-file-drop [multiple]="false" [directory]="false" [accept]="acceptedFileTypes" (onFileDrop)="onFilesDroppedCsv($event)">
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        <ng-container *ngIf="!fileDataCsv">
+          Drag and drop or
+          <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
+        </ng-container>
+        <ng-container *ngIf="fileDataCsv">
+          {{fileDataCsv.name}}
+          <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="fileDataCsv=null">
+            Remove
+          </a>
+        </ng-container>
+    </ng-template>
+  </ngx-file-drop>
+  
+                    </div>
+                    <p class="pt-3 text-center">Drag and drop a file here or click</p>
+  
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-5 text-center">
+              <button class="btn btn-lg" (click)="multipleImportCsv()">Import <i class="fa-solid fa-file-import"></i></button>
+            </div>
+          </div>
+     
+  
+          <div class="col-6 intruct-col">
+            <p>Instructions:</p>
+            <ol>
+              <li> Download the first sample file.</li>
+              <li> Open the downloaded 'csv' file and carefully fill the details of the student.</li>
+              <li> The date you are trying to enter the "Birthday" and "Admission Date" column make sure the date format is
+                  yyyy-mm-dd (2023-01-14).
+              </li>
+              <li> Do not import the duplicate "Roll Number" and "Register No".</li>
+              <li> For student "Gender" use Male, Female value.</li>
+              <li> If enable Automatically Generate login details, leave the "username" and "password" columns blank.</li>
+              <li> The Category name comes from another table, so for the "Category", enter Category ID (can be found on the
+                    category page) .
+              </li>
+              <li> If a parent is existing / if you want to use the same parent information for multiple students only
+                  enter the "Guardian Username" and leave other columns blank.
+              </li>
+            </ol>
+          </div>
+  
+  
+        
+  </form>
+        </div>
+  
+       
+        
+      </div>
+     
+    </div>
+  </app-layout>
+  
+  
+  
+  

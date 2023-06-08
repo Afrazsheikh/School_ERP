@@ -10,8 +10,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { AddFeeCategoyComponent } from './add-fee-categoy/add-fee-categoy.component';
 import { EditFeeCategoyComponent } from './edit-fee-categoy/edit-fee-categoy.component';
 import { AssignFeeListComponent } from './assign-fee-list/assign-fee-list.component';
-import { AssignFeeTypeOneComponent } from './assign-fee-type-one/assign-fee-type-one.component';
-import { AssignFeeTypeTwoComponent } from './assign-fee-type-two/assign-fee-type-two.component';
 import { TransportFeeListComponent } from './transport-fee-list/transport-fee-list.component';
 import { TransportFeeAddComponent } from './transport-fee-add/transport-fee-add.component';
 import { PrintInvoiceComponent } from './print-invoice/print-invoice.component';
@@ -24,8 +22,6 @@ import { NgxPrintModule } from 'ngx-print';
     AddFeeCategoyComponent,
     EditFeeCategoyComponent,
     AssignFeeListComponent,
-    AssignFeeTypeOneComponent,
-    AssignFeeTypeTwoComponent,
     TransportFeeListComponent,
     TransportFeeAddComponent,
     PrintInvoiceComponent,
