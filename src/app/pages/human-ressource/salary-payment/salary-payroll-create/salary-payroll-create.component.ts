@@ -98,7 +98,6 @@ export class SalaryPayrollCreateComponent implements OnInit {
   onSubmitPayment() {
     if (this.isAlreadyPaid) {
       window.print();
-
       return;
     }
     this.paymentFormGroup.value.salaryPaidMonth = this.currentMonthAndYear;

@@ -5,7 +5,7 @@
             <div class="card-body">
              <div class="row">
                 <div class="col-md-6">
-                    <span class="invoice-lbl">{{schoolInfo?.name}} </span>
+                    <span class="invoice-lbl"><img class="img-fluid" src="assets/invoice_school_logo.jpg" alt="" /> </span>
                 </div>
                 <div class="col-md-6 text-end">
                     <div class="invoice-lbl">Invoice No #0001</div>
@@ -26,11 +26,9 @@
                                 <div class="col-md-12" style="overflow-wrap: break-word;"><span>{{studentInfo?.presentAddress}}</span></div>
                                 <div class="col-md-12 text-wrap">Class : {{studentInfo?.academic?.studentClass?.className}} ({{studentInfo?.academic?.section?.name}})</div>
                                 <div class="col-md-12 text-wrap">Father Name : {{studentInfo?.guardian?.fatherName}}</div></td>
-                            <td style="text-align:right;vertical-align: top;">                    <div class="col-md-12 text-weight">Academic :</div>
-                                <div class="col-md-12 text-wrap">{{schoolInfo?.name}}</div>
-                                <div class="col-md-12 text-wrap">{{schoolInfo?.address}}</div>
-                                <div class="col-md-12 text-wrap">{{schoolInfo?.phoneNo}}</div>
-                                <div class="col-md-12 text-wrap">{{schoolInfo?.email}}</div></td>
+                                <td style="text-align:right;vertical-align: top;">
+                                <div class="col-md-12 text-weight">Academic :</div>
+                                <div class="col-md-12 text-wrap"><img class="img-fluid" src="assets/invoice_school_logo_detail.jpg" alt=""  style="margin-top:5px;"/></div></td>
                         </tr>
                     </tbody>
                 </table>

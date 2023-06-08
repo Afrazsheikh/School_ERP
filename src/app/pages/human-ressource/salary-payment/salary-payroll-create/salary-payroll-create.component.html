@@ -1,27 +1,18 @@
 <app-layout>
-  <div class="container p-5">
+  <div class="container p-5" id="print-section">
     <div class="row">
       <div class="col-lg-12">
         <div class="modal-header">
           <h6 class="modal-title header-txt">
-            <i _ngcontent-dan-c162="" class="fa-solid fa-user-tie"></i
-            >&nbsp;&nbsp; <span>Salary Details</span>
+            <i _ngcontent-dan-c162="" class="fa-solid fa-user-tie"></i>&nbsp;&nbsp; <span>Salary Details</span>
           </h6>
           <button (click)="backButtonClick()" class="btn-c">Back</button>
         </div>
         <div class="row modal-body bg-white p-3">
-          <div
-            class="col-lg-2 mt-2 d-flex align-items-center justify-content-center"
-          >
-            <img
-              #profileImg
-              class="w-100 img-thumbnail rounded"
-              [src]="employeeDetail?.image"
-              (error)="
+          <div class="col-lg-2 mt-2 d-flex align-items-center justify-content-center">
+            <img #profileImg class="w-100 img-thumbnail rounded" [src]="employeeDetail?.image" (error)="
                 profileImg.src = '../../../../../assets/images/stud-profile.jpg'
-              "
-              alt=""
-            />
+              " alt="" />
           </div>
           <div class="col-lg-5 mt-2">
             <table>
@@ -76,14 +67,10 @@
     </div>
 
     <div *ngIf="isSalaryDetailAvailable" class="row">
-      <div
-        class="col-lg-6 p-0 px-2"
-        *ngIf="employeeDetail?.salaryGrade?.allowances"
-      >
+      <div class="col-lg-6 p-0 px-2" *ngIf="employeeDetail?.salaryGrade?.allowances">
         <div class="modal-header">
           <h6 class="modal-title header-txt">
-            <i _ngcontent-dan-c162="" class="fa-solid fa-money-bill"></i
-            >&nbsp;&nbsp; <span>Allowances</span>
+            <i _ngcontent-dan-c162="" class="fa-solid fa-money-bill"></i>&nbsp;&nbsp; <span>Allowances</span>
           </h6>
         </div>
         <div class="modal-body bg-white p-3">
@@ -92,12 +79,10 @@
               <th width="15%">Name</th>
               <th width="25%">Amount</th>
             </tr>
-            <tr
-              *ngFor="
+            <tr *ngFor="
                 let allowance of employeeDetail?.salaryGrade?.allowances;
                 index as i
-              "
-            >
+              ">
               <td>{{ allowance.name }}</td>
               <td>₹{{ allowance.amount }}</td>
             </tr>
@@ -108,8 +93,7 @@
       <div class="col-lg-6 p-0" *ngIf="employeeDetail?.salaryGrade?.deductions">
         <div class="modal-header">
           <h6 class="modal-title header-txt">
-            <i _ngcontent-dan-c162="" class="fa-solid fa-square-minus"></i
-            >&nbsp;&nbsp; <span>Deductions</span>
+            <i _ngcontent-dan-c162="" class="fa-solid fa-square-minus"></i>&nbsp;&nbsp; <span>Deductions</span>
           </h6>
         </div>
         <div class="modal-body bg-white p-3">
@@ -118,12 +102,10 @@
               <th width="15%">Name</th>
               <th width="25%">Amount</th>
             </tr>
-            <tr
-              *ngFor="
+            <tr *ngFor="
                 let deduction of employeeDetail?.salaryGrade?.deductions;
                 index as i
-              "
-            >
+              ">
               <td>{{ deduction.name }}</td>
               <td>₹{{ deduction.amount }}</td>
             </tr>
@@ -134,84 +116,46 @@
 
     <div class="row">
       <div class="col-md-12 header-txt">
-        <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i
-        >&nbsp;&nbsp;<span>Payment Details</span>
+        <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Payment Details</span>
       </div>
     </div>
     <form [formGroup]="paymentFormGroup">
       <div class="row mt-3 mb-3">
         <div class="col-lg-3">
           <label class="form-label">Total Allowance</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="totalAllowance"
-            readonly
-          />
+          <input type="text" class="form-control" formControlName="totalAllowance" readonly />
         </div>
         <div class="col-lg-3">
           <label class="form-label">Total Deduction</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="totalDeductions"
-            readonly
-          />
+          <input type="text" class="form-control" formControlName="totalDeductions" readonly />
         </div>
         <div class="col-lg-3">
           <label class="form-label">Overtime Total Hours</label>
-          <input
-            type="number"
-            (input)="onEnterOvertimeHr($event)"
-            [readOnly]="isAlreadyPaid"
-            formControlName="overtimeHrs"
-            class="form-control"
-          />
+          <input type="number" (input)="onEnterOvertimeHr($event)" [readOnly]="isAlreadyPaid"
+            formControlName="overtimeHrs" class="form-control" />
         </div>
         <div class="col-lg-3">
           <label class="form-label">Overtime Amount</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="overtimeAmount"
-            readonly
-          />
+          <input type="text" class="form-control" formControlName="overtimeAmount" readonly />
         </div>
       </div>
       <div class="row">
         <div class="col-lg-3">
           <label class="form-label">Net Salary</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="netSalary"
-            readonly
-          />
+          <input type="text" class="form-control" formControlName="netSalary" readonly />
         </div>
         <div class="col-lg-3">
           <label class="form-label">Pay Via <span class="error">*</span></label>
-          <select
-            [disabled]="isAlreadyPaid"
-            formControlName="payVia"
-            class="form-select form-control"
-          >
+          <select [disabled]="isAlreadyPaid" formControlName="payVia" class="form-select form-control">
             <option disabled value="select">Select Payment Mode</option>
-            <option
-              *ngFor="let option of paymentModes; index as i"
-              [value]="option"
-            >
+            <option *ngFor="let option of paymentModes; index as i" [value]="option">
               {{ option }}
             </option>
           </select>
         </div>
         <div class="col-lg-3">
           <label class="form-label">Bank Account</label>
-          <input
-            [readOnly]="isAlreadyPaid"
-            formControlName="account"
-            type="text"
-            class="form-control"
-          />
+          <input [readOnly]="isAlreadyPaid" formControlName="account" type="text" class="form-control" />
         </div>
       </div>
     </form>
@@ -223,16 +167,16 @@
     </div> -->
     <div class="header-txt col-md-12 mt-3"></div>
     <div class="row mt-3 mb-3">
-      <div class="offset-md-10 col-md-2">
-        <button
-          type="button"
-          class="save_button btn"
-          (click)="onSubmitPayment()"
-          [disabled]="!paymentFormGroup.valid"
-        >
-          {{ isAlreadyPaid ? "Print Receipt" : "Paid" }}
-        </button>
+        <ng-container *ngIf="!isAlreadyPaid">
+          <button type="button" class="save_button btn" (click)="onSubmitPayment()" [disabled]="!paymentFormGroup.valid">Paid</button>
+        </ng-container>
+        <ng-container *ngIf="isAlreadyPaid">
+          <div class="row" id="printBtn">
+            <div class="col-md-12"> <button printSectionId="print-section" [useExistingCss]="true" ngxPrint
+                class="btn">print</button></div>
+          </div>
+        </ng-container>
       </div>
+
     </div>
-  </div>
 </app-layout>
