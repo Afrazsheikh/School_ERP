@@ -18,6 +18,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-create/salary-payroll-create.component';
+import { NgxPrintModule } from 'ngx-print';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-cr
     MatTabsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    NgxPrintModule
   ]
 })
 export class HumanRessourceModule { }
