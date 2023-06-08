@@ -17,7 +17,7 @@ export class EmpListComponent {
   designations: any[] = [];
   isLoading: boolean;
   employeeId:any;
-  departmentDrp = -1;
+  departmentDrp:string="";
   pageNo = 1;
   p: number = 1;
   pagingConfig = {
@@ -45,7 +45,7 @@ export class EmpListComponent {
   getEmployees() {
     this.spinner.show();
     this.pageNo =this.pagingConfig.currentPage;
-    this.api.getEmployeesByPageNo(this.pageNo-1).subscribe(resp => {
+    this.api.getEmployeesByPageNo(this.pageNo-1,this.departmentDrp).subscribe(resp => {
       this.spinner.hide();      
       this.employees = resp.employees;  
       this.filterByDes = this.employees;
@@ -92,8 +92,9 @@ export class EmpListComponent {
     this.router.navigate(["/employee/detail/"+ employee._id]);
   }
   onChangeDepart(event){
-    this.filterByDes = [];
-    this.filterByDesignation(event.target.value);
+    // this.filterByDes = [];
+    // this.filterByDesignation(event.target.value);
+    this.getEmployees();
   }
   pageChanged(event: any): void {
     this.pagingConfig.currentPage  = event;
