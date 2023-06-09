@@ -40,21 +40,61 @@
     </div>
   </mat-expansion-panel>
 
-  <mat-list-item>
-    <mat-icon matListItemIcon>add_home</mat-icon> Attendance
+  <mat-expansion-panel
+  hideToggle="true"
+  [expanded]="currentUrl.includes('/attendance') ? true : false"
+>
+<mat-expansion-panel-header>
+  <mat-list-item
+    [ngClass]="currentUrl.includes('/attendance') ? 'active' : ''"
+  >
+    <mat-icon matListItemIcon>add_home</mat-icon>Attendance
   </mat-list-item>
+</mat-expansion-panel-header>
+<div class="sub-menu-cont">
+  <mat-list-item
+  class="sub-menu"
+  [routerLink]="routes.ATTENDANCE_EMPLOYEE"
+  routerLinkActive="sub-active"
+>
+  Employee
+</mat-list-item>
+<mat-list-item
+class="sub-menu"
+[routerLink]="routes.ATTENDANCE_STUDENT"
+routerLinkActive="sub-active"
+>
+Student
+</mat-list-item>
+<mat-list-item
+class="sub-menu"
+[routerLink]="routes.ATTENDANCE_EXAM"
+routerLinkActive="sub-active"
+>
+Exam
+</mat-list-item>
+</div>
+</mat-expansion-panel>
+
+
   <mat-expansion-panel
     hideToggle="true"
     [expanded]="currentUrl.includes('/fees') ? true : false"
+  > </mat-expansion-panel>
+   
+   <mat-expansion-panel
+    hideToggle="true"
+    [expanded]="currentUrl.includes('/fees') ? true : false"
   >
-    <mat-expansion-panel-header>
-      <mat-list-item [ngClass]="currentUrl.includes('/fees') ? 'active' : ''">
-        <mat-icon matListItemIcon>group_work</mat-icon> Fees
+   <mat-expansion-panel-header>
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/fees') ? 'active' : ''"
+      >
+        <mat-icon matListItemIcon>account_balance</mat-icon>Fees
       </mat-list-item>
     </mat-expansion-panel-header>
-    <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <mat-list-item
+        <mat-list-item
         class="sub-menu"
         [routerLink]="routes.FEES_CATEGORY"
         routerLinkActive="sub-active"

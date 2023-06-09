@@ -4,7 +4,12 @@ import { AttendanceEmployeeComponent } from './attendance-employee/attendance-em
 import { AttendanceStudentComponent } from './attendance-student/attendance-student.component';
 import { AttendanceExamComponent } from './attendance-exam/attendance-exam.component';
 
-const routes: Routes = [ {
+const routes: Routes = [ 
+  {
+    path: "",
+    component: AttendanceEmployeeComponent
+  },
+  {
   path: "employee",
   component: AttendanceEmployeeComponent
 },
