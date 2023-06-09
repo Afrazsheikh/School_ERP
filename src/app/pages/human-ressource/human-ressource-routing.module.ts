@@ -10,6 +10,7 @@ import { SalaryPaymentComponent } from './salary-payment/salary-payment.componen
 import { SalaryEditComponent } from './salary-templete/salary-edit/salary-edit.component';
 import { SalaryTempleteComponent } from './salary-templete/salary-templete.component';
 import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-create/salary-payroll-create.component';
+import { PayrollInvoiceComponent } from './payroll-invoice/payroll-invoice.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
     path: 'salary-payroll-create/:id/:monthAndYear',
     component: SalaryPayrollCreateComponent,
   },
+  {
+    path: 'payroll-invoice/:id/:monthAndYear',
+    component: PayrollInvoiceComponent,
+  }
 ];
 
 @NgModule({

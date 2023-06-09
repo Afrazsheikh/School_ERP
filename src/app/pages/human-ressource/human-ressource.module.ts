@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-create/salary-payroll-create.component';
 import { NgxPrintModule } from 'ngx-print';
+import { PayrollInvoiceComponent } from './payroll-invoice/payroll-invoice.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { NgxPrintModule } from 'ngx-print';
     LeaveApplicationComponent,
     LeaveManageApplicationComponent,
     SalaryEditComponent,
-    SalaryPayrollCreateComponent
+    SalaryPayrollCreateComponent,
+    PayrollInvoiceComponent
   ],
   imports: [
     CommonModule,

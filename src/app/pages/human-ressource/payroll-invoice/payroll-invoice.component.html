@@ -1,0 +1,114 @@
+<app-layout>
+
+    <div class="container p-5" id="print-section">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="invoice-lbl"><img class="img-fluid" src="assets/invoice_school_logo.jpg" alt="" />
+                        </span>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="invoice-lbl">Payslip No #0001</div>
+                        <div class="invoice-lbl-lg">Date: {{currentDate | date:'dd.MMM.yyyy'}}</div>
+                        <div class="invoice-lbl-lg">Salary Month: {{monthAndYear|date:'MMM'}} </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12 acd-detai">
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="50%" style="vertical-align: top;">
+                                <div class="col-md-12 text-weight"> To :</div>
+                                <div class="col-md-12 text-wrap">{{ employeeDetail?.name }}
+                                </div>
+                                <div class="col-md-12 ">Department : {{employeeDetail?.department?.name}}</div>
+                                <div class="col-md-12 ">Designation : {{employeeDetail?.designation}}</div>
+                                <div class="col-md-12 ">Mobile No : {{employeeDetail?.number}}</div>
+                            </td>
+                            <td style="text-align:right;vertical-align: top;">
+                                <div class="col-md-12 text-weight">form :</div>
+                                <div class="col-md-12 text-wrap"><img class="img-fluid"
+                                        src="assets/invoice_school_logo_detail.jpg" alt="" style="margin-top:5px;" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row row mt-5">
+            <div class="col-6">
+                <div class="scheduler-sec">
+                    <h6 class="table-heading mb-3">Allowances</h6>
+
+                    <table class="table mt-3">
+                        <thead class="scheduler-head">
+                            <tr>
+                                <th>Name</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Festivals</td>
+                                <td class="text-end">$500.00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>House Rent</td>
+                                <td class="text-end">$500.00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Overtime Salary (5 Hour)</td>
+                                <td class="text-end">{{employeeDetail?.salaryGrade?.overTimeRatePerHr}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="scheduler-sec">
+                    <h6 class="table-heading mb-3">Deductions</h6>
+
+                    <table class="table mt-3">
+                        <thead class="scheduler-head">
+                            <tr>
+                                <th>Name</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fund</td>
+                                <td class="text-end">$500.00
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="text-end">
+                <div class="col-lg-5 float-end salary-box">
+                    <ul>
+                        <li><strong>Basic Salary : </strong>{{employeeDetail?.salaryGrade?.basicSalary}}</li>
+                        <li><strong>Total Allowance: </strong>{{employeeDetail?.salaryGrade?.totalAllowance}}</li>
+                        <li><strong>Total Deduction: </strong>{{employeeDetail?.salaryGrade?.totalDeductions}}</li>
+                        <li><strong>Net Salary : </strong>{{employeeDetail?.salaryGrade?.netSalary}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-end salary-box-btn p-1">
+                <button class="btn" printSectionId="print-section" [useExistingCss]="true" ngxPrint>Print</button>
+            </div>
+        </div>
+    </div>
+
+</app-layout>

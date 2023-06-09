@@ -1,0 +1,33 @@
+.scheduler-sec {
+    border: 1px solid #ccc;
+    // padding: 15px;
+    border-radius: 5px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+}
+.table-heading{
+    border-bottom: 2px solid purple;
+    padding-bottom: 12px;
+    padding-left: 4px;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 15px;
+}
+.error{
+    color:red;
+}
+.scheduler-head{
+    background: #f6f6f6;
+}
+.salary-box ul li {
+    background: #f5f5f5;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    font-weight: 300;
+    list-style-type: none;
+}
+.salary-box ul li strong{
+    font-weight: bold;
+}

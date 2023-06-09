@@ -127,11 +127,25 @@ export class SalaryPaymentComponent {
   }
 
   navigateToSalaryCreate(emp: any) {
-    this.router.navigateByUrl(
-      '/human-resource/salary-payroll-create/' +
-        emp._id +
-        '/' +
-        this.date.value.format('MM-YYYY')
-    );
+    if(emp.salaryStatus === "PAID")
+    {
+      this.router.navigateByUrl(
+         '/human-resource/payroll-invoice/'
+         +
+          emp._id +
+          '/' +
+          this.date.value.format('MM-YYYY')
+      );
+    }
+    else
+    {
+      this.router.navigateByUrl(
+        '/human-resource/salary-payroll-create/' +
+          emp._id +
+          '/' +
+          this.date.value.format('MM-YYYY')
+      );
+    }
+    
   }
 }
