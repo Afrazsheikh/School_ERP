@@ -34,7 +34,7 @@ export class EmpDeptComponent {
 
     this.editDept = new FormGroup({
       name: new FormControl(null, [Validators.required]),
-      department: new FormControl(null, [Validators.required])
+      department: new FormControl(null)
 
     });
     this.designForm = new FormGroup({
@@ -162,6 +162,7 @@ export class EmpDeptComponent {
 
   setDesignation(dept: any)
   {
+    console.log(dept);
     this.selectedDesign = dept;
     this.editDesign.patchValue({
       id:dept?._id,

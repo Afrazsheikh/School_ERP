@@ -4,31 +4,37 @@
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Add Department">
           <div>
-            <div class="col-6 px-4">
+            <div class="col-12 px-4 mt-3">
               <form [formGroup]="deptForm" (ngSubmit)="addDepartment()">
-                <h5 class="mb-4">Add Department</h5>
-                <div class="mb-3">
-                  <label class="form-label">Department Name *</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="name"
-                  />
+                <h5 class="mb-4 header-txt">Add Department</h5>
+                <div class="row">
+                    <div class="col-md-8">
+                      <div class="mb-3">
+                        <label class="form-label">Department Name <span class="error">*</span></label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="name"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4 mt-4 pt-2">
+                       <button class="btn" [disabled]="isLoading || !deptForm.valid">
+                          <span
+                            *ngIf="isLoading"
+                            class="spinner-border text-light"
+                          ></span>
+                          <span *ngIf="!isLoading">Save</span>
+                        </button>
+                    </div>
                 </div>
+            
 
-                <div class="text-end">
-                  <button class="btn" [disabled]="isLoading || !deptForm.valid">
-                    <span
-                      *ngIf="isLoading"
-                      class="spinner-border text-light"
-                    ></span>
-                    <span *ngIf="!isLoading">Save</span>
-                  </button>
-                </div>
+              
               </form>
             </div>
             <div class="col-12 px-4">
-              <h5 class="mb-4">Department List</h5>
+              <h5 class="mb-4 header-txt">Department List</h5>
               <table class="table" [cellPadding]="0" [cellSpacing]="0">
                 <thead>
                   <tr>
@@ -72,10 +78,10 @@
           <div>
             <div class="col-12 px-4">
               <form [formGroup]="designForm" (ngSubmit)="addDesignation()">
-                <h5 class="mb-4">Add Designation</h5>
+                <h5 class="mb-4 mt-4 header-txt">Add Designation</h5>
                 <div class="row">
-                  <div class="col-6 mb-3">
-                    <label class="form-label"> Select Department*</label>
+                  <div class="col-5 mb-3">
+                    <label class="form-label">Department <span class="error">*</span></label>
                     <select class="form-select" formControlName="department">
                       <option disabled value="select">Select</option>
                       <option
@@ -86,17 +92,16 @@
                       </option>
                     </select>
                   </div>
-                  <div class="col-6 mb-3">
-                    <label class="form-label">Designation Name *</label>
+                  <div class="col-5 mb-3">
+                    <label class="form-label ">Designation Name <span class="error">*</span></label>
                     <input
                       type="text"
                       class="form-control"
                       formControlName="name"
                     />
                   </div>
-                </div>
-
-                <div class="text-end">
+                  
+                <div class="col-md-2 mt-4 pt-2">
                   <button
                     class="btn"
                     [disabled]="isLoading || !designForm.valid"
@@ -108,11 +113,13 @@
                     <span *ngIf="!isLoading">Save</span>
                   </button>
                 </div>
+                </div>
+
               </form>
             </div>
 
             <div class="col-12 px-4">
-              <h5 class="mb-4">Designation List</h5>
+              <h5 class="mb-4 header-txt">Designation List</h5>
               <table class="table" [cellPadding]="0" [cellSpacing]="0">
                 <thead>
                   <tr>
@@ -170,7 +177,7 @@
       <div class="modal-body">
         <form [formGroup]="editDept">
           <div class="mb-3">
-            <label class="form-label">Department Name *</label>
+            <label class="form-label">Department Name <span class="error">*</span></label>
             <input type="text" class="form-control" formControlName="name" />
           </div>
         </form>
