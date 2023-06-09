@@ -16,6 +16,7 @@ import { EditClassComponent } from './control-class/edit-class/edit-class.compon
 import {MatSelectModule} from '@angular/material/select';
 import { ClassTeacherAssignComponent } from './class-teacher-assign/class-teacher-assign.component';
 import { StudentPromotionComponent } from './student-promotion/student-promotion.component';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 
 
 
@@ -39,7 +40,8 @@ import { StudentPromotionComponent } from './student-promotion/student-promotion
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    SelectDropDownModule
   ]
 })
 export class AcademicModule { }

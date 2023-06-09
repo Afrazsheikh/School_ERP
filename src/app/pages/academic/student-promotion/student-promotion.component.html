@@ -3,16 +3,17 @@
         <!-- Start filter of promotion -->
         <div class="row">
             <div class="col-md-12 header-txt">
-                <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Student Promotion</span>
+                <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Student
+                    Promotion</span>
             </div>
         </div>
         <div class="row">
             <form [formGroup]="filterForm">
                 <div class="row mt-2 mb-3">
-    
+
                     <div class="col-4">
                         <label class="form-label">Class <span class="error">*</span></label>
-                        <select class="form-select" formControlName="studentClass" >
+                        <select class="form-select" formControlName="studentClass">
                             <option disabled value="select">Select</option>
                             <option *ngFor="let sec of classes" [ngValue]="sec">
                                 {{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}
@@ -25,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-4">
                         <label class="form-label">Year <span class="error">*</span></label>
                         <select class="form-select" formControlName="academicYear">
@@ -41,12 +42,12 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="col-2 mt-4 pt-2">
-                        <button class="btn"  [disabled]="!filterForm.valid"
+                        <button class="btn" [disabled]="!filterForm.valid"
                             (click)="callReport(filterForm)">Filter</button>
                     </div>
-    
+
                 </div>
             </form>
         </div>
@@ -82,7 +83,7 @@
                     <form [formGroup]="promotionForm">
                         <div class="row mt-2 mb-3">
 
-                            <div class="col-4">
+                            <div class="col-3">
                                 <label class="form-label">Promote To Session <span class="error">*</span></label>
                                 <select class="form-select" formControlName="academicYear">
                                     <option disabled value="select">Select</option>
@@ -98,7 +99,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-3">
                                 <label class="form-label">Promote To Class <span class="error">*</span></label>
                                 <select class="form-select" formControlName="studentClass"
                                     (change)="onChangeClass($event)">
@@ -115,7 +116,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-3">
                                 <label class="form-label">Promote To Section <span class="error">*</span></label>
                                 <select class="form-select" formControlName="section">
                                     <option disabled value="select">Select</option>
@@ -130,31 +131,54 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-3">
+                                <label class="form-label">Promotion Type <span class="error">*</span></label>
+                                <select class="form-select" formControlName="student" (change)="studentChange($event)">
+                                    <option disabled value="select">Select</option>
+                                    <option value="1">Promote All</option>
+                                    <option value="2">Not to Promote</option>
+                                </select>
+                                <div *ngIf="promotionForm.controls['student'].invalid && (promotionForm.controls['student'].dirty || promotionForm.controls['student'].touched)"
+                                    class="error mt-2">
+                                    <div *ngIf="promotionForm.controls['student'].errors['required']">
+                                        Promotion Type is required.
+                                    </div>
+                                </div>
                             </div>
-                            <div class="row mt-2 mb-3">
+                            <div class="col-5 mt-4" *ngIf="promteStudentEnable">
+                                <label class="form-label">Select Not Promoted Students <span class="error">*</span></label>
+                                <ngx-select-dropdown [multiple]="true" [instanceId]="'dropdown_1'"
+                                    tabindex="0" [multiple]="false"
+                                    [config]="config" [options]="options"
+                                    (change)="selectedGua($event)"></ngx-select-dropdown>
+                            </div>
+                        </div>
+                        <div class="row mt-2 mb-3"  *ngIf="promteStudentEnable">
                             <div class="table-responsive" style="height: 450px;">
+                                <div class="row">
+                                    <div class="col-md-12 header-txt">
+                                        <i _ngcontent-dan-c162=""
+                                            class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Not Promoted Students List </span>
+                                    </div>
+                                </div>
                                 <table class="table mt-4 table-condensed nowrap table-hover table-bordered tbr-top">
                                     <thead style="position: sticky;background-color: #f1f1f1;top: 0;padding-top: 15px;">
                                         <tr>
-                                            <th scope="col" style="width:120px;">Name</th>
-                                            <th scope="col">Class</th>
+                                            <th scope="col">Id</th>
                                             <th scope="col">Register No</th>
-                                            <th scope="col">Guardian Name</th>
-                                            <th scope="col">Academic fees </th>
-                                            <th><input type="checkbox" #AllChkPromotion (change)="allChkChange($event)">
-                                            </th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <ng-container *ngFor="let student of studentData; let i = index">
+                                        <ng-container *ngFor="let student of notPromteStudentList; let i = index">
                                             <tr>
-                                                <td>{{student.firstName + " " + student.lastName}}</td>
-                                                <td>{{student.class}} ({{student.section}})</td>
+
+                                                <td>{{student._id}}</td>
                                                 <td>{{student.registerNo}}</td>
-                                                <td>{{student.guardian?.firstName}}</td>
-                                                <td>{{student.academyFees}}</td>
-                                                <td><input type="checkbox" (change)="singalChkChange($event)"
-                                                        [checked]="student?.promotioncheck"></td>
+                                                <td>{{student.name}}</td>
+                                                <td> <button class="btn emp-edit ms-1" (click)="deleteNotPromotedStudent(student)"><i class="fa-solid fa-trash-can"></i></button></td>
                                             </tr>
                                         </ng-container>
                                     </tbody>

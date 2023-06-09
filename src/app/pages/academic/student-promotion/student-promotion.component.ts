@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import { StudentService } from '../../student-details/student.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { numbers } from '@material/toolbar';
 
 @Component({
   selector: 'app-student-promotion',
@@ -21,8 +22,28 @@ export class StudentPromotionComponent implements OnInit {
   visiblePromotion: boolean = false;
   selectChkCount: number = 0;
   @ViewChild('AllChkPromotion') private allChkPromotion: any;
+  config = {
+    displayKey: "name",
+    height: "250px",
+    search: true,
+    placeholder: "Select",
+    searchPlaceholder: "Search...",
+    limitTo: 0,
+    customComparator: undefined,
+    noResultsFound: "No results found!",
+    moreText: "more",
+    searchOnKey: "name",
+    clearOnSelection: false,
+    inputDirection: "ltr",
+    selectAllLabel: "Select all",
+    enableSelectAll: false
+  }
+  options: any[] = [];
+  studentList: any[] = [];
+  promteStudentEnable: boolean = false;
+  notPromteStudentList: any[] = [];
   constructor(private api: ApiService, private toastr: ToastrService,
-    private studentService: StudentService, private spinner: NgxSpinnerService,private cd: ChangeDetectorRef) {
+    private studentService: StudentService, private spinner: NgxSpinnerService, private cd: ChangeDetectorRef) {
     this.aceYear = this.studentService.aceYear;
   }
   ngOnInit(): void {
@@ -43,11 +64,12 @@ export class StudentPromotionComponent implements OnInit {
       section: new FormControl(null),
       academicYear: new FormControl(null, [Validators.required]),
       studentData: new FormControl(null, [Validators.required]),
+      student: new FormControl(null, [Validators.required]),
     })
   }
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {
-      this.classes = resp.classes;     
+      this.classes = resp.classes;
     });
   }
   setClass(classId) {
@@ -69,7 +91,6 @@ export class StudentPromotionComponent implements OnInit {
         this.filterForm.patchValue({ section: element?.sections[0]?._id });
       }
     });
-    console.log(event.target.value['section']);
   }
   getAllSection() {
     this.api.getAllSection().subscribe(resp => {
@@ -80,13 +101,14 @@ export class StudentPromotionComponent implements OnInit {
   callReport(reportForm) {
     const data = {
       academicYear: reportForm.value.academicYear,
-      section:  reportForm.value.studentClass?.sections[0]?._id,
+      section: reportForm.value.studentClass?.sections[0]?._id,
       studentClass: reportForm.value.studentClass?._id,
     }
     this.spinner.show();
     this.api.studentList(data).subscribe(data => {
       this.spinner.hide();
       this.studentData = data['students'];
+      this.getStudentPromteList();
       this.studentData.forEach(element => {
         element.promotioncheck = false;
       });
@@ -135,7 +157,55 @@ export class StudentPromotionComponent implements OnInit {
       this.allChkPromotion.nativeElement.checked = false;
     }
   }
-  savePromotion() {
+  studentChange(event) {
+    this.notPromteStudentList=[];
+    if (event.target.value == "2") {
+      this.promteStudentEnable = true;
+    }
 
+    else {
+      this.notPromteStudentList=this.options;
+      this.promotionForm.controls['studentData'].setValue(this.notPromteStudentList);
+      this.promteStudentEnable = false;
+    }
+  }
+  getStudentPromteList() {
+    if (this.studentData.length > 0) {
+      this.studentData.forEach(element => {
+        this.options.push({
+          _id: element._id,
+          name: element.firstName + " " + element.lastName + " (" + element.registerNo + ")",
+          registerNo: element.registerNo
+        });
+      });
+    }
+  }
+  selectedGua(event) {
+     this.promotionForm.controls['studentData'].setValue(null);
+    if (event) {
+      let isExist = this.notPromteStudentList.findIndex(x => x._id == event.value?._id);
+      if (isExist == -1) {
+        var notPromteStudentObj = {
+          _id: event.value?._id,
+          name: event.value?.name,
+          registerNo: event.value?.registerNo
+        };
+        this.notPromteStudentList.push(notPromteStudentObj);
+      }
+      this.promotionForm.controls['studentData'].setValue(this.notPromteStudentList);
+    }
+  }
+  deleteNotPromotedStudent(student)
+  {
+    let isExist = this.notPromteStudentList.findIndex(x => x._id == student._id);
+    if(isExist>-1)
+    {
+      this.notPromteStudentList.splice(isExist, 1);
+      this.promotionForm.controls['studentData'].setValue(this.notPromteStudentList);
+    }
+    
+  }
+  savePromotion() {
+    console.log("promotionForm",this.promotionForm.value);
   }
 }
