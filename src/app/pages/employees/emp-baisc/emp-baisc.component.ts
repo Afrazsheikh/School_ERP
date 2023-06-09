@@ -86,7 +86,7 @@ getDesignations() {
  updateInfo(formData){
   const payload = {
     employeeId : formData.value.id,
-    designation: formData.value.desiganation, 
+    designation: formData.value.designation, 
     department :formData.value.department,
     joiningDate: moment(formData.value.joiningDate).format('MM/DD/YYYY'), 
     qualification : formData.value.qualification, 

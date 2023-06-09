@@ -92,7 +92,7 @@ export class CreateEmpComponent {
 
   createInfo(formData) {
     const payload = {
-      designation: formData.value.desiganation,
+      designation: formData.value.designation,
       department: formData.value.department,
       joiningDate: moment(formData.value.joiningDate).format('MM/DD/YYYY'),
       qualification: formData.value.qualification,
@@ -129,12 +129,16 @@ export class CreateEmpComponent {
       ifscCode: formData.value.ifscCode,
       accountNumber: formData.value.accountNumber
     }
+    console.log(payload);
+    console.log(formData);
     this.api.addEmpployee(payload).subscribe(resp => {
       this.toastr.success(resp?.message, "Added Successfully");
+      this.empB1Form.reset();
     },
       (err) => {
         this.toastr.error(err, " Added failed");
       });
+
   }
   updatePermenentAdd() {
     var presentA = ''; var housno = ''; var aprtment = ''; var landmark = ''; var zipcode = '';
