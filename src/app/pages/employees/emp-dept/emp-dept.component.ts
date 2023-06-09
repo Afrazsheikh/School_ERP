@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
-
+import {startCase, camelCase} from 'lodash'
 @Component({
   selector: 'app-emp-dept',
   templateUrl: './emp-dept.component.html',
@@ -68,6 +68,7 @@ export class EmpDeptComponent {
   addDepartment()
   {
     this.isLoading = true;
+    this.deptForm.controls['name'].setValue(startCase(camelCase(this.deptForm.value.name)));
     this.api.addDepartment(this.deptForm.value).subscribe(resp => {
       console.log(resp);
 
@@ -94,6 +95,7 @@ export class EmpDeptComponent {
   updateDepartment()
   {
     this.isLoading = true;
+    this.deptForm.controls['name'].setValue(startCase(camelCase(this.deptForm.value.name)));
     this.api.updateDepartment(this.selectedDept._id, this.editDept.value).subscribe(resp => {
       console.log(resp);
 
@@ -140,6 +142,7 @@ export class EmpDeptComponent {
     console.log(this.designForm.value);
     
     this.isLoading = true;
+    this.designForm.controls['name'].setValue(startCase(camelCase(this.designForm.value.name)));
     this.api.addDesignation(this.designForm.value).subscribe(resp => {
       console.log(resp);
 
@@ -168,6 +171,7 @@ export class EmpDeptComponent {
   updateDesignation()
   {
     this.isLoading = true;
+    this.editDesign.controls['name'].setValue(startCase(camelCase(this.editDesign.value.name)));
     const payload = {
       id :this.selectedDesign?._id,
       name:this.editDesign.value?.name,
@@ -218,6 +222,5 @@ export class EmpDeptComponent {
           
         }
     });
-  }
-
+  } 
 }
