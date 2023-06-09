@@ -32,6 +32,14 @@ export class MarkEntryComponent {
   rows: FormArray;
   isShowMarkEntiries:boolean=false;
 
+  pageNo = 1;
+  p: number = 1;
+  pagingConfig = {
+    'currentPage'  : 1,
+    'itemsPerPage': 5,
+    'totalItems' : 0
+  }
+
   constructor(private api: ApiService,
     private toastr: ToastrService,
     private studentService: StudentService,
@@ -137,7 +145,7 @@ export class MarkEntryComponent {
           this.addForm.updateValueAndValidity();
         });
         this.studentService.studentDetailBackAction.isBack = false;
-      //  this.isShowMarkEntiries=true;
+       this.isShowMarkEntiries=true;
       }
 
     },
@@ -153,11 +161,11 @@ export class MarkEntryComponent {
   }
 
   getAllMarks() {
-
     this.api.getMarksAll().subscribe(resp => {
+      this.spinner.hide(); 
       this.marksEntries = resp.marks;
       this.filteredMarks = resp.marks;
-      this.patchStudent();
+      //this.patchStudent();
     });
   }
 
@@ -216,5 +224,9 @@ export class MarkEntryComponent {
         console.error(err);
       })
   }
+  pageChanged(event: any): void {
+    this.pagingConfig.currentPage  = event;
+    this.getAllMarks();
+   }
 
 }

@@ -110,6 +110,13 @@ const routes: Routes = [
         (m) => m.ParentsAppModule
       ),
   },
+  {
+    path: 'attendance',
+    loadChildren: () =>
+      import('./pages/attendance/attendance.module').then(
+        (m) => m.AttendanceModule
+      ),
+  },
 ];
 
 @NgModule({

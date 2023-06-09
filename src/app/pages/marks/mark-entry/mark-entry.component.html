@@ -100,7 +100,7 @@
                 <table class="table mt-4 table-condensed nowrap table-hover table-bordered tbr-top">
                   <thead>
                     <tr>
-                      <th scope="col">SL</th>
+                      <!-- <th scope="col">SL</th> -->
                       <th scope="col">Student Name</th>
                       <th scope="col">Category</th>
                       <th scope="col">Register No.</th>
@@ -110,8 +110,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of addForm.get('rows')['controls']; let i = index">
-                      <td>{{i + 1}}</td>
+                    <tr *ngFor="let row of addForm.get('rows')['controls']|  paginate: pagingConfig; let i = index">
+                      <!-- <td>{{i + 1}}</td> -->
                       <td>{{row.get('firstName').value}} {{row.get('lastName').value}}</td>
                       <td>{{row.get('caste').value}}</td>
                       <td>{{row.get('registerNo').value}}</td>
@@ -130,6 +130,7 @@
                     </tr>
                   </tbody>
                 </table>
+                <pagination-controls  (pageChange)="pageChanged($event)"> </pagination-controls>
               </div>
               <div class="col-5" style="margin-left: auto;text-align:right;">
                 <button class="btn col-md-4 mt-4" [disabled]="!addForm.valid"
