@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../../student-details/student.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-class-schedule',
@@ -17,7 +18,9 @@ export class ClassScheduleComponent {
   sections: any[] = [];
   classes: any[] = [];
   addForm:FormGroup;
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder,private studentService:StudentService) {
+  isShowSchedule = false;
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder,private spinner: NgxSpinnerService,
+    private studentService:StudentService) {
    this.aceYear = this.studentService.aceYear;
   }
   ngOnInit() {
@@ -60,9 +63,17 @@ export class ClassScheduleComponent {
       studentClass:s_class, 
       section:s_section
     }
+    this.isShowSchedule = true;
+    this.spinner.show();
     this.api.getClassAllSchedule(payload).subscribe(resp => {
      this.scheduleArr = resp.schedule;
-    });
+     this.spinner.hide();
+    },
+    (err) =>{
+      this.spinner.hide();
+      this.scheduleArr =[];
+      this.toastr.error(err);
+    })
   }
   
 }

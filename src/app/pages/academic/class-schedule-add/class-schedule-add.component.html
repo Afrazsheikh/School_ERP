@@ -1,6 +1,12 @@
 <app-layout>
   <form [formGroup]="addForm">
+  
     <div class="container p-4">
+      <div class="row">
+        <div class="col-md-12 header-txt">
+          <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Add/Update Class Schedule</span>
+        </div>
+      </div>
       <div class="row mt-5 mb-3">
         <div class="col-3">
           <label class="form-label">Class <span class="error">*</span></label>
@@ -9,13 +15,6 @@
             <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}</option>
           </select>
         </div>
-       <!-- <div class="col-3">
-          <label class="form-label">Section <span class="error">*</span></label>
-          <select class="form-select" formControlName="section">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let sec of sections" value="{{sec._id}}">{{sec.name}}</option>
-          </select>
-        </div>-->
         <div class="col-3">
           <label class="form-label">Day <span class="error">*</span></label>
           <select class="form-select" formControlName="day">
@@ -31,11 +30,16 @@
           </select>
         </div>
         <div class="col-3 mb-5 mt-4 pt-2">
-          <button class="btn" (click)="false">Filter</button>
+          <button class="btn" (click)="checkScheduleAvailable(addForm)" [disabled]="!addForm.valid">Filter</button>
         </div>
       </div>
-   
-      <div class="scheduler-sec">
+      <div  *ngIf="!isShowScheduleData" class="row">
+        <div class="col-md-12 table-heading ">
+          <span class="mb-3 error" style="font-size: 12px;">Note:</span> <span style="font-size: 12px;padding:0px 0px 0px 5px;">Please click on the filter button once you have selected the appropriate class, day and year; the schedule data will be loaded. </span>
+        </div>
+        
+      </div>
+      <div class="scheduler-sec" *ngIf="isShowScheduleData">
         <h6 class="table-heading mb-3">Add Schedule</h6>
 
         <table class="table mt-3">
@@ -114,11 +118,11 @@
         </table>
         <div class="row">
           <div class="col-md-4">
-            <button (click)="onAddRow()" class="btn">Add Row</button>
+            <button (click)="onAddRow({})" class="btn">Add Row</button>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="isShowScheduleData">
         <div class="col-md-12 text-end me-4">
           <button (click)="saveScheduleRecord(addForm)" class="btn ps-4 pe-4" [disabled]="!addForm.valid">Save</button>
         </div>

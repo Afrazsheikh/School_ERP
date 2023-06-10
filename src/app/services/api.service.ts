@@ -299,6 +299,16 @@ export class ApiService {
       .get(environment.apiBaseUrl + '/designation/all')
       .pipe(catchError(this.errorHandler));
   }
+  getTeacherList(): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/allTeacher/Teacher')
+      .pipe(catchError(this.errorHandler));
+  }
+  getDesignationById(id: string): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/employee/designation/'+id)
+      .pipe(catchError(this.errorHandler));
+  }
 
   addLeave(postData: any): Observable<any> {
     return this.httpClient
@@ -743,6 +753,16 @@ export class ApiService {
   addSchedule(data): Observable<any> {
     return this.httpClient
       .post(environment.apiBaseUrl + '/schedule', data)
+      .pipe(catchError(this.errorHandler));
+  }
+  updateSchedule(data): Observable<any> {
+    return this.httpClient
+      .put(environment.apiBaseUrl + '/schedule', data)
+      .pipe(catchError(this.errorHandler));
+  }
+  getScheculeDataByDay(postData: any,day:string): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/schedule/academics/'+day, postData)
       .pipe(catchError(this.errorHandler));
   }
   getSalaryMonthWise(month, year): Observable<any> {

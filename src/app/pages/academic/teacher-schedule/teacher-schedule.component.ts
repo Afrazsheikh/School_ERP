@@ -18,12 +18,8 @@ export class TeacherScheduleComponent {
   }
   getEmployees()
   {
-    this.api.getAllEmployees().subscribe(resp => {
-      this.employees = resp.employees;
-      console.log(this.employees);
-      
-      this.filteredEmp = this.employees.filter(emp => (emp.designation?.name).toLowerCase() === 'teacher');
-      console.log(this.filteredEmp);
+    this.api.getTeacherList().subscribe(resp => {
+      this.filteredEmp= this.employees = resp.teachers;
       
     });
   }

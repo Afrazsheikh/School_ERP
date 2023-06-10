@@ -20,6 +20,8 @@ export class ClassScheduleAddComponent {
   employees =[];
   hrs = [];
   mins = ["00", "30"];
+  existSchedata:any[] =[];
+  isShowScheduleData = false;
   aceYear:any[] = [];
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder,private studentService:StudentService) {
     this.createForm();
@@ -31,8 +33,7 @@ export class ClassScheduleAddComponent {
     this.getAllClass();
     this.getSubject();
     this.getTeacher();
-    this.addForm.addControl('rows', this.rows);
-    this.onAddRow();
+    this.addForm.addControl('rows', this.rows);   
   }
   hrsData() {
     this.hrs = [];
@@ -56,17 +57,10 @@ export class ClassScheduleAddComponent {
   }
   getTeacher()
   {
-    this.api.getAllEmployees().subscribe(resp => {
-      this.employees = resp.employees;
-      this.teacherOption = this.employees.filter(emp => (emp?.designation?.name).toLowerCase() == 'teacher');     
+    this.api.getTeacherList().subscribe(resp => {
+      this.teacherOption = resp.teachers;    
     });
   }
-   /*getTeacher(){
-   this.api.getEmployeeByRole('64350b305165343b13a004d3').subscribe(resp => {
-      this.teacherOption = resp.employees;
-      console.log(this.teacherOption);
-    }); 
-  }*/
   onChangeClass(event){
     this.sections =[];
     this.addForm.patchValue({section: 'select'});
@@ -80,24 +74,62 @@ export class ClassScheduleAddComponent {
   }
   createForm(){
     this.addForm = this.fb.group({
+      scheduleId:[''],
       class: ['',Validators.required],
       section: ['',Validators.required],
       day: ['',Validators.required],
       year:['', Validators.required]
     });
   }
-  onAddRow() {
-    this.rows.push(this.createItemFormGroup());
+
+  onAddRow(data :any) {
+    this.rows.push(this.createItemFormGroup(data));
   }
-  createItemFormGroup(): FormGroup {
-    return this.fb.group({
-      break:  [''],
-      subject:  ['', Validators.required],
-      teacher:  ['',Validators.required],
-      startTime:  ['',Validators.required],
-      endTime:  ['', Validators.required],
-      classRoom:  ['']
-    });
+  createItemFormGroup(data:any): FormGroup {
+    if(this.api.isEmptyObject(data)) {
+      return this.fb.group({
+        id:[''],
+        break:  [''],
+        subject:  ['', Validators.required],
+        teacher:  ['',Validators.required],
+        startTime:  ['',Validators.required],
+        endTime:  ['', Validators.required],
+        classRoom:  ['']
+      });
+    } else {
+      const timeArr = (data?.time).split("-");
+      console.log(timeArr);
+      return this.fb.group({
+        id:[data?._id],
+        break:  [''],
+        subject:  [data?.subject?._id, Validators.required],
+        teacher:  [data?.teacher?._id,Validators.required],
+        startTime:  [(timeArr[0]).trim(),Validators.required],
+        endTime:  [(timeArr[1]).trim(), Validators.required],
+        classRoom:  ['']
+      });
+    }
+   
+  }
+  checkScheduleAvailable(formData){
+    let payload ={
+       academicYear :formData.value.year, 
+      studentClass: formData.value.class,
+      section:formData.value.section
+    }
+    this.isShowScheduleData = true;
+   this.api.getScheculeDataByDay(payload,formData.value.day).subscribe(resp => {
+    this.existSchedata = resp?.schedule?.activities;
+    this.existSchedata.forEach(element =>{
+      this.onAddRow(element);
+    })
+    this.addForm.patchValue({scheduleId: resp?.schedule?._id});
+      
+    },
+    (err) => {
+      this.onAddRow({});
+      console.error(err);
+    })
   }
   onRemoveRow(rowIndex:number){
     this.rows.removeAt(rowIndex);
@@ -110,23 +142,46 @@ export class ClassScheduleAddComponent {
         rowA ={'time' : element.startTime + " - " + element.endTime, 'teacher': element.teacher, 'subject':element.subject};
       activeDat.push(rowA);
     });
-    let payload ={
-      day : form.value.day, 
-      type: '', 
-      academicYear :form.value.year, 
-      studentClass: form.value.class,
-      section:form.value.section,
-      activities: activeDat
+   
+    if(!this.api.isEmptyObject(form.value.scheduleId)) {
+      let payload ={
+        scheduleId: form.value.scheduleId, 
+        day : form.value.day, 
+        type: '',
+        activities: activeDat,
+        academicYear :form.value.year, 
+        studentClass: form.value.class,
+        section:form.value.section
+      }
+      this.api.updateSchedule(payload).subscribe(resp => {
+        console.log(resp);
+        this.toastr.success(resp.message, "Updated success");
+        this.router.navigate(['/academic/class-schedule']);
+      },
+      (err) => {
+         this.toastr.error(err, " update failed");
+        console.error(err);
+      })
+    } else {
+      let payload ={
+        day : form.value.day, 
+        type: '', 
+        academicYear :form.value.year, 
+        studentClass: form.value.class,
+        section:form.value.section,
+        activities: activeDat
+      }
+      this.api.addSchedule(payload).subscribe(resp => {
+        console.log(resp);
+        this.toastr.success(resp.message, "Added success");
+        this.router.navigate(['/academic/class-schedule']);
+      },
+      (err) => {
+         this.toastr.error(err, " add failed");
+        console.error(err);
+      })
     }
-   this.api.addSchedule(payload).subscribe(resp => {
-      console.log(resp);
-      this.toastr.success(resp.message, "Added success");
-      this.router.navigate(['/academic/class-schedule']);
-    },
-    (err) => {
-       this.toastr.error(err, " add failed");
-      console.error(err);
-    })
+  
   }
 
 }
