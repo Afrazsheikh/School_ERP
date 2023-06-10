@@ -139,7 +139,8 @@
                     <td>{{ design.name }}</td>
 
                     <td>
-                      <button
+                      <ng-container *ngIf="design.name !== 'Teacher'">
+                        <button
                         class="btn emp-edit me-1"
                         data-bs-toggle="modal"
                         data-bs-target="#editPromptD"
@@ -155,6 +156,8 @@
                       >
                         <i class="fa-solid fa-trash-can"></i>
                       </button>
+                      </ng-container>
+                     
                     </td>
                   </tr>
                 </tbody>
