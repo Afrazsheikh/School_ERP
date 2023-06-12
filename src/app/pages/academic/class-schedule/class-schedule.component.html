@@ -1,10 +1,13 @@
 <app-layout>
   <div class="container tab-container p-4">
     <form [formGroup]="addForm">
-    <div class="row mt-3 mb-3">
-      <div class="text-end mb-3">
-        <button class="btn" routerLink="add">Add Schedule</button>
+      <div class="row header-txt">
+          <div class="col-md-6">Schedule List</div>
+          <div class="text-end mb-1 col-md-6">
+            <button class="btn" routerLink="add">Manage Schedule</button>
+        </div>
       </div>
+    <div class="row mt-3 mb-3">      
       <div class="col-4">
         <label class="form-label">Class <span class="error">*</span></label>
         <select class="form-select" formControlName="class" (change)="onChangeClass($event)">
@@ -25,8 +28,9 @@
     </div>
    
   </form>
-    <h6 class="table-heading mb-4">Schedule List</h6>
-    
+    <div class="row header-txt mb-3" *ngIf="isShowSchedule">
+      <div class="col-md-6">Schedule List Class and Year Wise</div>
+      </div>
       <ng-container *ngFor="let  data of scheduleArr">
         <div class="row">
           <div class="col border border-dark">{{data.day}}</div>

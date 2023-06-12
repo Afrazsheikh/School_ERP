@@ -27,11 +27,8 @@ export class ClassTeacherAssignComponent {
   }
   getEmployees()
   {
-    this.api.getAllEmployees().subscribe(resp => {
-      this.employees = resp.employees;  
-      if(resp.employees) {
-        this.teacher = this.employees.filter(emp => (emp.designation?.name).toLowerCase() == 'teacher');
-      }
+    this.api.getTeacherList().subscribe(resp => {
+      this.teacher = resp.teachers;       
     });
   }
   getAllClass() {
