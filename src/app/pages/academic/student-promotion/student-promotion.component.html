@@ -13,7 +13,7 @@
 
                     <div class="col-4">
                         <label class="form-label">Class <span class="error">*</span></label>
-                        <select class="form-select" formControlName="studentClass">
+                        <select class="form-select" formControlName="studentClass" (change)="checkClass()">
                             <option disabled value="select">Select</option>
                             <option *ngFor="let sec of classes" [ngValue]="sec">
                                 {{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}
@@ -29,7 +29,7 @@
 
                     <div class="col-4">
                         <label class="form-label">Year <span class="error">*</span></label>
-                        <select class="form-select" formControlName="academicYear">
+                        <select class="form-select" formControlName="academicYear" (change)="checkYear()">
                             <option disabled value="select">Select</option>
                             <option *ngFor="let day of aceYear" value="{{ day._id }}">
                                 {{ day.name }}
@@ -85,7 +85,7 @@
 
                             <div class="col-3">
                                 <label class="form-label">Promote To Session <span class="error">*</span></label>
-                                <select class="form-select" formControlName="academicYear">
+                                <select class="form-select" formControlName="academicYear" (change)="checkYear();">
                                     <option disabled value="select">Select</option>
                                     <option *ngFor="let day of aceYear" value="{{ day._id }}">
                                         {{ day.name }}
@@ -96,16 +96,19 @@
                                     <div *ngIf="promotionForm.controls['academicYear'].errors['required']">
                                         Promote To Session is required.
                                     </div>
+                                    <div *ngIf="promotionForm.controls['academicYear'].errors['isSameYear']">
+                                        Can not same Year or Promote To Session.
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-3">
                                 <label class="form-label">Promote To Class <span class="error">*</span></label>
                                 <select class="form-select" formControlName="studentClass"
-                                    (change)="onChangeClass($event)">
+                                    (change)="onChangeClass($event);checkClass();">
                                     <option disabled value="select">Select</option>
-                                    <option *ngFor="let sec of classes" value="{{ sec._id }}">
-                                        {{ sec.className }}
+                                    <option *ngFor="let sec of classes" [ngValue]="sec">
+                                        {{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}
                                     </option>
                                 </select>
                                 <div *ngIf="promotionForm.controls['studentClass'].invalid && (promotionForm.controls['studentClass'].dirty || promotionForm.controls['studentClass'].touched)"
@@ -113,24 +116,12 @@
                                     <div *ngIf="promotionForm.controls['studentClass'].errors['required']">
                                         Promote To Class is required.
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-3">
-                                <label class="form-label">Promote To Section <span class="error">*</span></label>
-                                <select class="form-select" formControlName="section">
-                                    <option disabled value="select">Select</option>
-                                    <option *ngFor="let sec of sections" value="{{ sec._id }}">
-                                        {{ sec.name }}
-                                    </option>
-                                </select>
-                                <div *ngIf="promotionForm.controls['section'].invalid && (promotionForm.controls['section'].dirty || promotionForm.controls['section'].touched)"
-                                    class="error mt-2">
-                                    <div *ngIf="promotionForm.controls['section'].errors['required']">
-                                        Promote To Section is required.
+                                    <div *ngIf="promotionForm.controls['studentClass'].errors['isSameClass']">
+                                        Can not same Class or Promote To Class.
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="col-3">
                                 <label class="form-label">Promotion Type <span class="error">*</span></label>
@@ -151,7 +142,7 @@
                                 <ngx-select-dropdown [multiple]="true" [instanceId]="'dropdown_1'"
                                     tabindex="0" [multiple]="false"
                                     [config]="config" [options]="options"
-                                    (change)="selectedGua($event)"></ngx-select-dropdown>
+                                    (change)="notPromotedStudentChange($event)"></ngx-select-dropdown>
                             </div>
                         </div>
                         <div class="row mt-2 mb-3"  *ngIf="promteStudentEnable">
@@ -188,7 +179,7 @@
                         </div>
                         <div class="col-5" style="margin-left: auto;text-align:right;">
                             <button class="btn col-md-4 mt-4" [disabled]="!promotionForm.valid"
-                                (click)="savePromotion()">Promotion</button>
+                            data-bs-toggle="modal" data-bs-target="#confirmpromotion">Promotion</button>
                         </div>
                     </form>
                 </div>
@@ -197,3 +188,24 @@
     </div>
     <!-- End promotion Form -->
 </app-layout>
+
+<!-- Delete model -->
+
+<div class="modal fade" id="confirmpromotion">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Student Promotion </h5>
+        </div>
+        <div class="modal-body">
+          <p>Can you confirm that you want to promote this class if you click yes then you cannot go back and reverse the changes ?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="modalDismissBtn" type="button" #closeButton class="btn" data-bs-dismiss="modal">&times;No</button>
+          <button type="button" class="btn" (click)="savePromotion()">
+            <span>Yes</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

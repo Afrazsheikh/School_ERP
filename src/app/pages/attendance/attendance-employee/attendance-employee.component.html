@@ -1,16 +1,17 @@
 <app-layout>
-    <div class="container tab-container p-5">
+    <div class="container-flud p-5 tab-container">
         <div class="row header-txt">
             <div class="col-md-12"><span>Employee Attendance</span></div>
         </div>
 
         <form [formGroup]="addForm">
             <div class="row mt-3 grey-border cls-employee-designation">
-                <div class="mb-3 col-md-4">
+                <div class="mb-3 col-md-3">
                     <label class="form-label">Designation <span class="error">*</span></label>
-                    <select class="form-select" formControlName="designation">
+                    <select class="form-select" formControlName="designation" (change)="designationChange($event)">
                         <option disabled value="select">Select</option>
-                        <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
+                        <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}
+                        </option>
                     </select>
                     <div *ngIf="addForm.controls['designation'].invalid && (addForm.controls['designation'].dirty || addForm.controls['designation'].touched)"
                         class="error mt-2">
@@ -19,14 +20,32 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="mb-3 col-md-4">
+                    <label class="form-label">Employee <span class="error">*</span></label>
+                    <select class="form-select" formControlName="employee">
+                        <option disabled value="select">Select</option>
+                        <option *ngFor="let employee of employeesList" [value]="employee._id">{{employee.name}}</option>
+                    </select>
+                    <div *ngIf="addForm.controls['employee'].invalid && (addForm.controls['employee'].dirty || addForm.controls['employee'].touched)"
+                        class="error mt-2">
+                        <div *ngIf="addForm.controls['employee'].errors['required']">
+                            Employee is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3 col-md-3">
                     <label class="form-label">Date <span class="error">*</span></label>
                     <div class="input-group">
-                        <input matInput class="form-control me-3" formControlName="date" [matDatepicker]="picker" [max]="today" placeholder="dd-mm-yyyy" />
+                        <input matInput [matDatepicker]="picker" formControlName="date" [max]="today"
+                            class="form-control me-3">
                         <div class="mr-2 tooglePicker">
-                            <mat-datepicker-toggle matSuffix [for]="picker" class="cls-btn"></mat-datepicker-toggle>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker" class="cls-btn"></mat-datepicker-toggle>
                         </div>
-                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-datepicker #picker startView="multi-year" (monthSelected)="setMonthAndYear($event, picker)"
+                            panelClass="example-month-picker">
+                        </mat-datepicker>
                     </div>
                     <div *ngIf="addForm.controls['date'].invalid && (addForm.controls['date'].dirty || addForm.controls['date'].touched)"
                         class="error mt-2">
@@ -35,16 +54,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mt-3 ps-0">
-                    <button class="btn mt-3" (click)="filterEmployee(addForm)"  [disabled]="!addForm.valid">Filter</button>
+
+                <div class="col-md-2 mt-3 ps-0">
+                    <button class="btn mt-3" (click)="filterEmployee(addForm)"
+                        [disabled]="!addForm.valid">Filter</button>
                 </div>
             </div>
         </form>
     </div>
-    <div _ngcontent-ogo-c108="" class="container-flud p-5 pt-3 ng-star-inserted">
-        <div _ngcontent-ogo-c108="" class="card">
-            <div _ngcontent-ogo-c108="" class="card-header"><i class="fas fa-users"></i> Employees List</div>
-            <div _ngcontent-ogo-c108="" class="card-body">
+    <div class="container-flud p-5 pt-3 ng-star-inserted">
+        <div class="card">
+            <div class="card-header"><i class="fas fa-users"></i> Employees List</div>
+            <div class="card-body">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3 ms-auto">
@@ -62,57 +83,90 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="table-responsive mb-sm mt-xs">
                                 <table class="table table-bordered table-hover table-condensed mb-none">
                                     <thead>
                                         <tr>
-                                            <th width="40">#</th>
-                                            <th width="80">Photo</th>
-                                            <th>Name</th>
-                                            <th>Staff Id</th>
+                                            <th width="80">Day</th>
+                                            <th width="80">Date</th>
                                             <th width="400">Status</th>
                                             <th>Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let row of addForm.get('rows')['controls'] |  paginate: pagingConfig; index as i">
-                                            <td>{{i + 1}}</td> 
-                                            <td class="center">
-                                                <ng-container *ngIf="row.image">
-                                                <img class="rounded"[src]="row?.image"width="40" height="40">
-                                                </ng-container>
-                                                <ng-container *ngIf="!row.image">
-                                                    <img class="rounded" src="/assets/images/no-profile.jpg"width="40" height="40">
-                                                    </ng-container>
+                                        <tr
+                                            *ngFor="let row of addForm.get('rows')['controls']  index as i">
+                                            <ng-container *ngIf="i<=14">
+                                                <td>{{row.get('_id').value}}</td>
+                                                <td>{{row.get('date').value}}</td>
+                                                <td>
+                                                    <select name="mark_all_everyone" [formControl]="row.get('status')"
+                                                        class="form-control select2-hidden-accessible"
+                                                        onchange="selAtten_all(this.value)" data-plugin-selecttwo=""
+                                                        data-width="100%" data-minimum-results-for-search="Infinity"
+                                                        tabindex="-1" aria-hidden="true">
+                                                        <option value="" selected="selected">Not Selected</option>
+                                                        <option value="P">Present</option>
+                                                        <option value="A">Absent</option>
+                                                        <option value="HD">Half Day</option>
+                                                    </select>
                                                 </td>
-                                            <td>{{row.get('name').value}}</td>
-                                            <td>#1234</td>
-                                            <td>
-                                                <select name="mark_all_everyone" [formControl]="row.get('status')" class="form-control select2-hidden-accessible"
-                                                    onchange="selAtten_all(this.value)" data-plugin-selecttwo="" data-width="100%"
-                                                    data-minimum-results-for-search="Infinity" tabindex="-1" aria-hidden="true">
-                                                    <option value="" selected="selected">Not Selected</option>
-                                                    <option value="P">Present</option>
-                                                    <option value="A">Absent</option>
-                                                    <option value="HD">Half Day</option>
-                                                </select>
-                                            </td>
-                                            <td><input class="form-control" [formControl]="row.get('remark')" name="Remarks" type="text" placeholder="Remarks" value="">
-                                            </td>
+                                                <td><input class="form-control" [formControl]="row.get('remark')"
+                                                        name="Remarks" type="text" placeholder="Remarks" value="">
+                                                </td>
+                                            </ng-container>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <pagination-controls  (pageChange)="pageChanged($event)"> </pagination-controls>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table-responsive mb-sm mt-xs">
+                                <table class="table table-bordered table-hover table-condensed mb-none">
+                                    <thead>
+                                        <tr>
+                                            <th width="80">Day</th>
+                                            <th width="80">Date</th>
+                                            <th width="400">Status</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let row of addForm.get('rows')['controls']  index as i">
+                                            <ng-container *ngIf="i>14">
+                                                <td>{{row.get('_id').value}}</td>
+                                                <td>{{row.get('date').value}}</td>
+                                                <td>
+                                                    <select name="mark_all_everyone" [formControl]="row.get('status')"
+                                                        class="form-control select2-hidden-accessible"
+                                                        onchange="selAtten_all(this.value)" data-plugin-selecttwo=""
+                                                        data-width="100%" data-minimum-results-for-search="Infinity"
+                                                        tabindex="-1" aria-hidden="true">
+                                                        <option value="" selected="selected">Not Selected</option>
+                                                        <option value="P">Present</option>
+                                                        <option value="A">Absent</option>
+                                                        <option value="HD">Half Day</option>
+                                                    </select>
+                                                </td>
+                                                <td><input class="form-control" [formControl]="row.get('remark')"
+                                                        name="Remarks" type="text" placeholder="Remarks" value="">
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </div>               
+                </div>
             </div>
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-md-12 text-end">
-                        <button type="button" class="btn btn-default btn-block" (click)="saveEmployeeAttendance()" name="save" value="1">Save</button>
+                        <button type="button" class="btn btn-default btn-block" (click)="saveEmployeeAttendance()"
+                            name="save" value="1">Save</button>
                     </div>
                 </div>
             </div>

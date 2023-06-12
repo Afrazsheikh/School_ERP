@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
@@ -158,13 +158,13 @@ export class StudentPromotionComponent implements OnInit {
     }
   }
   studentChange(event) {
-    this.notPromteStudentList=[];
+    this.notPromteStudentList = [];
     if (event.target.value == "2") {
       this.promteStudentEnable = true;
     }
 
     else {
-      this.notPromteStudentList=this.options;
+      this.notPromteStudentList = this.options;
       this.promotionForm.controls['studentData'].setValue(this.notPromteStudentList);
       this.promteStudentEnable = false;
     }
@@ -180,9 +180,9 @@ export class StudentPromotionComponent implements OnInit {
       });
     }
   }
-  selectedGua(event) {
-     this.promotionForm.controls['studentData'].setValue(null);
-    if (event) {
+  notPromotedStudentChange(event) {
+    this.promotionForm.controls['studentData'].setValue(null);
+    if (event.value?._id) {
       let isExist = this.notPromteStudentList.findIndex(x => x._id == event.value?._id);
       if (isExist == -1) {
         var notPromteStudentObj = {
@@ -195,17 +195,43 @@ export class StudentPromotionComponent implements OnInit {
       this.promotionForm.controls['studentData'].setValue(this.notPromteStudentList);
     }
   }
-  deleteNotPromotedStudent(student)
-  {
+  deleteNotPromotedStudent(student) {
     let isExist = this.notPromteStudentList.findIndex(x => x._id == student._id);
-    if(isExist>-1)
-    {
+    if (isExist > -1) {
       this.notPromteStudentList.splice(isExist, 1);
       this.promotionForm.controls['studentData'].setValue(this.notPromteStudentList);
     }
-    
+
   }
+  checkClass()
+  {
+    if(this.promotionForm.value?.studentClass==this.filterForm.value?.studentClass)
+    {
+      this.promotionForm.controls['studentClass'].setErrors({'isSameClass':true})
+    }
+    else
+    {
+      this.promotionForm.controls['studentClass'].setErrors(null);
+    }
+  }
+  checkYear()
+  {
+    if(this.promotionForm.value?.academicYear==this.filterForm?.value.academicYear)
+    {
+      this.promotionForm.controls['academicYear'].setErrors({'isSameYear':true})
+    }
+    else
+    {
+      this.promotionForm.controls['academicYear'].setErrors(null);
+    }
+  }
+  
+
   savePromotion() {
-    console.log("promotionForm",this.promotionForm.value);
+    document.getElementById('modalDismissBtn')?.click();
+    console.log("promotionForm", this.promotionForm.value);
+    this.filterForm.reset();
+    this.promotionForm.reset();
+    this.visiblePromotion=false;
   }
 }
