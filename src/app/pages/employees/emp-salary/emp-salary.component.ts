@@ -23,6 +23,6 @@ export class EmpSalaryComponent {
   });
 }
 paySlipClick(employee){
-  this.router.navigate(["/human-resource/salary-payroll-create/"+employee?.employee+"/"+employee?.salaryPaidMonth]);
+  this.router.navigate(["/human-resource/payroll-invoice/"+employee?.employee+"/"+employee?.salaryPaidMonth]);
 }
 }

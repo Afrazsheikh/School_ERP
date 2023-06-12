@@ -26,11 +26,11 @@
                                 <div class="col-md-12 text-wrap">{{ employeeDetail?.name }}
                                 </div>
                                 <div class="col-md-12 ">Department : {{employeeDetail?.department?.name}}</div>
-                                <div class="col-md-12 ">Designation : {{employeeDetail?.designation}}</div>
+                                <div class="col-md-12 ">Designation : {{employeeDetail?.designation?.name}}</div>
                                 <div class="col-md-12 ">Mobile No : {{employeeDetail?.number}}</div>
                             </td>
                             <td style="text-align:right;vertical-align: top;">
-                                <div class="col-md-12 text-weight">form :</div>
+                                <div class="col-md-12 text-weight">Form :</div>
                                 <div class="col-md-12 text-wrap"><img class="img-fluid"
                                         src="assets/invoice_school_logo_detail.jpg" alt="" style="margin-top:5px;" />
                                 </div>
@@ -54,19 +54,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Festivals</td>
-                                <td class="text-end">$500.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>House Rent</td>
-                                <td class="text-end">$500.00
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Overtime Salary (5 Hour)</td>
-                                <td class="text-end">{{employeeDetail?.salaryGrade?.overTimeRatePerHr}}
+                            <tr *ngFor="let allow of employeeDetail?.salaryGrade?.allowances">
+                                <td>{{allow?.name}}</td>
+                                <td class="text-end">{{allow?.amount}}
                                 </td>
                             </tr>
                         </tbody>
@@ -86,9 +76,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Fund</td>
-                                <td class="text-end">$500.00
+                            <tr *ngFor="let allow of employeeDetail?.salaryGrade?.deductions">
+                                <td>{{allow?.name}}</td>
+                                <td class="text-end">{{allow?.amount}}
                                 </td>
                             </tr>
                         </tbody>

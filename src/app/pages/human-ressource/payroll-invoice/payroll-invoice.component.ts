@@ -30,18 +30,18 @@ export class PayrollInvoiceComponent {
 
         if (routeParam.hasOwnProperty('id')) {
           this.employeeId = routeParam['id'];
+          this.monthAndYear =  routeParam['monthAndYear'];
           this.fetchEmployeeDetail();
-          this.monthAndYear = new Date(routeParam['monthAndYear'].split('-')[0]);
+         // this.monthAndYear = new Date(routeParam['monthAndYear'].split('-')[0]);
         }
       },
     });
   }
 
   fetchEmployeeDetail() {
-    this._apiService.getAllEmployeesById(this.employeeId).subscribe({
+    this._apiService.getSalaryMonthAndEmpWise(this.employeeId, this.monthAndYear).subscribe({
       next: (res) => {
-        this.employeeDetail = res.employee;
-        console.log("this.employeeDetail",this.employeeDetail);
+        this.employeeDetail = res.salary_receipts;
         if (this.employeeDetail.hasOwnProperty('salaryGrade')) {
           this.isSalaryDetailAvailable = true;
         }
