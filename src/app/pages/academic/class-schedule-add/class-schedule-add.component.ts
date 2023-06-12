@@ -118,13 +118,16 @@ export class ClassScheduleAddComponent {
       section:formData.value.section
     }
     this.isShowScheduleData = true;
+    this.rows.clear();
+    this.addForm.patchValue({scheduleId:''});
+    this.addForm.updateValueAndValidity();
    this.api.getScheculeDataByDay(payload,formData.value.day).subscribe(resp => {
     this.existSchedata = resp?.schedule?.activities;
     this.existSchedata.forEach(element =>{
       this.onAddRow(element);
     })
     this.addForm.patchValue({scheduleId: resp?.schedule?._id});
-      
+    this.addForm.updateValueAndValidity();
     },
     (err) => {
       this.onAddRow({});
