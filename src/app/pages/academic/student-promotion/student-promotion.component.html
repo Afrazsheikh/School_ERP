@@ -126,7 +126,7 @@
                             <div class="col-3">
                                 <label class="form-label">Promotion Type <span class="error">*</span></label>
                                 <select class="form-select" formControlName="student" (change)="studentChange($event)">
-                                    <option disabled value="select">Select</option>
+                                    <option  value="">Select</option>
                                     <option value="1">Promote All</option>
                                     <option value="2">Not to Promote</option>
                                 </select>
@@ -139,7 +139,7 @@
                             </div>
                             <div class="col-5 mt-4" *ngIf="promteStudentEnable">
                                 <label class="form-label">Select Not Promoted Students <span class="error">*</span></label>
-                                <ngx-select-dropdown [multiple]="true" [instanceId]="'dropdown_1'"
+                                <ngx-select-dropdown  [instanceId]="'dropdown_1'"
                                     tabindex="0" [multiple]="false"
                                     [config]="config" [options]="options"
                                     (change)="notPromotedStudentChange($event)"></ngx-select-dropdown>
@@ -178,9 +178,28 @@
 
                         </div>
                         <div class="col-5" style="margin-left: auto;text-align:right;">
-                            <button class="btn col-md-4 mt-4" [disabled]="!promotionForm.valid"
-                            data-bs-toggle="modal" data-bs-target="#confirmpromotion">Promotion</button>
+                            <button class="btn col-md-4 mt-4" [disabled]="!promotionForm.valid" (click)="openQuickModal(confirmpromotion)">Promotion</button>
                         </div>
+                        <ng-template #confirmpromotion>
+                            <div class="modal-header">
+                              <h4 class="modal-title pull-left">Confirmation</h4>
+                              <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+                                <span aria-hidden="true" class="visually-hidden">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <span class="text-justify">Can you confirm that you want to promote this class if you click yes then you cannot go back and reverse the changes?</span>
+                                </div>
+                              </div>
+                                 
+                                <div class="modal-footer mt-4">
+                                  <button type="button" class="save_button btn" (click)="savePromotion(promotionForm)">Yes, Continue</button>
+                                  <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+                                </div>
+                            </div>
+                          </ng-template>
                     </form>
                 </div>
             </div>
@@ -190,22 +209,3 @@
 </app-layout>
 
 <!-- Delete model -->
-
-<div class="modal fade" id="confirmpromotion">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirm Student Promotion </h5>
-        </div>
-        <div class="modal-body">
-          <p>Can you confirm that you want to promote this class if you click yes then you cannot go back and reverse the changes ?</p>
-        </div>
-        <div class="modal-footer">
-          <button id="modalDismissBtn" type="button" #closeButton class="btn" data-bs-dismiss="modal">&times;No</button>
-          <button type="button" class="btn" (click)="savePromotion()">
-            <span>Yes</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>

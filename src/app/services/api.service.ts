@@ -1088,6 +1088,16 @@ export class ApiService {
       .get(environment.apiBaseUrl + '/allFeeMonth/' + id)
       .pipe(catchError(this.errorHandler));
   }
+  promoteToAllStudent(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/promoteAll', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  promoteWithSelectedStudent(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/notPromoteAll', postData)
+      .pipe(catchError(this.errorHandler));
+  }
   isEmptyObject(obj) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {

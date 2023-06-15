@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService } from '../../../services/api.service';
 import { StudentService } from '../../student-details/student.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { numbers } from '@material/toolbar';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-student-promotion',
@@ -15,6 +16,7 @@ import { numbers } from '@material/toolbar';
 export class StudentPromotionComponent implements OnInit {
   filterForm: FormGroup;
   promotionForm: FormGroup;
+  modalRef!: BsModalRef;
   classes: any[] = [];
   sections: any[] = [];
   aceYear: any[] = [];
@@ -42,7 +44,7 @@ export class StudentPromotionComponent implements OnInit {
   studentList: any[] = [];
   promteStudentEnable: boolean = false;
   notPromteStudentList: any[] = [];
-  constructor(private api: ApiService, private toastr: ToastrService,
+  constructor(private api: ApiService, private toastr: ToastrService, private modalService: BsModalService,
     private studentService: StudentService, private spinner: NgxSpinnerService, private cd: ChangeDetectorRef) {
     this.aceYear = this.studentService.aceYear;
   }
@@ -99,63 +101,33 @@ export class StudentPromotionComponent implements OnInit {
     });
   }
   callReport(reportForm) {
+    this.promotionForm.controls['student'].setValue('');
+    this.promotionForm.controls['studentData'].setValue('');
+    this.promteStudentEnable = false;
+    this.promotionForm.updateValueAndValidity();
     const data = {
       academicYear: reportForm.value.academicYear,
       section: reportForm.value.studentClass?.sections[0]?._id,
       studentClass: reportForm.value.studentClass?._id,
     }
     this.spinner.show();
+    this.studentData = [];
+    this.options = [];
     this.api.studentList(data).subscribe(data => {
       this.spinner.hide();
       this.studentData = data['students'];
       this.getStudentPromteList();
-      this.studentData.forEach(element => {
-        element.promotioncheck = false;
-      });
       this.studentService.studentDetailBackAction.isBack = false;
-      if (this.studentData.length > 0)
+      if (!this.api.isEmptyObject(this.studentData)) {
         this.visiblePromotion = true;
+      }
+       
     },
       (err) => {
         this.spinner.hide();
         this.studentData = [];
         this.toastr.error(err);
       })
-  }
-  allChkChange(event) {
-    if (event.target.checked) {
-      this.studentData.forEach(element => {
-        element.promotioncheck = true;
-      });
-      this.selectChkCount = this.studentData.length;
-      this.cd.detectChanges();
-    }
-    else {
-      this.studentData.forEach(element => {
-        element.promotioncheck = false;
-      });
-      this.selectChkCount = 0;
-      this.cd.detectChanges();
-    }
-  }
-  singalChkChange(event) {
-    let totalStudents = this.studentData.length;
-    if (event.target.checked == true) {
-      this.selectChkCount++;
-      this.mainChkSelectorUnselect(totalStudents, this.selectChkCount);
-    }
-    else {
-      this.selectChkCount--;
-      this.mainChkSelectorUnselect(totalStudents, this.selectChkCount);
-    }
-  }
-  mainChkSelectorUnselect(totalStudents, selectChkCount) {
-    if (totalStudents == selectChkCount) {
-      this.allChkPromotion.nativeElement.checked = true;
-    }
-    else {
-      this.allChkPromotion.nativeElement.checked = false;
-    }
   }
   studentChange(event) {
     this.notPromteStudentList = [];
@@ -170,7 +142,7 @@ export class StudentPromotionComponent implements OnInit {
     }
   }
   getStudentPromteList() {
-    if (this.studentData.length > 0) {
+    if (!this.api.isEmptyObject(this.studentData)) {
       this.studentData.forEach(element => {
         this.options.push({
           _id: element._id,
@@ -179,6 +151,7 @@ export class StudentPromotionComponent implements OnInit {
         });
       });
     }
+    console.log( this.options);
   }
   notPromotedStudentChange(event) {
     this.promotionForm.controls['studentData'].setValue(null);
@@ -225,13 +198,61 @@ export class StudentPromotionComponent implements OnInit {
       this.promotionForm.controls['academicYear'].setErrors(null);
     }
   }
-  
-
-  savePromotion() {
-    document.getElementById('modalDismissBtn')?.click();
-    console.log("promotionForm", this.promotionForm.value);
-    this.filterForm.reset();
-    this.promotionForm.reset();
-    this.visiblePromotion=false;
+  openQuickModal(template: TemplateRef<any>){
+   this.modalRef = this.modalService.show(template);
+  }
+  closePopup(){
+    this.modalRef.hide();
+  }
+  savePromotion(formData) {
+    var  payload = {};
+    if(!this.api.isEmptyObject(formData.value)) {
+      if(formData.value.student === "1") { //promot all Student
+        payload = {
+          "academicYear":this.filterForm.value?.academicYear,
+          "studentClass":this.filterForm.value?.studentClass?._id,
+          "section":this.filterForm.value?.studentClass?.sections[0]?._id,
+          "promoteacademicYear":formData.value?.academicYear,
+          "promotestudentClass":formData.value?.studentClass?._id,
+          "promoteSection":formData.value?.studentClass?.sections[0]?._id
+        }
+        this.api.promoteToAllStudent(payload).subscribe(resp => {
+          this.closePopup();
+          this.toastr.success(resp.message, "Promoted Successfully");
+          this.filterForm.reset();
+          this.promotionForm.reset();
+          this.visiblePromotion=false;
+        },
+        (err) => {
+          this.toastr.error(err, " Promotion Failed");
+          console.error(err);
+        })
+      } else if(formData.value.student === "2"){ //Not to promot all Student
+        var studentIDArr:any[] = [];
+        formData.value.studentData.forEach(ele =>{
+            studentIDArr.push(ele?._id);
+        });
+        payload = {
+          "academicYear":this.filterForm.value?.academicYear,
+          "studentClass":this.filterForm.value?.studentClass?._id,
+          "section":this.filterForm.value?.studentClass?.sections[0]?._id,
+          "promoteacademicYear":formData.value?.academicYear,
+          "promotestudentClass":formData.value?.studentClass?._id,
+          "promoteSection":formData.value?.studentClass?.sections[0]?._id,
+          "studentId":studentIDArr
+        }
+        this.api.promoteWithSelectedStudent(payload).subscribe(resp => {
+          this.closePopup();
+          this.toastr.success(resp.message, "Promoted Successfully");
+          this.filterForm.reset();
+          this.promotionForm.reset();
+          this.visiblePromotion=false;
+        },
+        (err) => {
+          this.toastr.error(err, " Promotion Failed");
+          console.error(err);
+        });        
+      }
+    }
   }
 }
