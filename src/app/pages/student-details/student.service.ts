@@ -17,11 +17,11 @@ export class StudentService {
    AccountMethod = [{ _id: "STB", name: "STB" }, { _id: "Janata bank", name: "Janata bank" }];
   concessionList = [{ _id: "0", name: "0" }, { _id: "10", name: "10%" },{ _id: "15", name: "15%" }]
   feeMode = [{ _id: "quarterly", name: "Quarterly" }, { _id: "monthly", name: "Monthly" },{ _id: "anually", name: "Anually" }];
-  aceYear = [{ _id: "2026-2027", name: "2026-2027" },{ _id: "2025-2026", name: "2025-2026" }, { _id: "2023-2024", name: "2023-2024" },{ _id: "2022-2023", name: "2022-2023" },
-  { _id: "2021-2022", name: "2021-2022" },{ _id: "2020-2021", name: "2020-2021" }];
+  aceYear = [{ _id: "2024-2025", name: "2024-2025" }, { _id: "2023-2024", name: "2023-2024" },{ _id: "2022-2023", name: "2022-2023" },
+  { _id: "2021-2022", name: "2021-2022" }];
   genderList = [{_id:"Male", name:"Male"}, {_id:"Female", name:"Female"},{_id:"Other", name:"Other"}];
 
-  typeList=[{ _id: "TYPE-A", name: "TYPE-A" },{ _id: "TYPE-B", name: "TYPE-B" }]
+  typeList=[{ _id: "Registration Application", name: "Registration Application" },{ _id: "Admission Application", name: "Admission Application" }]
 
   bloodGrList=[{_id:"A+", name:"A+"}, {_id:'A-', name:"A-"},{_id:'B+', name:"B+"},{_id:'B-', name:"B-"},{_id:'O+', name:"O+"},
   {_id:'O-', name:"O-"},{_id:'AB+', name:"AB+"},{_id:'AB-', name:"AB-"}];

@@ -189,14 +189,14 @@ export class StudentPromotionComponent implements OnInit {
   }
   checkYear()
   {
-  /*  if(this.promotionForm.value?.academicYear==this.filterForm?.value.academicYear)
+    if(this.promotionForm.value?.academicYear==this.filterForm?.value.academicYear)
     {
       this.promotionForm.controls['academicYear'].setErrors({'isSameYear':true})
     }
     else
     {
       this.promotionForm.controls['academicYear'].setErrors(null);
-    }*/
+    }
   }
   openQuickModal(template: TemplateRef<any>){
    this.modalRef = this.modalService.show(template);

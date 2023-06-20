@@ -1098,6 +1098,11 @@ export class ApiService {
       .post(environment.apiBaseUrl + '/notPromoteAll', postData)
       .pipe(catchError(this.errorHandler));
   }
+  getStudentAttendanceData(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/showAttandanceList', postData)
+      .pipe(catchError(this.errorHandler));
+  }
   isEmptyObject(obj) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {

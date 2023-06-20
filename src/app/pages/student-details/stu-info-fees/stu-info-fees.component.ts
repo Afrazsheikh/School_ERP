@@ -90,7 +90,9 @@ export class StuInfoFeesComponent {
   this.row.isExpand = true;
  }
  getExistingFee(){
-  this.row.isVisibleSaveBtn = true;
+  if(this.studentFee?.isEditableCategory){
+    this.row.isVisibleSaveBtn = this.studentFee?.isEditableCategory;
+  }
   this.addForm.patchValue({
     id :this.studentFee?._id,
     feeMode:this.studentFee?.feemode,
@@ -106,10 +108,11 @@ export class StuInfoFeesComponent {
   });
   this.studentFee.allMode.forEach(element => {
       this.onAddInvoiceRow(element);
+      if(element?.status === 'Paid') {
+        this.row.isVisibleSaveBtn = false;
+      }
   });
-  if(this.studentFee?.isEditableCategory){
-    this.row.isVisibleSaveBtn = this.studentFee?.isEditableCategory;
-  }
+  
   this.row.isExpand = true;
  }
  
