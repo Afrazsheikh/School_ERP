@@ -5,10 +5,9 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MatDatepicker } from '@angular/material/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ApiService } from 'src/app/services/api.service';
-import * as _moment from 'moment';
+import { ApiService } from '../../../services/api.service';
 import { default as _rollupMoment, Moment } from 'moment';
-const moment = _rollupMoment || _moment;
+const moment = _rollupMoment ;
 export const MY_FORMATS = {
   parse: {
     dateInput: 'MM/YYYY',
@@ -61,7 +60,7 @@ export class AttendanceEmployeeComponent implements OnInit {
     this.addForm = this.fb.group({
       designation: ['', Validators.required],
       employee:['', Validators.required],
-      date: [moment(), Validators.required],
+      date: [moment(),Validators.required],
     });
   }
   onAddRow(data) {
@@ -144,8 +143,21 @@ export class AttendanceEmployeeComponent implements OnInit {
     // })
   }
   filterEmployee(addForm) {
+    console.log(addForm);
     this.departmentDrp = addForm.value.designation;
     this.getEmployees();
+  }
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.addForm.value?.date.value;
+    ctrlValue.year(normalizedYear.year());
+    this.addForm.value?.date.setValue(ctrlValue);
+  }
+
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue =this.addForm.value?.date.value;
+    ctrlValue.month(normalizedMonth.month());
+    this.addForm.value?.date.setValue(ctrlValue);
+    datepicker.close();
   }
   
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {

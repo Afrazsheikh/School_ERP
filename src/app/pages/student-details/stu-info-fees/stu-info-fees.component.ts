@@ -20,7 +20,7 @@ export class StuInfoFeesComponent {
   categoryList: any[] =[];
   feeModeList:any[] =[];
   transportList:any[] = [];
-  row = {"isExpand": false , 'mode':''}
+  row = {"isExpand": false , 'mode':'', isVisibleSaveBtn: true}
   rows: FormArray;
   invoceRow: FormArray;
   paymentMethod:any[] = [];
@@ -83,12 +83,14 @@ export class StuInfoFeesComponent {
   data?.feeConcessionData?.allMode.forEach(element => {
       this.onAddInvoiceRow(element);
   });
-  this.addForm.controls['totalFinalAmount'].disable();
-  this.addForm.controls['feeMode'].disable();
+  //this.addForm.controls['totalFinalAmount'].disable();
+  //this.addForm.controls['feeMode'].disable();
   this.addForm.updateValueAndValidity();
+  this.row.isVisibleSaveBtn = true;
   this.row.isExpand = true;
  }
  getExistingFee(){
+  this.row.isVisibleSaveBtn = true;
   this.addForm.patchValue({
     id :this.studentFee?._id,
     feeMode:this.studentFee?.feemode,
@@ -105,6 +107,9 @@ export class StuInfoFeesComponent {
   this.studentFee.allMode.forEach(element => {
       this.onAddInvoiceRow(element);
   });
+  if(this.studentFee?.isEditableCategory){
+    this.row.isVisibleSaveBtn = this.studentFee?.isEditableCategory;
+  }
   this.row.isExpand = true;
  }
  
@@ -143,6 +148,7 @@ updateInvoice(data, index){
       status:'Paid'
     })
     controlData.controls[index].get('paymentMethod').disable();
+    this.row.isVisibleSaveBtn = false;
     this.addForm.updateValueAndValidity();
   },
     (err) => {
@@ -172,7 +178,7 @@ updateInvoice(data, index){
         this.onAddRow(element, false);
       });    
     }); //forkJOIN closing tag
-
+    this.row.isVisibleSaveBtn = true;
   
   }
  calculatePerc(i){
@@ -184,6 +190,7 @@ updateInvoice(data, index){
   obje.patchValue({
     totalAmount: totalA
   })
+  this.calculateAmount();
   
 }
 onCheckChange(e, i){
@@ -212,8 +219,13 @@ calculateAmount(){
     }
     payNowClick(formData){
       this.spinner.show();
+      var feeProcessData:any[] = []
       formData.value.rows.forEach(element =>{
         element['type']='';
+        if(element.categoryName !== "") {
+          feeProcessData.push(element);
+        }
+        
       })
     this.row.isExpand = true;
     this.row.mode = this.addForm.feeMode;
@@ -223,7 +235,8 @@ calculateAmount(){
       "academicYear":formData.value.academicYear,
       "studentClass":formData.value.studentClass,
       "totalFinalAmount":(formData.value.totalFinalAmount).toString(),
-      "allFee": formData.value.rows
+      "allFee": feeProcessData, // formData.value.rows,
+      "isEditableCategory":true   
     }
     this.api.studenWiseFeeCategoryStore(payload).subscribe(data =>{     
         this.studentFee  = data['feeConcessionData'];
@@ -264,6 +277,7 @@ calculateAmount(){
           code:  [data?.code],
           amount:  [data?.amount],
           concession: [{value:data?.concession, disabled:true}],
+          hike:[{value:data?.hike, disabled:true}],
           totalAmount: [{value:data?.totalAmount,disabled:true}],
           isChecked: [{value:data?.isChecked, disabled:true}],
           type:[data?.type],
@@ -276,6 +290,7 @@ calculateAmount(){
         code:  [data?.code],
         amount:  [data?.amount],
         concession: [''],
+        hike:[{value:"", disabled:true}],
         totalAmount: [data?.amount],
         isChecked: [false],
         type:[data?.type],

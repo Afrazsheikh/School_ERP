@@ -38,6 +38,17 @@
                 <div class="mb-3 col-md-3">
                     <label class="form-label">Date <span class="error">*</span></label>
                     <div class="input-group">
+
+                        <input matInput [matDatepicker]="dp" placeholder="Month and Year" formControlName="date"  class="form-control me-3">
+                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                        <div class="mr-2 tooglePicker"><mat-datepicker #dp
+                                        startView="multi-year"
+                                        (yearSelected)="chosenYearHandler($event)"
+                                        (monthSelected)="chosenMonthHandler($event, dp)"
+                                        panelClass="example-month-picker">
+                        </mat-datepicker></div>
+
+                            <!--
                         <input matInput [matDatepicker]="picker" formControlName="date" [max]="today"
                             class="form-control me-3">
                         <div class="mr-2 tooglePicker">
@@ -45,7 +56,7 @@
                         </div>
                         <mat-datepicker #picker startView="multi-year" (monthSelected)="setMonthAndYear($event, picker)"
                             panelClass="example-month-picker">
-                        </mat-datepicker>
+                        </mat-datepicker> -->
                     </div>
                     <div *ngIf="addForm.controls['date'].invalid && (addForm.controls['date'].dirty || addForm.controls['date'].touched)"
                         class="error mt-2">
@@ -91,7 +102,7 @@
                                             <th width="80">Day</th>
                                             <th width="80">Date</th>
                                             <th width="400">Status</th>
-                                            <th>Remarks</th>
+                                            <!--<th>Remarks</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -112,9 +123,9 @@
                                                         <option value="HD">Half Day</option>
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" [formControl]="row.get('remark')"
+                                                <!--<td><input class="form-control" [formControl]="row.get('remark')"
                                                         name="Remarks" type="text" placeholder="Remarks" value="">
-                                                </td>
+                                                </td> -->
                                             </ng-container>
                                         </tr>
                                     </tbody>
@@ -129,7 +140,7 @@
                                             <th width="80">Day</th>
                                             <th width="80">Date</th>
                                             <th width="400">Status</th>
-                                            <th>Remarks</th>
+                                            <!--<th>Remarks</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -150,9 +161,9 @@
                                                         <option value="HD">Half Day</option>
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" [formControl]="row.get('remark')"
+                                              <!-- <td><input class="form-control" [formControl]="row.get('remark')"
                                                         name="Remarks" type="text" placeholder="Remarks" value="">
-                                                </td>
+                                                </td>--> 
                                             </ng-container>
                                         </tr>
                                     </tbody>
