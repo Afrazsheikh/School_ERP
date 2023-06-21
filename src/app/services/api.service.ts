@@ -883,6 +883,16 @@ export class ApiService {
       .post(environment.apiBaseUrl + '/marks/student', postData)
       .pipe(catchError(this.errorHandler));
   }
+  getMarksByAcademicAndStudent(postData: any) {
+    return this.httpClient
+      .put(environment.apiBaseUrl + '/marks/students', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  getMarksByAcademicPagWise(postData: any, pageNo: any) {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/marks/student/page/'+ pageNo, postData)
+      .pipe(catchError(this.errorHandler));
+  }
   uploadCSV(postData: any): Observable<any> {
     return this.httpClient
       .post(environment.apiBaseUrl + '/student/uploadcsv', postData)

@@ -52,7 +52,7 @@ export class MarkEntryComponent {
 
 
   ngOnInit(): void {
-    this.getAllMarks();
+   // this.getAllMarks();
     this.getAllExam();
     this.getAllClass();
     this.getAllSection();
@@ -61,31 +61,26 @@ export class MarkEntryComponent {
   }
   createForm() {
     this.addForm = this.fb.group({
-      examId: [''],
+      examId: ['',Validators.required],
       classId: ['',Validators.required],
       academicYear: ['', Validators.required],
       section: ['', Validators.required],
-      subject: ['']
+      subject: ['',Validators.required]
     });
   }
   onAddRow(data) {
     this.rows.push(this.createItemFormGroup(data));
   }
-  createItemFormGroup(data): FormGroup {
-    console.log(data);
+  createItemFormGroup(data) {
     return this.fb.group({
-      marksId: [data?.marksId],
-      subject: [data?.subject],
+      id: [data?.id],
       practical: [data?.practical],
       written: [data?.written],
-      academicYear: [data?.academicYear],
-      studentClass: [data?.studentClass],
-      section: [data?.section],
       firstName: [data?.firstName],
       lastName: [data?.lastName],
-      caste: [data?.caste],
       registerNo: [data?.registerNo],
-      isAbsent: [data?.isAbsent]
+      isAbsent: [data?.isAbsent],
+      studentId:[data?.studentId]
     });
   }
   removeGroup() {
@@ -118,48 +113,54 @@ export class MarkEntryComponent {
       academicYear: addForm.value.academicYear,
       section: addForm.value.section,
       studentClass: addForm.value.classId,
+      exam:addForm.value.examId,
+      subject:addForm.value.subject,
     }
+    this.pageNo =this.pagingConfig.currentPage;
     this.spinner.show();
-    this.api.studentList(data).subscribe(data => {
+    this.api.getMarksByAcademicPagWise(data, this.pageNo-1).subscribe(data => {
       this.spinner.hide();
-      this.filteredMarks = data['students'];
+      this.filteredMarks = data['studentMarks'];
+      this.pagingConfig.totalItems = data['totalCount'];
       if(this.filteredMarks.length>0)
       {
+        this.rows.clear();
+        var studentMarks: any;
         this.filteredMarks.forEach(element => {
-          var studentMarks: any;
+         
           studentMarks = {
-            marksId: [0],
-            subject: [this.addForm.value?.subject],
-            practical: [0],
-            written: [0],
-            academicYear: [this.addForm.value?.academicYear],
-            studentClass: [this.addForm.value?.classId],
-            section: [this.addForm.value?.section],
-            firstName: [element?.firstName],
-            lastName: [element?.lastName],
-            caste: [element?.caste],
-            registerNo: [element?.registerNo],
-            isAbsent: [false]
+          //  marksId: 0,
+            id: element?._id,
+         //   subject: element?.subject?._id,
+            practical: element?.practical,
+            written: element?.written,
+         //   academicYear: this.addForm.value?.academicYear,
+         //   studentClass: this.addForm.value?.classId,
+         //   section: this.addForm.value?.section,
+            firstName: element?.student,
+            lastName: element?.lastName,
+            studentId: element?.student,
+            registerNo: element?.registerNo,
+            isAbsent: element?.isAbsent
           };
           this.onAddRow(studentMarks);
           this.addForm.updateValueAndValidity();
         });
-        this.studentService.studentDetailBackAction.isBack = false;
        this.isShowMarkEntiries=true;
       }
 
     },
       (err) => {
         this.spinner.hide();
-        this.filteredMarks.forEach(element => {
+       /* this.filteredMarks.forEach(element => {
           this.onAddRow(element);
         });
         this.addForm.updateValueAndValidity();
-        this.addForm.updateValueAndValidity();
+        this.addForm.updateValueAndValidity(); */
         this.toastr.error(err);
       })
   }
-
+/*
   getAllMarks() {
     this.api.getMarksAll().subscribe(resp => {
       this.spinner.hide(); 
@@ -167,7 +168,7 @@ export class MarkEntryComponent {
       this.filteredMarks = resp.marks;
       //this.patchStudent();
     });
-  }
+  } 
 
   patchStudent() {
     this.api.getAllStudents().subscribe(resp => {
@@ -177,7 +178,7 @@ export class MarkEntryComponent {
         mark['isLoading'] = false;
       });
     });
-  }
+  }*/
 
   getAllExam() {
     console.log("this");
@@ -209,24 +210,32 @@ export class MarkEntryComponent {
   }
 
   updateMarks(marks) {
+    console.log(marks.value);
+
+    var payload:any[] = [];
+    marks.value.rows.forEach(element => {
+      payload.push({"id": element?.id,"student":element?.studentId, "isAbsent":element?.isAbsent,
+       "practical":element?.practical, "written":element?.written});
+    });
     this.isLoading = true;
-    const postData = marks;
+    const finalPostData = {
+      studentMarks: payload
+    };
     console.log(marks);
-    this.api.updateMarks(postData).subscribe(resp => {
+    this.api.getMarksByAcademicAndStudent(finalPostData).subscribe(resp => {
       this.isLoading = false;
-      this.getAllMarks();
-      this.toastr.success(resp.message, "Marks update success");
+      this.clickFilter(this.addForm);
+      this.toastr.success(resp['message'], "Marks updated Successfully");
     },
       (err) => {
         this.isLoading = false;
-        postData['isLoading'] = false;
         this.toastr.error(err, "Marks update failed");
         console.error(err);
-      })
+      }) 
   }
   pageChanged(event: any): void {
     this.pagingConfig.currentPage  = event;
-    this.getAllMarks();
+    this.clickFilter(this.addForm);
    }
 
 }

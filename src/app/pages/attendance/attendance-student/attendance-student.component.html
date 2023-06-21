@@ -57,30 +57,24 @@
     <table class="table mt-3">
       <thead>
         <tr>
-          <th scope="col">Photo</th>
-            <th scope="col" style="width:120px;">Name / DOB</th>
-            <th scope="col">Class</th>
+          <th scope="col">#</th>
+          <th scope="col">Date</th>
+            <th scope="col" >Name</th>
             <th scope="col">Register No</th>
-            <th scope="col">Roll No</th>
-            <th scope="col">Guardian Name</th>
-            <th scope="col">Fees Pregress</th>
+            <th scope="col">Status</th>
         </tr>
       </thead>
       <tbody>
         <ng-container *ngFor="let student of studentData; let i = index">
           <tr>
-          <td>  <img class="image" [src]="student?.image? student.image: 'assets/images/no-profile.jpg'"
-            alt=""></td>
-          <td>{{student.firstName + " " + student.lastName}} {{student.dob | date :"MM/dd/yyyy"}}</td>         
-          <td>{{student.class}} ({{student.section}})</td>
-          <td>{{student.registerNo}}</td>
-          <td>{{student.rollNo}}</td>
-          <td>{{student.guardian?.firstName}}</td>
-          <td><div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                <span>0%</span>
-            </div>
-          </div></td>
+          <td> {{i+1}}</td>
+          <td>{{student?.date}}</td>
+          <td>{{student?._id?.firstName + " " + student?._id?.lastName}}</td>         
+          <td>{{student?._id?.registerNo}}</td>
+          <td>
+            <span class="badge badge-danger" *ngIf="(student?.type).toLowerCase() !== 'fullday'" style="text-transform: uppercase;">{{student?.type}}</span>
+            <span class="badge badge-success" *ngIf="(student?.type).toLowerCase() === 'fullday'" style="text-transform: uppercase;">{{student?.type}}</span>
+         
         </tr>
         </ng-container>
       </tbody>

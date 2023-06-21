@@ -61,8 +61,7 @@ export class AttendanceStudentComponent {
     this.spinner.show();
     this.api.getStudentAttendanceData(data).subscribe(data => {
       this.spinner.hide();
-      this.studentData = data['students'];
-      this.studentService.studentDetailBackAction.isBack = false;
+      this.studentData = data['data'];
     },
     (err) =>{
       this.spinner.hide();
