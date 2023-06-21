@@ -11,8 +11,8 @@
 
         <div class="row mt-5 mb-3">
 
-          <div class="col-4">
-            <label class="form-label">Exam *</label>
+          <div class="col-3">
+            <label class="form-label">Exam <span class="error">*</span></label>
             <select class="form-select" formControlName="examId">
               <option disabled value="select">Select</option>
               <option *ngFor="let exam of exams" [value]="exam._id">
@@ -28,8 +28,8 @@
             </div>
           </div>
 
-          <div class="col-4">
-            <label class="form-label">Class *</label>
+          <div class="col-3">
+            <label class="form-label">Class <span class="error">*</span></label>
             <select class="form-select" formControlName="classId" (change)="onChangeClass($event)">
               <option disabled value="select">Select</option>
               <option *ngFor="let sec of classes" [value]="sec._id">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}})
@@ -44,8 +44,8 @@
             </div>
           </div>
 
-          <div class="col-4">
-            <label class="form-label">Academic Year *</label>
+          <div class="col-2">
+            <label class="form-label">Academic Year <span class="error">*</span></label>
             <select class="form-select" formControlName="academicYear">
               <option disabled value="select">Select</option>
               <option *ngFor="let class of academics" [value]="class._id">
@@ -60,13 +60,8 @@
               </div>
             </div>
           </div>
-
-        </div>
-
-        <div class="row mb-3">
-
-          <div class="col-4">
-            <label class="form-label">Subject *</label>
+          <div class="col-3">
+            <label class="form-label">Subject <span class="error">*</span></label>
             <select class="form-select" formControlName="subject">
               <option disabled value="select">Select</option>
               <option *ngFor="let class of subjects" [value]="class._id">
@@ -81,11 +76,9 @@
               </div>
             </div>
           </div>
-
-          <div class="col-4" style="margin-top: 29px;">
+          <div class="col-1" style="margin-top: 29px;">
             <button class="btn" (click)="clickFilter(addForm)">Filter </button>
           </div>
-
         </div>
       </div>
 
