@@ -87,7 +87,7 @@ export class AttendanceEmployeeComponent implements OnInit {
   }
   getAllEmployees() {
     this.api.getDesignationById(this.departmentDrp).subscribe(resp => {
-      this.employeesList.push(resp.employees);
+      this.employeesList = resp.employees;
     }, (err) => {
       this.toastr.error(err);
     })

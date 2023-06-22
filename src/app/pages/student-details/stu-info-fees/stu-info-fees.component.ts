@@ -20,7 +20,7 @@ export class StuInfoFeesComponent {
   categoryList: any[] =[];
   feeModeList:any[] =[];
   transportList:any[] = [];
-  row = {"isExpand": false , 'mode':'', isVisibleSaveBtn: true}
+  row = {"isExpand": false , 'mode':'', isVisibleSaveBtn: true, isTransportSet: false}
   rows: FormArray;
   invoceRow: FormArray;
   paymentMethod:any[] = [];
@@ -77,6 +77,9 @@ export class StuInfoFeesComponent {
   const controlData = this.addForm.get('rows') as FormArray;
   controlData.clear();
 
+  const controlInvoice = this.addForm.get('invoceRow') as FormArray;
+  controlInvoice.clear();
+
   data?.feeConcessionData?.allFee.forEach(element =>{
     this.onAddRow(element, true);
   });
@@ -90,9 +93,7 @@ export class StuInfoFeesComponent {
   this.row.isExpand = true;
  }
  getExistingFee(){
-  if(this.studentFee?.isEditableCategory){
-    this.row.isVisibleSaveBtn = this.studentFee?.isEditableCategory;
-  }
+ 
   this.addForm.patchValue({
     id :this.studentFee?._id,
     feeMode:this.studentFee?.feemode,
@@ -100,19 +101,43 @@ export class StuInfoFeesComponent {
     studentClass:this.studentFee?.studentClass,
     totalFinalAmount:this.studentFee?.totalFinalAmount
   });
-  this.addForm.controls['totalFinalAmount'].disable();
-  this.addForm.controls['feeMode'].disable();
+
+
   this.addForm.updateValueAndValidity();
   this.studentFee.allFee.forEach(element =>{
-    this.onAddRow(element, true);
+   if(!this.api.isEmptyObject(element?.categoryName)) {
+    if((element?.code).indexOf('TRANS') == 0) {
+      element['type'] = '$$KM@@';
+      this.row.isTransportSet = true;
+    } else {
+      element['type']='';
+    };
+    if(this.studentFee?.isEditableCategory){
+
+      this.onAddRow(element, false);
+      
+    } else {
+      this.onAddRow(element, true);
+    }
+   }
   });
+  if(this.studentFee?.isEditableCategory){
+    this.row.isVisibleSaveBtn = this.studentFee?.isEditableCategory;
+    if(!this.row.isTransportSet) {
+      this.getTransporation();
+      this.onAddRow({id: '', categoryName:"", code: '', amount: 0, type:'$$KM@@'}, false);
+    }
+   
+  } else {
+    this.addForm.controls['totalFinalAmount'].disable();
+     this.addForm.controls['feeMode'].disable();
+  }
   this.studentFee.allMode.forEach(element => {
       this.onAddInvoiceRow(element);
       if(element?.status === 'Paid') {
         this.row.isVisibleSaveBtn = false;
       }
   });
-  
   this.row.isExpand = true;
  }
  
@@ -128,9 +153,16 @@ export class StuInfoFeesComponent {
       date:  [data?.date],
       status: [data?.status],
       amount: [data?.amount],
-      paymentMethod: [{value:data?.paymentMode, disabled:((data?.status).toLowerCase() === 'paid'? true: false)}, Validators.required],
+      paymentMethod: [{value:data?.paymentMode, disabled:((data?.status).toLowerCase() === 'paid'? true: false)}],
       paymentBy: ['']
     });
+}
+checkF(value){
+  if(!this.api.isEmptyObject(value)) {
+    return false;
+  } else {
+    return true;
+  }
 }
 invoiceModelPopup(template: TemplateRef<any>, data: any, index){
   this.invoiceRowSingleData =data;
@@ -295,7 +327,7 @@ calculateAmount(){
         concession: [''],
         hike:[{value:"", disabled:true}],
         totalAmount: [data?.amount],
-        isChecked: [false],
+        isChecked: [data?.isChecked],
         type:[data?.type],
         transporationId:['']
       });

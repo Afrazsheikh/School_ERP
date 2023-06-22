@@ -21,7 +21,7 @@ export class SalaryAssignComponent implements OnInit {
   {}
 
   ngOnInit(): void {
-    this.getAllEmployees();
+   // this.getAllEmployees();
     this.getDesignations()
 
   }
@@ -41,13 +41,17 @@ export class SalaryAssignComponent implements OnInit {
 
       this.employees = resp.employees;
       this.filteredEmployees = resp.employees;
-      this.getAllSalaries();
+    //  this.getAllSalaries();
     });
   }
 
-  getFilteredEmployees()
+  getFilteredEmployees(event)
   {
-    this.filteredEmployees = this.employees.filter(emp => emp.designation?._id === this.designFilter);
+    this.api.getDesignationById(event.target.value).subscribe(resp => {
+     this.employees = resp.employees;
+      this.filteredEmployees = resp.employees;
+      this.getAllSalaries();
+    });
   }
 
   getAllSalaries()

@@ -137,10 +137,10 @@ export class MarkEntryComponent {
          //   academicYear: this.addForm.value?.academicYear,
          //   studentClass: this.addForm.value?.classId,
          //   section: this.addForm.value?.section,
-            firstName: element?.student,
-            lastName: element?.lastName,
-            studentId: element?.student,
-            registerNo: element?.registerNo,
+            firstName: element?.student?.firstName,
+            lastName: element?.student?.lastName,
+            studentId: element?.student?._id,
+            registerNo: element?.student?.registerNo,
             isAbsent: element?.isAbsent
           };
           this.onAddRow(studentMarks);
