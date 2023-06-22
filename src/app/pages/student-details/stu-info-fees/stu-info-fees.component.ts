@@ -81,13 +81,31 @@ export class StuInfoFeesComponent {
   controlInvoice.clear();
 
   data?.feeConcessionData?.allFee.forEach(element =>{
-    this.onAddRow(element, true);
+
+    if(!this.api.isEmptyObject(element?.categoryName)) {
+      if((element?.code).indexOf('TRANS') == 0) {
+        element['type'] = '$$KM@@';
+        this.row.isTransportSet = true;
+      } else {
+        element['type']='';
+      };
+      if(data?.feeConcessionData?.isEditableCategory){
+  
+        this.onAddRow(element, false);
+        
+      } else {
+        this.onAddRow(element, true);
+      }
+     }
+
   });
   data?.feeConcessionData?.allMode.forEach(element => {
       this.onAddInvoiceRow(element);
   });
-  //this.addForm.controls['totalFinalAmount'].disable();
-  //this.addForm.controls['feeMode'].disable();
+  if(!data?.feeConcessionData?.isEditableCategory) {
+    this.addForm.controls['totalFinalAmount'].disable();
+    this.addForm.controls['feeMode'].disable();
+  }
   this.addForm.updateValueAndValidity();
   this.row.isVisibleSaveBtn = true;
   this.row.isExpand = true;
@@ -256,6 +274,7 @@ calculateAmount(){
       this.spinner.show();
       var feeProcessData:any[] = []
       formData.value.rows.forEach(element =>{
+        console.log(element);
         element['type']='';
         if(element.categoryName !== "") {
           feeProcessData.push(element);
@@ -312,7 +331,7 @@ calculateAmount(){
           code:  [data?.code],
           amount:  [data?.amount],
           concession: [{value:data?.concession, disabled:true}],
-          hike:[{value:data?.hike, disabled:true}],
+          hike:[data?.hike],
           totalAmount: [{value:data?.totalAmount,disabled:true}],
           isChecked: [{value:data?.isChecked, disabled:true}],
           type:[data?.type],
@@ -325,7 +344,7 @@ calculateAmount(){
         code:  [data?.code],
         amount:  [data?.amount],
         concession: [''],
-        hike:[{value:"", disabled:true}],
+        hike:[""],
         totalAmount: [data?.amount],
         isChecked: [data?.isChecked],
         type:[data?.type],

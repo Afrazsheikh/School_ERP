@@ -39,7 +39,7 @@
 
   <div class="row mt-2 mb-3">
 
-    <div class="col-4">
+    <div class="col-3">
       <label class="form-label">Class <span class="error">*</span></label>
       <select class="form-select" formControlName="studentClass">
         <option disabled value="select">Select</option>
@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    <div class="col-4">
+    <div class="col-3">
       <label class="form-label">Year <span class="error">*</span></label>
       <select class="form-select" formControlName="academicYear">
         <option disabled value="select">Select</option>
@@ -72,7 +72,7 @@
       </div>
     </div>
 
-    <div class="col-4">
+    <div class="col-3">
       <label class="form-label">Category <span class="error">*</span></label>
       <select class="form-select" formControlName="category">
         <option disabled value="select">Select</option>
@@ -88,27 +88,7 @@
         </div>
       </div>
     </div>
-
-  </div>
-
-  <div class="row mt-3 mb-3">
-
-  
-
-    <div class="col-4">
-      <label class="form-label">Roll No <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="rollNo" />
-      <div
-        *ngIf="studentForm.controls['rollNo'].invalid && (studentForm.controls['rollNo'].dirty || studentForm.controls['rollNo'].touched)"
-        class="error mt-2">
-        <div *ngIf="studentForm.controls['rollNo'].errors['required']">
-          RollNo No is required.
-        </div>
-      </div>
-    </div>
-
-
-    <div class="col-4">
+    <div class="col-3">
       <label class="form-label">Type</label>
       <select class="form-select" formControlName="type">
         <option disabled value="select">Select</option>
@@ -124,7 +104,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="row">
