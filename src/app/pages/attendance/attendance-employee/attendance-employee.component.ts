@@ -7,13 +7,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../services/api.service';
 import { default as _rollupMoment, Moment } from 'moment';
+import { DatePipe } from '@angular/common';
 const moment = _rollupMoment ;
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'DD/MM/YYYY',
   },
   display: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'DD/MM/YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -46,7 +47,7 @@ export class AttendanceEmployeeComponent implements OnInit {
 
   constructor(private api: ApiService,
     public fb: FormBuilder,
-    private toastr: ToastrService,
+    private toastr: ToastrService,private datepipe: DatePipe,
     private spinner: NgxSpinnerService) {
     this.today.setDate(this.today.getDate() - 1);
     this.createForm();
@@ -59,19 +60,17 @@ export class AttendanceEmployeeComponent implements OnInit {
   createForm() {
     this.addForm = this.fb.group({
       designation: ['', Validators.required],
-      employee:['', Validators.required],
-      date: [moment(),Validators.required],
+      date: ['',Validators.required],
     });
   }
   onAddRow(data) {
     this.rows.push(this.createItemFormGroup(data));
   }
   createItemFormGroup(data): FormGroup {
-    console.log(data);
     return this.fb.group({
-      _id: [data?._id],
+      id: [data?.id],
       status: [data?.status],
-      date: [data?.date],
+      name: [data?.name],
       remark: [data?.remark],
     });
   }
@@ -85,95 +84,63 @@ export class AttendanceEmployeeComponent implements OnInit {
       this.designations = resp.designations;
     });
   }
-  getAllEmployees() {
-    this.api.getDesignationById(this.departmentDrp).subscribe(resp => {
-      this.employeesList = resp.employees;
-    }, (err) => {
-      this.toastr.error(err);
-    })
-  }
-  designationChange(event) {
-    if(event)
-    {
-      this.departmentDrp=event.target.value;
-      this.getAllEmployees();
-    }
-    
-  }
-  getEmployees() {
-    this.removeGroup();
-    //this.spinner.show();
-    var employeeobj: any;
-    for (var i = 1; i <= 31; i++) {
-      var date = i + "/" + this.today.getMonth() + "/" + this.today.getFullYear();
-
-      employeeobj = {
-        _id: [i],
-        status: [''],
-        remark: [''],
-        date: [date],
-      };
-      this.onAddRow(employeeobj);
-
-    }
-
-
-    // this.api.getEmployeesByPageNo(this.pageNo - 1, this.departmentDrp).subscribe(resp => {
-    //   this.spinner.hide();
-    //   // this.employees = resp.employees;
-
-    //   // this.employees.forEach(element => {
-    //   //   var employeeobj: any;
-    //   //     employeeobj = {
-    //   //     _id: [element?._id],
-    //   //     image: [element?.image],
-    //   //     name: [element?.name],
-    //   //     status: [element?.status],
-    //   //     remark: [element?.remark],
-    //   //   };
-    //    //this.onAddRow(employeeobj);
-    //   //   this.addForm.updateValueAndValidity();
-    //   // });
-
-    //   this.pagingConfig.totalItems = resp['totalCount'];
-    // }, (err) => {
-    //   this.spinner.hide();
-    //   this.employees = [];
-    //   this.toastr.error(err);
-    // })
-  }
-  filterEmployee(addForm) {
-    console.log(addForm);
-    this.departmentDrp = addForm.value.designation;
-    this.getEmployees();
-  }
-  chosenYearHandler(normalizedYear: Moment) {
-    const ctrlValue = this.addForm.value?.date.value;
-    ctrlValue.year(normalizedYear.year());
-    this.addForm.value?.date.setValue(ctrlValue);
-  }
-
-  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue =this.addForm.value?.date.value;
-    ctrlValue.month(normalizedMonth.month());
-    this.addForm.value?.date.setValue(ctrlValue);
-    datepicker.close();
-  }
   
-  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.addForm.value?.date;
-    ctrlValue.month(normalizedMonthAndYear.month());
-    ctrlValue.year(normalizedMonthAndYear.year());
-    this.addForm.controls['date'].setValue(ctrlValue);
-    datepicker.close();
+  filterEmployee(addForm) {
+    this.departmentDrp = addForm.value.designation;
+    const postData ={
+      designation : addForm.value.designation,
+      date: this.datepipe.transform(addForm.value.date, 'MM/dd/yyyy')  
+    };
+    this.api.getEmployeeAttendance(postData).subscribe(resp => {
+      this.employeesList = resp[0]?.data;
+       if(!this.api.isEmptyObject(this.employeesList)) {
+        var employeeobj: any;
+        this.removeGroup();
+        this.employeesList.forEach(element =>{
+          employeeobj = {
+            id: element?.id,
+            status: element?.type,
+            remark: '',
+            name: element?.name,
+          };
+        this.onAddRow(employeeobj);
+        })
+      }
+    },
+      (err) => {
+        this.removeGroup();
+         console.error(err);
+      })
+   
   }
   statusChange(event) {
     this.rows.controls.forEach(element => {
       element.get('status').setValue(event.target.value);
     });
   }
+  clearData(){
+    this.removeGroup();
+    this.filterEmployee(this.addForm);
+  }
   saveEmployeeAttendance() {
-    console.log(this.addForm.value);
-    ;
+    var emplList:any[] = []; 
+    if(!this.api.isEmptyObject(this.addForm.value.rows)) {
+      this.addForm.value.rows.forEach(element => {
+          emplList.push({'employee': element?.id, "type": element?.status});
+      });
+    }
+    const postData = {
+      "designation":this.addForm.value.designation,
+      "date":this.datepipe.transform(this.addForm.value.date, 'MM/dd/yyyy') ,
+      "employee" : emplList
+      }
+      this.api.updateEmployeeAttendance(postData).subscribe(resp => {
+        this.toastr.success(resp[0]?.msg, "Attendance Updated Successfully");
+        this.clearData();
+      },
+        (err) => {
+          this.toastr.error(err, " add failed");
+          console.error(err);
+        })
   }
 }

@@ -8,7 +8,7 @@
             <div class="row mt-3 grey-border cls-employee-designation">
                 <div class="mb-3 col-md-3">
                     <label class="form-label">Designation <span class="error">*</span></label>
-                    <select class="form-select" formControlName="designation" (change)="designationChange($event)">
+                    <select class="form-select" formControlName="designation" >
                         <option disabled value="select">Select</option>
                         <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}
                         </option>
@@ -21,42 +21,19 @@
                     </div>
                 </div>
 
-                <div class="mb-3 col-md-4">
-                    <label class="form-label">Employee <span class="error">*</span></label>
-                    <select class="form-select" formControlName="employee">
-                        <option disabled value="select">Select</option>
-                        <option *ngFor="let employee of employeesList" [value]="employee._id">{{employee.name}}</option>
-                    </select>
-                    <div *ngIf="addForm.controls['employee'].invalid && (addForm.controls['employee'].dirty || addForm.controls['employee'].touched)"
-                        class="error mt-2">
-                        <div *ngIf="addForm.controls['employee'].errors['required']">
-                            Employee is required.
-                        </div>
-                    </div>
-                </div>
 
                 <div class="mb-3 col-md-3">
                     <label class="form-label">Date <span class="error">*</span></label>
                     <div class="input-group">
 
-                        <input matInput [matDatepicker]="dp" placeholder="Month and Year" formControlName="date"  class="form-control me-3">
-                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                        <div class="mr-2 tooglePicker"><mat-datepicker #dp
-                                        startView="multi-year"
-                                        (yearSelected)="chosenYearHandler($event)"
-                                        (monthSelected)="chosenMonthHandler($event, dp)"
-                                        panelClass="example-month-picker">
-                        </mat-datepicker></div>
+                        <input matInput class="form-control me-3" [matDatepicker]="picker2" placeholder="dd-mm-yyyy"
+              formControlName="date"  />
+            <div class="mr-2 tooglePicker">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            </div>
+            <mat-datepicker #picker2></mat-datepicker>
 
-                            <!--
-                        <input matInput [matDatepicker]="picker" formControlName="date" [max]="today"
-                            class="form-control me-3">
-                        <div class="mr-2 tooglePicker">
-                            <mat-datepicker-toggle matIconSuffix [for]="picker" class="cls-btn"></mat-datepicker-toggle>
-                        </div>
-                        <mat-datepicker #picker startView="multi-year" (monthSelected)="setMonthAndYear($event, picker)"
-                            panelClass="example-month-picker">
-                        </mat-datepicker> -->
+                          
                     </div>
                     <div *ngIf="addForm.controls['date'].invalid && (addForm.controls['date'].dirty || addForm.controls['date'].touched)"
                         class="error mt-2">
@@ -81,95 +58,65 @@
                     <div class="row">
                         <div class="col-md-3 ms-auto">
                             <div class="form-group mb-3">
-                                <label class="control-label">Select For Everyone <span class="required">*</span></label>
+                                <label class="control-label">Select For Everyone</label>
                                 <select name="mark_all_everyone" class="form-control select2-hidden-accessible"
                                     (change)="statusChange($event)" data-plugin-selecttwo="" data-width="100%"
                                     data-minimum-results-for-search="Infinity" tabindex="-1" aria-hidden="true">
                                     <option value="" selected="selected">Not Selected</option>
-                                    <option value="P">Present</option>
-                                    <option value="A">Absent</option>
-                                    <option value="HD">Half Day</option>
+                                    <option value="Present">Present</option>
+                                    <option value="Absent">Absent</option>
+                                    <option value="Half Day">Half Day</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="table-responsive mb-sm mt-xs">
                                 <table class="table table-bordered table-hover table-condensed mb-none">
                                     <thead>
                                         <tr>
-                                            <th width="80">Day</th>
-                                            <th width="80">Date</th>
-                                            <th width="400">Status</th>
+                                            <th width="50%">Name</th>
+                                            <th >Status</th>
                                             <!--<th>Remarks</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr
                                             *ngFor="let row of addForm.get('rows')['controls']  index as i">
-                                            <ng-container *ngIf="i<=14">
-                                                <td>{{row.get('_id').value}}</td>
-                                                <td>{{row.get('date').value}}</td>
-                                                <td>
+                                           
+                                                <td style="text-transform: uppercase;">{{row.get('name').value }}</td>
+                                               <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" id="inlineCheckbox{{i}}" value="Present" name="status{{i}}" [formControl]="row.get('status')">
+                                                    <label class="form-check-label" for="inlineCheckbox{{i}}">Present</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" id="inlineCheckboxL{{i}}" value="Absent"  name="status{{i}}" [formControl]="row.get('status')">
+                                                    <label class="form-check-label" for="inlineCheckboxL{{i}}">Absent</label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" id="inlineCheckboxG{{i}}" value="Half Day" name="status{{i}}" [formControl]="row.get('status')">
+                                                    <label class="form-check-label" for="inlineCheckboxG{{i}}">Half Day</label>
+                                                  </div>
+                                               </td>
+                                                <!--<td>
                                                     <select name="mark_all_everyone" [formControl]="row.get('status')"
-                                                        class="form-control select2-hidden-accessible"
-                                                        onchange="selAtten_all(this.value)" data-plugin-selecttwo=""
-                                                        data-width="100%" data-minimum-results-for-search="Infinity"
-                                                        tabindex="-1" aria-hidden="true">
+                                                        class="form-control select2-hidden-accessible">
                                                         <option value="" selected="selected">Not Selected</option>
-                                                        <option value="P">Present</option>
-                                                        <option value="A">Absent</option>
-                                                        <option value="HD">Half Day</option>
+                                                        <option value="Present">Present</option>
+                                                        <option value="Absent">Absent</option>
+                                                        <option value="Half Day">Half Day</option>
                                                     </select>
-                                                </td>
-                                                <!--<td><input class="form-control" [formControl]="row.get('remark')"
-                                                        name="Remarks" type="text" placeholder="Remarks" value="">
                                                 </td> -->
-                                            </ng-container>
+
+                                        
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="table-responsive mb-sm mt-xs">
-                                <table class="table table-bordered table-hover table-condensed mb-none">
-                                    <thead>
-                                        <tr>
-                                            <th width="80">Day</th>
-                                            <th width="80">Date</th>
-                                            <th width="400">Status</th>
-                                            <!--<th>Remarks</th> -->
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr
-                                            *ngFor="let row of addForm.get('rows')['controls']  index as i">
-                                            <ng-container *ngIf="i>14">
-                                                <td>{{row.get('_id').value}}</td>
-                                                <td>{{row.get('date').value}}</td>
-                                                <td>
-                                                    <select name="mark_all_everyone" [formControl]="row.get('status')"
-                                                        class="form-control select2-hidden-accessible"
-                                                        onchange="selAtten_all(this.value)" data-plugin-selecttwo=""
-                                                        data-width="100%" data-minimum-results-for-search="Infinity"
-                                                        tabindex="-1" aria-hidden="true">
-                                                        <option value="" selected="selected">Not Selected</option>
-                                                        <option value="P">Present</option>
-                                                        <option value="A">Absent</option>
-                                                        <option value="HD">Half Day</option>
-                                                    </select>
-                                                </td>
-                                              <!-- <td><input class="form-control" [formControl]="row.get('remark')"
-                                                        name="Remarks" type="text" placeholder="Remarks" value="">
-                                                </td>--> 
-                                            </ng-container>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
