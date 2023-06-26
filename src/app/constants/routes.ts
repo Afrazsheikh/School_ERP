@@ -78,7 +78,7 @@ export enum routes {
   REP_STUD_FESSCONS_REP="/report/fees-cons",
   REP_STUD_CLASS_TEACH_REP="/report/class-teacher-list",
   REP_STUD_SUB_TEACH_REP="/report/sub-teacher-list",
-
+  REP_PRINCIPAL_REPORT = "/report/prinicipal-report",
   REP_STUD_ATTEN_REP="/report/student-attendence",
   PARENTAPP="/parent/parent_app",
   TEACHERAPP="/parent/teacher_app",

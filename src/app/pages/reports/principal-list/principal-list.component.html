@@ -1,0 +1,73 @@
+<app-layout>
+    <div class="container-fluid p-4">
+     
+        <div class="row mb-3">
+            <div class="col-md-12 header-txt">
+              <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Prinicpal  Report</span>
+            </div>
+          </div>
+        <div class="row mb-3">
+            <form [formGroup]="reportForm">
+                <div class="row mt-3 grey-border">
+                 <div class="mb-3 col-md-4">
+                    <label class="form-label">Date <span class="error">*</span></label>
+                    <div class="input-group ">
+                         <input matInput class="form-control height-40 me-3" [matDatepicker]="picker"
+                         placeholder="dd-mm-yyyy"  formControlName="startDate">
+                         <div class="mr-2 tooglePicker">  
+                          <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle >
+                          </div>
+                    <mat-datepicker #picker></mat-datepicker>
+                       </div>
+                       <div *ngIf="reportForm.controls['startDate'].invalid && (reportForm.controls['startDate'].dirty || reportForm.controls['startDate'].touched)"
+                    class="error mt-2">
+                    <div *ngIf="reportForm.controls['startDate'].errors['required']">
+                      Date is required.
+                    </div></div>
+                  </div>
+                    
+              <div class="col-md-3 mt-4">
+                <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+              </div>
+              <div class="col-md-5 text-end mt-4">
+                <button class="btn mt-2" (click)="addReportData()" >Add</button>
+              </div>
+                </div>             
+            </form>  
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <table class="table-blue">
+                    <tr>
+                        <td class="lable" width="35%"><b>Date:27/03/2023</b></td><td><b>Day: Monday</b></td>
+                    </tr>
+                    <tr>
+                        <td class="lable">No. of Student Present</td><td> 547</td>
+                    </tr>
+                    <tr>
+                        <td class="lable">No. of Teacher Present</td><td> 40</td>
+                    </tr>
+                    <tr>
+                        <td class="lable">No. of Rounds Taken</td><td> 2 </td>
+                    </tr>
+                    <tr>
+                        <td class="lable">No. of Classes Observed by Principal</td><td> 19 </td>
+                    </tr>
+                    <tr>
+                        <td class="lable">No. of Classes Observed by</td> <td> 92 </td>
+                    </tr>
+                    <tr>
+                        <td class="lable">Particiapted in any Competition (Dist/State/National lavel)</td><td> Nil </td>
+                    </tr>
+                    <tr>
+                        <td class="lable">Won in any Competition(Dist/State/National lavel)</td><td> Nil </td>
+                    </tr>
+                   <tr>
+                        <td class="lable">Any Event Conducted Today</td><td> Special Assembly was conducted by Primary Students as part of Science Week. kids performed dance and skits demostrating science concepts. Certificates to the winners in Best out of Waste competition were issed </td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</app-layout>

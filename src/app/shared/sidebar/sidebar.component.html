@@ -407,7 +407,7 @@ Exam
       </mat-list-item>
     </div>
   </mat-expansion-panel>
-
+<!--
   <mat-expansion-panel
     hideToggle="true"
     [expanded]="currentUrl.includes('/report') ? true : false"
@@ -417,7 +417,7 @@ Exam
         <mat-icon matListItemIcon>photo_alum</mat-icon>Reports
       </mat-list-item>
     </mat-expansion-panel-header>
-    <!--Sub Menu-->
+    
     <div class="sub-menu-cont">
       <mat-list-item
         class="sub-menu"
@@ -477,7 +477,7 @@ Exam
       </mat-list-item>
     </div>
   </mat-expansion-panel>
-
+-->
   <mat-expansion-panel
     hideToggle="true"
     [expanded]="currentUrl.includes('/homework') ? true : false"
@@ -751,7 +751,50 @@ Exam
     </div>
   </mat-expansion-panel>
 
-  <mat-list-item routerLink="{{ routes.CAREERS }}" routerLinkActive="active">
-    <mat-icon matListItemIcon>library_books</mat-icon> Reports
-  </mat-list-item>
+
+
+  <mat-expansion-panel
+  hideToggle="true"
+  [expanded]="currentUrl.includes('/report') ? true : false"
+>
+    <mat-expansion-panel-header>
+      <mat-list-item
+        [ngClass]="currentUrl.includes('/report') ? 'active' : ''"
+      >
+        <mat-icon matListItemIcon>library_books</mat-icon> Reports
+      </mat-list-item>
+    </mat-expansion-panel-header>
+    <div class="sub-menu-cont">
+      <mat-list-item
+      class="sub-menu"
+      [routerLink]="routes.REP_STUD_ST_REP"
+      routerLinkActive="sub-active"
+    >
+    Student Strength
+    </mat-list-item>
+    <mat-list-item
+    class="sub-menu"
+    [routerLink]="routes.REP_STUD_adm_REP"
+    routerLinkActive="sub-active"
+    >
+    Student Admission
+    </mat-list-item>
+    <mat-list-item
+    class="sub-menu"
+    [routerLink]="routes.REP_INACTIVE_ST_REP"
+    routerLinkActive="sub-active"
+    >
+    Student Status
+    </mat-list-item>
+    <mat-list-item
+    class="sub-menu"
+    [routerLink]="routes.REP_PRINCIPAL_REPORT"
+    routerLinkActive="sub-active"
+    >
+    Principal Report
+    </mat-list-item>
+    </div>
+  </mat-expansion-panel>
+
+
 </mat-list>

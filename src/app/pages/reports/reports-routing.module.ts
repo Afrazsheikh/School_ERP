@@ -6,7 +6,8 @@ import { FeesConsessionReportComponent } from './fees-consession-report/fees-con
 import { InactiveStudentReportComponent } from './inactive-student-report/inactive-student-report.component';
 import { StudentAttendanceComponent } from './student-attendance/student-attendance.component';
 import { StudentStrengthReportComponent } from './student-strength-report/student-strength-report.component';
-
+import { PrincipalListComponent } from './principal-list/principal-list.component';
+import { PrincipalListAddComponent } from './principal-list-add/principal-list-add.component';
 const routes: Routes = [
   {
 
@@ -38,9 +39,13 @@ const routes: Routes = [
   component:  ClassTeacherListComponent
 },
 {
-  path: 'student-attendence',
-  component:  StudentAttendanceComponent
+  path: 'prinicipal-report',
+  component:  PrincipalListComponent
 },
+{
+  path:'add-school-data',
+  component:PrincipalListAddComponent
+}
 ];
 
 @NgModule({

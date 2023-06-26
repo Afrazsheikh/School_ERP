@@ -1,0 +1,120 @@
+<app-layout>
+    <div class="container-fluid p-4">
+
+        <div class="row">
+            <div class="col-md-12 header-txt">
+              <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>School Information - Principal</span>
+            </div>
+          </div>
+          <form [formGroup]="studentForm">
+            <div class="row mt-3">
+                <div class="col-4">
+                    <label class="form-label">Date<span class="error">*</span></label>
+                    <div class="input-group">
+                      <input matInput class="form-control me-3" [matDatepicker]="picker2" placeholder="dd-mm-yyyy"
+                        formControlName="date" />
+                      <div class="mr-2 tooglePicker">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      </div>
+                      <mat-datepicker #picker2></mat-datepicker>
+                    </div>
+                    <div
+                      *ngIf="studentForm.controls['date'].invalid && (studentForm.controls['date'].dirty || studentForm.controls['date'].touched)"
+                      class="error mt-2">
+                      <div *ngIf="studentForm.controls['date'].errors['required']">
+                        Date is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2"></div>
+                  <div class="col-6">
+                    <label class="form-label">No. of Student Present <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="presentStudent" />
+                    <div
+                      *ngIf="studentForm.controls['presentStudent'].invalid && (studentForm.controls['presentStudent'].dirty || studentForm.controls['presentStudent'].touched)"
+                      class="error mt-2">
+                      <div *ngIf="studentForm.controls['presentStudent'].errors['required']">
+                        No. of Student Present is required.
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label class="form-label">No. of Teacher Present <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="presentTeacher" />
+                    <div
+                      *ngIf="studentForm.controls['presentTeacher'].invalid && (studentForm.controls['presentTeacher'].dirty || studentForm.controls['presentTeacher'].touched)"
+                      class="error mt-2">
+                      <div *ngIf="studentForm.controls['presentTeacher'].errors['required']">
+                        No. of Teacher Present is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">No. of Rounds Taken <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="noOfRound" />
+                    <div
+                      *ngIf="studentForm.controls['noOfRound'].invalid && (studentForm.controls['noOfRound'].dirty || studentForm.controls['noOfRound'].touched)"
+                      class="error mt-2">
+                      <div *ngIf="studentForm.controls['noOfRound'].errors['required']">
+                        No. of Rounds Taken is required.
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label class="form-label">No. of Classes Observed by Principal <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="observedByPrincipal" />
+                    <div
+                      *ngIf="studentForm.controls['observedByPrincipal'].invalid && (studentForm.controls['observedByPrincipal'].dirty || studentForm.controls['observedByPrincipal'].touched)"
+                      class="error mt-2">
+                      <div *ngIf="studentForm.controls['observedByPrincipal'].errors['required']">
+                        No. of Classes Observed by Principal is required.
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label class="form-label">Particiapted in any Competition (Dist/State/National lavel)<span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="participateCompetetion" />
+                    <div
+                      *ngIf="studentForm.controls['participateCompetetion'].invalid && (studentForm.controls['participateCompetetion'].dirty || studentForm.controls['participateCompetetion'].touched)"
+                      class="error mt-2">
+                      <div *ngIf="studentForm.controls['participateCompetetion'].errors['required']">
+                        Particiapted in any Competition is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label">Won in any Competition(Dist/State/National lavel) <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="wonCompetetion" />
+                    <div
+                      *ngIf="studentForm.controls['wonCompetetion'].invalid && (studentForm.controls['wonCompetetion'].dirty || studentForm.controls['wonCompetetion'].touched)"
+                      class="error mt-2">
+                      <div *ngIf="studentForm.controls['wonCompetetion'].errors['required']">
+                        Won in any Competition is required.
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <label class="form-label">Any Event Conducted Today </label>
+                    <textarea class="form-control" placeholder="Leave a comment here" formControlName="event"></textarea>
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                  <button type="button" class="save_button btn" (click)="createInfo(studentForm)"
+                    [disabled]="!studentForm.valid">
+                    Save
+                  </button>
+                </div>
+              </div>
+          </form>
+    </div>
+</app-layout>
