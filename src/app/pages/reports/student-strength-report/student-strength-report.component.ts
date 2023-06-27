@@ -1,10 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ApiService } from '../../../services/api.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { StudentService } from '../../student-details/student.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
+import * as _moment from 'moment';
+import {default as _rollupMoment, Moment} from 'moment';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+const moment = _rollupMoment || _moment;
 
+// See the Moment.js docs for the meaning of these formats:
+// https://momentjs.com/docs/#/displaying/format/
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @Component({
   selector: 'app-student-strength-report',
   templateUrl: './student-strength-report.component.html',
-  styleUrls: ['./student-strength-report.component.scss']
+  styleUrls: ['./student-strength-report.component.scss'],
+  providers: [
+     {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class StudentStrengthReportComponent {
+  reportForm: any;
+  aceYear :any[] =[];
+  selectedType = "class";
+  castList: any[] = []; 
+  reportOption = [{"id":"class", "name": "Class Wise"}, {"id":"gender", "name":"Gender Wise"}, {"id":"cast", "name":"Cast Wise"},{"id":"month", "name":"Month Wise"}]
+  date = new FormControl(moment());
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
+    private studentService:StudentService, private spinner: NgxSpinnerService, private datepipe: DatePipe
+) {
+   this.aceYear = this.studentService.aceYear;
+   this.castList = this.studentService.castList;
+   this.addForm();
 
+  }
+  addForm() {
+    this.reportForm = new FormGroup({
+        reportType:new FormControl('class', [Validators.required]),
+        cast:new FormControl(null)
+    })
+  }
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+  }
+  callReport(formData){
+    this.selectedType = formData.value.reportType;
+  }
+  addReportData(){
+    this.router.navigate(['/report/add-school-data']);
+  }
 }

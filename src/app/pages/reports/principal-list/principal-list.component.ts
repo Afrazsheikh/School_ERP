@@ -15,11 +15,27 @@ import { DatePipe } from '@angular/common';
 export class PrincipalListComponent {
   reportForm: any;
   aceYear :any[] =[];
+  principalData:any = {};
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
     private studentService:StudentService, private spinner: NgxSpinnerService, private datepipe: DatePipe
 ) {
    this.aceYear = this.studentService.aceYear;
+   this.clearPrincipalData();
    this.addForm();
+  }
+  clearPrincipalData(){
+    this.principalData = {
+      "_id":"",
+      "date":"",
+      "day":"",
+      "teacherPresent":"",
+      "studentPresent":"",
+      "roundTaken":"",
+      "observedByPrincipal":"",
+      "participated":"",
+      "wonCompetition":"",
+      "evenetConduct":""
+    };
   }
   addForm() {
     this.reportForm = new FormGroup({
@@ -27,7 +43,20 @@ export class PrincipalListComponent {
     })
   }
   callReport(formData){
-
+    const postData ={
+      date: this.datepipe.transform(formData.value.startDate, 'MM/dd/yyyy')  
+    };
+    this.spinner.show();
+    this.clearPrincipalData();
+    this.api.getPrincipalReport(postData).subscribe(resp => {
+      this.spinner.hide();
+     this.principalData = resp?.report;
+     console.log( this.principalData);
+    },
+      (err) => {
+        this.spinner.hide();
+         console.error(err);
+      })  
   }
   addReportData(){
     this.router.navigate(['/report/add-school-data']);

@@ -52,7 +52,7 @@ html, body {
   margin-left: 8px;
 }
 
-.form-group input, textarea {
+.form-group input { //textarea
   border-radius: 30px!important;
   border-color: $color-primary!important;
 }

@@ -1123,8 +1123,16 @@ export class ApiService {
       .post(environment.apiBaseUrl + '/empAttandance/create', postData)
       .pipe(catchError(this.errorHandler));
   }
-
-
+  createPrincipalReport(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/createReport', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  getPrincipalReport(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/getReportByDate', postData)
+      .pipe(catchError(this.errorHandler));
+  }
   isEmptyObject(obj) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {

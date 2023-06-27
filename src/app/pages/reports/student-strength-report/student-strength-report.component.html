@@ -1,91 +1,143 @@
 <app-layout>
-    <div class="container p-4">
-      <div class="row mt-5 mb-3">
-        <div class="col-4">
-            <label for="type"> Class<sup class="red">*</sup></label> 
-            <select id="type" class="form-select " aria-label="Default select example">
-                <option selected>Select</option>
-                <option value="1">Select</option>
-                <option value="2">Six</option>
-                <option value="3">Seven</option>
-            </select>
-        </div>
-        <div class="col-4 offset-4">
-            <label class="form-label">Date *</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-                <input type="text" class="form-control">
-              </div>
-        </div>
-      </div>
-      <div class="row mt-5 mb-3">
-        <div class="col-4">
-            <label for="type"> Section<sup class="red">*</sup></label> 
-            <select id="type" class="form-select " aria-label="Default select example">
-                <option selected>Select</option>
-                <option value="1">Select</option>
-                <option value="2">Six</option>
-                <option value="3">Seven</option>
-            </select>
-        </div>
-        <div class="col-4 offset-4">
-            <label for="type"> Student<sup class="red">*</sup></label> 
-            <select id="type" class="form-select " aria-label="Default select example">
-                <option selected>Select</option>
-                <option value="1">Select</option>
-                <option value="2">Six</option>
-                <option value="3">Seven</option>
-            </select>
-        </div>
-      </div>
-      <div class="text-end mb-5">
-        <button class="btn">Filter</button>
-      </div>
-  
-      <!-- <p class="table-heading">Marks Entries</p> -->
-      <table class="table mt-3">
-        <thead>
-          <tr>
-            <th scope="col"><input type="checkbox" class="form-check-input"></th>
-            <th scope="col">SL</th>
+  <div class="container-fluid p-4">
    
-            <th scope="col">Class</th>
-
-            <th scope="col">Section </th>
-            <th scope="col">Age</th>
-
-            <th scope="col">Caste</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Contact</th>
-
-
-            <th scope="col">Action </th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td scope="row"><input type="checkbox" class="form-check-input"></td>
-            <td>#001234</td>
-         
-          
-            <td>College</td>
-      
-            <td>Principal</td>
-            <td>Science</td>
-            <td>Science</td>
-            <td>Science</td>
-            <td>Science</td>
-
-
-         
-            <td>
-              <button class="btn emp-edit me-1"><i class="fa-solid fa-pencil"></i></button>
-              <button class="btn emp-edit ms-1"><i class="fa-solid fa-trash-can"></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </app-layout>
-  
+      <div class="row mb-3">
+          <div class="col-md-12 header-txt">
+            <i _ngcontent-dan-c162="" class="fas fa-user-check"></i>&nbsp;&nbsp;<span>Student Strength </span>
+          </div>
+        </div>
+      <div class="row mb-3">
+          <form [formGroup]="reportForm">
+              <div class="row mt-3 grey-border">
+               <div class="mb-3 col-md-4">
+                  <label class="form-label">Selete Type <span class="error">*</span></label>
+                  <select id="type" class="form-select" formControlName="reportType">
+                   <option *ngFor="let sec of reportOption" [value]="sec.id">{{sec?.name}} </option>
+                </select>
+                     <div *ngIf="reportForm.controls['reportType'].invalid && (reportForm.controls['reportType'].dirty || reportForm.controls['reportType'].touched)"
+                  class="error mt-2">
+                  <div *ngIf="reportForm.controls['reportType'].errors['required']">
+                    Report Type is required.
+                  </div></div>
+                </div>
+                <div class="mb-3 col-md-4" *ngIf="reportForm.controls['reportType'].value === 'cast'">
+                  <label class="form-label">Selete Cast <span class="error">*</span></label>
+                  <select id="type" class="form-select" formControlName="cast">
+                    <option value="">Select</option>
+                    <option *ngFor="let day of castList" value="{{ day._id }}">
+                      {{ day.name }}
+                    </option>
+                </select>
+                </div> 
+                <div class="col-md-4 mt-4 pt-2" *ngIf="reportForm.controls['reportType'].value === 'month'">
+                  <mat-form-field>
+                    <mat-label>Month and Year</mat-label>
+                    <input matInput [matDatepicker]="dp" [formControl]="date">
+                    <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp
+                                    startView="multi-year"
+                                    (monthSelected)="setMonthAndYear($event, dp)"
+                                    panelClass="example-month-picker">
+                    </mat-datepicker>
+                  </mat-form-field>
+                </div> 
+            <div class="col-md-3 mt-4">
+              <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+            </div>
+              </div>             
+          </form>  
+      </div>
+      <div class="row">
+       
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-12" *ngIf="selectedType === 'cast'">
+          <table class="table mt-3">
+            <thead>
+              <tr>
+               <th>SL</th>
+               <th>Cast</th>
+                <th>Class </th>
+                <th>No. of. Sections</th>      
+                <th>No. of. Student</th>      
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td> 
+                <td>BC</td>
+                <td>Five</td>            
+                <td>3</td>
+                <td>33</td>
+              </tr>
+              <tr>
+                <td>1</td> 
+                <td>BC</td>
+                <td>Six</td>            
+                <td>2</td>
+                <td>60</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          <div class="col-md-12" *ngIf="selectedType === 'class' || selectedType === 'month'">
+            <table class="table mt-3">
+              <thead>
+                <tr>
+                 <th>SL</th>
+                  <th>Class </th>
+                  <th>No. of. Sections</th>      
+                  <th>No. of. Student</th>      
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td> 
+                  <td>Five</td>            
+                  <td>3</td>
+                  <td>33</td>
+                </tr>
+                <tr>
+                  <td>1</td> 
+                  <td>Six</td>            
+                  <td>2</td>
+                  <td>60</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-12" *ngIf="selectedType === 'gender'">
+            <table class="table mt-3">
+              <thead>
+                <tr>
+                 <th>SL</th>
+                  <th>Class </th>
+                  <th>No. of. Sections</th>      
+                  <th>No. of. Student</th> 
+                  <th>Boy</th>  
+                  <th>Girl</th>   
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td> 
+                  <td>Five</td>            
+                  <td>3</td>
+                  <td>33</td>
+                  <td>23</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>1</td> 
+                  <td>Six</td>            
+                  <td>2</td>
+                  <td>60</td>
+                  <td>50</td>
+                  <td>10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+  </div>
+</app-layout>
