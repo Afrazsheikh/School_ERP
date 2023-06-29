@@ -9,9 +9,9 @@
       <div class="row mb-3">
           <form [formGroup]="reportForm">
               <div class="row mt-3 grey-border">
-               <div class="mb-3 col-md-4">
+               <div class="mb-3 col-md-3">
                   <label class="form-label">Selete Type <span class="error">*</span></label>
-                  <select id="type" class="form-select" formControlName="reportType">
+                  <select id="type" class="form-select" formControlName="reportType"  (change)="onChangeClass($event)">
                    <option *ngFor="let sec of reportOption" [value]="sec.id">{{sec?.name}} </option>
                 </select>
                      <div *ngIf="reportForm.controls['reportType'].invalid && (reportForm.controls['reportType'].dirty || reportForm.controls['reportType'].touched)"
@@ -20,7 +20,19 @@
                     Report Type is required.
                   </div></div>
                 </div>
-                <div class="mb-3 col-md-4" *ngIf="reportForm.controls['reportType'].value === 'cast'">
+                <div class="mb-3 col-md-3" *ngIf="reportForm.controls['reportType'].value !== 'month'">
+                  <label class="form-label">Year <span class="error">*</span></label>
+                  <select class="form-select" formControlName="academicYear">
+                    <option  value="">Select</option>
+                    <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
+                  </select>
+                  <div *ngIf="reportForm.controls['academicYear'].invalid && (reportForm.controls['academicYear'].dirty || reportForm.controls['academicYear'].touched)"
+                  class="error mt-2">
+                  <div *ngIf="reportForm.controls['academicYear'].errors['required']">
+                    Year is required.
+                  </div></div>
+                </div>
+                <div class="mb-3 col-md-3" *ngIf="reportForm.controls['reportType'].value === 'cast'">
                   <label class="form-label">Selete Cast <span class="error">*</span></label>
                   <select id="type" class="form-select" formControlName="cast">
                     <option value="">Select</option>
@@ -29,16 +41,15 @@
                     </option>
                 </select>
                 </div> 
-                <div class="col-md-4 mt-4 pt-2" *ngIf="reportForm.controls['reportType'].value === 'month'">
+                <div class="col-md-4 mt-3 pt-2" *ngIf="reportForm.controls['reportType'].value === 'month'">
                   <mat-form-field>
-                    <mat-label>Month and Year</mat-label>
-                    <input matInput [matDatepicker]="dp" [formControl]="date">
-                    <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
-                    <mat-datepicker #dp
-                                    startView="multi-year"
-                                    (monthSelected)="setMonthAndYear($event, dp)"
-                                    panelClass="example-month-picker">
-                    </mat-datepicker>
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="Start date" formControlName="startDate">
+                      <input matEndDate placeholder="End date" formControlName="endDate">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
                   </mat-form-field>
                 </div> 
             <div class="col-md-3 mt-4">

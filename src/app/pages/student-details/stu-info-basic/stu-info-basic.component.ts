@@ -37,18 +37,28 @@ export class StuInfoBasicComponent {
     this.religionList = this.studentService.religionList;
     this.motherToungLanList = this.studentService.language;
     this.castList = this.studentService.castList;
-    this.typeList = this.studentService.typeList;
+ //  this.typeList = this.studentService.typeList;
     this.relationShipList = this.studentService.relationShipList;
     this.occupationsList = this.studentService.occupationsList;
     this.educationList = this.studentService.educationList;
+    this.getTypeList();
+    this.getAllSection();
   }
  ngOnInit() {
   this.getAllClass();
-  this.getAllSection();
+  
   this.getAllCateogy();
   this.studentBasic = this.studentData;
   this.createForm();
  }
+ getTypeList(){
+  this.api.getAdmissionTypeAll().subscribe(resp => {
+    this.typeList = resp?.type
+  },
+    (err) => {
+       console.error(err);
+    })
+}
  getAllSection() {
   this.api.getAllSection().subscribe(resp => {
     this.sections = resp.sections

@@ -19,10 +19,10 @@ const moment = _rollupMoment || _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'DD/MM/YYYY',
   },
   display: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'DD/MM/YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -60,8 +60,28 @@ export class StudentStrengthReportComponent {
   addForm() {
     this.reportForm = new FormGroup({
         reportType:new FormControl('class', [Validators.required]),
-        cast:new FormControl(null)
+        cast:new FormControl(null),
+        academicYear:new FormControl('', [Validators.required]),
+        startDate:new FormControl(null),
+        endDate:new FormControl(null)
     })
+  }
+  onChangeClass(event){
+  const name = event.target.value;
+  this.reportForm.get('cast').clearValidators(); 
+  this.reportForm.get('cast').updateValueAndValidity();
+
+   if(name === 'month') {
+    this.reportForm.get('academicYear').clearValidators(); 
+    this.reportForm.get('academicYear').updateValueAndValidity();   
+   } else {
+    this.reportForm.get('academicYear').setValidators([Validators.required]); // 5.Set Required Validator
+    this.reportForm.get('academicYear').updateValueAndValidity();
+   }
+   if(name === 'cast') {
+    this.reportForm.get('cast').setValidators([Validators.required]); // 5.Set Required Validator
+    this.reportForm.get('cast').updateValueAndValidity();
+   }
   }
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value!;
@@ -71,6 +91,9 @@ export class StudentStrengthReportComponent {
     datepicker.close();
   }
   callReport(formData){
+    console.log(formData.value);
+    console.log(moment(formData.value.startDate).format("YYYY-MM-DD"));
+    console.log(moment(formData.value.endDate).format("YYYY-MM-DD"));
     this.selectedType = formData.value.reportType;
   }
   addReportData(){

@@ -65,7 +65,7 @@ export class CreateStudentComponent {
     this.religionList = this.studentService.religionList;
     this.motherToungLanList = this.studentService.language;
     this.castList = this.studentService.castList;
-    this.typeList = this.studentService.typeList;
+   // this.typeList = this.studentService.typeList;
     this.relationShipList = this.studentService.relationShipList;
     this.occupationsList = this.studentService.occupationsList;
     this.educationList = this.studentService.educationList;
@@ -75,6 +75,7 @@ export class CreateStudentComponent {
   ngOnInit() {
     this.getAllClass();
     this.getAllCateogy();
+    this.getTypeList();
     this.getGuardenList();
     this.createForm();
   }       
@@ -92,6 +93,14 @@ export class CreateStudentComponent {
       });
       
     });
+  }
+  getTypeList(){
+    this.api.getAdmissionTypeAll().subscribe(resp => {
+      this.typeList = resp?.type
+    },
+      (err) => {
+         console.error(err);
+      })
   }
   getAllSection() {
     this.api.getAllSection().subscribe(resp => {

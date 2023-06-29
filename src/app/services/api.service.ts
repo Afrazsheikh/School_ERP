@@ -1133,6 +1133,26 @@ export class ApiService {
       .post(environment.apiBaseUrl + '/getReportByDate', postData)
       .pipe(catchError(this.errorHandler));
   }
+  createAdmissionType(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + '/createType', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  getAdmissionTypeAll(): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/type/all')
+      .pipe(catchError(this.errorHandler));
+  }
+  updateAdmissionType(postData): Observable<any> {
+    return this.httpClient
+      .put(environment.apiBaseUrl + '/updateType', postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  deleteAdmissionType(id: string): Observable<any> {
+    return this.httpClient
+      .delete(environment.apiBaseUrl + '/type/' + id)
+      .pipe(catchError(this.errorHandler));
+  }
   isEmptyObject(obj) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {

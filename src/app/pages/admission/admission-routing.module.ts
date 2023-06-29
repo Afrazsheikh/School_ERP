@@ -4,7 +4,7 @@ import { AdmissionComponent } from './admission.component';
 import { CategoryComponent } from './category/category.component';
 import { MultipleImportComponent } from './multiple-import/multiple-import.component';
 import { CreateStudentComponent } from './create-student/create-student.component';
-
+import { TypeListComponent } from './type-list/type-list.component';
 
 const routes: Routes = [
   {
@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'category',
     component: CategoryComponent,
+  },
+  {
+    path: 'admission-type',
+    component: TypeListComponent,
   },
   {
     path: 'multiple-import',

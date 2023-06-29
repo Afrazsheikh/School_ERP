@@ -72,7 +72,8 @@
           <td>{{student?._id?.firstName + " " + student?._id?.lastName}}</td>         
           <td>{{student?._id?.registerNo}}</td>
           <td>
-            <span class="badge badge-danger" *ngIf="(student?.type).toLowerCase() !== 'fullday'" style="text-transform: uppercase;">{{student?.type}}</span>
+            <span class="badge badge-danger" *ngIf="(student?.type).toLowerCase() === 'absent'" style="text-transform: uppercase;">{{student?.type}}</span>
+            <span class="badge badge-warning" *ngIf="(student?.type).toLowerCase() === 'halfday'" style="text-transform: uppercase;">{{student?.type}}</span>
             <span class="badge badge-success" *ngIf="(student?.type).toLowerCase() === 'fullday'" style="text-transform: uppercase;">{{student?.type}}</span>
          
         </tr>

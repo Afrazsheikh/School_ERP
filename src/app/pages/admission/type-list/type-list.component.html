@@ -1,0 +1,116 @@
+<app-layout>
+    <div class="container p-5">
+        <div class="row">
+          <div class="col-md-12 header-txt">
+            <i class="fa-solid fa-layer-group"></i>&nbsp;&nbsp;<span>Admission Type Category Management</span>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header header-txt">
+                      Create Type
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="createTypeForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="form-label">Type Name <span class="error">*</span></label>
+                                        <input type="text" class="form-control" formControlName="typeName" />
+                                        <div
+                                            *ngIf="createTypeForm.controls['typeName'].invalid && (createTypeForm.controls['typeName'].dirty || createTypeForm.controls['typeName'].touched)"
+                                            class="error mt-2">
+                                            <div *ngIf="createTypeForm.controls['typeName'].errors['required']">
+                                                Type Name is required.
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mt-3 mb-3">
+                                    <button type="button" class="save_button btn" (click)="createInfo(createTypeForm)"
+                                      [disabled]="!createTypeForm.valid">
+                                      Save
+                                    </button>
+                                  </div>
+                            </div>
+                        </form>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card">
+                <div class="card-header header-txt">
+                    Type List
+                  </div>
+                  <div class="card-body">
+                    <table class="table mt-3">
+                        <thead>
+                            <tr>
+                                <th width="15%">S. No</th>
+                                <th >Type Name</th>
+                                <th width="26%">Action</th>
+                              </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of typeData;  let i = index">
+                                <td>{{i+1}}</td>
+                                <td >{{row?.name}}</td>
+                                <td>
+                                    <button class="btn emp-edit me-1" (click)="openModal(template, row)"><i class="fa-solid fa-pencil"></i></button>
+                                    <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, row)"><i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                  </div>
+            </div></div>
+        </div>
+    </div>
+</app-layout>
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Edit Category</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="updateTypeForm">
+        <div class="modal-body bg-white">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Type Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="typeName">
+            </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="save_button btn" (click)="updateType(updateTypeForm)" [disabled]="!updateTypeForm.valid">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  <ng-template #deletemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Delete Confirmation</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="text-justify">Are you sure, You Want To Delete This Information?</span>
+        </div>
+      </div>
+         
+        <div class="modal-footer mt-4">
+          <button type="button" class="save_button btn" (click)="deletePopup()">Yes, Continue</button>
+          <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+        </div>
+    </div>
+  </ng-template>

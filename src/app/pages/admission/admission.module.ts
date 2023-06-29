@@ -20,6 +20,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { TypeListComponent } from './type-list/type-list.component';
 
 const MY_FORMATS = {
   parse: {
@@ -39,7 +40,8 @@ const MY_FORMATS = {
     AdmissionComponent,
     CategoryComponent,
     MultipleImportComponent,
-    CreateStudentComponent
+    CreateStudentComponent,
+    TypeListComponent
   ],
   imports: [
     CommonModule,

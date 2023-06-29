@@ -99,7 +99,7 @@
           <label class="form-label">Type</label>
           <select class="form-select" formControlName="type">
             <option disabled value="select">Select</option>
-            <option *ngFor="let tdata of typeList" value="{{ tdata._id }}">
+            <option *ngFor="let tdata of typeList" value="{{ tdata.name }}">
               {{ tdata.name }}
             </option>
           </select>
