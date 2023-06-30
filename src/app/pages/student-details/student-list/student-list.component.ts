@@ -83,7 +83,7 @@ export class StudentListComponent implements OnInit {
       }
     });
   }
-  callReport(reportForm){
+  callReport(reportForm) {
     const data = {
       academicYear: reportForm.value.academicYear,
       section: reportForm.value.section,
