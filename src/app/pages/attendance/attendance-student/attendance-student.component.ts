@@ -18,6 +18,9 @@ export class AttendanceStudentComponent {
   aceYear :any[] =[];
   reportForm: FormGroup;
   studentData: any;
+  order:  string = 'type';
+  reverse: boolean = false;
+  caseInsensitive: boolean = false;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
     private studentService:StudentService, private spinner: NgxSpinnerService, private datepipe: DatePipe
 ) {
@@ -26,6 +29,12 @@ export class AttendanceStudentComponent {
   }
   ngOnInit(): void {  
     this.getAllClass();
+  }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
   }
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {

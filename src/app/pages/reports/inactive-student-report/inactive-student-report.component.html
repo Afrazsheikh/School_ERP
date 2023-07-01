@@ -58,20 +58,24 @@
           <tr>
             <th scope="col">SL</th>
             <th scope="col">Student Name </th>
-            <th scope="col">Class</th>
-            <th scope="col">Year</th>
+            <th scope="col">Register No</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Phone</th>
             <th scope="col">Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>       
-          
-            <td>Json Parekh</td>      
-            <td>Six(A)</td>
-            <td>2022- 2023</td>
-            <td>Active</td>
-          </tr>
+          <ng-container *ngFor="let stRow of studentData; let i = index">
+            <tr>
+              <td>{{i+1}}</td> 
+              <td>{{stRow?.firstName}} {{stRow?.lastName}}</td>      
+              <td>{{stRow?.registerNo}}</td>
+              <td>{{stRow.dob | date :"MM/dd/yyyy"}}</td>
+              <td>{{stRow?.number}}</td>
+              <td>{{ (stRow?.active)? 'Active' : 'Inactive'}}</td>
+            </tr>
+          </ng-container>
+         
         </tbody>
       </table>
     </div>

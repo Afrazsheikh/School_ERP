@@ -59,17 +59,27 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Date</th>
-            <th scope="col" >Name</th>
-            <th scope="col">Register No</th>
-            <th scope="col">Status</th>
+            <th  [class.active]="order === '_id.firstName'"
+            (click)="setOrder('_id.firstName')">First Name<span [hidden]="reverse">▼</span>
+            <span [hidden]="!reverse">▲</span></th>
+            <th  [class.active]="order === '_id.lastName'"
+            (click)="setOrder('_id.lastName')">Last Name<span [hidden]="reverse">▼</span>
+            <span [hidden]="!reverse">▲</span></th>
+            <th  [class.active]="order === '_id.registerNo'"
+        (click)="setOrder('_id.registerNo')">Register No<span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span></th>
+            <th  [class.active]="order === 'type'"
+        (click)="setOrder('type')">Status<span [hidden]="reverse">▼</span>
+        <span [hidden]="!reverse">▲</span></th>
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let student of studentData; let i = index">
+        <ng-container *ngFor="let student of studentData| orderBy: order:reverse:caseInsensitive; let i = index">
           <tr>
           <td> {{i+1}}</td>
           <td>{{student?.date}}</td>
-          <td>{{student?._id?.firstName + " " + student?._id?.lastName}}</td>         
+          <td>{{student?._id?.firstName }}</td>      
+          <td>{{student?._id?.lastName}}</td>         
           <td>{{student?._id?.registerNo}}</td>
           <td>
             <span class="badge badge-danger" *ngIf="(student?.type).toLowerCase() === 'absent'" style="text-transform: uppercase;">{{student?.type}}</span>

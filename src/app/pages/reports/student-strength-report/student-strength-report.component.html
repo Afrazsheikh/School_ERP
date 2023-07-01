@@ -74,20 +74,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td> 
-                <td>BC</td>
-                <td>Five</td>            
-                <td>3</td>
-                <td>33</td>
-              </tr>
-              <tr>
-                <td>1</td> 
-                <td>BC</td>
-                <td>Six</td>            
-                <td>2</td>
-                <td>60</td>
-              </tr>
+              <ng-container *ngFor="let castRow of castDataArr; let i = index">
+                <tr>
+                  <td>{{i+1}}</td> 
+                  <td>{{castRow?.caste}}</td>
+                  <td>{{castRow?.studentClass?.className}}</td>            
+                  <td>{{castRow?.section?.name}}</td>
+                  <td>{{castRow?.total}}</td>
+                </tr>
+                </ng-container>              
             </tbody>
           </table>
         </div>
@@ -102,18 +97,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td> 
-                  <td>Five</td>            
-                  <td>3</td>
-                  <td>33</td>
-                </tr>
-                <tr>
-                  <td>1</td> 
-                  <td>Six</td>            
-                  <td>2</td>
-                  <td>60</td>
-                </tr>
+                <ng-container *ngFor="let genRow of monthDataArr; let i = index">
+                  <tr>
+                    <td>{{i+1}}</td> 
+                    <td>{{genRow?.studentClass?.className}}</td>            
+                    <td>{{genRow?.section?.name}}</td>
+                    <td>{{genRow?.total}}</td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>
@@ -130,22 +121,17 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td> 
-                  <td>Five</td>            
-                  <td>3</td>
-                  <td>33</td>
-                  <td>23</td>
-                  <td>10</td>
-                </tr>
-                <tr>
-                  <td>1</td> 
-                  <td>Six</td>            
-                  <td>2</td>
-                  <td>60</td>
-                  <td>50</td>
-                  <td>10</td>
-                </tr>
+                <ng-container *ngFor="let genRow of genderDataArr; let i = index">
+                  <tr>
+                    <td>{{i+1}}</td> 
+                    <td>{{genRow?.studentClass?.className}}</td>            
+                    <td>{{genRow?.section?.name}}</td>
+                    <td>{{genRow?.total}}</td>
+                    <td>{{genRow?.boy}}</td>
+                    <td>{{genRow?.girl}}</td>
+                  </tr>
+                  </ng-container> 
+               
               </tbody>
             </table>
           </div>

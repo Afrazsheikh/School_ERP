@@ -13,7 +13,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { OrderModule } from 'ngx-order-pipe';
 const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -34,6 +35,7 @@ const MY_FORMATS = {
   imports: [
     CommonModule,
     AttendanceRoutingModule,
+    OrderModule,
     SharedModule,
     ReactiveFormsModule,
     MatDatepickerModule, 

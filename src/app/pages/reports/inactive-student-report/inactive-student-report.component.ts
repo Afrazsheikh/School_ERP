@@ -54,21 +54,25 @@ export class InactiveStudentReportComponent {
     });
   }
   callReport(reportForm){
-   /* const data = {
+    const data = {
       academicYear: reportForm.value.academicYear,
       section: reportForm.value.section,
       studentClass: reportForm.value.studentClass,
     }
+    var type: boolean =false;
+    if(reportForm.value.status === 'Active') {
+      type = true;
+    }
     this.spinner.show();
-    this.api.studentList(data).subscribe(data => {
+    this.studentData = [];
+    this.api.getActiveInactiveStudent(data, type).subscribe(data => {
       this.spinner.hide();
       this.studentData = data['students'];
-      this.studentService.studentDetailBackAction.isBack = false;
     },
     (err) =>{
       this.spinner.hide();
       this.studentData =[];
       this.toastr.error(err);
-    })*/
+    })
   }
 }

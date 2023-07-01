@@ -47,6 +47,10 @@ export class StudentStrengthReportComponent {
   aceYear :any[] =[];
   selectedType = "class";
   castList: any[] = []; 
+  castDataArr:any[] = [];
+  monthDataArr:any[] = [];
+  genderDataArr:any[] = [];
+  classDataArr:any[] =[];
   reportOption = [{"id":"class", "name": "Class Wise"}, {"id":"gender", "name":"Gender Wise"}, {"id":"cast", "name":"Cast Wise"},{"id":"month", "name":"Month Wise"}]
   date = new FormControl(moment());
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
@@ -91,12 +95,60 @@ export class StudentStrengthReportComponent {
     datepicker.close();
   }
   callReport(formData){
-    console.log(formData.value);
-    console.log(moment(formData.value.startDate).format("YYYY-MM-DD"));
-    console.log(moment(formData.value.endDate).format("YYYY-MM-DD"));
     this.selectedType = formData.value.reportType;
+    const payload = {
+      academicYear: formData.value.academicYear, 
+      caste : formData.value.cast, 
+      fromDate: moment(formData.value.startDate).format("YYYY-MM-DD"), 
+      toDate: moment(formData.value.endDate).format("YYYY-MM-DD")
+    }
+    this.spinner.show();
+    var type:string = '';
+    switch(this.selectedType) { 
+      case "month": { 
+        type = 'DATE';
+          break; 
+      } 
+      case "gender": { 
+        type = 'GENDER'; 
+          break; 
+      } 
+      case "cast": {
+        type = 'CASTE'; 
+          break;    
+      } 
+      default: { 
+        type = 'CLASS'; 
+          break;              
+      } 
+    }
+    this.api.getStudentStrengthReport(payload, type).subscribe(resp => {
+      this.spinner.hide();
+      switch(this.selectedType) { 
+        case "month": { 
+          this.monthDataArr = resp['dateResponse'];
+            break; 
+        } 
+        case "gender": { 
+          this.genderDataArr = resp['genderResponse'];
+            break; 
+        } 
+        case "cast": {
+          this.castDataArr = resp['casteResponse'];
+            break;    
+        } 
+        default: { 
+          this.monthDataArr = resp['dateResponse']; 
+            break;              
+        } 
+      }
+     console.log(resp);
+    },
+      (err) => {
+        this.spinner.hide();
+         console.error(err);
+      })  
+
   }
-  addReportData(){
-    this.router.navigate(['/report/add-school-data']);
-  }
+ 
 }

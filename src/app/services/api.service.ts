@@ -1153,6 +1153,16 @@ export class ApiService {
       .delete(environment.apiBaseUrl + '/type/' + id)
       .pipe(catchError(this.errorHandler));
   }
+  getActiveInactiveStudent(postData: any, status:boolean): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + "/students/active/"+status+"/academic", postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  getStudentStrengthReport(postData: any, type:string): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + "/students/filter/"+type+"", postData)
+      .pipe(catchError(this.errorHandler));
+  }
   isEmptyObject(obj) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {
