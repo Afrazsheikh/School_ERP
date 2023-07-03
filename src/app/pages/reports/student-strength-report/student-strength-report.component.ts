@@ -117,11 +117,18 @@ export class StudentStrengthReportComponent {
         type = 'CASTE'; 
           break;    
       } 
+      case "class": {
+        type = 'GENDER'; 
+          break;    
+      } 
       default: { 
         type = 'CLASS'; 
           break;              
       } 
     }
+    this.monthDataArr =[];
+    this.genderDataArr = [];
+    this.classDataArr= [];
     this.api.getStudentStrengthReport(payload, type).subscribe(resp => {
       this.spinner.hide();
       switch(this.selectedType) { 
@@ -131,6 +138,10 @@ export class StudentStrengthReportComponent {
         } 
         case "gender": { 
           this.genderDataArr = resp['genderResponse'];
+            break; 
+        } 
+        case "class": { 
+          this.monthDataArr = resp['genderResponse'];
             break; 
         } 
         case "cast": {

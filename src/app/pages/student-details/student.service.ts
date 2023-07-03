@@ -17,8 +17,7 @@ export class StudentService {
    AccountMethod = [{ _id: "STB", name: "STB" }, { _id: "Janata bank", name: "Janata bank" }];
   concessionList = [{ _id: "0", name: "0" }, { _id: "10", name: "10%" },{ _id: "15", name: "15%" }]
   feeMode = [{ _id: "quarterly", name: "Quarterly" }, { _id: "monthly", name: "Monthly" },{ _id: "anually", name: "Anually" }];
-  aceYear = [{ _id: "2024-2025", name: "2024-2025" }, { _id: "2023-2024", name: "2023-2024" },{ _id: "2022-2023", name: "2022-2023" },
-  { _id: "2021-2022", name: "2021-2022" }];
+  aceYear = [{ _id: "2023-2024", name: "2023-2024" },{ _id: "2024-2025", name: "2024-2025" }];
   genderList = [{_id:"Male", name:"Male"}, {_id:"Female", name:"Female"},{_id:"Other", name:"Other"}];
 
   typeList=[{ _id: "Registration Application", name: "Registration Application" },{ _id: "Admission Application", name: "Admission Application" }]
