@@ -47,7 +47,7 @@
             <th scope="col">Register No</th>
             <th scope="col">Roll No</th>
             <th scope="col">Guardian Name</th>
-            <th scope="col">Fees Pregress</th>
+            <th scope="col">Status</th>
             <th width="13%">Action</th>
         </tr>
       </thead>
@@ -61,11 +61,10 @@
           <td>{{student.registerNo}}</td>
           <td>{{student.rollNo}}</td>
           <td>{{student.guardian?.firstName}}</td>
-          <td><div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                <span>0%</span>
-            </div>
-          </div></td>
+          <td>
+            <span class="badge badge-danger" *ngIf="!student?.active" style="text-transform: uppercase;">Inactive</span>
+            <span class="badge badge-success" *ngIf="student?.active" style="text-transform: uppercase;">Active</span>
+          </td>
           <td >
             <button class="btn emp-edit me-1" (click)="openQuickModal(quicktemplate, student)"><i class="fa-solid fa-grip"></i></button>
             <button class="btn emp-edit me-1" (click)="editClick(student)"><i class="fa-regular fa-circle-right"></i></button>

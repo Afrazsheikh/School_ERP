@@ -81,6 +81,7 @@ export enum routes {
   REP_STUD_SUB_TEACH_REP="/report/sub-teacher-list",
   REP_PRINCIPAL_REPORT = "/report/prinicipal-report",
   REP_STUD_ATTEN_REP="/report/student-attendence",
+  REP_EMP_ATTEN_REP="/report/employee-attendence",
   PARENTAPP="/parent/parent_app",
   TEACHERAPP="/parent/teacher_app",
   ATTENDANCE_EMPLOYEE="/attendance/employee",

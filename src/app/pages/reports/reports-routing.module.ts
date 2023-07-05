@@ -8,29 +8,28 @@ import { StudentAttendanceComponent } from './student-attendance/student-attenda
 import { StudentStrengthReportComponent } from './student-strength-report/student-strength-report.component';
 import { PrincipalListComponent } from './principal-list/principal-list.component';
 import { PrincipalListAddComponent } from './principal-list-add/principal-list-add.component';
+import { EmployeeAttendenceComponent } from './employee-attendence/employee-attendence.component';
 const routes: Routes = [
   {
-
     path: 'stud-strength',
     component:  StudentStrengthReportComponent
-  }
- ,
- {
-
-  path: 'adm-detail',
-  component:  AdmissionDetailsReportsComponent
-},
-{
-
-  path: 'inactive-stud',
-  component:  InactiveStudentReportComponent
-},
-{
-
-  path: 'fees-cons',
-  component:  FeesConsessionReportComponent
-},
-{
+  },
+  {   path: 'adm-detail',
+      component:  AdmissionDetailsReportsComponent
+  },
+  {   path: 'inactive-stud',
+      component:  InactiveStudentReportComponent
+  },
+  {   path: 'fees-cons',
+      component:  FeesConsessionReportComponent
+  },
+  {   path: 'employee-attendence',
+      component:  EmployeeAttendenceComponent
+  },
+  {   path: 'student-attendence',
+  component:  StudentAttendanceComponent
+  },
+  {
   path: 'class-teacher-list',
   component:  ClassTeacherListComponent
 },

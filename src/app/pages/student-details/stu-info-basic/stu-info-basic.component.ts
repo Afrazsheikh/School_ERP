@@ -123,6 +123,7 @@ onChangeClass(event){
       previousQualification:[this.studentBasic?.previousQualification],
       previousSchoolName:[this.studentBasic?.previousSchoolName],
       previousRemarks:[this.studentBasic?.previousRemarks],
+      status:[this.studentBasic?.active],
       guardian1:this.fb.group({
         relation: [this.studentBasic?.guardian?.relation, Validators.required],
         setAsPrimaryGuradian:[this.studentBasic?.guardian?.isPrimary],
@@ -226,7 +227,7 @@ onChangeClass(event){
     premanentAddressZipCode: formData.value.permanentAddressZipCode,
     premanentAddressCity: formData.value.permanentAddressCity,
     premanentAddressState: formData.value.permanentAddressState,
-
+    active:(formData.value.status)
   }
   this.api.editStudent(payload,this.studentBasic._id).subscribe(resp => {
     this.toastr.success(resp.message, "Updated Successfully");

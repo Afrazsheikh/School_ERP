@@ -13,6 +13,7 @@ import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { concat } from 'rxjs';
 const moment = _rollupMoment || _moment;
 
 // See the Moment.js docs for the meaning of these formats:
@@ -153,7 +154,7 @@ export class StudentStrengthReportComponent {
             break;              
         } 
       }
-     console.log(resp);
+    // console.log(resp);
     },
       (err) => {
         this.spinner.hide();
@@ -161,5 +162,6 @@ export class StudentStrengthReportComponent {
       })  
 
   }
+  stationNames: Set<string>;
  
 }
