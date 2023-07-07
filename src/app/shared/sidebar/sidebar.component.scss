@@ -2,7 +2,8 @@
 
 /** Material Theme Overrides **/
 .mdc-list-item--with-leading-icon .mdc-list-item__start {
-  margin-right: 16px;
+  margin-right: 10px !important;
+  margin-left: 10px !important;
   color: $color-primary;
 }
 
@@ -10,16 +11,21 @@
   position: relative;
 
   .sub-menu {
-    padding-left: 60px;
+    //padding-left: 35px;
+    margin-left: 15px;
+    border-top: 1px solid #7F5EA3;
+  }
+  .sub-menu:first-child {
+    border-top: none;
   }
 }
 
 .sub-menu-cont::before {
   content: '';
   position: absolute;
-  top: 10px;
-  left: 30px;
-  bottom: 10px;
+  top: 0px;
+  left: 15px;
+  bottom: 5px;
   right: auto;
   border: 2px solid $color-primary;
 }

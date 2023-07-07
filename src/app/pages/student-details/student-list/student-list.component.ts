@@ -16,22 +16,39 @@ export class StudentListComponent implements OnInit {
   classes: any[] = [];
   subjects: any[] = [];
   reportForm: FormGroup;
-  studentData: any;
+  studentData: any[] = [];
+  studentFirstData: any;
   modalRef!: BsModalRef;
   studentId:any;
   studentSelRow:any;
   aceYear :any[] =[];
+  order:  string = 'firstName';
+  reverse: boolean = false;
+  caseInsensitive: boolean = false;
+  searchText: any;
+  peopleFilter: any;
+  fields = {
+    name :'',
+    dob:'',
+    registerNo:''
+  };
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService,
     private studentService:StudentService, private spinner: NgxSpinnerService
 ) {
    this.aceYear = this.studentService.aceYear;
    this.addForm();
   }
-  ngOnInit(): void {  
+  ngOnInit(): void { 
+    this.peopleFilter = this.fields; 
     this.getAllClass();
     // this.getAllSection();
-  
-    
+  }
+  updateFilters(){
+    this.fields.name = this.searchText;
+    this.fields.dob = this.searchText;
+    this.fields.registerNo = this.searchText;
+    this.peopleFilter = this.fields;
+    console.log(this.peopleFilter)
   }
   addForm() {
     this.reportForm = new FormGroup({
@@ -90,10 +107,18 @@ export class StudentListComponent implements OnInit {
       studentClass: reportForm.value.studentClass,
     }
     this.spinner.show();
-    this.api.studentList(data).subscribe(data => {
-      this.spinner.hide();
-      this.studentData = data['students'];
+    this.studentData = [];
+    this.studentFirstData = [];
+    this.api.studentList(data).subscribe(data => {     
+      this.studentFirstData = data['students'];
+      if(!this.api.isEmptyObject(this.studentFirstData)){
+        this.studentFirstData.forEach(element =>{
+          element['name'] = element?.firstName + " "+ element.lastName;
+           this.studentData.push(element);       
+         });
+      } 
       this.studentService.studentDetailBackAction.isBack = false;
+      this.spinner.hide();
     },
     (err) =>{
       this.spinner.hide();

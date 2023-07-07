@@ -37,7 +37,13 @@
         <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
       </div>
         </div>             
-    </form>   
+    </form>  
+    <div class="top-options mt-3">
+      <div class="col-md-6">   <input type="text" class="form-control" placeholder="Search by First Name, Last Name, and Register No" [(ngModel)]="searchText" (ngModelChange)="updateFilters()">
+      </div>
+   
+    
+    </div> 
     <table class="table mt-3">
       <thead>
         <tr>
@@ -45,21 +51,23 @@
             <th scope="col" style="width:120px;">Name / DOB</th>
             <th scope="col">Class</th>
             <th scope="col">Register No</th>
-            <th scope="col">Roll No</th>
+            <!--<th scope="col">Roll No</th> -->
             <th scope="col">Guardian Name</th>
             <th scope="col">Status</th>
             <th width="13%">Action</th>
-        </tr>
+        </tr>       
       </thead>
       <tbody>
-        <ng-container *ngFor="let student of studentData; let i = index">
+        <ng-container *ngIf="( studentData | orderBy: order:reverse:caseInsensitive | filter:peopleFilter:false) as result">
+       <ng-container *ngFor="let student of result ; let i = index">
+          {{student.firstName | json}}
           <tr>
           <td>  <img class="image" [src]="student?.image? student.image: 'assets/images/no-profile.jpg'"
             alt=""></td>
-          <td>{{student.firstName + " " + student.lastName}} {{student.dob | date :"MM/dd/yyyy"}}</td>         
+          <td>{{student.name}} {{student.dob | date :"MM/dd/yyyy"}}</td>         
           <td>{{student.class}} ({{student.section}})</td>
           <td>{{student.registerNo}}</td>
-          <td>{{student.rollNo}}</td>
+        <!--  <td>{{student.rollNo}}</td>-->
           <td>{{student.guardian?.firstName}}</td>
           <td>
             <span class="badge badge-danger" *ngIf="!student?.active" style="text-transform: uppercase;">Inactive</span>
@@ -71,7 +79,12 @@
           <!-- <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, student)"><i class="fa-solid fa-trash-can"></i></button>-->
           </td>
         </tr>
-        </ng-container>
+       
+      </ng-container>
+      <tr *ngIf="result.length === 0" class="no-record-found">
+        <td colspan="5"  class="ps-4 error">No Record Found</td> 
+      </tr>
+    </ng-container>
       </tbody>
     </table>
 

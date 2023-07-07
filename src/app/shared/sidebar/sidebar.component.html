@@ -1,6 +1,6 @@
 <mat-list>
   <mat-list-item routerLink="{{ routes.DASHBOARD }}" routerLinkActive="active">
-    <mat-icon matListItemIcon>border_all</mat-icon> Dashboard
+    <mat-icon matListItemIcon>home</mat-icon> Dashboard
   </mat-list-item>
 
   <mat-expansion-panel
@@ -11,7 +11,7 @@
       <mat-list-item
         [ngClass]="currentUrl.includes('/admission') ? 'active' : ''"
       >
-        <mat-icon matListItemIcon>group_work</mat-icon> Admission
+        <mat-icon matListItemIcon>account_circle</mat-icon> Admission
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -55,7 +55,7 @@
   <mat-list-item
     [ngClass]="currentUrl.includes('/attendance') ? 'active' : ''"
   >
-    <mat-icon matListItemIcon>add_home</mat-icon>Attendance
+    <mat-icon matListItemIcon>leaderboard</mat-icon>Attendance
   </mat-list-item>
 </mat-expansion-panel-header>
 <div class="sub-menu-cont">
@@ -73,22 +73,9 @@ routerLinkActive="sub-active"
 >
 Student
 </mat-list-item>
-<!--<mat-list-item
-class="sub-menu"
-[routerLink]="routes.ATTENDANCE_EXAM"
-routerLinkActive="sub-active"
->
-Exam
-</mat-list-item> -->
 </div>
 </mat-expansion-panel>
 
-
-  <mat-expansion-panel
-    hideToggle="true"
-    [expanded]="currentUrl.includes('/fees') ? true : false"
-  > </mat-expansion-panel>
-   
    <mat-expansion-panel
     hideToggle="true"
     [expanded]="currentUrl.includes('/fees') ? true : false"
@@ -97,7 +84,7 @@ Exam
       <mat-list-item
         [ngClass]="currentUrl.includes('/fees') ? 'active' : ''"
       >
-        <mat-icon matListItemIcon>account_balance</mat-icon>Fees
+        <mat-icon matListItemIcon>monetization_on</mat-icon>Fees
       </mat-list-item>
     </mat-expansion-panel-header>
     <div class="sub-menu-cont">
@@ -208,24 +195,11 @@ Exam
         [routerLink]="routes.STUDNT_LIST"
         routerLinkActive="active"
       >
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Student List
+        <mat-icon matListItemIcon>contacts</mat-icon>Student List
       </mat-list-item>
-
-      <!--<mat-list-item matListItemIcon [routerLink]="routes.STUDNT_DETAIL" routerLinkActive="active">
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Student Details
-      </mat-list-item>-->
     </mat-expansion-panel-header>
     <!--Sub Menu-->
     <div class="sub-menu-cont">
-      <!-- 
-      
-      
-      <mat-list-item class="sub-menu" [routerLink]="routes.STUDNT_LIST" routerLinkActive="sub-active">
-        Student List
-      </mat-list-item>
-      <mat-list-item class="sub-menu">
-        Login Deactivate
-      </mat-list-item>-->
     </div>
   </mat-expansion-panel>
 
@@ -237,7 +211,7 @@ Exam
       <mat-list-item
         [ngClass]="currentUrl.includes('/employee/') ? 'active' : ''"
       >
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Employees
+        <mat-icon matListItemIcon>recent_actors</mat-icon>Employees
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -341,7 +315,7 @@ Exam
   >
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/cert') ? 'active' : ''">
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Certificate
+        <mat-icon matListItemIcon>face</mat-icon>Certificate
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -376,7 +350,7 @@ Exam
   >
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/marks') ? 'active' : ''">
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Exam Master
+        <mat-icon matListItemIcon>assignment_ind</mat-icon>Exam Master
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -493,7 +467,7 @@ Exam
       <mat-list-item
         [ngClass]="currentUrl.includes('/homework') ? 'active' : ''"
       >
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Homework
+        <mat-icon matListItemIcon>addchart</mat-icon>Homework
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -521,7 +495,7 @@ Exam
   >
     <mat-expansion-panel-header>
       <mat-list-item [ngClass]="currentUrl.includes('/bulk') ? 'active' : ''">
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Bulk SMS and Email
+        <mat-icon matListItemIcon>email</mat-icon>Bulk SMS and Email
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -579,7 +553,7 @@ Exam
       <mat-list-item
         [ngClass]="currentUrl.includes('/transport') ? 'active' : ''"
       >
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Transport
+        <mat-icon matListItemIcon>share_location</mat-icon>Transport
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -634,7 +608,7 @@ Exam
       <mat-list-item
         [ngClass]="currentUrl.includes('/human-resource') ? 'active' : ''"
       >
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Human Ressource
+        <mat-icon matListItemIcon>contact_emergency</mat-icon>Human Ressource
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -703,7 +677,7 @@ Exam
       <mat-list-item
         [ngClass]="currentUrl.includes('/reception') ? 'active' : ''"
       >
-        <mat-icon matListItemIcon>photo_alum</mat-icon>Reception
+        <mat-icon matListItemIcon>contact_phone</mat-icon>Reception
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->
@@ -740,7 +714,7 @@ Exam
       <mat-list-item
         [ngClass]="currentUrl.includes('/reception') ? 'active' : ''"
       >
-        <mat-icon matListItemIcon>photo_alum</mat-icon> App Settings
+        <mat-icon matListItemIcon>settings_suggest</mat-icon> App Settings
       </mat-list-item>
     </mat-expansion-panel-header>
     <!--Sub Menu-->

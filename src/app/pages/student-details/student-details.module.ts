@@ -26,6 +26,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { StudVehicleRouteComponent } from './stud-vehicle-route/stud-vehicle-route.component';
+import { OrderModule } from 'ngx-order-pipe';
 const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -59,8 +60,9 @@ const MY_FORMATS = {
     FormsModule,
     AccordionModule.forRoot(),
     ReactiveFormsModule,
-    StudentDetailsRoutingModule,
+    OrderModule,
     SharedModule,
+    StudentDetailsRoutingModule,
     MatSelectModule,
     MatDatepickerModule,
     MatMomentDateModule,

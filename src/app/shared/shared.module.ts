@@ -12,9 +12,10 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FilterPipe } from './pipe/filter.pipe';
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, SidebarComponent],
+  declarations: [FilterPipe,LayoutComponent, HeaderComponent, SidebarComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -28,6 +29,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxPaginationModule
   ],
   providers: [],
-  exports: [LayoutComponent, SidebarComponent, HeaderComponent, NgxPaginationModule],
+  exports: [LayoutComponent, SidebarComponent, HeaderComponent, NgxPaginationModule,FilterPipe],
 })
 export class SharedModule {}
