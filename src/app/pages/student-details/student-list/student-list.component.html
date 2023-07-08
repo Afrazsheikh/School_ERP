@@ -48,26 +48,25 @@
       <thead>
         <tr>
           <th scope="col">Photo</th>
-            <th scope="col" style="width:120px;">Name / DOB</th>
+            <th scope="col" style="width:160px;">Name / DOB</th>
             <th scope="col">Class</th>
             <th scope="col">Register No</th>
             <!--<th scope="col">Roll No</th> -->
-            <th scope="col">Guardian Name</th>
+            <th scope="col" style="width:160px;">Guardian Name</th>
             <th scope="col">Status</th>
             <th width="13%">Action</th>
         </tr>       
       </thead>
-      <tbody>
+      <tbody *ngIf="!isLoading">
         <ng-container *ngIf="( studentData | orderBy: order:reverse:caseInsensitive | filter:peopleFilter:false) as result">
        <ng-container *ngFor="let student of result ; let i = index">
-          {{student.firstName | json}}
           <tr>
           <td>  <img class="image" [src]="student?.image? student.image: 'assets/images/no-profile.jpg'"
             alt=""></td>
           <td>{{student.name}} {{student.dob | date :"MM/dd/yyyy"}}</td>         
           <td>{{student.class}} ({{student.section}})</td>
           <td>{{student.registerNo}}</td>
-        <!--  <td>{{student.rollNo}}</td>-->
+      <!--<td>{{student.rollNo}}</td>--> 
           <td>{{student.guardian?.firstName}}</td>
           <td>
             <span class="badge badge-danger" *ngIf="!student?.active" style="text-transform: uppercase;">Inactive</span>

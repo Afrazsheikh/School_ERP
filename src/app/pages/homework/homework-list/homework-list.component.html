@@ -1,16 +1,17 @@
 <app-layout>
   <div class="container tab-container p-4">
-    <div class="text-end">
-      <button class="btn" role="navigation" routerLink="add">Add Homework</button>
-    </div>
+    <div class="row header-txt">
+      <div class="col-md-6 "><span>Homework List</span></div>
+      <div class="col-md-6 text-end mb-2"> <button class="btn" role="navigation" routerLink="add">Add Homework</button></div>     
+  </div>
     <form [formGroup]="reportForm">
       <div class="row mt-3">
-        <div class="mb-3 col-md-3">
+        <div class="mb-3 col-md-4">
           <label class="form-label">Class <span class="error">*</span></label>
        
-          <select class="form-select" formControlName="studentClass">
+          <select class="form-select" formControlName="studentClass"  (change)="onChangeClass($event)">
             <option disabled value="select">Select</option>
-            <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
+            <option *ngFor="let sec of classes" [value]="sec._id">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}</option>
           </select>
           <div *ngIf="reportForm.controls['studentClass'].invalid && (reportForm.controls['studentClass'].dirty || reportForm.controls['studentClass'].touched)"
           class="error mt-2">
@@ -18,22 +19,7 @@
             Class is required.
           </div>
         </div></div>
-  
-        <div class="mb-3 col-md-3">
-          <label class="form-label">Section <span class="error">*</span></label>
-        
-          <select class="form-select" formControlName="section">
-            <option disabled value="select">Select</option>
-            <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-          </select>
-          <div *ngIf="reportForm.controls['section'].invalid && (reportForm.controls['section'].dirty || reportForm.controls['section'].touched)"
-          class="error mt-2">
-          <div *ngIf="reportForm.controls['section'].errors['required']">
-            Section is required.
-          </div>
-        </div>
-        </div>
-        <div class="mb-3 col-md-3">
+        <div class="mb-3 col-md-4">
           <label class="form-label">Year <span class="error">*</span></label>
           <select class="form-select" formControlName="academicYear">
             <option disabled value="select">Select</option>
@@ -45,7 +31,7 @@
             Year is required.
           </div></div>
         </div>
-        <div class="mb-3 col-md-3">
+        <div class="mb-3 col-md-4">
           <label class="form-label">Subject <span class="error">*</span></label>
           <select class="form-select" formControlName="subject">
             <option disabled value="select">Select</option>
@@ -59,7 +45,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="mb-3 col-md-3">
+        <div class="mb-3 col-md-4">
           <label class="form-label">Start Date <span class="error">*</span></label>
           <div class="input-group ">
                <input matInput class="form-control me-3" [matDatepicker]="picker"
@@ -75,7 +61,7 @@
             Start Date is required.
           </div></div>
         </div>
-        <div class="mb-3 col-md-3">
+        <div class="mb-3 col-md-4">
           <label class="form-label">End Date <span class="error">*</span></label>
           <div class="input-group ">
                <input matInput class="form-control me-3" [matDatepicker]="picker2"
@@ -91,12 +77,13 @@
             End Date is required.
           </div></div>
         </div>
+        <div class="col-md-2 mt-4">
+          <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+        </div>
       </div>  
-    <div class="text-end mb-5">
-      <button class="btn" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
-    </div>
+   
   </form>
-    <p class="table-heading">Homework List</p>
+    <p class="table-heading  grey-border">Homework Data</p>
     <table class="table mt-3">
       <thead>
         <tr>

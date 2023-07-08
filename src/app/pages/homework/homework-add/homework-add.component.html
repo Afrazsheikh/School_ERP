@@ -1,12 +1,15 @@
 <app-layout>
   <form [formGroup]="homeWorkForm">
   <div class="container tab-container p-4">
+    <div class="row header-txt">
+      <div class="col-md-12"><span>Add Homework</span></div>     
+  </div>
     <div class="row mt-5 mb-3">
-      <div class="col-3">
+      <div class="col-4">
         <label class="form-label">Class <span class="error">*</span></label>
-          <select class="form-select" formControlName="studentClass">
+          <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
             <option disabled value="select">Select</option>
-            <option *ngFor="let sec of classes" [value]="sec._id">{{sec.className}}</option>
+            <option *ngFor="let sec of classes" [value]="sec._id">{{sec?.classNumeric}} ({{sec?.sections[0]?.name}}) {{sec.className}}</option>
           </select>
           <div *ngIf="homeWorkForm.controls['studentClass'].invalid && (homeWorkForm.controls['studentClass'].dirty || homeWorkForm.controls['studentClass'].touched)"
           class="error mt-2">
@@ -15,21 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="col-3">
-        <label class="form-label">Section <span class="error">*</span></label>
-        
-        <select class="form-select" formControlName="section">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-        </select>
-        <div *ngIf="homeWorkForm.controls['section'].invalid && (homeWorkForm.controls['section'].dirty || homeWorkForm.controls['section'].touched)"
-        class="error mt-2">
-        <div *ngIf="homeWorkForm.controls['section'].errors['required']">
-          Section is required.
-        </div>
-      </div>
-      </div>
-      <div class="col-3">
+      <div class="col-4">
         <label class="form-label">Year <span class="error">*</span></label>
         <select class="form-select" formControlName="academicYear">
           <option disabled value="select">Select</option>
@@ -41,7 +30,7 @@
           Year is required.
         </div></div>
       </div>
-      <div class="col-3">
+      <div class="col-4">
         <label class="form-label">Subject <span class="error">*</span></label>
         <select class="form-select" formControlName="subject">
           <option disabled value="select">Select</option>
@@ -56,8 +45,8 @@
     </div>
 
     <div class="row mb-3">
-      <div class="col-3">
-        <label class="form-label">Date of Homework *</label>
+      <div class="col-4">
+        <label class="form-label">Date of Homework <span class="error">*</span></label>
         <div class="input-group ">
           <input matInput class="form-control me-3" [matDatepicker]="picker"
           placeholder="dd-mm-yyyy"  formControlName="homeWorkDate">
@@ -72,8 +61,8 @@
       Date of Homework is required.
      </div></div>
       </div>
-      <div class="col-3">
-        <label class="form-label">Date of Submission *</label>
+      <div class="col-4">
+        <label class="form-label">Date of Submission <span class="error">*</span></label>
         <div class="input-group ">
           <input matInput class="form-control me-3" [matDatepicker]="picker2"
           placeholder="dd-mm-yyyy" formControlName="submissionDate"  >
@@ -88,8 +77,8 @@
       Date of Submission is required.
      </div></div>
       </div>
-      <div class="col-3">
-        <label class="form-label">Schedule Date *</label>
+      <div class="col-4">
+        <label class="form-label">Schedule Date <span class="error">*</span></label>
         <div class="input-group ">
           <input matInput class="form-control me-3" [matDatepicker]="picker3"
           placeholder="dd-mm-yyyy" formControlName="scheduleDate"  >

@@ -32,6 +32,7 @@ export class StudentListComponent implements OnInit {
     dob:'',
     registerNo:''
   };
+  isLoading = true;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService,
     private studentService:StudentService, private spinner: NgxSpinnerService
 ) {
@@ -101,6 +102,7 @@ export class StudentListComponent implements OnInit {
     });
   }
   callReport(reportForm) {
+    this.isLoading = true;
     const data = {
       academicYear: reportForm.value.academicYear,
       section: reportForm.value.section,
@@ -119,8 +121,10 @@ export class StudentListComponent implements OnInit {
       } 
       this.studentService.studentDetailBackAction.isBack = false;
       this.spinner.hide();
+      this.isLoading = false;
     },
     (err) =>{
+      this.isLoading = false;
       this.spinner.hide();
       this.studentData =[];
       this.toastr.error(err);

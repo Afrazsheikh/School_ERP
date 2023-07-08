@@ -941,19 +941,19 @@ export class ApiService {
 
   getBanners(): Observable<any> {
     return this.httpClient
-      .get(environment.apiBaseUrl + '/banner/all')
+      .get(environment.apiBaseUrl + '/bannerAll')
       .pipe(catchError(this.errorHandler));
   }
 
   getNotices(): Observable<any> {
     return this.httpClient
-      .get(environment.apiBaseUrl + '/noticeBoard/all')
+      .get(environment.apiBaseUrl + '/allNoticeBoard')
       .pipe(catchError(this.errorHandler));
   }
 
   getNotifications(): Observable<any> {
     return this.httpClient
-      .get(environment.apiBaseUrl + '/notification/all')
+      .get(environment.apiBaseUrl + '/notificationAll')
       .pipe(catchError(this.errorHandler));
   }
 

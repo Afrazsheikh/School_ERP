@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { StudentService } from '../../student-details/student.service';
 @Component({
   selector: 'app-homework-add',
   templateUrl: './homework-add.component.html',
@@ -14,14 +14,14 @@ export class HomeworkAddComponent {
   classes: any[] = [];
   subjects: any[] = [];
   homeWorkForm: FormGroup;
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
-  constructor( public fb: FormBuilder,public router: Router, private api: ApiService,private toastr: ToastrService,) {
-    
+  aceYear:any[] = [];
+  constructor( public fb: FormBuilder,public router: Router, private api: ApiService,private toastr: ToastrService,private studentService:StudentService) {
+    this.aceYear = this.studentService.aceYear;
   }
   ngOnInit() {
     this.createForm();
     this.getAllClass();
-    this.getAllSection();
+   // this.getAllSection();
     this.getSubject();
   }
   createForm(){
@@ -37,6 +37,17 @@ export class HomeworkAddComponent {
       description:['',Validators.required],
       smsNotification:[false]
     });
+  }
+  onChangeClass(event){
+    this.sections =[];
+    const id = event.target.value;
+    this.classes.forEach(element => {
+        if(element._id === id) {
+          this.sections = element.sections;
+          this.homeWorkForm.patchValue({section: element?.sections[0]?._id});
+        }
+    });
+    console.log(event.target.value['section']);
   }
   getAllSection() {
     this.api.getAllSection().subscribe(resp => {

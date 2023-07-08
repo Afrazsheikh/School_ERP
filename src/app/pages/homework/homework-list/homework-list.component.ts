@@ -25,7 +25,7 @@ export class HomeworkListComponent {
     private homeworkService: HomeworkService,private studentService:StudentService ) {
       this.aceYear = this.studentService.aceYear;
     this.getAllClass();
-    this.getAllSection();
+   // this.getAllSection();
     this.addForm();
     this.getSubject();
   }
@@ -38,6 +38,17 @@ export class HomeworkListComponent {
       startDate: new FormControl(null, [Validators.required]),
       endDate: new FormControl(null, [Validators.required])
     })
+  }
+  onChangeClass(event){
+    this.sections =[];
+    const id = event.target.value;
+    this.classes.forEach(element => {
+        if(element._id === id) {
+          this.sections = element.sections;
+          this.reportForm.patchValue({section: element?.sections[0]?._id});
+        }
+    });
+    console.log(event.target.value['section']);
   }
   getAllSection() {
     this.api.getAllSection().subscribe(resp => {

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { HomeworkService } from '../homework.service';
+import { StudentService } from '../../student-details/student.service';
 
 @Component({
   selector: 'app-homework-edit',
@@ -17,9 +18,10 @@ export class HomeworkEditComponent {
   homeWorkForm: FormGroup;
   homeWorkId: any;
   row:any;
-  aceYear = [{ _id: "2020-2021", name: "2020-2021" }, { _id: "2021-2022", name: "2021-2022" }, { _id: "2022-2023", name: "2022-2023" }];
+  aceYear:any[] = [];
   constructor( public fb: FormBuilder,public router: Router,  private route: ActivatedRoute,private api: ApiService,
-    private toastr: ToastrService,private homeworkService: HomeworkService) {
+    private toastr: ToastrService,private homeworkService: HomeworkService, private studentService:StudentService) {
+      this.aceYear = this.studentService.aceYear;
     route.params.subscribe(param => {
       this.homeWorkId = param['id'];
      
@@ -27,14 +29,13 @@ export class HomeworkEditComponent {
     this.row = this.homeworkService.editHomeWorkData;
   }
   ngOnInit() {
-    
-    this.createForm();
     this.getAllClass();
-    this.getAllSection();
+ //   this.getAllSection();
     this.getSubject();
+    this.createForm();
   }
   createForm(){
-    console.log(this.row);
+   
     this.homeWorkForm = this.fb.group({
       id:[this.homeWorkId],
       studentClass: [this.row?.academic?.studentClass, Validators.required],
@@ -49,7 +50,17 @@ export class HomeworkEditComponent {
       smsNotification:[false]
     });
   }
- 
+  onChangeClass(event){
+    this.sections =[];
+    const id = event.target.value;
+    this.classes.forEach(element => {
+        if(element._id === id) {
+          this.sections = element.sections;
+          this.homeWorkForm.patchValue({section: element?.sections[0]?._id});
+        }
+    });
+    console.log(event.target.value['section']);
+  }
   getAllSection() {
     this.api.getAllSection().subscribe(resp => {
       this.sections = resp.sections
@@ -62,7 +73,8 @@ export class HomeworkEditComponent {
   }
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {
-      this.classes = resp.classes
+      this.classes = resp.classes;
+      
     });
   }
   submitDate(formData:any){
