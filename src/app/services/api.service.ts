@@ -1163,6 +1163,16 @@ export class ApiService {
       .post(environment.apiBaseUrl + "/students/filter/"+type+"", postData)
       .pipe(catchError(this.errorHandler));
   }
+  getEmployeeAttendanceReport(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + "/filteremp/attandance", postData)
+      .pipe(catchError(this.errorHandler));
+  }
+  getStudentAttendanceReport(postData: any): Observable<any> {
+    return this.httpClient
+      .post(environment.apiBaseUrl + "/filterStudent/attandance", postData)
+      .pipe(catchError(this.errorHandler));
+  }
   isEmptyObject(obj) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {

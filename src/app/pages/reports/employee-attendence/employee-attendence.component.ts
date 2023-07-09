@@ -19,10 +19,10 @@ const moment = _rollupMoment || _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: 'MM/YYYY',
   },
   display: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: 'MM/YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -64,23 +64,36 @@ export class EmployeeAttendenceComponent {
   }
   addForm() {
     this.reportForm = new FormGroup({
-        designation:new FormControl(null, [Validators.required]),
-        startDate:new FormControl(null, [Validators.required]),
-        endDate:new FormControl(null, [Validators.required])
+        designation:new FormControl(null, [Validators.required])
     })
   }
-  
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.date.value;
+    ctrlValue.year(normalizedYear.year());
+    this.date.setValue(ctrlValue);
+  }
+
+  chosenMonthHandler(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+  }
   callReport(formData){
-   /*
-    this.api.getStudentStrengthReport(payload, type).subscribe(resp => {
-      
-  
+    const payload = {
+      designation: formData.value.designation,
+      date:moment(this.date.value).format("MM/YYYY")
+    }
+    this.employeeList = [];
+    this.api.getEmployeeAttendanceReport(payload).subscribe(resp => {
+      this.employeeList = resp[0]['data'];
     },
       (err) => {
         this.spinner.hide();
          console.error(err);
       })  
- */
+ 
   }
   
  

@@ -19,10 +19,10 @@ const moment = _rollupMoment || _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: 'MM/YYYY',
   },
   display: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: 'MM/YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -47,7 +47,7 @@ export class StudentAttendanceComponent {
   date = new FormControl(moment());
   sections: any[] = [];
   classes: any[] = [];
-  studentData: any;
+  studentData: any[] = [];
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
     private studentService:StudentService, private spinner: NgxSpinnerService, private datepipe: DatePipe
 ) {
@@ -77,23 +77,38 @@ export class StudentAttendanceComponent {
   addForm() {
     this.reportForm = new FormGroup({
        studentClass: new FormControl(null, [Validators.required]),
-       section: new FormControl(null),
-       startDate:new FormControl(null, [Validators.required]),
-       endDate:new FormControl(null, [Validators.required])
+       section: new FormControl(null)
     })
   }
-  
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.date.value;
+    ctrlValue.year(normalizedYear.year());
+    this.date.setValue(ctrlValue);
+  }
+
+  chosenMonthHandler(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+  }
   callReport(formData){
-   /*
-    this.api.getStudentStrengthReport(payload, type).subscribe(resp => {
+    const payload = {
+      classId :formData.value.studentClass,
+      sectionId :formData.value.section,
+      date:moment(this.date.value).format("MM/YYYY")
+    }
+    this.studentData = [];
+    this.api.getStudentAttendanceReport(payload).subscribe(resp => {
       
-  
+  this.studentData = resp[0]['data']
     },
       (err) => {
         this.spinner.hide();
          console.error(err);
       })  
- */
+
   }
   
  

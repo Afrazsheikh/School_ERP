@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 mt-3 pt-2">
-                        <mat-form-field>
+                       <!-- <mat-form-field>
                           <mat-label>Enter a date range</mat-label>
                           <mat-date-range-input [rangePicker]="picker">
                             <input matStartDate placeholder="Start date" formControlName="startDate">
@@ -32,6 +32,16 @@
                           </mat-date-range-input>
                           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>-->
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="dp" placeholder="Month and Year" [formControl]="date">
+                          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                          <mat-datepicker #dp
+                                          startView="multi-year"
+                                          (yearSelected)="chosenYearHandler($event)"
+                                          (monthSelected)="chosenMonthHandler($event, dp)"
+                                          panelClass="example-month-picker">
+                          </mat-datepicker>
                         </mat-form-field>
                       </div> 
                       <div class="col-md-3 mt-4">
@@ -53,27 +63,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                        <td>1</td> 
-                        <td>xyz </td>
-                        <td>22 days</td>            
-                        <td>01 days</td>
-                        <td>03 days </td>
-                      </tr>
-                      <tr>
-                        <td>1</td> 
-                        <td>abc </td>
-                        <td>20 days</td>            
-                        <td>05 days</td>
-                        <td>05 days </td>
-                      </tr>
-                    <ng-container *ngFor="let castRow of employeeList; let i = index">
+                   <ng-container *ngFor="let empRow of employeeList; let i = index">
                       <tr>
                         <td>{{i+1}}</td> 
-                        <td>{{castRow?.caste}}</td>
-                        <td>{{castRow?.studentClass?.className}}</td>            
-                        <td>{{castRow?.section?.name}}</td>
-                        <td>{{castRow?.total}}</td>
+                        <td>{{empRow?.name | titlecase}}</td>
+                        <td>{{empRow?.totalPresentCount}}</td>  
+                        <td>{{empRow?.totalHalfDayCount}}</td>          
+                        <td>{{empRow?.totalAbsentCount}}</td>                        
                       </tr>
                       </ng-container>              
                   </tbody>

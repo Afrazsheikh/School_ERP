@@ -23,15 +23,16 @@
                   </div>
                 </div></div>  
                   <div class="col-md-4 mt-3 pt-2">
-                      <mat-form-field>
-                        <mat-label>Enter a date range</mat-label>
-                        <mat-date-range-input [rangePicker]="picker">
-                          <input matStartDate placeholder="Start date" formControlName="startDate">
-                          <input matEndDate placeholder="End date" formControlName="endDate">
-                        </mat-date-range-input>
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-date-range-picker #picker></mat-date-range-picker>
-                      </mat-form-field>
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="dp" placeholder="Month and Year" [formControl]="date">
+                      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                      <mat-datepicker #dp
+                                      startView="multi-year"
+                                      (yearSelected)="chosenYearHandler($event)"
+                                      (monthSelected)="chosenMonthHandler($event, dp)"
+                                      panelClass="example-month-picker">
+                      </mat-datepicker>
+                    </mat-form-field>
                     </div> 
                     <div class="col-md-3 mt-4">
                       <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
@@ -52,27 +53,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                      <td>1</td> 
-                      <td>xyz </td>
-                      <td>22 days</td>            
-                      <td>01 days</td>
-                      <td>03 days </td>
-                    </tr>
-                    <tr>
-                      <td>1</td> 
-                      <td>abc </td>
-                      <td>20 days</td>            
-                      <td>05 days</td>
-                      <td>05 days </td>
-                    </tr>
-                  <ng-container *ngFor="let castRow of studentData; let i = index">
+                  <ng-container *ngFor="let stRow of studentData; let i = index">
                     <tr>
                       <td>{{i+1}}</td> 
-                      <td>{{castRow?.caste}}</td>
-                      <td>{{castRow?.studentClass?.className}}</td>            
-                      <td>{{castRow?.section?.name}}</td>
-                      <td>{{castRow?.total}}</td>
+                      <td>{{stRow?.name | titlecase}}</td>
+                      <td>{{stRow?.totalPresentCount}}</td>            
+                      <td>{{stRow?.totalHalfDayCount}}</td>
+                      <td>{{stRow?.totalAbsentCount}}</td>
                     </tr>
                     </ng-container>              
                 </tbody>

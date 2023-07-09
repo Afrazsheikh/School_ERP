@@ -94,7 +94,7 @@
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Banner Image</th>
-                <th scope="col">type</th>
+                <th scope="col">Type</th>
               </tr>
             </thead>
             <tbody>
@@ -211,10 +211,10 @@
           <table class="table mt-3">
             <thead>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
+                <th scope="col" >Name</th>
+                <th scope="col" width="33%">Description</th>
                 <th scope="col">Date</th>
-                <th scope="col">Banner Image</th>
+                <th scope="col" width="15%">Banner Image</th>
                 <th scope="col">Type</th>
               </tr>
             </thead>
@@ -225,7 +225,7 @@
                 <td>{{ notice.noticeDate | date }}</td>
                 <td>
                   <img
-                    class="img-fluid tableImg"
+                    class="img-thumbnail tableImg"
                     [src]="notice.imageAttachment"
                     alt=""
                   />
