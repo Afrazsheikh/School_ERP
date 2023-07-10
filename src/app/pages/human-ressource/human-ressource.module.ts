@@ -20,6 +20,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-create/salary-payroll-create.component';
 import { NgxPrintModule } from 'ngx-print';
 import { PayrollInvoiceComponent } from './payroll-invoice/payroll-invoice.component';
+import { MobilePayrollInvoiceComponent } from './mobile-payroll-invoice/mobile-payroll-invoice.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { PayrollInvoiceComponent } from './payroll-invoice/payroll-invoice.compo
     LeaveManageApplicationComponent,
     SalaryEditComponent,
     SalaryPayrollCreateComponent,
-    PayrollInvoiceComponent
+    PayrollInvoiceComponent,
+    MobilePayrollInvoiceComponent
   ],
   imports: [
     CommonModule,

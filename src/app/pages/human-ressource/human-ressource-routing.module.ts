@@ -11,6 +11,8 @@ import { SalaryEditComponent } from './salary-templete/salary-edit/salary-edit.c
 import { SalaryTempleteComponent } from './salary-templete/salary-templete.component';
 import { SalaryPayrollCreateComponent } from './salary-payment/salary-payroll-create/salary-payroll-create.component';
 import { PayrollInvoiceComponent } from './payroll-invoice/payroll-invoice.component';
+import { MobilePayrollInvoiceComponent } from './mobile-payroll-invoice/mobile-payroll-invoice.component';
+
 
 const routes: Routes = [
   {
@@ -56,6 +58,10 @@ const routes: Routes = [
   {
     path: 'payroll-invoice/:id/:monthAndYear',
     component: PayrollInvoiceComponent,
+  },
+  {
+    path: 'mobile-payroll-invoice/:id/:monthAndYear',
+    component: MobilePayrollInvoiceComponent,
   }
 ];
 
