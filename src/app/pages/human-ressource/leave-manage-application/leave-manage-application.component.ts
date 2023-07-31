@@ -142,6 +142,7 @@ export class LeaveManageApplicationComponent implements OnInit {
 
   updateStatus()
   {
+   
     this.isLoading = true;
     const postData = {
       leavesRequestId: this.selectedLeave._id,

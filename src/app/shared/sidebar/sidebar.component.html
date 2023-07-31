@@ -651,13 +651,13 @@ Student
       >
         Leave Category
       </mat-list-item>
-      <mat-list-item
+     <!--  <mat-list-item
         class="sub-menu"
         [routerLink]="routes.HR_LEAVE_APP"
         routerLinkActive="sub-active"
       >
         Leave/ Application
-      </mat-list-item>
+      </mat-list-item> -->
       <mat-list-item
         class="sub-menu"
         [routerLink]="routes.HR_LEAVE_MAN_APP"
@@ -708,11 +708,11 @@ Student
 
   <mat-expansion-panel
     hideToggle="true"
-    [expanded]="currentUrl.includes('/reception') ? true : false"
+    [expanded]="currentUrl.includes('/parent') ? true : false"
   >
     <mat-expansion-panel-header>
       <mat-list-item
-        [ngClass]="currentUrl.includes('/reception') ? 'active' : ''"
+        [ngClass]="currentUrl.includes('/parent') ? 'active' : ''"
       >
         <mat-icon matListItemIcon>settings_suggest</mat-icon> App Settings
       </mat-list-item>
@@ -720,12 +720,33 @@ Student
     <!--Sub Menu-->
     <div class="sub-menu-cont">
       <mat-list-item
+      class="sub-menu"
+      [routerLink]="routes.BANNER"
+      routerLinkActive="sub-active"
+    >
+     Banner
+    </mat-list-item>
+    <mat-list-item
+    class="sub-menu"
+    [routerLink]="routes.NOTICE_BOARD"
+    routerLinkActive="sub-active"
+  >
+   Notice Board
+  </mat-list-item>
+      <mat-list-item
         class="sub-menu"
-        [routerLink]="routes.PARENTAPP"
+        [routerLink]="routes.NOTIFICATION"
         routerLinkActive="sub-active"
       >
-        Mobile App
+       Notification
       </mat-list-item>
+      <mat-list-item
+      class="sub-menu"
+      [routerLink]="routes.TICKET_BOARD"
+      routerLinkActive="sub-active"
+    >
+     Raised Ticket
+    </mat-list-item>
       <!-- <mat-list-item class="sub-menu" [routerLink]="routes.TEACHERAPP" routerLinkActive="sub-active">
         teacher App
            </mat-list-item> -->

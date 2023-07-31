@@ -8,31 +8,35 @@
 
           <mat-tab-nav-panel #tabPanel>
             <form [formGroup]="stopForm" (ngSubmit)="updateStopPage()">
-              <div class="my-5">
-                <div class="mb-3">
-                  <label class="form-label">Stop Page *</label>
-                  <input type="text" class="form-control" formControlName="stoppageName">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-6">
+                  <div class="my-5">
+                    <div class="mb-3">
+                      <label class="form-label">Stop Page <span class="error">*</span></label>
+                      <input type="text" class="form-control" formControlName="stoppageName">
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Stop Time <span class="error">*</span></label>
+                      <!-- <input type="time" class="form-control" formControlName="stopTime"> -->
+                      <input class="form-control" [ngxTimepicker]="fullTime" [format]="24" readonly formControlName="stopTime">
+                      <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Route Fare <span class="error">*</span></label>
+                      <input type="text" class="form-control" formControlName="routeFare">
+                    </div>
+                    <div class="text-end mb-3">
+                      <button class="btn" [disabled]="isLoading || !stopForm.valid">
+                        <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                        <span *ngIf="!isLoading">Save</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Stop Time *</label>
-                  <!-- <input type="time" class="form-control" formControlName="stopTime"> -->
-                  <input class="form-control" [ngxTimepicker]="fullTime" [format]="24" readonly formControlName="stopTime">
-                  <ngx-material-timepicker #fullTime></ngx-material-timepicker>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Route Fare *</label>
-                  <input type="text" class="form-control" formControlName="routeFare">
-                </div>
-              </div>
-
-              <div class="text-end mb-3">
-                <button class="btn" [disabled]="isLoading || !stopForm.valid">
-                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                  <span *ngIf="!isLoading">Save</span>
-                </button>
-              </div>
+              </div>             
             </form>
           </mat-tab-nav-panel>
       </div>

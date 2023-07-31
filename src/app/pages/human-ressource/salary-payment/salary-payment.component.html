@@ -1,11 +1,9 @@
 <app-layout>
   <div class="container p-5">
-    <!-- <div class="py-2 " style="border: solid;"> -->
-    <div class="py-2">
-      <div class="col-12">
+    <h6 class="header-txt mb-3">Salary Payment</h6>
         <div class="row">
-          <div class="col-6">
-            <label class="form-label">Months And Year*</label>
+          <div class="col-4">
+            <label class="form-label">Months And Year  <span class="error">*</span></label>
             <div class="input-group">
               <input
                 matInput
@@ -43,8 +41,8 @@
             </select>
           </div>
 
-          <div class="col-12 text-end px-0 pt-4">
-            <div class="button pe-5 pt-1 pb-1">
+          <div class="col-3 mt-4">
+            <div class="button pe-5 pt-1 pb-1 mt-2">
               <button
                 (click)="onFilter()"
                 type="button"
@@ -55,11 +53,9 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
     <div class="tab-container">
-      <div class="pt-4">
+      <div class="grey-border row mt-3">
         <p class="table-heading"><b>Staff List</b></p>
       </div>
 

@@ -1,72 +1,77 @@
 <app-layout>
-  <div class="body_content bg-light pt-5">
-    <!-- ************************************************form*********************************************************** -->
-        <div class="form_card bg-white pt-3">
-          <div class="row">
-            <div class="col-12 Student_text"><i class="bi bi-mortarboard-fill mx-2"></i> Student Details <div class="right_line"></div></div>
-            <div class="col-12 col-md-5 mt-4">
-              <div class="cards_common bg-light">
-                <div class="modal-header">
-                  <h6 class="modal-title"><i class="bi bi-pencil-square mx-2"></i> Add category </h6>
-                </div>
-                <form [formGroup]="categoryForm">
-                <div class="modal-body bg-white">
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Category Name <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" formControlName="categoryName">
-                    </div>
-                 
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="save_button btn" (click)="addCategory(categoryForm)" [disabled]="!categoryForm.valid">Save</button>
-                </div>
-              </form>
+  <div class="container p-5">
+    <div class="row">
+      <div class="col-md-12 header-txt">
+        <i class="fa-solid fa-layer-group"></i>&nbsp;&nbsp;<span>Student Category Management</span>
+      </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-5">
+          <div class="card">
+            <div class="card-header header-txt">
+             Add Category
               </div>
-            
-            </div>
-            <div class="col-12 col-md-7 mt-4">
-              <div class="cards_common bg-light">
-                <div class="modal-header">
-                  <h6 class="modal-title"><i class="bi bi-card-list mx-2"></i> Category list</h6>
-                </div>
-                <div class="modal-body bg-white">
-                  <table>
-                    <tr>
-                      <!-- <th>Branch</th> -->
-                      <th width="15%">S. No</th>
-                      <th width="25%">Id</th>
-
-                      <th width="20%">Name</th>
-                      <th>Action</th>
-                    </tr>
-                    <tr *ngFor="let row of categoryData;  let i = index">
-                      <td>{{i+1}}</td>
-                      <td >{{row._id}}</td>
-
-                      <!-- <td>
-
-                        <div class="cdk-virtual-scroll-data-source-example">
-                          <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
-                            <div *cdkVirtualFor =" let row of categoryData" class="example-item">{{row._id}}</div>
-                          </cdk-virtual-scroll-viewport>
-                        </div>
-                      </td> -->
-                      <td>{{row.categoryName}}</td>
-
-                      <td>
-                        <button class="btn emp-edit me-1" (click)="openModal(template, row)"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, row)"><i class="fa-solid fa-trash-can"></i></button>
-                      </td>
-                    </tr>
+              <div class="card-body">
+                <form [formGroup]="categoryForm">
+                  <div class="row">
+                      <div class="col-md-12">
+                        <label for="exampleInputEmail1" class="form-label">Category Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="categoryName">
+                      </div>
+                   
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-md-12">
+                      <button type="button" class="save_button btn" (click)="addCategory(categoryForm)" [disabled]="!categoryForm.valid">Save</button>
+                    </div>
                     
-                  </table>
+                  </div>
+                </form>
                 </div>
-                </div>
-            </div>            
-          </div>
+              </div>
         </div>
-    <!-- *************************************************************************************************** -->
+        <div class="col-md-7">
+          <div class="card">
+            <div class="card-header header-txt">
+              Category list
+              </div>
+              <div class="card-body">
+                <table class="table mt-3">
+                  <thead>
+                     <tr>
+                    <!-- <th>Branch</th> -->
+                    <th width="12%">S. No</th>
+                    <th width="35%">Id</th>
 
+                    <th width="30%">Name</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let row of categoryData;  let i = index">
+                    <td>{{i+1}}</td>
+                    <td style="word-break: break-all;">{{row._id}}</td>
+
+                    <!-- <td>
+
+                      <div class="cdk-virtual-scroll-data-source-example">
+                        <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+                          <div *cdkVirtualFor =" let row of categoryData" class="example-item">{{row._id}}</div>
+                        </cdk-virtual-scroll-viewport>
+                      </div>
+                    </td> -->
+                    <td>{{row.categoryName}}</td>
+
+                    <td>
+                      <button class="btn emp-edit me-1" (click)="openModal(template, row)"><i class="fa-solid fa-pencil"></i></button>
+                      <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, row)"><i class="fa-solid fa-trash-can"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+                </table>
+                </div></div>
+        </div>
+    </div>
 </div>
 </app-layout>
 <ng-template #template>

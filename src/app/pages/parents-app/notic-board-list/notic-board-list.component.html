@@ -1,0 +1,56 @@
+<app-layout>
+    <div class="container tab-container p-4">
+      <div class="row header-txt">
+        <div class="col-md-6"><span>Notice Board List</span></div>  
+        <div class="col-md-6 text-end mb-1"> <button class="btn" role="navigation" (click)="addBtnClick()">Add Notice</button></div>   
+    </div>
+<table class="table mt-3">
+    <thead>
+      <tr>
+        <th scope="col" >Name</th>
+        <th scope="col" width="33%">Description</th>
+        <th scope="col">Date</th>
+        <th scope="col" width="15%">Banner Image</th>
+        <th scope="col">Type</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let notice of notices; index as i">
+        <td>{{ notice.name }}</td>
+        <td>{{ notice.description }}</td>
+        <td>{{ notice.noticeDate | date }}</td>
+        <td>
+          <img
+            class="img-thumbnail tableImg"
+            [src]="notice.imageAttachment"
+            alt=""
+          />
+        </td>
+        <td>{{ notice.noticeBoardType }}</td>
+        <td> <button class="btn emp-edit me-1" (click)="openDeleteModal(deletemplate, notice)"><i class="fa-solid fa-trash-can"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  </app-layout>
+  <ng-template #deletemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Delete Confirmation</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="text-justify">Are you sure, You Want To Delete This Information?</span>
+        </div>
+      </div>
+         
+        <div class="modal-footer mt-4">
+          <button type="button" class="save_button btn" (click)="deletePopup()">Yes, Continue</button>
+          <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+        </div>
+    </div>
+  </ng-template>

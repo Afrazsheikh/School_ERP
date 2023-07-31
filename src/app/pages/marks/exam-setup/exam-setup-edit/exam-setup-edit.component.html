@@ -12,12 +12,12 @@
                         <div class="container">
 
 
-                            <div class="mb-2 col-md-5 py-2 offset-3">
-                                <label class="form-label"> Name*</label>
+                            <div class="mb-2 col-md-5 py-2 offset-2">
+                                <label class="form-label"> Name <span class="error">*</span></label>
                                 <input type="text" formControlName="name" class="form-control">
                               </div>
-                              <div class="mb-3 col-md-5 offset-3 py-2">
-                                <label class="form-label">Term *</label>
+                              <div class="mb-3 col-md-5 offset-2 py-2">
+                                <label class="form-label">Term <span class="error">*</span></label>
                                 <select class="form-select" formControlName="term">
                                   <option disabled value="select">Select</option>
                                   <option *ngFor="let designation of examTerms" [value]="designation._id">
@@ -25,8 +25,8 @@
                                   </option>
                                 </select>
                               </div>
-                              <div class="mb-3 py-2 offset-3 col-md-5">
-                                <label class="form-label">Exam Type *</label>
+                              <div class="mb-3 py-2 offset-2 col-md-5">
+                                <label class="form-label">Exam Type <span class="error">*</span></label>
                                 <select class="form-select" formControlName="examtype">
                                   <option disabled value="select">Select</option>
                                   <option *ngFor="let exam of exams" [value]="exam.examtype">
@@ -37,8 +37,8 @@
                                 </select>
                               </div>
                               <!-- this will chnge -->
-                              <div class="mb-3  col-md-5 offset-3 py-2">
-                                <label class="form-label">Marks Disturbutions *</label>
+                              <div class="mb-3  col-md-5 offset-2 py-2">
+                                <label class="form-label">Marks Disturbutions <span class="error">*</span></label>
                                 <select class="form-select" formControlName="marksDistribution">
                                   <option disabled value="select">Select</option>
                                   <option *ngFor="let exam of marksDistributions"  [value]="exam._id">
@@ -47,13 +47,13 @@
 
                                 </select>
                               </div>
-                              <div class="mb-3  col-md-5 offset-3 py-">
+                              <div class="mb-3  col-md-5 offset-2 py-">
 
                                     <label for="exampleFormControlTextarea1" class="form-label">Remarks</label>
                                     <textarea formControlName="remarks" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 
                               </div>
-                              <div class="text-end offset-4" >
+                              <div class="offset-4" >
                                 <button type="submit" class="btn" [disabled]="isLoading || !examForm.valid">
                                   <span *ngIf="isLoading" class="spinner-border text-light"></span>
                                   <span *ngIf="!isLoading">Update</span>

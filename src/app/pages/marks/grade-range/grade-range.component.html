@@ -4,7 +4,7 @@
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Grade List">
           <div class="pt-4">
-            <div class="top-options">
+           <!-- <div class="top-options">
               <div class="search-area">
                 <div class="input-group pe-3">
                   <input type="search" class="form-control" placeholder="Search here...">
@@ -18,7 +18,7 @@
                   <button class="btn"><img src="assets/icons/opt-print.svg"></button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <table class="table mt-3">
               <thead>
@@ -53,33 +53,34 @@
         </mat-tab>
         <mat-tab label="Create Grade">
           <form [formGroup]="gradeForm" (ngSubmit)="addGrade()">
-          <div class="row mt-5 mb-3">
+          <div class="row ms-1 mt-5 mb-3">
             <div class="col-4">
-              <label class="form-label">Name *</label>
+              <label class="form-label">Name <span class="error">*</span></label>
               <input type="text" formControlName="name" class="form-control">
             </div>
-            <div class="col-4 offset-4">
-              <label class="form-label">Grade Point *</label>
+            <div class="col-4">
+              <label class="form-label">Grade Point <span class="error">*</span></label>
               <input type="text" formControlName="gradePoint"class="form-control">
             </div>
           </div>
-          <div class="row mt-5 mb-3">
+          <div class="row  ms-1 mt-5 mb-3">
             <div class="col-4">
-              <label class="form-label">Min Percentage *</label>
+              <label class="form-label">Min Percentage <span class="error">*</span></label>
               <input type="text"formControlName="minPercentage" class="form-control">
             </div>
-            <div class="col-4 offset-4">
-              <label class="form-label">Max Percentage *</label>
+            <div class="col-4">
+              <label class="form-label">Max Percentage <span class="error">*</span></label>
               <input type="text" formControlName="maxPercentage"class="form-control">
             </div>
           </div>
-
-          <div class="mb-3">
+          <div class="row ms-1">
+              <div class="mb-3">
             <label class="form-label">Remarks</label>
             <textarea class="form-control" formControlName="remarks" rows="3"></textarea>
-            <input type="text" formControlName="remarks"class="form-control">
 
           </div>
+          </div>
+        
 
           <div class="text-end mb-3">
             <button type="submit" class="btn" [disabled]="isLoading || !gradeForm.valid">

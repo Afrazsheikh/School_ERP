@@ -5,17 +5,17 @@
     <div class="container p-z">
         <!-- <div class="py-2 " style="border: solid;"> -->
         <div class="py-2 ">
-
-<div class="row p-3">
-  <div class="col-6"><p class="table-heading "><b>Select Ground</b></p></div>
-  <div class="col-6 text-end">
-    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addLeave">Add Leave</button>
-  </div>
-</div>
+          <div class="row header-txt">
+            <div class="col-md-6 ">
+              <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Leave Management</span>
+            </div>
+            <div class="col-md-6 text-end mb-2">
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addLeave">Add Leave</button>
+            </div>
+          </div>
 <div class="row">
-    <div class="col">
-      <div class="col">
-        <label class="form-label">Designation *</label>
+      <div class="col-md-4 ms-2">
+        <label class="form-label">Designation</label>
         <!-- <label class="form-label">Class *</label> -->
         <select class="form-select" [(ngModel)]="designFilter" (change)="getFilteredLeaves()">
           <option disabled value="select">Select</option>
@@ -23,38 +23,21 @@
           <option value="student">Student</option>
         </select>
     </div>
-    </div>
 
-    <div class="col-12 text-end px-0 pt-4">
+    <div class="col-md-2 text-end px-0 pt-4">
         <div class="button pe-5 pt-1 pb-1">
           <button type="button" class="btn button_color">Filter</button></div>
         </div>
     </div>
 </div>
 
-<div class="tab-container">
-    <div class="pt-4">
-    <p class="table-heading "><b>Leave List </b></p>
-<!-- <div class="container p-4"> -->
+<div class="tab-container"> 
 
-<div class="top-options">
-    <div class="search-area">
-      <div class="input-group pe-3">
-        <input type="search" class="form-control" placeholder="Search here...">
-        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-      </div>
-      <div class="options">
-        <button class="btn"><img src="assets/icons/opt-copy.svg"></button>
-        <button class="btn"><img src="assets/icons/opt-excel.svg"></button>
-        <button class="btn"><img src="assets/icons/opt-pdf.svg"></button>
-        <button class="btn"><img src="assets/icons/opt-sheet.svg"></button>
-        <button class="btn"><img src="assets/icons/opt-print.svg"></button>
-      </div>
+  <div class="row mt-3 grey-border">
+    <div class="col-md-12 mb-2">
+      <b>Leave List </b>
     </div>
-    </div>
-</div>
-
-
+  </div> 
 
     <!--  -->
     <table class="table mt-3 py-4">
@@ -62,7 +45,7 @@
       <tr>
         <th scope="col"> SL</th>
         <th scope="col"> Role</th>
-        <th scope="col">Applicant</th>
+        <th scope="col">Applicant Name</th>
         <th scope="col">Leave Category</th>
         <th scope="col"> Date of Start</th>
         <th scope="col"> Date of End</th>
@@ -76,13 +59,17 @@
       <tr *ngFor="let leave of filteredLeaveApps; index as i">
         <td>{{i + 1}}</td>
         <td>{{leave.employee ? leave.employee.designation.name : 'Student'}}</td>
-        <td>{{leave.employee ? leave.employee.name : leave.student.firstName}}</td>
+        <td>{{leave.employee ? leave.employee.name : leave.student.firstName +" "+leave.student.lastName}}</td>
         <td>{{leave.leaveType.name}}</td>
         <td>{{leave.fromDate | date}}</td>
         <td>{{leave.toDate | date}}</td>
         <td>{{leave.days}}</td>
         <td>-</td>
-        <td><button class="badge rounded-pill">{{leave.status}}</button></td>
+        <td>
+          <span class="badge badge-warning" *ngIf="(leave.status).toLowerCase() === 'pending'" style="text-transform: uppercase;">{{leave.status}}</span>
+          <span class="badge badge-danger" *ngIf="(leave.status).toLowerCase() === 'rejected'" style="text-transform: uppercase;">{{leave.status}}</span>
+           <span class="badge badge-success" *ngIf="(leave.status).toLowerCase() === 'approved'" style="text-transform: uppercase;">{{leave.status}}</span>
+        </td>
         <td>
           <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#viewLeave"
             (click)="selectedLeave=leave;">
@@ -116,7 +103,7 @@
                       <h6>Add Leave Category</h6>
                   </div>
                   <div>
-                    <label class="form-label">Employee *</label>
+                    <label class="form-label">Employee <span class="error">*</span></label>
                     <select class="form-select" formControlName="employee">
                       <option disabled value="select">Select</option>
                       <option *ngFor="let emp of employees" [value]="emp._id">{{emp.name}}</option>
@@ -125,7 +112,7 @@
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Leave Type*</label>
+                  <label class="form-label">Leave Type <span class="error">*</span></label>
                   <select class="form-select" formControlName="leaveType">
                     <option disabled value="select">Select</option>
                     <option *ngFor="let leave of leaveCats" [value]="leave._id">{{leave.name}}</option>
@@ -133,7 +120,7 @@
                 </div>
 
                 <div class="mb-3">
-                  <label class="form-label">Date *</label>
+                  <label class="form-label">Date <span class="error">*</span></label>
                   <div class="input-group flex-nowrap">
                     <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
                     <mat-date-range-input [rangePicker]="picker" class="date-picker-input" (click)="picker.open()">
@@ -145,11 +132,11 @@
                 </div>
 
                 <div class="mb-3 py-2">
-                  <label class="form-label">Reason*</label>
+                  <label class="form-label">Reason <span class="error">*</span></label>
                   <input type="text" class="form-control" formControlName="reason">
                 </div>
                 <div class="mb-3 py-2">
-                  <label class="form-label">Attachment*</label>
+                  <label class="form-label">Attachment <span class="error">*</span></label>
                   <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event)">
                     <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
                         <ng-container *ngIf="!fileData">

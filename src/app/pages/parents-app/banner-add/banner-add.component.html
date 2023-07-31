@@ -1,0 +1,104 @@
+<app-layout>
+    <div class="container p-4">
+      <div class="row header-txt">
+        <div class="col-md-6"><span>Banner Add</span></div>  
+        <div class="col-md-6 text-end mb-1"> <button class="btn" role="navigation" (click)="backBtnClick()">Back</button></div>   
+    </div>
+<form [formGroup]="bannerForm" (ngSubmit)="addBanner()">
+    <div class="row my-3">
+      <div class="col-md-3">&nbsp;</div>
+      <div class="col-md-4">
+        <div class="row mt-3">
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              width="200px"
+              formControlName="title"
+            />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <label class="form-label">Type </label>
+            <!-- <label class="form-label">Class *</label> -->
+            <select class="form-select" formControlName="type">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let type of types" [value]="type">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <label class="form-label">Banner Image</label>
+            <ngx-file-drop
+              [multiple]="false"
+              [directory]="false"
+              (onFileDrop)="onFilesDropped($event, 'banner')"
+            >
+              <ng-template
+                ngx-file-drop-content-tmp
+                let-openFileSelector="openFileSelector"
+              >
+                <ng-container *ngIf="!bannerFile">
+                  Drag and drop or
+                  <a
+                    class="p-1 btn btn-link"
+                    type="button"
+                    (click)="openFileSelector()"
+                    >Browse Files</a
+                  >
+                </ng-container>
+                <ng-container *ngIf="bannerFile">
+                  {{ bannerFile.name }}
+                  <a
+                    class="p-1 btn btn-link"
+                    style="color: #f44336"
+                    type="button"
+                    (click)="bannerFile = bannerImage = null"
+                  >
+                    Remove
+                  </a>
+                </ng-container>
+              </ng-template>
+            </ngx-file-drop>
+            <img
+              *ngIf="bannerImage"
+              [src]="bannerImage"
+              class="img-fluid"
+              alt="Responsive image"
+              height="150px"
+              width="250px"
+            />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="text-end">
+            <button
+              type="submit"
+              class="text-end btn btn-primary"
+              [disabled]="!bannerForm.valid || isLoading || !bannerFile"
+            >
+              <span
+                *ngIf="isLoading"
+                class="spinner-border text-light"
+              ></span>
+              <span *ngIf="!isLoading">Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+     
+      
+    </div>
+
+    
+  </form>
+  </div>
+</app-layout>

@@ -4,7 +4,7 @@
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Call Log List">
           <div class="pt-4">
-            <div class="top-options">
+            <!--<div class="top-options">
               <div class="search-area">
                 <div class="input-group pe-3">
                   <input type="search" class="form-control" placeholder="Search here...">
@@ -18,7 +18,7 @@
                   <button class="btn"><img src="assets/icons/opt-print.svg"></button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <table class="table mt-3">
               <thead>
@@ -65,28 +65,28 @@
         </mat-tab>
         <mat-tab label="Add Call Log">
           <form [formGroup]="callLogForm" (ngSubmit)="addCallLog()">
-          <div class="my-5">
-            <div class="mb-3">
-              <label class="form-label">Call Type *</label>
+          <div class="row mt-3 ms-1">
+            <div class="col-md-3">
+              <label class="form-label">Call Type <span class="error">*</span></label>
               <input type="text" formControlName="callType" class="form-control">
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Calling Purpose *</label>
+            <div class="col-md-3">
+              <label class="form-label">Calling Purpose <span class="error">*</span></label>
               <input type="text" formControlName="purpose" class="form-control">
             </div>
 
-            <div class="mb-3">
-              <label class="form-label">Name *</label>
+            <div class="col-md-3">
+              <label class="form-label">Name <span class="error">*</span></label>
               <input type="text" formControlName="name" class="form-control">
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Mobile No. *</label>
+            <div class="col-md-3">
+              <label class="form-label">Mobile No. <span class="error">*</span></label>
               <input type="text" formControlName="mobileNo" class="form-control">
             </div>
-
-            <div class="mb-3">
+          </div>
+          <div class="row mt-3 ms-1">
+            
+            <div class="col-md-3">
               <label class="form-label">Date</label>
          
 
@@ -96,51 +96,31 @@
             (click)="picker1.open()" formControlName="date">
         </div>
         <mat-datepicker #picker1></mat-datepicker>
-   
-
-<!-- 
-         <input [matDatepicker]="picker" class="date-picker-input" (click)="picker.open()" formControlName="date">
-         <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span> -->
             </div>
-
-            <div class="row mb-3">
+            <div class="col-md-3">
               <label class="form-label">Time Slot To</label>
-              <div class="col-4">
-                <!-- <input type="text" formControlName="timeSlotTo" class="form-control"> -->
-                <input class="form-control" [ngxTimepicker]="fullTime" [format]="24" readonly formControlName="timeSlotTo">
-                <ngx-material-timepicker #fullTime></ngx-material-timepicker>
-              </div>
-              <div class="col-4 offset-4">
+              <input class="form-control" [ngxTimepicker]="fullTime" [format]="24" readonly formControlName="timeSlotTo">
+              <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+            </div>
+            <div class="col-md-3">
               <label class="form-label">Time Slot From</label>
-
-                <!-- <input type="text" formControlName="timeSlotFrom" class="form-control"> -->
-
-                <input class="form-control" [ngxTimepicker]="fullTime1" [format]="24" readonly formControlName="timeSlotFrom">
-                <ngx-material-timepicker #fullTime1></ngx-material-timepicker>
-              </div>
+              <input class="form-control" [ngxTimepicker]="fullTime1" [format]="24" readonly formControlName="timeSlotFrom">
+              <ngx-material-timepicker #fullTime1></ngx-material-timepicker>
             </div>
-
-            <div class="mb-3">
+            <div class="col-md-3">
               <label class="form-label">Follow up Date</label>
-       
-            <div class="input-group flex-nowrap">
-            
               <input type="text" class="date-picker-input" [matDatepicker]="picker2"
-                (click)="picker2.open()" formControlName="followUpDate">
+              (click)="picker2.open()" formControlName="followUpDate">
+              <mat-datepicker #picker2></mat-datepicker>
+
             </div>
-            <mat-datepicker #picker2></mat-datepicker>
-       
-
-    
-            </div>
-
-
-            <div class="mb-3">
+          </div>
+          <div class="row mt-3 mb-2 ms-1">
+            <div class="col-md-12">
               <label class="form-label">Note</label>
               <textarea class="form-control" formControlName="note" rows="5"></textarea>
             </div>
           </div>
-
           <div class="text-end mb-3">
             <button class="btn" [disabled]="isLoading || !callLogForm.valid">
               <span *ngIf="isLoading" class="spinner-border text-light"></span>

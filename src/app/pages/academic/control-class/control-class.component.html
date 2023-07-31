@@ -2,36 +2,39 @@
   <div class="container tab-container p-4">
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
       <mat-tab label="Class">
-        <form [formGroup]="ClassForm" (ngSubmit)="addClass()">
-        <div class="row mt-5 mb-3">
-      
-          <h6>Create Class</h6>
-          <div class="col-4">
-            <label class="form-label">Name *</label>
-            <input type="text" formControlName="className" class="form-control">
-          </div>
-          <div class="col-4">
-            <label class="form-label">Class Numeric *</label>
-            <input type="text"  formControlName="classNumeric" class="form-control">
-          </div>
-          <div class="col-4">
-            <label class="form-label">Section *</label>
-        <select class="form-select" formControlName="sections">
-          <option disabled value="select">Select</option>
-          <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
-        </select>
-          </div>
-        </div>
-        <div class="text-end mb-5">
-          <button class="btn" [disabled]="isLoading || !ClassForm.valid">
-            <span *ngIf="isLoading" class="spinner-border text-light"></span>
-              <span *ngIf="!isLoading">Save</span>
-          </button>
+        <fieldset class="border rounded-3 p-3 mt-3 mb-3">
+          <legend  class="float-none w-auto px-2 f-15">Create Class</legend>
+          <form [formGroup]="ClassForm" (ngSubmit)="addClass()">
+            <div class="row mb-3">             
+              <div class="col-4">
+                <label class="form-label">Name <span class="error">*</span></label>
+                <input type="text" formControlName="className" class="form-control">
+              </div>
+              <div class="col-3">
+                <label class="form-label">Class Numeric <span class="error">*</span></label>
+                <input type="text"  formControlName="classNumeric" class="form-control">
+              </div>
+              <div class="col-3">
+                <label class="form-label">Section <span class="error">*</span></label>
+            <select class="form-select" formControlName="sections">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
+            </select>
+              </div>
+              <div class="col-1 mt-4">
+                <button class="btn mt-2" [disabled]="isLoading || !ClassForm.valid">
+                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                    <span *ngIf="!isLoading">Save</span>
+                </button>
+             
+              </div>
+            </div>
+            
+          </form>
+       </fieldset>
        
-        </div>
-      </form>
-        <h6 class="table-heading mb-3">Class List</h6>
-        <div class="top-options">
+        <h6 class="header-txt mb-3">Class List</h6>
+       <!-- <div class="top-options">
           <div class="search-area">
             <div class="input-group pe-3">
               <input type="search" class="form-control" placeholder="Search here...">
@@ -45,7 +48,7 @@
               <button class="btn"><img src="assets/icons/opt-print.svg"></button>
             </div>
           </div>
-        </div>
+        </div>-->
         <table class="table mt-3">
           <thead>
             <tr>
@@ -85,26 +88,31 @@
       </mat-tab>
 
       <mat-tab label="Section">
-        <form [formGroup]="sectionForm" (ngSubmit)="addSection()">
-        <div class="row mt-5 mb-3">
-          <div class="col-4">
-            <label class="form-label">Name *</label>
-            <input type="text" formControlName="name" class="form-control">
-          </div>
-          <div class="col-4 offset-4">
-            <label class="form-label">Capacity *</label>
-            <input type="text"  formControlName="capacity" class="form-control">
-          </div>
-        </div>
-        <div class="text-end mb-5">
-          <button class="btn" [disabled]="isLoading || !sectionForm.valid">
-            <span *ngIf="isLoading" class="spinner-border text-light"></span>
-              <span *ngIf="!isLoading">Save</span>
-          </button>
-        </div>
-      </form>
-        <h6 class="table-heading mb-3">Section List</h6>
-        <div class="top-options">
+
+        <fieldset class="border rounded-3 p-3 mt-3 mb-3">
+          <legend  class="float-none w-auto px-2 f-15">Create Section</legend>
+          <form [formGroup]="sectionForm" (ngSubmit)="addSection()">
+            <div class="row">
+              <div class="col-4">
+                <label class="form-label">Name <span class="error">*</span></label>
+                <input type="text" formControlName="name" class="form-control">
+              </div>
+              <div class="col-4">
+                <label class="form-label">Capacity <span class="error">*</span></label>
+                <input type="text"  formControlName="capacity" class="form-control">
+              </div>
+              <div class="col-md-4 mt-4">
+                <button class="btn mt-2" [disabled]="isLoading || !sectionForm.valid">
+                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                    <span *ngIf="!isLoading">Save</span>
+                </button>
+              </div>
+            </div>           
+          </form>
+          </fieldset>
+       
+        <h6 class="header-txt mb-3">Section List</h6>
+       <!-- <div class="top-options">
           <div class="search-area">
             <div class="input-group pe-3">
               <input type="search" class="form-control" placeholder="Search here...">
@@ -118,7 +126,7 @@
               <button class="btn"><img src="assets/icons/opt-print.svg"></button>
             </div>
           </div>
-        </div>
+        </div>-->
         <table class="table mt-3">
           <thead>
             <tr>

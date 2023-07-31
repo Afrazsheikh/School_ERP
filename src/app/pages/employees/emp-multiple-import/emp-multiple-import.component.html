@@ -15,7 +15,7 @@
               <div class="col-6">
                 <div class="form-group">
                  
-            <label class="form-label">Designation *</label>
+            <label class="form-label">Designation <span class="error">*</span></label>
             <select class="form-select" formControlName="designation">
               <option disabled value="select">Select</option>
               <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
@@ -24,7 +24,7 @@
               </div>
               <div class="col-6">
                 <div class="form-group">
-                    <label class="form-label">Deaprtment *</label>
+                    <label class="form-label">Deaprtment <span class="error">*</span></label>
                     <select class="form-select" formControlName="department">
                       <option disabled value="select">Select</option>
                       <option *ngFor="let deaprtmnets of departments" [value]="deaprtmnets._id">{{deaprtmnets.name}}</option>

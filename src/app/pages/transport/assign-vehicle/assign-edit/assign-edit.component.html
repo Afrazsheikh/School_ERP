@@ -8,39 +8,46 @@
 
           <mat-tab-nav-panel #tabPanel>
             <form [formGroup]="vAssignForm" (ngSubmit)="updateAssignVehicle()">
-              <div class="my-5">
-                <div class="mb-3">
-                  <label class="form-label">Transport Route *</label>
-                  <select class="form-select" formControlName="route">
-                    <option disabled value="select">Select</option>
-                    <option *ngFor="let route of routes" [value]="route._id">{{route.routeName}}</option>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Stop Page *</label>
-                  <select class="form-select" formControlName="stoppage">
-                    <option disabled value="select">Select</option>
-                    <option *ngFor="let stop of stopPages" [value]="stop._id">{{stop.stoppageName}}</option>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Vehicle *</label>
-                  <select class="form-select" formControlName="vehicle">
-                    <option disabled value="select">Select</option>
-                    <option *ngFor="let vehicle of vehicles" [value]="vehicle._id">{{vehicle.vehicleNo}}</option>
-                  </select>
+              <div class="row ms-1">
+                <div class="col-md-1"></div>
+                <div class="col-md-6">
+                  <div class="my-5">
+                    <div class="mb-3">
+                      <label class="form-label">Transport Route <span class="error">*</span></label>
+                      <select class="form-select" formControlName="route">
+                        <option disabled value="select">Select</option>
+                        <option *ngFor="let route of routes" [value]="route._id">{{route.routeName}}</option>
+                      </select>
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Stop Page <span class="error">*</span></label>
+                      <select class="form-select" formControlName="stoppage">
+                        <option disabled value="select">Select</option>
+                        <option *ngFor="let stop of stopPages" [value]="stop._id">{{stop.stoppageName}}</option>
+                      </select>
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Vehicle <span class="error">*</span></label>
+                      <select class="form-select" formControlName="vehicle">
+                        <option disabled value="select">Select</option>
+                        <option *ngFor="let vehicle of vehicles" [value]="vehicle._id">{{vehicle.vehicleNo}}</option>
+                      </select>
+                    </div>
+                    <div class="text-end mb-3">
+                      <button class="btn" [disabled]="isLoading || vAssignForm.get('route')?.value == 'select'
+                        || vAssignForm.get('stoppage')?.value == 'select' || vAssignForm.get('vehicle')?.value == 'select'">
+                        <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                        <span *ngIf="!isLoading">Save</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
+             
 
-              <div class="text-end mb-3">
-                <button class="btn" [disabled]="isLoading || vAssignForm.get('route')?.value == 'select'
-                  || vAssignForm.get('stoppage')?.value == 'select' || vAssignForm.get('vehicle')?.value == 'select'">
-                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                  <span *ngIf="!isLoading">Save</span>
-                </button>
-              </div>
+             
             </form>
           </mat-tab-nav-panel>
       </div>

@@ -1,36 +1,23 @@
 <app-layout>
 
     <div class="container p-5">
-        <!-- <div class="py-2 " style="border: solid;"> -->
-        <div class="py-2 ">
+      <h6 class="header-txt mb-3">Salary Assign</h6>
+      <div class="row">
+          <div class="col-md-4">
+                <label class="form-label">Designation <span class="error">*</span></label>
+                <select class="form-select" [(ngModel)]="designFilter" (change)="getFilteredEmployees($event)">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let sec of designations" [value]="sec._id">{{sec.name}}</option>
+                </select>
+            </div>
 
+        <div class="col-md-4 mt-4">
 
-<div class="col-12">
-<div class="row">
-    <!-- <div class="col">
-        <label class="form-label">Role *</label>
-        <input type="text" class="form-control"><br>
-    </div> -->
-    <div class="col">
-        <div class="col">
-            <label class="form-label">Designation *</label>
-            <!-- <label class="form-label">Class *</label> -->
-            <select class="form-select" [(ngModel)]="designFilter" (change)="getFilteredEmployees($event)">
-              <option disabled value="select">Select</option>
-              <option *ngFor="let sec of designations" [value]="sec._id">{{sec.name}}</option>
-            </select>
+            <div class="button pe-5 pt-1 pb-1 mt-2"><button type="button"
+                    class="btn button_color">Filter</button></div>
+
         </div>
     </div>
-
-    <div class="col-12 text-end px-0 pt-4">
-
-        <div class="button pe-5 pt-1 pb-1"><button type="button"
-                class="btn button_color">Filter</button></div>
-
-    </div>
-</div>
-</div>
-</div>
 
   <div class="tab-container">
       <div class="pt-4">

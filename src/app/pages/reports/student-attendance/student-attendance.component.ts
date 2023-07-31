@@ -48,6 +48,15 @@ export class StudentAttendanceComponent {
   sections: any[] = [];
   classes: any[] = [];
   studentData: any[] = [];
+  searchText: any;
+  order:  string = 'name';
+  reverse: boolean = false;
+  caseInsensitive: boolean = false;
+  fields = {
+    name :''
+  };
+  peopleFilter: any;
+  isLoading = true;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
     private studentService:StudentService, private spinner: NgxSpinnerService, private datepipe: DatePipe
 ) {
@@ -56,7 +65,13 @@ export class StudentAttendanceComponent {
 
   }
   ngOnInit() {
+    this.peopleFilter = this.fields; 
     this.getAllClass();
+  }
+  updateFilters(){
+    this.fields.name = this.searchText;
+    this.peopleFilter = this.fields;
+    console.log(this.peopleFilter)
   }
   getAllClass() {
     this.api.getAllClass().subscribe(resp => {

@@ -4,7 +4,7 @@
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Assign List">
           <div class="pt-4">
-            <div class="top-options">
+            <!--<div class="top-options">
               <div class="search-area">
                 <div class="input-group pe-3">
                   <input type="search" class="form-control" placeholder="Search here...">
@@ -18,7 +18,7 @@
                   <button class="btn"><img src="assets/icons/opt-print.svg"></button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <table class="table mt-3">
               <thead>
@@ -62,48 +62,56 @@
         </mat-tab>
         <mat-tab label="Assign Vehicle">
           <form [formGroup]="vAssignForm" (ngSubmit)="assignVehicle()">
-            <div class="my-5">
-              <div class="mb-3">
-                <label class="form-label">Transport Route *</label>
-                <select class="form-select" formControlName="route">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let route of routes" [value]="route._id">{{route.routeName}}</option>
-                </select>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Stop Page *</label>
-                <select class="form-select" formControlName="stoppage">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let stop of stopPages" [value]="stop._id">{{stop.stoppageName}}</option>
-                </select>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Vehicle *</label>
-                <select class="form-select" formControlName="vehicle">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let vehicle of vehicles" (click)="selectedEnq=vehicle" [value]="vehicle._id">{{vehicle.vehicleNo}}</option>
-                </select>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-6">
+                <div class="my-5">
+                  <div class="mb-3">
+                    <label class="form-label">Transport Route <span class="error">*</span></label>
+                    <select class="form-select" formControlName="route">
+                      <option disabled value="select">Select</option>
+                      <option *ngFor="let route of routes" [value]="route._id">{{route.routeName}}</option>
+                    </select>
+                  </div>
+    
+                  <div class="mb-3">
+                    <label class="form-label">Stop Page <span class="error">*</span></label>
+                    <select class="form-select" formControlName="stoppage">
+                      <option disabled value="select">Select</option>
+                      <option *ngFor="let stop of stopPages" [value]="stop._id">{{stop.stoppageName}}</option>
+                    </select>
+                  </div>
+    
+                  <div class="mb-3">
+                    <label class="form-label">Vehicle <span class="error">*</span></label>
+                    <select class="form-select" formControlName="vehicle">
+                      <option disabled value="select">Select</option>
+                      <option *ngFor="let vehicle of vehicles" (click)="selectedEnq=vehicle" [value]="vehicle._id">{{vehicle.vehicleNo}}</option>
+                    </select>
+                  </div>
+                  <div class="text-end mb-3">
+                    <button class="btn" [disabled]="isLoading || vAssignForm.get('route')?.value == 'select'
+                      || vAssignForm.get('stoppage')?.value == 'select' || vAssignForm.get('vehicle')?.value == 'select'">
+                      <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                      <span *ngIf="!isLoading">Save</span>
+                    </button>
+                  </div>
+                </div>
+    
               </div>
             </div>
-
-            <div class="text-end mb-3">
-              <button class="btn" [disabled]="isLoading || vAssignForm.get('route')?.value == 'select'
-                || vAssignForm.get('stoppage')?.value == 'select' || vAssignForm.get('vehicle')?.value == 'select'">
-                <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                <span *ngIf="!isLoading">Save</span>
-              </button>
-            </div>
+          
+            
           </form>
         </mat-tab>
 
         <mat-tab label="Expense Report">
           <form [formGroup]="ExpensForm" (ngSubmit)="AddExpense()">
-            <div class="my-5">
+          
+            <div class="my-5 ms-1">
               <div class="row mb-3">
                 <div class="col-6">
-                  <label class="form-label">Vehicle *</label>
+                  <label class="form-label">Vehicle <span class="error">*</span></label>
                   <select class="form-select" formControlName="vehicleId">
                     <option disabled value="select">Select</option>
                     <option *ngFor="let vehicle of vehicles" [value]="vehicle._id">
@@ -203,7 +211,7 @@
         </form>
 
           <div class="tab-container pt-4">
-            <div class="top-options">
+            <!--<div class="top-options">
               <div class="search-area">
                 <div class="input-group pe-3">
                   <input type="search" class="form-control" placeholder="Search here...">
@@ -217,7 +225,7 @@
                   <button class="btn"><img src="assets/icons/opt-print.svg"></button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <table class="table mt-3">
               <thead>

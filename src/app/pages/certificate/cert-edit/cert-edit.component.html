@@ -9,16 +9,16 @@
       <mat-tab-nav-panel #tabPanel>
         <form [formGroup]="certiForm" (ngSubmit)="updateCerti()">
           <div class="mt-5">
-            <div class="row mb-3">
+            <div class="row ms-2 mb-3">
               <div class="col-4">
-                <label class="form-label">Certificate Name *</label>
+                <label class="form-label">Certificate Name <span class="error">*</span></label>
                 <input type="text" formControlName="name" class="form-control">
               </div>
             </div>
 
-            <div class="row mb-3">
-              <div class="col-6">
-                <label class="form-label">Applicable User *</label>
+            <div class="row ms-2 mb-3">
+              <div class="col-4">
+                <label class="form-label">Applicable User <span class="error">*</span></label>
                 <select class="form-select" formControlName="applicableUser">
                   <option disabled value="select">Select</option>
                   <option value="Student">Student</option>
@@ -42,18 +42,20 @@
                 </select>
               </div> -->
             </div>
-
-            <div class="mb-3">
-              <label class="form-label">Page Layout *</label>
+            <div class="row ms-2 mb-3">
+               <div class="col-md-4">
+              <label class="form-label">Page Layout <span class="error">*</span></label>
               <select class="form-select" formControlName="pageLayout">
                 <option disabled value="select">Select</option>
                 <option value="A4 (Landscape)">A4 (Landscape)</option>
                 <option value="A4 (Potrait)">A4 (Potrait)</option>
               </select>
             </div>
+            </div>
+           
 
-            <div class="row mb-3">
-              <label class="form-label">User Photo Style *</label>
+            <div class="row ms-2 mb-3">
+              <label class="form-label">User Photo Style <span class="error">*</span></label>
               <div class="col-4">
                 <select class="form-select" formControlName="userPhotoStyle">
                   <option disabled value="select">Select</option>
@@ -61,32 +63,25 @@
                   <option value="Round">Round</option>
                 </select>
               </div>
-              <div class="col-4 offset-4">
+              <div class="col-4">
                 <input type="number" formControlName="userPhotoSize" class="form-control" placeholder="Photo Size (px)">
               </div>
             </div>
-            <div class="row mb-3">
-            <div class="row mb-3">
-              <label class="form-label">Layout Spacing *</label>
-              <div class="col-4">
+              <div class="row ms-2 mb-3">
+              <label class="form-label">Layout Spacing <span class="error">*</span></label>
+              <div class="col-3">
                 <input type="number" formControlName="top" class="form-control" placeholder="Top Space (px)">
               </div>
-              <div class="col-4 offset-4">
+              <div class="col-3">
                 <input type="number" formControlName="bottom" class="form-control" placeholder="Bottom Space (px)">
               </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-4">
+              <div class="col-3">
                 <input type="number" formControlName="right" class="form-control" placeholder="Right Space (px)">
               </div>
-              <div class="col-4 offset-4">
+              <div class="col-3">
                 <input type="number" formControlName="left" class="form-control" placeholder="Left Space (px)">
               </div>
             </div>
-          </div>
-
-
             <div class="row mb-3">
               <div class="col-4">
                 <label class="form-label">Signature Image</label>

@@ -60,7 +60,8 @@ export class GuardianAppComponent {
   }
 
   ngOnInit(): void {
-    this.getBanners();
+   // this.getBanners();
+   this.getRaisedTickets();
   }
 
   getBanners() {

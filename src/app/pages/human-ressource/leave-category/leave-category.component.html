@@ -1,66 +1,84 @@
 <app-layout>
     <div class="container p-4">
       <div class="row">
-        <div class="col-6 px-4">
-          <form [formGroup]="leaveForm">
-            <h5 class="mb-4">Add Leave Category</h5>
-            <div class="mb-3">
-              <label class="form-label">Leave Category Name *</label>
-              <input type="text" class="form-control" formControlName="name">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Designation *</label>
-              <select class="form-select" formControlName="designation">
-                <option disabled value="select">Select</option>
-                <option *ngFor="let designation of designations" [value]="designation._id">
-                  {{designation.name}}
-                </option>
-              </select>
-            </div> <div class="mb-3">
-              <label class="form-label">Days *</label>
-              <input type="number" class="form-control" formControlName="days">
-            </div>
-            <div class="text-end">
-              <button type="button" class="btn" (click)="addLeave()" [disabled]="isLoading ||
-                !leaveForm.valid || leaveForm.get('designation')?.value == 'select'">
-                <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                <span *ngIf="!isLoading">Save</span>
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="col-6 px-4">
-          <h5 class="mb-4">Leave Category List</h5>
-          <table class="table" [cellPadding]="0" [cellSpacing]="0">
-            <thead>
-              <tr>
-                <th scope="col">SL</th>
-                <th scope="col">Name</th>
-                <th scope="col">Designation</th>
-                <th scope="col">Days</th>
-
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let leave of leaveCategories; index as i">
-                <td>{{i + 1}}</td>
-                <td>{{leave.name}}</td>
-                <td>{{leave.designationDetail?.name}}</td>
-                <td>{{leave.days}}</td>
-                <td>
-                  <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#editLeave"
-                    (click)="patchLeaveForm(leave)">
-                    <i class="fa-solid fa-pencil"></i>
-                  </button>
-                  <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePrompt"
-                    (click)="selectedLeave=leave"><i class="fa-solid fa-trash-can"></i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="col-md-12 header-txt">
+          <i class="fa-solid fa-layer-group"></i>&nbsp;&nbsp;<span>Leave Category Management</span>
         </div>
       </div>
+      <div class="row mt-3">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header header-txt">
+                  Add Leave Category
+                </div>
+                <div class="card-body">
+                  <form [formGroup]="leaveForm">
+                     <div class="mb-3">
+                      <label class="form-label">Leave Category Name <span class="error">*</span></label>
+                      <input type="text" class="form-control" formControlName="name">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Designation <span class="error">*</span></label>
+                      <select class="form-select" formControlName="designation">
+                        <option disabled value="select">Select</option>
+                        <option *ngFor="let designation of designations" [value]="designation._id">
+                          {{designation.name}}
+                        </option>
+                      </select>
+                    </div> <div class="mb-3">
+                      <label class="form-label">Days <span class="error">*</span></label>
+                      <input type="number" class="form-control" formControlName="days">
+                    </div>
+                    <div class="text-end">
+                      <button type="button" class="btn" (click)="addLeave()" [disabled]="isLoading ||
+                        !leaveForm.valid || leaveForm.get('designation')?.value == 'select'">
+                        <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                        <span *ngIf="!isLoading">Save</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card">
+            <div class="card-header header-txt">
+              Leave Category List
+              </div>
+              <div class="card-body">
+                <table class="table" [cellPadding]="0" [cellSpacing]="0">
+                  <thead>
+                    <tr>
+                      <th scope="col">SL</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Designation</th>
+                      <th scope="col">Days</th>
+      
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let leave of leaveCategories; index as i">
+                      <td>{{i + 1}}</td>
+                      <td>{{leave.name}}</td>
+                      <td>{{leave.designationDetail?.name}}</td>
+                      <td>{{leave.days}}</td>
+                      <td>
+                        <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#editLeave"
+                          (click)="patchLeaveForm(leave)">
+                          <i class="fa-solid fa-pencil"></i>
+                        </button>
+                        <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePrompt"
+                          (click)="selectedLeave=leave"><i class="fa-solid fa-trash-can"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+      </div>
+
     </div>
 </app-layout>
 
@@ -75,11 +93,11 @@
       <div class="modal-body">
         <form [formGroup]="editLeaveForm">
           <div class="mb-3">
-            <label class="form-label">Leave Category Name *</label>
+            <label class="form-label">Leave Category Name <span class="error">*</span></label>
             <input type="text" class="form-control" formControlName="name">
           </div>
           <div class="mb-3">
-            <label class="form-label">Role *</label>
+            <label class="form-label">Role <span class="error">*</span></label>
             <select class="form-select" formControlName="designation">
               <option disabled value="select">Select</option>
               <option *ngFor="let designation of designations" [value]="designation._id">
@@ -88,7 +106,7 @@
             </select>
           </div>
           <div class="mb-3">
-            <label class="form-label">Days *</label>
+            <label class="form-label">Days <span class="error">*</span></label>
             <input type="number" class="form-control" formControlName="days">
           </div>
         </form>

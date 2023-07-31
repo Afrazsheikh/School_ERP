@@ -4,7 +4,7 @@
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Route List">
           <div class="pt-4">
-            <div class="top-options">
+            <!--<div class="top-options">
               <div class="search-area">
                 <div class="input-group pe-3">
                   <input type="search" class="form-control" placeholder="Search here...">
@@ -18,7 +18,7 @@
                   <button class="btn"><img src="assets/icons/opt-print.svg"></button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <table class="table mt-3">
               <thead>
@@ -54,33 +54,32 @@
         </mat-tab>
         <mat-tab label="Create Route">
           <form [formGroup]="routeForm" (ngSubmit)="addRoute()">
-            <div class="my-5">
-              <div class="mb-3">
-                <label class="form-label">Route Name *</label>
-                <input type="text" class="form-control" formControlName="routeName">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Start Place *</label>
-                <input type="text" class="form-control" formControlName="startPlace">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Stop Place *</label>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-6 mt-3">
+                  <div class="col-md-12 mb-3 ">
+                    <label class="form-label">Route Name <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="routeName">
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Start Place <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="startPlace">
+                  </div>
+                  <div class="col-md-12 mb-3">
+                     <label class="form-label">Stop Place <span class="error">*</span></label>
                 <input type="text" class="form-control" formControlName="stopPlace">
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Remarks</label>
+                    <input type="text" class="form-control" formControlName="remarks">
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <button class="btn" [disabled]="isLoading || !routeForm.valid">
+                      <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                      <span *ngIf="!isLoading">Save</span>
+                    </button>
+                  </div>
               </div>
-
-              <div class="mb-3">
-                <label class="form-label">Remarks</label>
-                <input type="text" class="form-control" formControlName="remarks">
-              </div>
-            </div>
-
-            <div class="text-end mb-3">
-              <button class="btn" [disabled]="isLoading || !routeForm.valid">
-                <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                <span *ngIf="!isLoading">Save</span>
-              </button>
             </div>
           </form>
         </mat-tab>

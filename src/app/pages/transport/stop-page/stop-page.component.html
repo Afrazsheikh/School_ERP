@@ -4,7 +4,7 @@
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Stop Page List">
           <div class="pt-4">
-            <div class="top-options">
+            <!--<div class="top-options">
               <div class="search-area">
                 <div class="input-group pe-3">
                   <input type="search" class="form-control" placeholder="Search here...">
@@ -18,7 +18,7 @@
                   <button class="btn"><img src="assets/icons/opt-print.svg"></button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <table class="table mt-3">
               <thead>
@@ -52,31 +52,37 @@
         </mat-tab>
         <mat-tab label="Create Stop Page">
           <form [formGroup]="stopForm" (ngSubmit)="addStopPage()">
-            <div class="my-5">
-              <div class="mb-3">
-                <label class="form-label">Stop Page *</label>
-                <input type="text" class="form-control" formControlName="stoppageName">
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-6">
+                <div class="my-5">
+                  <div class="mb-3">
+                    <label class="form-label">Stop Page <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="stoppageName">
+                  </div>
+    
+                  <div class="mb-3">
+                    <label class="form-label">Stop Time <span class="error">*</span></label>
+                    <!-- <input type="time" class="form-control" formControlName="stopTime"> -->
+                    <input class="form-control" [ngxTimepicker]="fullTime" [format]="24" readonly formControlName="stopTime">
+                    <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+                  </div>
+    
+                  <div class="mb-3">
+                    <label class="form-label">Route Fare <span class="error">*</span></label>
+                    <input type="text" class="form-control" formControlName="routeFare">
+                  </div>
+                  <div class="text-end mb-3">
+                    <button class="btn" [disabled]="isLoading || !stopForm.valid">
+                      <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                      <span *ngIf="!isLoading">Save</span>
+                    </button>
+                  </div>
+                </div>
               </div>
+            </div>       
 
-              <div class="mb-3">
-                <label class="form-label">Stop Time *</label>
-                <!-- <input type="time" class="form-control" formControlName="stopTime"> -->
-                <input class="form-control" [ngxTimepicker]="fullTime" [format]="24" readonly formControlName="stopTime">
-                <ngx-material-timepicker #fullTime></ngx-material-timepicker>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Route Fare *</label>
-                <input type="text" class="form-control" formControlName="routeFare">
-              </div>
-            </div>
-
-            <div class="text-end mb-3">
-              <button class="btn" [disabled]="isLoading || !stopForm.valid">
-                <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                <span *ngIf="!isLoading">Save</span>
-              </button>
-            </div>
+            
           </form>
         </mat-tab>
       </mat-tab-group>

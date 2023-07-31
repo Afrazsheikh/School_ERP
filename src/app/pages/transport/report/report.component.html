@@ -1,9 +1,10 @@
 <app-layout>
   <div class="container p-4">
+    <h3 class="header-txt mb-3">Allocation Report</h3>
     <form [formGroup]="reportForm">
     <div class="row my-5">
-      <div class="mb-3 col-md-4">
-        <label class="form-label">Class *</label>
+      <div class="mb-3 col-md-3">
+        <label class="form-label">Class <span class="error">*</span></label>
      
         <select class="form-select" formControlName="studentClass">
           <option disabled value="select">Select</option>
@@ -11,29 +12,30 @@
         </select>
       </div>
 
-      <div class="mb-3 col-md-4">
-        <label class="form-label">Section *</label>
+      <div class="mb-3 col-md-3">
+        <label class="form-label">Section <span class="error">*</span></label>
       
         <select class="form-select" formControlName="section">
           <option disabled value="select">Select</option>
           <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
         </select>
       </div>
-      <div class="mb-3 col-md-4">
-        <label class="form-label">Year *</label>
+      <div class="mb-3 col-md-3">
+        <label class="form-label">Year <span class="error">*</span></label>
         <select class="form-select" formControlName="academicYear">
           <option disabled value="select">Select</option>
           <option *ngFor="let year of aceYear" [value]="year._id">{{year.name}}</option>
         </select>
       </div>
+      <div class="col-md-2 mt-4">
+        <button class="btn mt-2" (click)="callReport(reportForm)" [disabled]="!reportForm.valid">Filter</button>
+      </div>
     </div>
 </form>
-    <div class="text-end mb-3">
-      <button class="btn" (click)="callReport(reportForm)" [disabled]="!reportForm.valid">Filter</button>
-    </div>
+  
 
     <div class="tab-container pt-4">
-      <div class="top-options">
+      <!--<div class="top-options">
         <div class="search-area">
           <div class="input-group pe-3">
             <input type="search" class="form-control" placeholder="Search here...">
@@ -47,7 +49,7 @@
             <button class="btn"><img src="assets/icons/opt-print.svg"></button>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <table class="table mt-3">
         <thead>

@@ -8,48 +8,55 @@
 
           <mat-tab-nav-panel #tabPanel>
             <form [formGroup]="vehicleForm" (ngSubmit)="updateVehicle()">
-              <div class="my-5">
-                <div class="mb-3">
-                  <label class="form-label">Vehicle No. *</label>
-                  <input type="text" class="form-control" formControlName="vehicleNo">
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Capacity *</label>
-                  <input type="text" class="form-control" formControlName="capacity">
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Insurance Renewal Date *</label>
-                  <div class="input-group flex-nowrap">
-                    <input [matDatepicker]="picker" class="date-picker-input" (click)="picker.open()" formControlName="insuranceRenewalDate">
-                    <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-6">
+                  <div class="my-5">
+                    <div class="mb-3">
+                      <label class="form-label">Vehicle No. <span class="error">*</span></label>
+                      <input type="text" class="form-control" formControlName="vehicleNo">
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Capacity <span class="error">*</span></label>
+                      <input type="text" class="form-control" formControlName="capacity">
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Insurance Renewal Date <span class="error">*</span></label>
+                      <div class="input-group flex-nowrap">
+                        <input [matDatepicker]="picker" class="date-picker-input" (click)="picker.open()" formControlName="insuranceRenewalDate">
+                        <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                      </div>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Driver Name <span class="error">*</span></label>
+                      <input type="text" class="form-control" formControlName="driverName">
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Driver Phone <span class="error">*</span></label>
+                      <input type="text" class="form-control" formControlName="driverPhoneNo">
+                    </div>
+    
+                    <div class="mb-3">
+                      <label class="form-label">Driver License <span class="error">*</span></label>
+                      <input type="text" class="form-control" formControlName="driverLicense">
+                    </div>
+                    <div class="text-end mb-3">
+                      <button class="btn" [disabled]="isLoading || !vehicleForm.valid">
+                        <span *ngIf="isLoading" class="spinner-border text-light"></span>
+                        <span *ngIf="!isLoading">Save</span>
+                      </button>
+                    </div>
                   </div>
-                  <mat-datepicker #picker></mat-datepicker>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Driver Name *</label>
-                  <input type="text" class="form-control" formControlName="driverName">
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Driver Phone *</label>
-                  <input type="text" class="form-control" formControlName="driverPhoneNo">
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Driver License*</label>
-                  <input type="text" class="form-control" formControlName="driverLicense">
+    
                 </div>
               </div>
-
-              <div class="text-end mb-3">
-                <button class="btn" [disabled]="isLoading || !vehicleForm.valid">
-                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                  <span *ngIf="!isLoading">Save</span>
-                </button>
-              </div>
+              
+              
             </form>
           </mat-tab-nav-panel>
       </div>

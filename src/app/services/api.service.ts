@@ -1173,6 +1173,28 @@ export class ApiService {
       .post(environment.apiBaseUrl + "/filterStudent/attandance", postData)
       .pipe(catchError(this.errorHandler));
   }
+
+  deleteBannerById(id: string): Observable<any> {
+     return this.httpClient
+      .delete(environment.apiBaseUrl + '/banner/delete', {
+        body: id,
+      })
+      .pipe(catchError(this.errorHandler));
+  }
+  deleteNotificationById(id: string): Observable<any> {
+    return this.httpClient
+     .delete(environment.apiBaseUrl + '/notification/delete', {
+       body: id,
+     })
+     .pipe(catchError(this.errorHandler));
+ }
+ deleteNoticeById(id: string): Observable<any> {
+  return this.httpClient
+   .delete(environment.apiBaseUrl + '/noticeBoard/delete', {
+     body: id,
+   })
+   .pipe(catchError(this.errorHandler));
+}
   isEmptyObject(obj) {
     for (var property in obj) {
       if (obj.hasOwnProperty(property)) {

@@ -6,6 +6,7 @@
         mat-align-tabs="start"
         (selectedTabChange)="tabChange($event)"
       >
+      <!--
         <mat-tab label="Banner">
           <form [formGroup]="bannerForm" (ngSubmit)="addBanner()">
             <div class="row my-3">
@@ -64,7 +65,7 @@
               </div>
               <div class="col-4">
                 <label class="form-label">Type </label>
-                <!-- <label class="form-label">Class *</label> -->
+                
                 <select class="form-select" formControlName="type">
                   <option disabled value="select">Select</option>
                   <option *ngFor="let type of types" [value]="type">
@@ -183,7 +184,7 @@
 
               <div class="col-3">
                 <label class="form-label">Type </label>
-                <!-- <label class="form-label">Class *</label> -->
+               
                 <select class="form-select" formControlName="type">
                   <option disabled value="select">Select</option>
                   <option *ngFor="let type of types" [value]="type">
@@ -263,7 +264,7 @@
               </div>
               <div class="col-2">
                 <label class="form-label">Type </label>
-                <!-- <label class="form-label">Class *</label> -->
+                
                 <select class="form-select" formControlName="type">
                   <option disabled value="select">Select</option>
                   <option *ngFor="let type of types" [value]="type">
@@ -305,7 +306,7 @@
             </tbody>
           </table>
         </mat-tab>
-
+      -->
         <mat-tab label="Raised Ticket">
           <div class="mb-3" style="width: 15%; margin-top: 5%">
             <label for="exampleInputEmail1" class="form-label"
