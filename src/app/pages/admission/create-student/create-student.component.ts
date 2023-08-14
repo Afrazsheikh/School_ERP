@@ -268,7 +268,7 @@ export class CreateStudentComponent {
     postData.append("category", _form.value.category);
     postData.append("studentClass", _form.value.studentClass?._id);
     postData.append("registerNo", _form.value.registerNo);
-    postData.append("rollNo", _form.value.rollNo);
+   // postData.append("rollNo", _form.value.rollNo);
     postData.append("admissionDate", moment(_form.value.admissionDate).format("YYYY-MM-DD"));
     postData.append("firstName", _form.value.firstName);
     postData.append("type", _form.value.type);
