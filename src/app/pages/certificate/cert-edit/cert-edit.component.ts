@@ -55,6 +55,7 @@ export class CertEditComponent {
 
   patchForm()
   {
+    console.log(this.certi);
     this.certiForm.patchValue({
       name: this.certi.name,
       applicableUser: this.certi.applicableUser,

@@ -2,19 +2,46 @@
   <mat-list-item routerLink="{{ routes.DASHBOARD }}" routerLinkActive="active">
     <mat-icon matListItemIcon>home</mat-icon> Dashboard
   </mat-list-item>
+  <ng-container *ngFor="let value of menuData">
+   
+	<mat-expansion-panel   hideToggle="true"  [expanded]="expandTab(value.url)">
+   
+      <mat-expansion-panel-header>
+        <mat-list-item
+        [ngClass]="setClass(value.url)"
+      >
+        <mat-icon matListItemIcon>{{value.icon}}</mat-icon> {{value.name}}
+      </mat-list-item>
+        
+      </mat-expansion-panel-header>
+   
+    <div class="sub-menu-cont" >
+      <ng-container *ngFor="let submenu of value.subMenu">
+      <mat-list-item
+      class="sub-menu"
+      [routerLink]=submenu.url
+      routerLinkActive="sub-active"
+    >
+     {{submenu.name}}
+    </mat-list-item>
+  </ng-container>
+    </div>
+  </mat-expansion-panel>
+</ng-container>
 
+<!--
   <mat-expansion-panel
     hideToggle="true"
-    [expanded]="currentUrl.includes('/admission') ? true : false"
+    [expanded]="expandTab('/admission')"
   >
     <mat-expansion-panel-header>
       <mat-list-item
-        [ngClass]="currentUrl.includes('/admission') ? 'active' : ''"
+        [ngClass]="setClass('/admission')"
       >
         <mat-icon matListItemIcon>account_circle</mat-icon> Admission
       </mat-list-item>
     </mat-expansion-panel-header>
-    <!--Sub Menu-->
+   
     <div class="sub-menu-cont">
       <mat-list-item
         class="sub-menu"
@@ -49,11 +76,11 @@
 
   <mat-expansion-panel
   hideToggle="true"
-  [expanded]="currentUrl.includes('/attendance') ? true : false"
+ [expanded]="expandTab('/attendance')"
 >
 <mat-expansion-panel-header>
   <mat-list-item
-    [ngClass]="currentUrl.includes('/attendance') ? 'active' : ''"
+    [ngClass]="setClass('/attendance')"
   >
     <mat-icon matListItemIcon>leaderboard</mat-icon>Attendance
   </mat-list-item>
@@ -129,7 +156,7 @@ Student
         <mat-icon matListItemIcon>account_balance</mat-icon>Academic
       </mat-list-item>
     </mat-expansion-panel-header>
-    <!--Sub Menu-->
+   
     <div class="sub-menu-cont">
       <mat-list-item
         class="sub-menu"
@@ -198,11 +225,11 @@ Student
         <mat-icon matListItemIcon>contacts</mat-icon>Student List
       </mat-list-item>
     </mat-expansion-panel-header>
-    <!--Sub Menu-->
+    
     <div class="sub-menu-cont">
     </div>
   </mat-expansion-panel>
-
+-->
   <mat-expansion-panel
     hideToggle="true"
     [expanded]="currentUrl.includes('/employee/') ? true : false"

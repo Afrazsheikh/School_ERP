@@ -24,6 +24,9 @@ import { NgxPrintModule } from 'ngx-print';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './pages/auth/auth.guard';
+import { AuthService } from './pages/auth/auth.service';
+import { LogoutComponent } from './pages/logout/logout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReportsComponent,
     DashboardComponent,
     LoginComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ModalModule.forRoot(),
     ReactiveFormsModule,
   ],
-  providers: [BsModalService],
+  providers: [BsModalService, AuthGuard, AuthService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

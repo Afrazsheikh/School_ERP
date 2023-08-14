@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private api: ApiService,
     private toastr: ToastrService,
-    private _router: Router
+    private _router: Router,
+    private authService:AuthService
   ) {
     this.buildForm();
   }
@@ -36,6 +38,14 @@ export class LoginComponent {
   onLogin() {
     this.api.loginMethod(this.loginFG.value).subscribe({
       next: (res) => {
+        const resData = res[0]['data'];
+        const userInfo = {
+          "id": resData._id,
+          "contactName": resData.name,
+          "phoneNumber": resData.number,
+          "userEmail": resData.email
+        };
+        this.authService.setToken(res.authToken,userInfo);
         this.toastr.success('Logged-In Successfully!');
         this._router.navigateByUrl('/dashboard');
       },
