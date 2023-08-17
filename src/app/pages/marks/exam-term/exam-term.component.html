@@ -43,8 +43,7 @@
                   <i class="fa-solid fa-pencil"></i>
                 </button>
                      
-                      <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePrompt"
-                      (click)="selectedTerm=term"><i class="fa-solid fa-trash-can"></i></button>
+                      <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletePrompt, term)"><i class="fa-solid fa-trash-can"></i></button>
                     </td>
                   </tr>
       
@@ -90,13 +89,11 @@
                     <td>{{i+1}}</td>
                     <td>{{dist.name}}</td>
                 <td>
-                  <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#editLeaveE"
-                  (click)="patchDistForm(dist)">
+                  <button class="btn emp-edit me-1" (click)="patchDistForm(dist, editLeaveE)">
                   <i class="fa-solid fa-pencil"></i>
                 </button>
                      
-                      <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePromptD"
-                      (click)="selectedDist=dist"><i class="fa-solid fa-trash-can"></i></button>
+                      <button class="btn emp-edit ms-1" (click)="openDeleteDistributionModal(deletePromptD, dist)" ><i class="fa-solid fa-trash-can"></i></button>
                     </td>
                   </tr>
       
@@ -140,7 +137,33 @@
     </div>
   </div>
   
-  
+  <ng-template #editLeaveE>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Edit Exam  Distribution</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="editDistForm">
+        <div class="mb-3">
+          <label class="form-label"> Name *</label>
+          <input type="text" class="form-control" formControlName="name">
+        </div>
+    
+       
+      </form>
+         
+        <div class="modal-footer mt-4">
+          <button type="button" class="btn btn-danger" [disabled]="isLoading ||
+          !editDistForm.valid || editDistForm.get('dist')?.value == 'select'"  (click)="updateDistE()"> 
+          <span *ngIf="isLoading" class="spinner-border text-light"></span>
+          <span *ngIf="!isLoading">Update</span>
+        </button>
+          <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+        </div>
+    </div>
+  </ng-template>
   
 <!-- Modal for editing  -->
 <div class="modal fade" id="editLeaveD">
@@ -175,7 +198,49 @@
   
   
   <!---Modal for delete---->
-  <div class="modal fade" id="deletePrompt">
+  <ng-template #deletePrompt>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Delete Exam Term</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="text-justify">Are you sure, You Want To Delete This Information?</span>
+        </div>
+      </div>
+         
+        <div class="modal-footer mt-4">
+          <button type="button" class="save_button btn" (click)="deleteExaTerm()">Yes, Continue</button>
+          <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+        </div>
+    </div>
+  </ng-template>
+
+  <ng-template #deletePromptD>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Delete Exam Term</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <span class="text-justify">Are you sure, You Want To Delete This Information?</span>
+        </div>
+      </div>
+         
+        <div class="modal-footer mt-4">
+          <button type="button" class="save_button btn" (click)="deleteDist()">Yes, Continue</button>
+          <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+        </div>
+    </div>
+  </ng-template>
+
+  <!---<div class="modal fade" id="deletePrompt">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -195,7 +260,7 @@
   </div>
   </div>
 
-  <!---Modal for delete dist---->
+  Modal for delete dist
 <div class="modal fade" id="deletePromptD">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -214,4 +279,4 @@
       </div>
     </div>
   </div>
-</div>
+</div>---->

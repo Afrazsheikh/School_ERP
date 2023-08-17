@@ -48,8 +48,7 @@ export class ExamSetupComponent {
 
   addExams()
   {
-    console.log(this.examForm.value);
-    
+   
     this.isLoading = true;
     this.api.createExam(this.examForm.value).subscribe(resp => {
       console.log(resp);

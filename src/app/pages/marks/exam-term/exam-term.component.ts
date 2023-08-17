@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
-
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-exam-term',
   templateUrl: './exam-term.component.html',
@@ -14,7 +14,7 @@ export class ExamTermComponent {
   isLoading: boolean;
   examTerms: any;
   selectedTerm: any;
-
+  modalRef!: BsModalRef;
   disturbutionForm:  FormGroup
   editDistForm: FormGroup
 
@@ -22,7 +22,7 @@ export class ExamTermComponent {
   selectedDist: any;
 
 
-  constructor(private api: ApiService,private toastr: ToastrService  ) {
+  constructor(private api: ApiService,private toastr: ToastrService ,private modalService: BsModalService, ) {
     this.examTermForm =  new FormGroup ({
       name: new FormControl(null, [Validators.required]),
     
@@ -118,7 +118,7 @@ export class ExamTermComponent {
     this.api.deleteExamTerm(this.selectedTerm._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
+     this.closePopup();
       this.getExamTerms()
     },
     (err) => {
@@ -159,14 +159,14 @@ export class ExamTermComponent {
       
     })
   }
-  patchDistForm(dist:  any){
+  patchDistForm(dist:  any, template: TemplateRef<any>){
    this.selectedDist=dist
     this.editDistForm.patchValue({
       marksDistributionId: dist._id,
       name: dist.name,
  
     });
-    
+    this.modalRef = this.modalService.show(template);
   }
   updateDistE(){
     this.isLoading = true;
@@ -177,7 +177,7 @@ export class ExamTermComponent {
       
       this.isLoading = false;
       this.toastr.success(resp.message, "Exam  Disturbution  update success");
-      document.getElementById('editModalDismissBtn')?.click();
+     this.closePopup();
       this.getMarksDiturbution();
     },
     (err) => {
@@ -192,7 +192,7 @@ export class ExamTermComponent {
     this.api.deleteMarksDistribution(this.selectedDist._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
+      this.closePopup();
       this.getMarksDiturbution()
     },
     (err) => {
@@ -201,8 +201,17 @@ export class ExamTermComponent {
     })
   }
 
-  
-
+  openDeleteModal(template: TemplateRef<any>, data: any){
+    this.selectedTerm = data;
+    this.modalRef = this.modalService.show(template);
+  }
+  openDeleteDistributionModal(template: TemplateRef<any>, data: any){
+    this.selectedDist = data;
+    this.modalRef = this.modalService.show(template);
+  }
+  closePopup(){
+    this.modalRef.hide();
+  }
 
 
   }

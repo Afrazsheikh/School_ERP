@@ -88,7 +88,7 @@
                         <div class="mb-3 py-2 offset-2 col-md-5">
                           <label class="form-label">Exam Type <span class="error">*</span></label>
                           <select class="form-select" formControlName="examtype">
-                            <option disabled value="select">Select</option>
+                            <option  value="">Select</option>
                             <option *ngFor="let exam of exams" [value]="exam.examtype">
                               {{exam.examtype}}
                             </option>

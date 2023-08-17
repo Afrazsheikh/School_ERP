@@ -36,7 +36,9 @@ export class CertEmpComponent {
   }
 
   ngOnInit(): void {
-    this.getAllEmployees();
+   // this.getAllEmployees();
+    this.getAllDesignations();
+    this.getApplicableCertificates();
   }
 
   getAllEmployees()
