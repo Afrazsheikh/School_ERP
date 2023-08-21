@@ -63,20 +63,24 @@ export class LeaveManageApplicationComponent implements OnInit {
       this.filteredLeaveApps = resp.leavesRequest;
       this.filteredLeaveApps = this.filteredLeaveApps.filter(leave => leave.employee || leave.student);
       this.getDesignations();
+      this.getFilteredLeaves();
     });
   }
   
 
   getFilteredLeaves()
   {
-    if(this.designFilter === 'student') {
-      this.filteredLeaveApps = this.leaveApps.filter(leave => leave.student );
+    if(this.designFilter !== 'select') {
+      if(this.designFilter === 'student') {
+        this.filteredLeaveApps = this.leaveApps.filter(leave => leave.student );
+      }
+      else {
+        this.filteredLeaveApps = this.leaveApps.filter(leave => leave.employee?.designation?._id === this.designFilter);
+      }
+      console.log("GetFiltercall\n\n")
+      console.log(this.filteredLeaveApps);
     }
-    else {
-      this.filteredLeaveApps = this.leaveApps.filter(leave => leave.employee?.designation?._id === this.designFilter);
-    }
-    console.log("GetFiltercall\n\n")
-    console.log(this.filteredLeaveApps);
+    
   }
 
   getLeavesCategory()
@@ -137,7 +141,6 @@ export class LeaveManageApplicationComponent implements OnInit {
       this.leaveForm.reset();
       this.fileData = null;
       this.getLeaveApplication();
-      this.getFilteredLeaves();
     },
     (err) => {
       this.isLoading = false;
@@ -171,7 +174,6 @@ export class LeaveManageApplicationComponent implements OnInit {
      // document.getElementById('updateStatusModal')?.click();
      this.closePopup();
       this.getLeaveApplication();
-      this.getFilteredLeaves();
     },
     (err) => {
       this.isLoading = false;
