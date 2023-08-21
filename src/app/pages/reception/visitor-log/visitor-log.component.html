@@ -68,7 +68,7 @@
           </div>
         </mat-tab>
         <mat-tab label="Add Visitor">
-          <form [formGroup]="visitorLogForm" (ngSubmit)="addVisitorLog()">
+          <form [formGroup]="visitorLogForm" >
           <div class="row ms-1 mt-3">
             <div class="col-md-4">
               <label class="form-label">Visiting Purpose <span class="error">*</span></label>
@@ -140,7 +140,7 @@
          
 
           <div class="text-end mb-3">
-            <button type="button" class="btn btn-danger" [disabled]="isLoading || !visitorLogForm.valid" >
+            <button type="button" (click)="addVisitorLog()" class="btn btn-danger" [disabled]="isLoading || !visitorLogForm.valid" >
               <span *ngIf="isLoading" class="spinner-border text-light"></span>
               <span *ngIf="!isLoading">Save</span>
 

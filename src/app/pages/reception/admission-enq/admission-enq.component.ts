@@ -75,15 +75,14 @@ export class AdmissionEnqComponent {
   addDEnquery()
   {
     // console.log(this.examTermForm.value);
-    
+    this.addEnquiryForm.value.mobileNo = this.addEnquiryForm.value.mobileNo.toString();
+    this.addEnquiryForm.value.classApplyFor = this.addEnquiryForm.value.classApplyFor.toString();
     this.isLoading = true;
     this.api.addEnquery(this.addEnquiryForm.value).subscribe(resp => {
-      console.log(resp);
-      
+      console.log(resp);      
       this.isLoading = false;
-
       this.toastr.success(resp.message, "add success");
-     
+      this.getEnqu();     
   // this.getExamTerms();
     },
     (err) => {
@@ -116,6 +115,9 @@ export class AdmissionEnqComponent {
   updateEnq(){
 
     this.isLoading = true;
+    this.editEnq.value.mobileNo = this.editEnq.value.mobileNo.toString();
+    this.editEnq.value.classApplyFor = this.editEnq.value.classApplyFor.toString();
+
     this.api.updateEnq(this.selectedEnq._id, this.editEnq.value).subscribe(resp => {
       console.log(resp);
 

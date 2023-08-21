@@ -61,9 +61,9 @@ exam:any
 createForm(){
   this.examForm =  new FormGroup ({
     name: new FormControl(this.editRoute.name, [Validators.required]),
-    term: new FormControl(this.editRoute.term, [Validators.required]),
+    term: new FormControl(this.editRoute.term?._id, [Validators.required]),
     examtype: new FormControl(this.editRoute.examtype, [Validators.required]),
-    marksDistribution : new FormControl(this.editRoute.marksDistribution, [Validators.required]),
+    marksDistribution : new FormControl(this.editRoute.marksDistribution[0]['_id'], [Validators.required]),
     remarks: new FormControl(this.editRoute.remarks, [Validators.required]),
 })
 }
@@ -72,8 +72,9 @@ getExamTerms()
   this.api.getExamTerms().subscribe(resp => {
     this.examTerms = resp.examTerms;
     console.log(this.examTerms, "exam terms");
-
-
+    this.examForm.patchValue({
+      term:this.editRoute.term?._id
+    })
   });
 }
 getAllExam(){
@@ -89,7 +90,10 @@ getMarksDiturbution(){
   console.log("this");
 
   this.api.getAllMarksDistubutions().subscribe((res)=>{
-    this.marksDistributions = res.marksDistributions
+    this.marksDistributions = res.marksDistributions;
+    this.examForm.patchValue({
+      marksDistribution:this.editRoute.marksDistribution[0]['_id']
+    })
     console.log(this.marksDistributions, "first res");
 
   })
