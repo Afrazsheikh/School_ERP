@@ -10,7 +10,7 @@
               <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Leave Management</span>
             </div>
             <div class="col-md-6 text-end mb-2">
-              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addLeave">Add Leave</button>
+              <button type="button" class="btn" (click)="openQuickModalForAddLeave(addLeave)" >Add Leave</button>
             </div>
           </div>
 <div class="row">
@@ -24,10 +24,10 @@
         </select>
     </div>
 
-    <div class="col-md-2 text-end px-0 pt-4">
+    <!--<div class="col-md-2 text-end px-0 pt-4">
         <div class="button pe-5 pt-1 pb-1">
           <button type="button" class="btn button_color">Filter</button></div>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -71,10 +71,7 @@
            <span class="badge badge-success" *ngIf="(leave.status).toLowerCase() === 'approved'" style="text-transform: uppercase;">{{leave.status}}</span>
         </td>
         <td>
-          <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#viewLeave"
-            (click)="selectedLeave=leave;">
-            <i class="fa-solid fa-list-ul"></i>
-          </button>
+          <button class="btn emp-edit me-1" (click)="openQuickModal(viewLeave, leave)"><i class="fa-solid fa-list-ul"></i></button>
           <button class="btn emp-edit ms-1" data-bs-toggle="modal" data-bs-target="#deletePrompt"
             (click)="selectedLeave=leave;">
             <i class="fa-solid fa-trash-can"></i>
@@ -88,89 +85,193 @@
 </app-layout>
 
 
-<!---Modal for Add Leave---->
+<!---Modal for Add Leave>
 <div class="modal fade salary-table" id="addLeave">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Details</h5>
       </div>
-      <div class="modal-body">
-        <form [formGroup]="leaveForm">
-          <div class="container">
-              <div class="mb-3 py-2">
-                  <div class="py-4">
-                      <h6>Add Leave Category</h6>
-                  </div>
-                  <div>
-                    <label class="form-label">Employee <span class="error">*</span></label>
-                    <select class="form-select" formControlName="employee">
-                      <option disabled value="select">Select</option>
-                      <option *ngFor="let emp of employees" [value]="emp._id">{{emp.name}}</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Leave Type <span class="error">*</span></label>
-                  <select class="form-select" formControlName="leaveType">
-                    <option disabled value="select">Select</option>
-                    <option *ngFor="let leave of leaveCats" [value]="leave._id">{{leave.name}}</option>
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Date <span class="error">*</span></label>
-                  <div class="input-group flex-nowrap">
-                    <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-                    <mat-date-range-input [rangePicker]="picker" class="date-picker-input" (click)="picker.open()">
-                      <input matStartDate readonly placeholder="mm/dd/yyyy" formControlName="fromDate">
-                      <input matEndDate readonly placeholder="mm/dd/yyyy" formControlName="toDate">
-                    </mat-date-range-input>
-                  </div>
-                  <mat-date-range-picker #picker></mat-date-range-picker>
-                </div>
-
-                <div class="mb-3 py-2">
-                  <label class="form-label">Reason <span class="error">*</span></label>
-                  <input type="text" class="form-control" formControlName="reason">
-                </div>
-                <div class="mb-3 py-2">
-                  <label class="form-label">Attachment <span class="error">*</span></label>
-                  <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event)">
-                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                        <ng-container *ngIf="!fileData">
-                          Drag and drop or
-                          <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
-                        </ng-container>
-                        <ng-container *ngIf="fileData">
-                          {{fileData.name}}
-                          <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="fileData=null">
-                            Remove
-                          </a>
-                        </ng-container>
-                    </ng-template>
-                  </ngx-file-drop>
-                </div>
-          </div>
-        </form>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn" [disabled]="isLoading || !leaveForm.valid
-          || leaveForm.get('employee')?.value == 'select'
-          || leaveForm.get('leaveType')?.value == 'select'" (click)="addLeaveRequest()">
-          <span *ngIf="isLoading" class="spinner-border text-light"></span>
-          <span *ngIf="!isLoading">Save</span>
-        </button>
-        <button id="addModalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-      </div>
+      
     </div>
   </div>
-</div>
+</div>---->
+<ng-template #addLeave>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add Leave Category</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="leaveForm">
+      <div class="container">
+          <div class="mb-3 py-2">
+              <div class="py-4">
+                  <h6>Add Leave Category</h6>
+              </div>
+              <div>
+                <label class="form-label">Employee <span class="error">*</span></label>
+                <select class="form-select" formControlName="employee">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let emp of employees" [value]="emp._id">{{emp.name}}</option>
+                </select>
+              </div>
+            </div>
 
+            <div class="mb-3">
+              <label class="form-label">Leave Type <span class="error">*</span></label>
+              <select class="form-select" formControlName="leaveType">
+                <option disabled value="select">Select</option>
+                <option *ngFor="let leave of leaveCats" [value]="leave._id">{{leave.name}}</option>
+              </select>
+            </div>
 
-<!---Modal for View Leave Request---->
+            <div class="mb-3">
+              <label class="form-label">Date <span class="error">*</span></label>
+              <div class="input-group flex-nowrap">
+                <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                <mat-date-range-input [rangePicker]="picker" class="date-picker-input" (click)="picker.open()">
+                  <input matStartDate readonly placeholder="mm/dd/yyyy" formControlName="fromDate">
+                  <input matEndDate readonly placeholder="mm/dd/yyyy" formControlName="toDate">
+                </mat-date-range-input>
+              </div>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </div>
+
+            <div class="mb-3 py-2">
+              <label class="form-label">Reason <span class="error">*</span></label>
+              <input type="text" class="form-control" formControlName="reason">
+            </div>
+            <div class="mb-3 py-2">
+              <label class="form-label">Attachment <span class="error">*</span></label>
+              <ngx-file-drop [multiple]="false" [directory]="false" (onFileDrop)="onFilesDropped($event)">
+                <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                    <ng-container *ngIf="!fileData">
+                      Drag and drop or
+                      <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
+                    </ng-container>
+                    <ng-container *ngIf="fileData">
+                      {{fileData.name}}
+                      <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="fileData=null">
+                        Remove
+                      </a>
+                    </ng-container>
+                </ng-template>
+              </ngx-file-drop>
+            </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" [disabled]="isLoading || !leaveForm.valid
+      || leaveForm.get('employee')?.value == 'select'
+      || leaveForm.get('leaveType')?.value == 'select'" (click)="addLeaveRequest()">
+      <span *ngIf="isLoading" class="spinner-border text-light"></span>
+      <span *ngIf="!isLoading">Save</span>
+    </button>
+    <button type="button" class="save_button btn" (click)="closePopup()">Close</button>
+  </div>
+</ng-template>
+<ng-template #viewLeave>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Details</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    
+    <div class="row mb-3">
+      <div class="col-3">
+        <div>
+          Reviewed By :
+          <br>
+          Applicant :
+          <br>
+          Staff Id :
+          <br>
+          Leave Category :
+          <br>
+          Apply Date :
+          <br>
+          Start Date :
+          <br>
+          End Date :
+          <br>
+          Reason :
+          <br>
+          Attachment :
+          <br>
+          Status :
+          <br>
+          Comments :
+        </div>
+      </div>
+      <div class="col-9">
+        <div *ngIf="selectedLeave?.employee || selectedLeave?.student">
+          {{selectedLeave?.employee ? selectedLeave.employee.name : selectedLeave.student.firstName + ' ' + selectedLeave.student.lastName}}
+          <br>
+          {{selectedLeave?.employee ? selectedLeave.employee.name : selectedLeave.student.firstName + ' ' + selectedLeave.student.lastName}}
+          <br>
+          {{selectedLeave?.employee ? (selectedLeave.employee._id | slice:-7) : (selectedLeave.student._id | slice:-7)}}
+          <br>
+          {{selectedLeave?.leaveType.name}}
+          <br>
+          -
+          <br>
+          {{selectedLeave?.fromDate | date}}
+          <br>
+          {{selectedLeave?.toDate | date}}
+          <br>
+          {{selectedLeave?.reason}}
+          <br>
+          <a *ngIf="selectedLeave?.attachment" [href]="selectedLeave?.attachment" target="_blank">Download</a>
+          <br>
+          <form [formGroup]="leaveForm">
+            <div class="leave-status d-flex">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="status" id="pending"
+                    value="PENDING">
+                  <label class="form-check-label" for="pending">
+                    Pending
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="status" id="approve"
+                    value="APPROVED">
+                  <label class="form-check-label" for="approve">
+                    Approved
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="status" id="reject"
+                    value="REJECTED">
+                  <label class="form-check-label" for="reject">
+                    Reject
+                  </label>
+                </div>
+            </div>
+          </form>
+          <br>
+          <textarea class="form-control" rows="2"></textarea>
+          </div>
+      </div>
+    </div>
+       
+      <div class="modal-footer mt-4">
+        <button type="button" class="btn btn-primary"
+        [disabled]="isLoading" (click)="updateStatus()">
+        <span *ngIf="isLoading" class="spinner-border text-light"></span>
+        <span *ngIf="!isLoading">Apply</span>
+      </button>
+        <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+      </div>
+  </div>
+</ng-template>
+
+<!---Modal for View Leave Request
 <div class="modal fade" id="viewLeave">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -266,7 +367,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>---->
 
 
 <!---Modal for delete---->

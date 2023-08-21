@@ -23,7 +23,7 @@
                       <table class="table mt-3">
                         <thead>
                           <tr>
-                            <th scope="col"><input type="checkbox" class="form-check-input"></th>
+                            <!--<th scope="col"><input type="checkbox" class="form-check-input"></th> -->
                             <th scope="col">SL</th>
                             <th scope="col">Salary Grades</th>
                             <th scope="col">Basic Salaasdry</th>
@@ -34,7 +34,7 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let salary of salaries; index as i">
-                            <td scope="row"><input type="checkbox" class="form-check-input"></td>
+                           <!-- <td scope="row"><input type="checkbox" class="form-check-input"></td>-->
                             <td>{{i+1}}</td>
                             <td>{{salary.salaryGrade}}</td>
                             <td>{{salary.basicSalary}}</td>

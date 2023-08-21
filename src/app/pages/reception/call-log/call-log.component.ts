@@ -81,7 +81,7 @@ export class CallLogComponent {
       this.isLoading = false;
 
       this.toastr.success(resp.message, "add success");
-     
+      this.getCallLog() ;
   // this.getExamTerms();
     },
     (err) => {

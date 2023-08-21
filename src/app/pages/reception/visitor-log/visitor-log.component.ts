@@ -84,7 +84,7 @@ export class VisitorLogComponent {
       this.isLoading = false;
 
       this.toastr.success(resp.message, "add success");
-     
+      this.getVisitor() 
   // this.getExamTerms();
     },
     (err) => {

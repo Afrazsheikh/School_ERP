@@ -168,8 +168,10 @@
           </div>
            <div class="mb-3">
             <label class="form-label"> Date of Birth *</label>
-            <input type="text" class="form-control" formControlName="dob">
+            <input type="text" class="date-picker-input" formControlName="dob" 
+            [matDatepicker]="picker2"  (click)="picker2.open()"> 
           </div>
+          <mat-datepicker #picker2></mat-datepicker>
            <div class="mb-3">
             <label class="form-label"> fatherName *</label>
             <input type="text" class="form-control" formControlName="fatherName">
@@ -203,7 +205,7 @@
           <span *ngIf="isLoading" class="spinner-border text-light"></span>
           <span *ngIf="!isLoading">Update</span>
         </button> -->
-        <button (click)="updateEnq()"> Update</button>
+        <button (click)="updateEnq()" class="btn btn-primary"> Update</button>
       </div>
     </div>
   </div>

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
 import { NgxFileDropEntry } from 'ngx-file-drop';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-leave-manage-application',
@@ -23,8 +24,8 @@ export class LeaveManageApplicationComponent implements OnInit {
   isLoading: boolean;
   fileData: any;
   designFilter: string = 'select';
-
-  constructor(private api: ApiService, private toastr: ToastrService)
+  modalRef!: BsModalRef;
+  constructor(private api: ApiService, private toastr: ToastrService,private modalService: BsModalService)
   {
     this.leaveForm = new FormGroup({
       toDate: new FormControl<Date | null>(null, [Validators.required]),
@@ -64,15 +65,18 @@ export class LeaveManageApplicationComponent implements OnInit {
       this.getDesignations();
     });
   }
+  
 
   getFilteredLeaves()
   {
     if(this.designFilter === 'student') {
-      this.filteredLeaveApps = this.leaveApps.filter(leave => leave.student);
+      this.filteredLeaveApps = this.leaveApps.filter(leave => leave.student );
     }
     else {
       this.filteredLeaveApps = this.leaveApps.filter(leave => leave.employee?.designation?._id === this.designFilter);
     }
+    console.log("GetFiltercall\n\n")
+    console.log(this.filteredLeaveApps);
   }
 
   getLeavesCategory()
@@ -133,13 +137,26 @@ export class LeaveManageApplicationComponent implements OnInit {
       this.leaveForm.reset();
       this.fileData = null;
       this.getLeaveApplication();
+      this.getFilteredLeaves();
     },
     (err) => {
       this.isLoading = false;
       this.toastr.error(err, "Leave request add failed");
     })
   }
-
+  openQuickModalForAddLeave(template: TemplateRef<any>){
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+  }
+  openQuickModal(template: TemplateRef<any>, data: any){
+    this.selectedLeave = data;
+    this.leaveForm.patchValue({
+      status :data.status
+    });
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+  }
+  closePopup(){
+    this.modalRef.hide();
+  }
   updateStatus()
   {
    
@@ -151,8 +168,10 @@ export class LeaveManageApplicationComponent implements OnInit {
     this.api.updateLeaveRequestStatus(postData).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      document.getElementById('updateStatusModal')?.click();
+     // document.getElementById('updateStatusModal')?.click();
+     this.closePopup();
       this.getLeaveApplication();
+      this.getFilteredLeaves();
     },
     (err) => {
       this.isLoading = false;
