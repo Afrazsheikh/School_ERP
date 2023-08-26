@@ -18,7 +18,7 @@
         <label class="form-label">Designation</label>
         <!-- <label class="form-label">Class *</label> -->
         <select class="form-select" [(ngModel)]="designFilter" (change)="getFilteredLeaves()">
-          <option disabled value="select">Select</option>
+          <option  value="select">Select</option>
           <option *ngFor="let sec of designations" [value]="sec._id">{{sec.name}}</option>
           <option value="student">Student</option>
         </select>

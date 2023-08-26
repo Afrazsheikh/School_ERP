@@ -214,17 +214,19 @@ getAllStudent(){
   
   
   delete(){
-console.log(this.selectedID._id);
-
     this.isLoading = true;
-    this.api.deleteClass(this.selectedID._id).subscribe(resp => {
+    const payload = {
+      academicYear: this.classAssignForm.value.academicYear,
+      studentClass: this.classAssignForm.value.studentClass, 
+      section : this.classAssignForm.value.section, 
+      subject: this.selectedID?.subjectCode
+    }
+    this.api.deleteClassNewApi(payload).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-   
-
-      this.toastr.success(resp.message, "  Deleted successFully");
+     // this.toastr.success(resp?.message, "  Deleted successFully");
       document.getElementById('modalDismissBtn')?.click();
-      // this.closeButton.nativeElement?.click();
+    // this.closeButton.nativeElement?.click();
       this.getAllClass()
     },
     (err) => {

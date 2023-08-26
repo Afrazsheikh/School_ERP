@@ -607,6 +607,11 @@ export class ApiService {
       .delete(environment.apiBaseUrl + '/class/' + id)
       .pipe(catchError(this.errorHandler));
   }
+  deleteClassNewApi(payload: any){
+    return this.httpClient
+    .put(environment.apiBaseUrl + '/academic/subject/remove', payload)
+    .pipe(catchError(this.errorHandler));
+  }
   deleteSection(id: string): Observable<any> {
     return this.httpClient
       .delete(environment.apiBaseUrl + '/section/' + id)
@@ -1194,6 +1199,26 @@ export class ApiService {
      body: id,
    })
    .pipe(catchError(this.errorHandler));
+}
+getdashbaoradData(): Observable<any> {
+  return this.httpClient
+    .get(environment.apiBaseUrl + '/dashbaoradData')
+    .pipe(catchError(this.errorHandler));
+}
+getRaiseTicket(): Observable<any> {
+  return this.httpClient
+    .get(environment.apiBaseUrl + '/getAllRaiseTicket')
+    .pipe(catchError(this.errorHandler));
+}
+getAllVehicle(): Observable<any> {
+  return this.httpClient
+    .get(environment.apiBaseUrl + '/getAllVehicle')
+    .pipe(catchError(this.errorHandler));
+}
+getSectionCount(): Observable<any> {
+  return this.httpClient
+    .get(environment.apiBaseUrl + '/classSectionCount')
+    .pipe(catchError(this.errorHandler));
 }
   isEmptyObject(obj) {
     for (var property in obj) {

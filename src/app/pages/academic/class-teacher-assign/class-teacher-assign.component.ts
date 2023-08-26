@@ -61,7 +61,7 @@ export class ClassTeacherAssignComponent {
       academicYear: formData.value.academicYear , 
       studentClass: formData.value.studentClass, 
       section:formData.value.section, 
-      teachers: formData.value.assignTeacher
+      teachers: [formData.value.assignTeacher]
     }
       this.api.addTeacher(payload).subscribe(resp => {
         this.toastr.success(resp.message, "Teache assign successfully");

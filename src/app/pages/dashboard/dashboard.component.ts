@@ -10,6 +10,9 @@ import {
   ApexTitleSubtitle,
   ChartComponent,
 } from 'ng-apexcharts';
+import { ApiService } from '../../services/api.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -29,8 +32,12 @@ export type ChartOptions = {
 export class DashboardComponent {
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
+  sectionObj : any;
+  dashboardObj: any;
+  studentTickets:any;
+  employeeTickets:any;
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router){
 
-  constructor() {
     this.chartOptions = {
       series: [
         {
@@ -144,4 +151,32 @@ export class DashboardComponent {
       },
     };
   }
+  ngOnInit(): void {    
+    this.getAllCount();
+    this.getdashbaoradDataRecord();
+    this.getRaiseTicketRecord();
+  //  this.getAllVehicleRecord();
+  }
+  getAllCount(){
+    this.api.getSectionCount().subscribe(data =>{
+     this.sectionObj= data;
+     });
+  }
+  getRaiseTicketRecord(){
+    this.api.getRaiseTicket().subscribe(data =>{
+      this.studentTickets = data?.studentTickets;
+      this.employeeTickets = data?.teacherTickets;
+     });
+  }
+  getAllVehicleRecord(){
+    this.api.getAllVehicle().subscribe(data =>{
+    console.log(data);
+     });
+  }
+  getdashbaoradDataRecord(){
+    this.api.getdashbaoradData().subscribe(data =>{
+    this.dashboardObj = data;
+     });
+  }
+ 
 }
