@@ -592,9 +592,9 @@ export class ApiService {
       .pipe(catchError(this.errorHandler));
   }
 
-  updateclass(postData: any, ClassID: String): Observable<any> {
+  updateclass(postData: any): Observable<any> {
     return this.httpClient
-      .put(environment.apiBaseUrl + '/class', +ClassID, postData)
+      .put(environment.apiBaseUrl + '/class', postData)
       .pipe(catchError(this.errorHandler));
   }
   updateSection(postData: any): Observable<any> {
