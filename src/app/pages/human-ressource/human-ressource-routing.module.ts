@@ -59,10 +59,10 @@ const routes: Routes = [
     path: 'payroll-invoice/:id/:monthAndYear',
     component: PayrollInvoiceComponent,
   },
-  {
+ /* {
     path: 'mobile-payroll-invoice/:id/:monthAndYear',
     component: MobilePayrollInvoiceComponent,
-  }
+  }*/
 ];
 
 @NgModule({

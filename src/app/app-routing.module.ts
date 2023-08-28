@@ -5,10 +5,15 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './pages/auth/auth.guard';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { MobilePayrollInvoiceComponent } from './pages/human-ressource/mobile-payroll-invoice/mobile-payroll-invoice.component';
 const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+  },
+  {
+    path: 'human-resource/mobile-payroll-invoice/:id/:monthAndYear',
+    component: MobilePayrollInvoiceComponent,
   },
   {
     path: 'login',
