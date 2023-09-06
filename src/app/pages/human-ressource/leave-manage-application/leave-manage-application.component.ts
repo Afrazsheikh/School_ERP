@@ -17,6 +17,7 @@ export class LeaveManageApplicationComponent implements OnInit {
   filteredLeaveApps: any[] = [];
   leaveCats: any[] = [];
   employees: any[] = [];
+  employeesNewList: any[] = [];
   designations: any[] = [];
   leaveForm: FormGroup;
   editLeaveForm: FormGroup;
@@ -33,7 +34,8 @@ export class LeaveManageApplicationComponent implements OnInit {
       leaveType: new FormControl("select", [Validators.required]),
       employee: new FormControl("select", [Validators.required]),
       reason: new FormControl(null, [Validators.required]),
-      status: new FormControl("PENDING")
+      status: new FormControl("PENDING"),
+      designation: new FormControl()
     });
   }
 
@@ -41,7 +43,20 @@ export class LeaveManageApplicationComponent implements OnInit {
     this.getLeaveApplication();
     this.getLeavesCategory();
   }
-
+  onChangeDepart(event){
+    // this.filterByDes = [];
+    // this.filterByDesignation(event.target.value);
+    this.getDesignationByIdData(event.target.value);
+  }
+  getDesignationByIdData(id){
+    this.employeesNewList = [];
+    this.leaveForm.patchValue({
+      employee :""
+    });
+    this.api.getDesignationById(id).subscribe(resp => {
+      this.employeesNewList = resp?.employees;
+    });
+  }
   getDesignations()
   {
 

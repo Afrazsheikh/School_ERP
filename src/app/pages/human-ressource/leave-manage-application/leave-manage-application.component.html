@@ -111,10 +111,17 @@
                   <h6>Add Leave Category</h6>
               </div>
               <div>
+                <label class="form-label">Designation</label>
+                <select class="form-select" formControlName="designation" (change)="onChangeDepart($event)">
+                    <option value="">All</option>
+                    <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
+                  </select> 
+            </div>
+              <div>
                 <label class="form-label">Employee <span class="error">*</span></label>
                 <select class="form-select" formControlName="employee">
                   <option disabled value="select">Select</option>
-                  <option *ngFor="let emp of employees" [value]="emp._id">{{emp.name}}</option>
+                  <option *ngFor="let emp of employeesNewList" [value]="emp._id">{{emp.name}}</option>
                 </select>
               </div>
             </div>
