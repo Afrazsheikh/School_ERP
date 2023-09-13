@@ -41,7 +41,7 @@ export class ExamSetupComponent {
     this.getAllExam()
     this.getExamTerms()
     this.getMarksDiturbution()
-    this.getAllExam()
+    //this.getAllExam()
     // this.patchLeaveForm(this.exam)
 
   }

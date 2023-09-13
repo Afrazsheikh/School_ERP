@@ -12,10 +12,10 @@ export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
   // Login
-
+  
   loginMethod(postData): Observable<any> {
     return this.httpClient
-      .post(environment.apiBaseUrl + '/employee/teacher/login', postData)
+      .post(environment.apiBaseUrl + '/employee/admin/login', postData)
       .pipe(catchError(this.errorHandler));
   }
 

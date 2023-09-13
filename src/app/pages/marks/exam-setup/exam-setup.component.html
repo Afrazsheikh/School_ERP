@@ -89,11 +89,11 @@
                           <label class="form-label">Exam Type <span class="error">*</span></label>
                           <select class="form-select" formControlName="examtype">
                             <option  value="">Select</option>
-                            <option *ngFor="let exam of exams" [value]="exam.examtype">
+                           <!-- <option *ngFor="let exam of exams" [value]="exam.examtype">
                               {{exam.examtype}}
-                            </option>
-                         
-
+                            </option>-->
+                            <option value="Marks">Marks</option>
+                            <option value="Grade">Grade</option>
                           </select>
                         </div>
                         <!-- this will chnge -->
