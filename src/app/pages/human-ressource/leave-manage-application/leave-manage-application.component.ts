@@ -42,6 +42,7 @@ export class LeaveManageApplicationComponent implements OnInit {
   ngOnInit(): void {
     this.getLeaveApplication();
     this.getLeavesCategory();
+    
   }
   onChangeDepart(event){
     // this.filterByDes = [];
@@ -73,11 +74,11 @@ export class LeaveManageApplicationComponent implements OnInit {
 
   getLeaveApplication()
   {
+    this.getDesignations();
     this.api.getLeaveApplication().subscribe(resp => {
       this.leaveApps = resp.leavesRequest;
       this.filteredLeaveApps = resp.leavesRequest;
       this.filteredLeaveApps = this.filteredLeaveApps.filter(leave => leave.employee || leave.student);
-      this.getDesignations();
       this.getFilteredLeaves();
     });
   }

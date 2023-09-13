@@ -244,10 +244,12 @@
                 <tr *ngFor="let expense of vehicles; index as i">
                   <td>{{i+1}}</td>
                   <td>{{expense.vehicleNo}}</td>
-                  <td>{{expense.expenses[0].name}}</td>
-                  <td>{{expense.expenses[0].amount}}</td>
-                  <td>{{expense.expenses[0].time}}</td>
-                  <td>{{expense.expenses[0].description}}</td>
+                  <td>
+                    <span *ngIf="expense?.expenses.length !== 0">{{expense?.expenses[0].name}}</span>
+                    </td>
+                  <td><span *ngIf="expense?.expenses.length !== 0">{{expense?.expenses[0].amount}}</span></td>
+                  <td><span *ngIf="expense?.expenses.length !== 0">{{expense?.expenses[0].time}}</span></td>
+                  <td><span *ngIf="expense?.expenses.length !== 0">{{expense?.expenses[0].description}}</span></td>
              
 
 

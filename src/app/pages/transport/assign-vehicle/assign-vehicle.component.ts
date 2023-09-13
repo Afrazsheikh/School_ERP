@@ -65,10 +65,10 @@ data:any
   ngOnInit(): void {
     this.getAllVehicleAssigns();
     this.getAllRoutes();
-    this.getAllVehicles()
-    this.selectedEnq(this.data)
+    this.getAllVehiclesData()
+    //this.selectedEnq(this.data)
     // this.getAllVehicleExoense()
-    console.log(this.getVehcileID);
+   // console.log(this.getVehcileID);
 
   }
 
@@ -162,16 +162,17 @@ data:any
   {
     this.api.getAllStopPages().subscribe(resp => {
       this.stopPages = resp.stoppages;
-      this.getAllVehicles();
+      this.getAllVehiclesData();
     });
   }
 
-  getAllVehicles()
+  getAllVehiclesData()
   {
     this.api.getAllVehicles().subscribe(resp => {
-      this.vehicles = resp.vehicles;
+     // console.log("i am here")
+      this.vehicles = resp?.vehicles;
       
-    console.log(this.vehicles);
+   // console.log(this.vehicles);
     
     });
           
@@ -215,10 +216,10 @@ data:any
   //   });
   // }
   selectedEnq(vehd : any){
-
+//console.log(vehd);
     
-    this.selectedEnqaa 
-    console.log(this.selectedEnqaa);
+   // this.selectedEnqaa 
+    //console.log(this.selectedEnqaa);
 
   
 
@@ -295,7 +296,7 @@ data:any
       this.isLoading = false;
       this.toastr.success(resp.message, "  update success");
       document.getElementById('editModalDismissBtn')?.click();
-      this.getAllVehicles();
+      this.getAllVehiclesData();
     },
     (err) => {
       this.isLoading = false;
