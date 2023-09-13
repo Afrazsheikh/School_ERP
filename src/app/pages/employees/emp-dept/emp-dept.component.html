@@ -53,7 +53,8 @@
 
                     <td>{{ dept.name }}</td>
                     <td>
-                      <button
+                      <ng-container *ngIf="(dept.name).toLowerCase() !== 'admin'">
+                        <button
                         class="btn emp-edit me-1"
                         data-bs-toggle="modal"
                         data-bs-target="#editPrompt"
@@ -69,6 +70,8 @@
                       >
                         <i class="fa-solid fa-trash-can"></i>
                       </button>
+                      </ng-container>
+                     
                     </td>
                   </tr>
                 </tbody>
