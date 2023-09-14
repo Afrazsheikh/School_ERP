@@ -30,7 +30,7 @@ export class BannerAddComponent {
 
     let postData = new FormData();
     postData.append('title', this.bannerForm.value.title);
-    postData.append('type', this.bannerForm.value.type);
+  //  postData.append('type', this.bannerForm.value.type);
     if (this.bannerFile) {
       postData.append('file', this.bannerFile);
     }

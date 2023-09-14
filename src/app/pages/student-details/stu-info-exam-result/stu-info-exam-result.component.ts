@@ -25,8 +25,8 @@ export class StuInfoExamResultComponent {
   }
   this.api.getMarksByAcademicAndStudentId(payload).subscribe(resp => {
     if(resp.hasOwnProperty('marks')) {
-      this.studentExamArr1 = resp['marks']['Second Semester Exams'];
-      this.studentExamArr2 = resp['marks']['First Semester Exams'];
+      this.studentExamArr1 = resp['marks']['First Terms'];
+      this.studentExamArr2 = resp['marks']['Second Terms'];
     }
   },
   (err) => {
