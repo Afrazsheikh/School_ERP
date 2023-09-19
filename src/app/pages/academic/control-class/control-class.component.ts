@@ -84,7 +84,7 @@ export class ControlClassComponent {
       classId: dept._id,
       className: dept.className,
       classNumeric: dept.classNumeric,
-      sections: dept.sections[0]?.name,
+      sections: dept.sections[0]?._id,
 
     });
 
@@ -227,7 +227,7 @@ export class ControlClassComponent {
     const payload ={
       classId : this.editClass.value?.classId, 
       className : this.editClass.value?.className, 
-      sections : "", 
+      sections : this.editClass.value?.sections, 
       classNumeric : this.editClass.value?.classNumeric
     }
     this.api.updateclass(payload).subscribe(resp => {

@@ -12,6 +12,9 @@ export class StuInfoExamResultComponent {
   studentExam:any;
   studentExamArr1:any;
   studentExamArr2:any;
+  examArr :any;
+  finalExamArr:any[] = [];
+  finalExamNameArr:any[] = [];
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,) {
   }
  ngOnInit() {
@@ -25,9 +28,31 @@ export class StuInfoExamResultComponent {
   }
   this.api.getMarksByAcademicAndStudentId(payload).subscribe(resp => {
     if(resp.hasOwnProperty('marks')) {
-      this.studentExamArr1 = resp['marks']['First Terms'];
-      this.studentExamArr2 = resp['marks']['Second Terms'];
+      this.examArr= resp['marks'];
+      this.examArr.forEach(element => {
+        this.finalExamNameArr.push({subArr:[], name:element?.examId?.name, id:element.examId?._id}) ;
+     });
+     console.log(this.finalExamNameArr);
+     const uniqueArray = this.finalExamNameArr.filter((thing, index) => {
+      const _thing = JSON.stringify(thing);
+      return index === this.finalExamNameArr.findIndex(obj => {
+        return JSON.stringify(obj) === _thing;
+      });
+    });
+    console.log(uniqueArray);
+    this.finalExamNameArr = uniqueArray;
+    this.finalExamNameArr.forEach(element => {
+          this.examArr.forEach(el => {
+            if(el?.examId?._id === element?.id){
+              element.subArr.push(el);
+            }
+          });      
+     });
+    
+        console.log(this.finalExamArr);
+        console.log(this.finalExamNameArr)
     }
+
   },
   (err) => {
    // this.toastr.error(err, " update failed");

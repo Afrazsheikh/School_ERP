@@ -1,4 +1,31 @@
-<div class="row mb-3">
+<div *ngIf="finalExamNameArr.length > 0">
+<ng-container *ngFor="let exam of finalExamNameArr">
+  <div class="col-md-12 header-txt" >
+    <span>{{exam?.name}}</span>
+</div>
+<table class="table">
+  <thead class="border bg-light">
+    <tr>
+      <th scope="col">Subjects</th>
+      <th scope="col">Practical</th>
+      <th scope="col">Written</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let exam of exam?.subArr">
+      <tr>
+
+        <td>{{exam?.subject?.subjectName | titlecase }}</td>
+        <td>{{exam?.practical}}</td>
+        <td>{{exam?.written}}</td>
+        </tr>
+    </ng-container>
+    
+  </tbody>
+</table>
+</ng-container>
+</div>
+<!--<div class="row mb-3">
   <div class="col-md-12 header-txt" >
       <span>First Semester Exams</span>
   </div>
@@ -47,4 +74,4 @@
         </ng-container>
         
       </tbody>
-    </table>
+    </table> -->

@@ -189,7 +189,11 @@
           </div>
           <div class="mb-3">
             <label class="form-label"> Section *</label>
-            <input type="text" class="form-control" formControlName="sections">
+            <!--<input type="text" class="form-control" formControlName="sections">-->
+            <select class="form-select" formControlName="sections">
+              <option disabled value="select">Select</option>
+              <option *ngFor="let sec of sections" [value]="sec._id">{{sec.name}}</option>
+            </select>
           </div>
         </form>
       </div>
