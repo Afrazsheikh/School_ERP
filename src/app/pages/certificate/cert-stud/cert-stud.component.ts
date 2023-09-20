@@ -12,6 +12,8 @@ import DomToImage from 'dom-to-image';
 import axios from 'axios';
 import * as moment from 'moment';
 import { StudentService } from '../../student-details/student.service';
+import { FormBuilder, FormGroup, Validators,FormControl  } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-cert-stud',
@@ -19,6 +21,9 @@ import { StudentService } from '../../student-details/student.service';
   styleUrls: ['./cert-stud.component.scss']
 })
 export class CertStudComponent {
+  scheduleArr = [];
+  isShowSchedule = false;
+  classes: any[] = [];
   aceYear:any[] = [];
   students: any[] = [];
   certTemplates: any[] = [];
@@ -32,25 +37,83 @@ export class CertStudComponent {
     printDate: ''
   };
   isLoading = false;
-  canvasWrapper: HTMLElement;
-
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private studentService:StudentService) {
+  canvasWrapper: HTMLElement;  
+  addForm:FormGroup;
+  sections: any[] = [];
+  sectionName: any;
+  classnName: any;
+  studentData: any[];
+  studentFirstData: any[];
+  constructor(private api: ApiService,private spinner: NgxSpinnerService, private toastr: ToastrService, public fb: FormBuilder, private router: Router,private studentService:StudentService) {
     this.filter.printDate = moment().format('YYYY-MM-DD');
     this.aceYear = this.studentService.aceYear;
   }
 
   ngOnInit(): void {
+    this.createForm();
+    this.getAllClass()
     this.getAllStudents();
+    this.getAllSection()
   }
+  getAllSection(){
+    this.api.getAllSection().subscribe(resp => {
+      console.log(resp);
+      this.sections = resp.sections
+    });
 
+}
+
+
+  createForm(){
+    this.addForm = this.fb.group({
+      studentClass: ['',Validators.required],
+      section: ['',Validators.required],
+      academicYear:['', Validators.required],  
+       template: ['',Validators.required],
+       printDate: ['',Validators.required]
+
+
+       
+    });
+  }
+  onChangeClass(event){
+    this.sections =[];
+    const id = event.target.value;
+    this.classes.forEach(element => {
+        if(element._id === id) {
+          this.sections = element.sections;
+          this.addForm.patchValue({section: element?.sections[0]?._id});
+        }
+    });
+    console.log(event.target.value['section']);
+  }
+  getAllClass() {
+    this.api.getAllClass().subscribe(resp => {
+      console.log(resp);
+      this.classes = resp.classes
+    });
+  
+  }
   getAllStudents()
   {
     this.api.getAllStudents().subscribe((res)=>{
+
       this.students = res.students;
+
+      console.log(this.students);
+      
       this.getApplicableCertificates();
     });
   }
-
+  clickFilter(form:any){
+    console.log(form);
+    
+    const s_year = form.value.academicYear;
+    const s_class = form.value.class;
+    const s_section = form.value.section;
+    // this.getAllSchedule(s_year,s_class,s_section);
+  }
+ 
   getApplicableCertificates() {
     this.api.getApplicableCertificates('Student').subscribe((res)=>{
       this.certTemplates = res.certificates;
@@ -61,9 +124,59 @@ export class CertStudComponent {
     });
   }
 
+  public mapSectionClass( ClasssId,sectionId) {
+    console.log(sectionId, ClasssId);
+    const section = this.sections.find((sec) => sec._id === sectionId);
+    if (section) {
+      const sectionName = section.name; 
+    this.sectionName = sectionName
+    } 
+    const clas = this.classes.find((cls) => cls._id === ClasssId);
+    if (clas) {
+      const className = clas.className; 
+    this.classnName = className
+    } 
+    console.log(this.classnName, this.sectionName);
+    
+
+
+  }
+  callReport(reportForm) {
+    this.isLoading = true;
+    const data = {
+      academicYear: reportForm.value.academicYear,
+      section: reportForm.value.section,
+      studentClass: reportForm.value.studentClass,
+      template: reportForm.value.template,
+
+    }
+    this.spinner.show();
+    this.studentData = [];
+    this.studentFirstData = [];
+    this.api.studentList(data).subscribe(data => {     
+      this.studentFirstData = data['students'];
+      if(!this.api.isEmptyObject(this.studentFirstData)){
+        this.studentFirstData.forEach(element =>{
+          element['name'] = element?.firstName + " "+ element.lastName;
+           this.studentData.push(element);       
+         });
+      } 
+      this.studentService.studentDetailBackAction.isBack = false;
+      this.spinner.hide();
+      this.isLoading = false;
+    },
+    (err) =>{
+      this.isLoading = false;
+      this.spinner.hide();
+      this.studentData =[];
+      this.toastr.error(err);
+    })
+  }
+  
+
   getFilteredStudents()
   {
-    if(this.filter.academicYear != 'select' || this.filter.studentClass != 'select' || this.filter.section != 'select')
+    if(this.filter.academicYear != 'select' || this.filter.studentClass != 'select' || this.filter.section != 'select' ||  this.filter.template != 'select')
 
     this.api.studentSearch(this.filter).subscribe((res)=> {
       this.students = res.students;
@@ -72,23 +185,41 @@ export class CertStudComponent {
 
   printPreview(stud: any)
   {
+    
+    console.log( stud.academic.studentClass);
+    console.log( stud.academic.section);
+this.mapSectionClass( stud.academic.studentClass,stud.academic.section )
+    
     this.template = JSON.parse(JSON.stringify(this.selectedTemplate));
-    this.template.content = this.template.content.replaceAll(`{{category}}`, stud.caste);
     this.template.content = this.template.content.replaceAll(`{{printDate}}`,
-      moment(this.filter.printDate, 'YYYY-MM-DD').format('DD, MMMM, YYYY'));
+      moment(this.addForm.get('printDate').value, 'YYYY-MM-DD').format('DD, MMMM, YYYY'));
     stud.admissionDate = moment(stud.admissionDate).format('DD-MM-YYYY');
 
-    for(let key in stud)
-    {
-      if(key == 'guardian' || key == 'academic') {
-        for(let subKey in stud[key]) {
-          this.template.content = this.template.content.replaceAll(`{{${key}.${subKey}}}`, stud[key][subKey]);
-        }
-      }
-      else {
-        this.template.content = this.template.content.replaceAll(`{{${key}}}`, stud[key]);
-      }
-    }
+
+this.template.content = this.template.content.replaceAll('{{premanentAddressCity}}', stud.premanentAddressCity);
+this.template.content = this.template.content.replaceAll('{{premanentAddressHouseNo}}', stud.premanentAddressHouseNo);
+this.template.content = this.template.content.replaceAll('{{premanentAddressState}}', stud.premanentAddressState);
+this.template.content = this.template.content.replaceAll('{{premanentAddressStreet}}', stud.premanentAddressStreet);
+this.template.content = this.template.content.replaceAll('{{premanentAddressZipCode}}', stud.premanentAddressZipCode);
+  this.template.content = this.template.content.replaceAll('{{firstName}}', stud.firstName);
+  this.template.content = this.template.content.replaceAll('{{lastName}}', stud.lastName);
+  this.template.content = this.template.content.replaceAll('{{dob}}', moment(stud.dob).format('DD-MM-YYYY'));
+  this.template.content = this.template.content.replaceAll('{{admissionDate}}', moment(stud.admissionDate).format('DD-MM-YYYY'));
+  this.template.content = this.template.content.replaceAll('{{email}}', stud.email);
+  this.template.content = this.template.content.replaceAll('{{number}}', stud.number);
+  this.template.content = this.template.content.replaceAll('{{registerNo}}', stud.registerNo);
+  this.template.content = this.template.content.replaceAll('{{rollNo}}', stud.rollNo);
+  this.template.content = this.template.content.replaceAll('{{caste}}', stud.caste);
+  this.template.content = this.template.content.replaceAll('{{academic.studentClass}}', stud.academic.studentClass);  
+  this.template.content = this.template.content.replaceAll('{{gender}}', stud.gender);
+  this.template.content = this.template.content.replaceAll('{{religion}}', stud.religion);
+  this.template.content = this.template.content.replaceAll('{{bloodGroup}}', stud.bloodGroup);
+  this.template.content = this.template.content.replaceAll('{{guardian.firstName}}', stud.guardian.firstName);
+  this.template.content = this.template.content.replaceAll('{{guardian.motherName}}', stud.guardian.motherName);
+  this.template.content = this.template.content.replaceAll('{{guardian.userName}}', stud.guardian.userName);
+  this.template.content = this.template.content.replaceAll('{{academic.academicYear}}', stud.academic.academicYear);
+  this.template.content = this.template.content.replaceAll('{{class}}',this.classnName);
+  this.template.content = this.template.content.replaceAll('{{section}}',  this.sectionName);
 
     const div = document.createElement('div');
     div.innerHTML = this.template.content;

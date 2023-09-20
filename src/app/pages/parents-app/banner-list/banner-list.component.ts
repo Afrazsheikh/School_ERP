@@ -34,6 +34,8 @@ export class BannerListComponent {
   }
   deletePopup(){
     this.api.deleteBannerById(this.bannerId).subscribe(resp => {
+      console.log(resp);
+      
       this.closePopup();
       this.toastr.success(resp.message, "Deleted success");
       this.getBanners();

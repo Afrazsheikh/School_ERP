@@ -11,6 +11,7 @@ import { QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { CertEditComponent } from './cert-edit/cert-edit.component';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { CertEditComponent } from './cert-edit/cert-edit.component';
     QuillModule.forRoot(),
     SharedModule,
     NgxFileDropModule,
-    FormsModule
+    FormsModule, NgxPrintModule
   ]
 })
 export class CertificateModule { }

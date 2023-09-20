@@ -58,14 +58,14 @@
       <div class="modal-header">
         <h5 class="modal-title">Preview Certificate</h5>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="print-section">
         <div id="print-wrapper"></div>
       </div>
       <div class="modal-footer">
         <button id="modalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" [disabled]="isLoading">
+        <button type="button" class="btn btn-danger" [disabled]="isLoading"  [useExistingCss]="true" ngxPrint>
           <span *ngIf="isLoading" class="spinner-border text-light"></span>
-          <span *ngIf="!isLoading">Print</span>
+          <span *ngIf="!isLoading" >Print</span>
         </button>
       </div>
     </div>

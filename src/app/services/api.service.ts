@@ -1179,11 +1179,11 @@ export class ApiService {
       .pipe(catchError(this.errorHandler));
   }
 
-  deleteBannerById(id: string): Observable<any> {
+  deleteBannerById(postData: string): Observable<any> {
      return this.httpClient
-      .delete(environment.apiBaseUrl + '/banner/delete', {
-        body: id,
-      })
+      .post(environment.apiBaseUrl + '/banner/delete' , postData 
+      
+      )
       .pipe(catchError(this.errorHandler));
   }
   deleteNotificationById(id: string): Observable<any> {

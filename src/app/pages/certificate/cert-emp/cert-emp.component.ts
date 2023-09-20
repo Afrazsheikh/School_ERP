@@ -18,7 +18,7 @@ import * as moment from 'moment';
   styleUrls: ['./cert-emp.component.scss']
 })
 export class CertEmpComponent {
-
+  imageUrl: string = 'https://test-cloud-storage.s3.ap-northeast-1.amazonaws.com/1694776561968-Screenshot%20%2813%29.png';
   employees: any[] = [];
   certTemplates: any[] = [];
   selectedTemplate: any;
@@ -76,24 +76,24 @@ export class CertEmpComponent {
 
   printPreview(emp: any)
   {
+   
+    console.log(emp);
+    const img  = " https://test-cloud-storage.s3.ap-northeast-1.amazonaws.com/1694776561968-Screenshot%20%2813%29.png"
+
+   
     this.template = JSON.parse(JSON.stringify(this.selectedTemplate));
-    this.template.content = this.template.content.replaceAll(`{{category}}`, emp.caste);
-    this.template.content = this.template.content.replaceAll(`{{printDate}}`,
-      moment(this.filter.printDate, 'YYYY-MM-DD').format('DD, MMMM, YYYY'));
-    emp.joiningDate = moment(emp.joiningDate).format('DD-MM-YYYY');
-
-    for(let key in emp)
-    {
-      if(key == 'department' || key == 'designation') {
-        for(let subKey in emp[key]) {
-          this.template.content = this.template.content.replaceAll(`{{${key}.${subKey}}}`, emp[key][subKey]);
-        }
-      }
-      else {
-        this.template.content = this.template.content.replaceAll(`{{${key}}}`, emp[key]);
-      }
-    }
-
+    this.template.content = this.template.content
+    .replaceAll('{{firstName}}', emp.name)
+    .replaceAll('{{gender}}', emp.gender)
+    .replaceAll('{{img}}', this.imageUrl)
+    .replaceAll('{{permanentAddress}}', emp.permanentAddress)
+    .replaceAll('{{designation.name}}', emp.designation.name)
+    .replaceAll('{{department.name}}', emp.department.name)
+    .replaceAll('{{email}}', emp.email)
+    .replaceAll('{{dob}}', moment(emp.dob).format('DD-MM-YYYY'))
+    .replaceAll('{{joiningDate}}', moment(emp.joiningDate).format('DD-MM-YYYY'))
+    .replaceAll('{{printDate}}', moment().format('DD-MM-YYYY')); // Assuming you want the current date
+  
     const div = document.createElement('div');
     div.innerHTML = this.template.content;
     const wrapper = document.getElementById('print-wrapper');
