@@ -33,7 +33,10 @@ export class BannerListComponent {
     this.modalRef = this.modalService.show(template);
   }
   deletePopup(){
-    this.api.deleteBannerById(this.bannerId).subscribe(resp => {
+    const payload = {
+      id:this.bannerId
+    }
+    this.api.deleteBannerById(payload).subscribe(resp => {
       this.closePopup();
       this.toastr.success(resp.message, "Deleted success");
       this.getBanners();
