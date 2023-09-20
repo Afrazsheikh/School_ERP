@@ -195,8 +195,14 @@ export class GuardianAppComponent {
       this.raisedTickets = resp.raiseATicket;
       this.mapStudents();
     });
+   // this.getRaisedTicketsByTeacher();
   }
-
+  getRaisedTicketsByTeacher() {
+    this.api.getRaisedTicketsTeacher().subscribe((resp) => {
+      this.raisedTickets = resp.raiseATicket;
+      this.mapStudents();
+    });
+  }
   mapStudents() {
     const observables: Observable<any>[] = [];
     observables.push(this.api.getAllStudents());

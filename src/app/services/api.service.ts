@@ -982,10 +982,14 @@ export class ApiService {
 
   getRaisedTickets(): Observable<any> {
     return this.httpClient
-      .get(environment.apiBaseUrl + '/raiseTicket/all')
+      .get(environment.apiBaseUrl + '/raiseTicket/guardian')
       .pipe(catchError(this.errorHandler));
   }
-
+  getRaisedTicketsTeacher(): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/raiseTicket/teacher')
+      .pipe(catchError(this.errorHandler));
+  }
   updateTicketStatus(postData): Observable<any> {
     return this.httpClient
       .put(environment.apiBaseUrl + '/raiseTicket/status', postData)
@@ -1179,11 +1183,11 @@ export class ApiService {
       .pipe(catchError(this.errorHandler));
   }
 
-  deleteBannerById(postData: string): Observable<any> {
+
+  deleteBannerById(postData: any): Observable<any> {
      return this.httpClient
-      .post(environment.apiBaseUrl + '/banner/delete' , postData 
-      
-      )
+      .post(environment.apiBaseUrl + '/banner/delete', postData)
+
       .pipe(catchError(this.errorHandler));
   }
   deleteNotificationById(id: string): Observable<any> {
