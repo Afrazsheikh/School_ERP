@@ -203,6 +203,7 @@ export class GuardianAppComponent {
       this.mapStudents();
     });
   }
+  
   mapStudents() {
     const observables: Observable<any>[] = [];
     observables.push(this.api.getAllStudents());

@@ -56,7 +56,7 @@
                             <td>{{feeData?.invoice}}</td>
                            <!-- <td>{{feeData?.month}}</td>-->
                             <td>{{feeData?.date}}</td>
-                            <td>{{feeData?.paidDate}}</td>
+                            <td>{{feeData?.paidDate  | date}}</td>
                             <td>{{feeData?.amount}}</td>
                             <td>{{feeData?.paymentMode}}</td>
                             <td><div class="red-border" *ngIf="((feeData?.status).toLowerCase() === 'unpaid')">{{feeData?.status}}</div>
