@@ -6,3 +6,10 @@
   gap: 1rem;
   cursor: pointer;
 }
+
+.i-ellipsis{
+  max-width: 15ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

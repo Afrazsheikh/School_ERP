@@ -13,6 +13,8 @@ import { NotificationAddComponent } from './notification-add/notification-add.co
 import { NotificationListComponent } from './notification-list/notification-list.component';
 import { NoticBoardListComponent } from './notic-board-list/notic-board-list.component';
 import { NoticBoardAddComponent } from './notic-board-add/notic-board-add.component';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // import { ParentsAppRoutingModule } from './parents-app-routing.module';
 
@@ -26,8 +28,8 @@ import { NoticBoardAddComponent } from './notic-board-add/notic-board-add.compon
     NotificationAddComponent,
     NotificationListComponent,
     NoticBoardListComponent,
-    NoticBoardAddComponent
-
+    NoticBoardAddComponent,
+   
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,9 @@ import { NoticBoardAddComponent } from './notic-board-add/notic-board-add.compon
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    PopoverModule,
+    MatTooltipModule
   ]
 })
 export class ParentsAppModule { }
