@@ -1,12 +1,15 @@
 <app-layout>
   <div class="container p-4">
     <div class="tab-container">
-      <mat-tab-group
-        mat-stretch-tabs="false"
-        mat-align-tabs="start"
-        (selectedTabChange)="tabChange($event)"
-      >
-      <!--
+
+
+
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedTabChange)="tabChange($event)">
+
+
+
+
+        <!--
         <mat-tab label="Banner">
           <form [formGroup]="bannerForm" (ngSubmit)="addBanner()">
             <div class="row my-3">
@@ -334,30 +337,35 @@
                 <th scope="col">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="isLoaded">
               <tr *ngFor="let ticket of raisedTickets; index as i">
                 <td>{{ ticket.sendTo }}</td>
                 <td>
-                  {{ ticket.student.firstName + " " + ticket.student.lastName }}
+                  <ng-container *ngIf="ticket.raiseType=='guardian'">
+                    {{ ticket.student.firstName + " " + ticket.student.lastName }}
+                  </ng-container>
+                  <ng-container *ngIf="ticket.raiseType=='teacher'">
+                    {{ ticket.student.name }}
+                  </ng-container>
                 </td>
                 <td>
-                  {{
+                  <ng-container *ngIf="ticket.raiseType=='guardian'">
+                    {{
                     ticket.student.academic?.studentClass?.className +
-                      "-" +
-                      ticket.student.academic?.section?.name
-                  }}
+                    "-" +
+                    ticket.student.academic?.section?.name
+                    }}
+                  </ng-container>
                 </td>
                 <td>{{ ticket.supportType }}</td>
                 <td>{{ ticket.raiseType }}</td>
-                <td>{{ ticket.description }}</td>
+                <td>
+                  <span class="i-ellipsis" matTooltip="{{ ticket.description }}">{{ ticket.description }}</span>
+                </td>
                 <td>{{ ticket.status }}</td>
                 <td>
-                  <button
-                    class="btn me-1"
-                    data-bs-toggle="modal"
-                    data-bs-target="#viewTicket"
-                    (click)="setTicket(ticket)"
-                  >
+                  <button class="btn me-1" data-bs-toggle="modal" data-bs-target="#viewTicket"
+                    (click)="setTicket(ticket)">
                     <i class="fa-solid fa-pencil"></i>
                   </button>
                 </td>
@@ -441,25 +449,15 @@
               <form [formGroup]="ticketStatus">
                 <div class="ticket-status d-flex">
                   <div class="form-check me-1">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      formControlName="status"
-                      id="pending"
-                      value="PENDING"
-                    />
+                    <input class="form-check-input" type="radio" formControlName="status" id="pending"
+                      value="PENDING" />
                     <label class="form-check-label" for="pending">
                       Pending
                     </label>
                   </div>
                   <div class="form-check me-1">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      formControlName="status"
-                      id="approve"
-                      value="RESOLVED"
-                    />
+                    <input class="form-check-input" type="radio" formControlName="status" id="approve"
+                      value="RESOLVED" />
                     <label class="form-check-label" for="approve">
                       Resolved
                     </label>
@@ -471,21 +469,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="updateTicketStatus()"
-          [disabled]="isLoading"
-        >
+        <button type="button" class="btn btn-primary" (click)="updateTicketStatus()" [disabled]="isLoading">
           <span *ngIf="isLoading" class="spinner-border text-light"></span>
           <span *ngIf="!isLoading">Apply</span>
         </button>
-        <button
-          id="updateStatusModal"
-          type="button"
-          class="btn btn-primary"
-          data-bs-dismiss="modal"
-        >
+        <button id="updateStatusModal" type="button" class="btn btn-primary" data-bs-dismiss="modal">
           Close
         </button>
       </div>

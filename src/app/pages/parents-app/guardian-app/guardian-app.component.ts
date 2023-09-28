@@ -6,6 +6,7 @@ import { NgxFileDropEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { RaisedTicketService } from 'src/app/services/raised-ticket.service';
 
 @Component({
   selector: 'app-guardian-app',
@@ -32,7 +33,9 @@ export class GuardianAppComponent {
   noticeImage: any;
   types = ['guardian', 'teacher'];
 
-  constructor(private api: ApiService, private toastr: ToastrService) {
+  isLoaded=false;
+
+  constructor(private api: ApiService, private toastr: ToastrService, private raisedTicketService:RaisedTicketService) {
     this.bannerForm = new FormGroup({
       title: new FormControl(null, [Validators.required]),
       type: new FormControl(null, [Validators.required]),
@@ -193,7 +196,15 @@ export class GuardianAppComponent {
   getRaisedTickets() {
     this.api.getRaisedTickets().subscribe((resp) => {
       this.raisedTickets = resp.raiseATicket;
-      this.mapStudents();
+      this.raisedTicketService.getRaiseTicketTeacher().subscribe(data=>{
+        if(data && data.raiseATicket){
+          this.raisedTickets=[...this.raisedTickets, ...data.raiseATicket];
+          this.mapStudents();
+        }else{
+          this.mapStudents();
+        }
+      })
+      
     });
    // this.getRaisedTicketsByTeacher();
   }
@@ -210,16 +221,19 @@ export class GuardianAppComponent {
     observables.push(this.api.getAllAcademic());
     observables.push(this.api.getAllClass());
     observables.push(this.api.getAllSection());
+    observables.push(this.api.getTeacherList());
 
     let students = [],
       academics = [],
       classes = [],
-      sections = [];
+      sections = [],
+      teachers=[];
     forkJoin(observables).subscribe((response) => {
       students = response[0].students;
       academics = response[1].academics;
       classes = response[2].classes;
       sections = response[3].sections;
+      teachers = response[4].teachers;
 
       academics.forEach((academic) => {
         if (academic.studentClass) {
@@ -234,14 +248,20 @@ export class GuardianAppComponent {
       });
 
       this.raisedTickets.forEach((ticket) => {
-        if (ticket.student) {
+        if ( ticket.raiseType=='guardian') {
           ticket.student = students.find((s) => s._id === ticket.student);
           ticket.student.academic = academics.find(
             (a) => a._id === ticket.student.academic._id
           );
         }
+        if ( ticket.raiseType=='teacher') {
+          ticket.student = teachers.find((s) => s._id === ticket.student);
+          // ticket.student.academic = academics.find(
+          //   (a) => a._id === ticket.student.academic._id
+          // );
+        }
       });
-
+      this.isLoaded=true;
       console.log(this.raisedTickets);
     });
   }
