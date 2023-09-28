@@ -21,7 +21,7 @@ export class BannerAddComponent {
   ngOnInit(){
     this.bannerForm = new FormGroup({
       title: new FormControl(null, [Validators.required]),
-      type: new FormControl(null, [Validators.required]),
+      // type: new FormControl(null, [Validators.required]),
     });
 
   }

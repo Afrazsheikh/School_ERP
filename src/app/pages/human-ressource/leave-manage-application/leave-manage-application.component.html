@@ -50,7 +50,7 @@
         <th scope="col"> Date of Start</th>
         <th scope="col"> Date of End</th>
         <th scope="col">Days</th>
-        <th scope="col">Apply Date</th>
+        <!-- <th scope="col">Apply Date</th> -->
         <th scope="col">Status</th>
         <th scope="col"> Action</th>
       </tr>
@@ -64,7 +64,7 @@
         <td>{{leave.fromDate | date}}</td>
         <td>{{leave.toDate | date}}</td>
         <td>{{leave.days}}</td>
-        <td>-</td>
+        <!-- <td>-</td> -->
         <td>
           <span class="badge badge-warning" *ngIf="(leave.status).toLowerCase() === 'pending'" style="text-transform: uppercase;">{{leave.status}}</span>
           <span class="badge badge-danger" *ngIf="(leave.status).toLowerCase() === 'rejected'" style="text-transform: uppercase;">{{leave.status}}</span>
