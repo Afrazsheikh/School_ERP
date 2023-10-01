@@ -28,10 +28,8 @@
                         <td>{{row.get('amount').value}}</td>
                         <td>
                           <input type="text" class="form-control" [formControl]="row.get('concession')" style="width:80px" (focusout)='calculatePerc(i)' maxlength="2"></td>
-                        <td> <span *ngIf="((row.get('code').value).indexOf('ACADEMIC')) === 0">
-                          <input type="text" class="form-control" [formControl]="row.get('hike')" style="width:80px;background-color:#e9ecef; opacity: 1;" maxlength="2" readonly>
-                        </span>
-                         
+                        <td> 
+                          {{row.get('hike').value}}                         
                         </td>
                         <td><input type="text" class="form-control" [formControl]="row.get('totalAmount')" style="width:120px"></td>
                 </tr>

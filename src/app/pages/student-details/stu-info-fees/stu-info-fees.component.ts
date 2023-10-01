@@ -324,6 +324,7 @@ calculateAmount(){
       }else {
         data.totalAmount = Number(data.amount) 
       }
+      
       if(disabledMode){
         return this.fb.group({
           id:  [data?.id],
@@ -343,8 +344,8 @@ calculateAmount(){
         categoryName:  [data?.categoryName],
         code:  [data?.code],
         amount:  [data?.amount],
-        concession: [''],
-        hike:[""],
+        concession: [data?.concession],
+        hike:[data?.hike],
         totalAmount: [data?.amount],
         isChecked: [data?.isChecked],
         type:[data?.type],
