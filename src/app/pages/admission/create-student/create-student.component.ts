@@ -52,6 +52,7 @@ export class CreateStudentComponent {
     selectAllLabel: "Select all",
     enableSelectAll: false
   }
+  emailPattern =  '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   guadianList: any[] = [];
   options:any[] = [];
   @ViewChild('guardian2PrimaryGuard') private guardian2PrimaryGuard: MatCheckbox;
@@ -146,8 +147,8 @@ export class CreateStudentComponent {
       motherTongue: ['', Validators.required],
       religion: ['', Validators.required],
       caste: ['', Validators.required],
-      email: ['', Validators.required],
-      mobileNumber: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+      mobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       presentAddressHouseNo: ['',Validators.required],
       presentAddressStreet: ['', Validators.required],
       presentAddressZipCode: ['',Validators.required],

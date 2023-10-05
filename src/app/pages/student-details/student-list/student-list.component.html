@@ -73,12 +73,11 @@
             <span class="badge badge-success" *ngIf="student?.active" style="text-transform: uppercase;">Active</span>
           </td>
           <td >
-            <button class="btn emp-edit me-1" (click)="openQuickModal(quicktemplate, student)"><i class="fa-solid fa-grip"></i></button>
+            <button class="btn emp-edit me-1" (click)="openQuickModal(quicktemplate, student)"><i class="fa-solid fa-eye"></i></button>
             <button class="btn emp-edit me-1" (click)="editClick(student)"><i class="fa-regular fa-circle-right"></i></button>
           <!-- <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, student)"><i class="fa-solid fa-trash-can"></i></button>-->
           </td>
         </tr>
-       
       </ng-container>
       <tr *ngIf="result.length === 0" class="no-record-found">
         <td colspan="5"  class="ps-4 error">No Record Found</td> 
@@ -164,7 +163,7 @@
        
       <div class="modal-footer mt-4">
         <button type="button" class="save_button btn" (click)="deletePopup()">Yes, Continue</button>
-        <button type="button" class="save_button btn" (click)="closePopup()">Cancle</button>
+        <button type="button" class="save_button btn" (click)="closePopup()">Cancel</button>
       </div>
   </div>
 </ng-template>
