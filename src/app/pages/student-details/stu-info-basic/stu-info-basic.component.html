@@ -716,7 +716,7 @@
 
     <div class="col-4">
       <label class="form-label">Username <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="userName" />
+      <input type="text" class="form-control" formControlName="userName" readonly />
       <div
         *ngIf="studentForm.controls['userName'].invalid && (studentForm.controls['userName'].dirty || studentForm.controls['userName'].touched)"
         class="error mt-2">
@@ -728,7 +728,7 @@
 
     <div class="col-4">
       <label class="form-label">Password <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="password" />
+      <input type="text" class="form-control" formControlName="password"  readonly/>
       <div
         *ngIf="studentForm.controls['password'].invalid && (studentForm.controls['password'].dirty || studentForm.controls['password'].touched)"
         class="error mt-2">
