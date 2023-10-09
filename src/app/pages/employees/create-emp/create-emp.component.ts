@@ -21,11 +21,14 @@ export class CreateEmpComponent {
   departments: any[] = [];
   designations: any[] = [];
   selectedDesgingation:any[] = [];
+  stateList:any[] = [];
   address = { 'present': [], 'permanent': [] };
+  emailPattern =  '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router, public fb: FormBuilder, private studentService: StudentService) {
     this.genderList = this.studentService.genderList;
     this.bloodGrList = this.studentService.bloodGrList;
     this.religionList = this.studentService.religionList;
+    this.stateList = this.studentService.indiaStateList;
   }
   ngOnInit() {
     this.getDepartments();
@@ -62,16 +65,16 @@ export class CreateEmpComponent {
       dob: ['', Validators.required],
       religion: ['', Validators.required],
       bloodGroup: ['', Validators.required],
-      number: ['', Validators.required],
-      email: ['', Validators.required],
+      number: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       presentAddressHouseNo: ['', Validators.required],
       presentAddressStreet: ['', Validators.required],
-      presentAddressZipCode: ['', Validators.required],
+      presentAddressZipCode: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       presentAddressState: ['', Validators.required],
       presentAddressCity: ['', Validators.required],
       permanentAddressHouseNo: ['', Validators.required],
       permanentAddressStreet: ['', Validators.required],
-      permanentAddressZipCode: ['', Validators.required],
+      permanentAddressZipCode: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       permanentAddressCity: ['', Validators.required],
       permanentAddressState: ['', Validators.required],
       isSameAddress: [false],

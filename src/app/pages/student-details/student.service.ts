@@ -43,12 +43,48 @@ export class StudentService {
   occupationsList= [{_id:"Govt.Job", name:"Govt.Job"},{_id:"Private Job", name:"Private Job"},{_id:"Business", name:"Business"},{_id:"Others", name:"Others"}];
 
   educationList= [{_id:"School", name:"School"},{_id:"Graduate", name:"Graduate"},{_id:"Post Graduate", name:"Post Graduate"},{_id:"Others", name:"Others"}];
-  
+  indiaStateList =[{"key":"AP", "name":"Andhra Pradesh"}, 
+{"key":"AR" , "name":"Arunachal Pradesh"},
+{"key":"AS" , "name":"Assam"},
+{"key":"BR" , "name":"Bihar"},
+{"key":"CT" , "name":"Chhattisgarh"},
+{"key":"GA" , "name":"Goa"},
+{"key":"GJ" , "name":"Gujarat"},
+{"key":"HR" , "name":"Haryana"},
+{"key":"HP" , "name":"Himachal Pradesh"},
+{"key":"JK" , "name":"Jammu and Kashmir"},
+{"key":"JH" , "name":"Jharkhand"},
+{"key":"KA" , "name":"Karnataka"},
+{"key":"KL" , "name":"Kerala"},
+{"key":"MP" , "name":"Madhya Pradesh"},
+{"key":"MH" , "name":"Maharashtra"},
+{"key":"MN" , "name":"Manipur"},
+{"key":"ML" , "name":"Meghalaya"},
+{"key":"MZ" , "name":"Mizoram"},
+{"key":"NL" , "name":"Nagaland"},
+{"key":"OR" , "name":"Odisha"},
+{"key":"PB" , "name":"Punjab"},
+{"key":"RJ" , "name":"Rajasthan"},
+{"key":"SK" , "name":"Sikkim"},
+{"key":"TN" , "name":"Tamil Nadu"},
+{"key":"TG" , "name":"Telangana"},
+{"key":"TR" , "name":"Tripura"},
+{"key":"UT" , "name":"Uttarakhand"},
+{"key":"UP" , "name":"Uttar Pradesh"},
+{"key":"WB" , "name":"West Bengal"},
+{"key":"AN" , "name":"Andaman and Nicobar Islands"},
+{"key":"CH" , "name":"Chandigarh"},
+{"key":"DN" , "name":"Dadra and Nagar Haveli"},
+{"key":"DD" , "name":"Daman and Diu"},
+{"key":"DL" , "name":"Delhi"},
+{"key":"LD" , "name":"Lakshadweep"},
+{"key":"PY" , "name":"Puducherry"}];
   studentDetailBackAction = {
     "isBack": false,
     "academicYear":"",
     "studentClass":"",
     "section":""
   };
+ 
    constructor() { }
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import { StudentService } from '../../student-details/student.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-class-assign',
@@ -30,7 +31,8 @@ classAssignForm: FormGroup
   subjectArray: any[];
 
 
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,    private studentService:StudentService)
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
+     private studentService:StudentService,private spinner: NgxSpinnerService)
   {
     this.aceYear = this.studentService.aceYear;
   
@@ -185,7 +187,7 @@ getAllStudent(){
   
 
   callReport(reportForm){
-    console.log(reportForm);
+    this.spinner.show();
     
     this.subjectList = [];
     const data = {
@@ -194,7 +196,7 @@ getAllStudent(){
       studentClass: reportForm.value.studentClass,
     }
     this.api.getAllAcademicData(data).subscribe(data => {
-      console.log(data);
+      this.spinner.hide();
       
       this.subjectList = data['academics']['subjects'];
       // Convert subjectList object to an array
@@ -207,7 +209,7 @@ getAllStudent(){
 
     },
     (err) =>{
-
+      this.spinner.hide();
       this.toastr.error(err);
     })
   }

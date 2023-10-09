@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { elementAt } from 'rxjs';
 import { ApiService } from '../../../services/api.service';
 import { StudentService } from '../../student-details/student.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-assign-teacher',
@@ -24,7 +25,7 @@ export class AssignTeacherComponent {
   className:any;
   sectionName:any;
   constructor(private api: ApiService,private toastr: ToastrService, private router: Router, private modalService: BsModalService,
-    private studentService:StudentService) {
+    private studentService:StudentService,private spinner: NgxSpinnerService) {
       this.aceYear = this.studentService.aceYear;
       this.TeacherForm = new FormGroup({
         academicYear: new FormControl(null, [Validators.required]),
@@ -64,6 +65,7 @@ export class AssignTeacherComponent {
     });
   }
   callReport(reportForm){    
+    this.spinner.show();
     this.teacherList = [];
     this.className = this.sectionName = '';
     const data = {
@@ -72,7 +74,7 @@ export class AssignTeacherComponent {
       studentClass: reportForm.value.studentClass,
     }
     this.api.getAllAcademicData(data).subscribe(data => {
-      console.log(data);
+      this.spinner.hide();
       
       this.teacherList = data['academics']['teachers'];
       this.className = data['academics']['class'];
@@ -80,7 +82,7 @@ export class AssignTeacherComponent {
   //    this.studentService.studentDetailBackAction.isBack = false;
     },
     (err) =>{
-    //  this.studentData =[];
+      this.spinner.hide();
       this.toastr.error(err);
     })
   }

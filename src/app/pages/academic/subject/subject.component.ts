@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -16,7 +17,7 @@ editSubject:  FormGroup
   isLoading: boolean;
   subjects: any[] = [];
   selectedDesign: any;
-  constructor(private api: ApiService, private toastr: ToastrService,  private route: ActivatedRoute,) {
+  constructor(private api: ApiService, private toastr: ToastrService,  private route: ActivatedRoute,private spinner: NgxSpinnerService) {
     this.subjectForm = new FormGroup({
       subjectName: new FormControl(null, [Validators.required]),
       subjectCode: new FormControl(null, [Validators.required]),
@@ -64,11 +65,13 @@ editSubject:  FormGroup
     })
   }
   getSubject(){
-
+    this.spinner.show();
       this.api.getAllSubjects().subscribe(resp => {
-        console.log(resp);
-        
+        this.spinner.hide();        
         this.subjects = resp.subjects
+      },
+      (err)=>{
+        this.spinner.hide();
       });
 
   }

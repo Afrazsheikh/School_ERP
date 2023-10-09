@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-control-class',
   templateUrl: './control-class.component.html',
@@ -23,7 +23,7 @@ export class ControlClassComponent {
   selectedDesign: any;
   _id: string;
 
-  constructor(private api: ApiService, private toastr: ToastrService,  private route: ActivatedRoute,) {
+  constructor(private api: ApiService, private toastr: ToastrService,  private route: ActivatedRoute,private spinner: NgxSpinnerService) {
     this.ClassForm = new FormGroup({
       className: new FormControl(null, [Validators.required]),
       // sections: new FormControl(null, [Validators.required]),
@@ -119,11 +119,13 @@ export class ControlClassComponent {
 
   getAllClass(){
    
-  
+    this.spinner.show();
     this.api.getAllClass().subscribe(resp => {
-      console.log(resp);
-      
+      this.spinner.hide();
       this.classes = resp.classes
+    },
+    (err)=>{
+      this.spinner.show();
     });
 
 }

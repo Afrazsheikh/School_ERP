@@ -252,13 +252,16 @@
 
     <div class="col-3">
       <label class="form-label">Mobile No <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="mobileNumber" />
+      <input type="text" class="form-control" formControlName="mobileNumber" maxlength="10" />
       <div
         *ngIf="studentForm.controls['mobileNumber'].invalid && (studentForm.controls['mobileNumber'].dirty || studentForm.controls['mobileNumber'].touched)"
         class="error mt-2">
         <div *ngIf="studentForm.controls['mobileNumber'].errors['required']">
           Mobile No is required.
         </div>
+        <div *ngIf="studentForm.get('mobileNumber').hasError('pattern')">
+          Enter 10 digit Mobile Number
+      </div>
       </div>
     </div>
 
@@ -271,6 +274,9 @@
         <div *ngIf="studentForm.controls['email'].errors['required']">
           Email is required.
         </div>
+        <div *ngIf="studentForm.get('email').hasError('pattern')">
+          Email is invalid
+      </div>
       </div>
     </div>
     <div class="col-3">
@@ -331,13 +337,16 @@
 
     <div class="col-3">
       <label class="form-label">ZipCode <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="presentAddressZipCode">
+      <input type="text" class="form-control" formControlName="presentAddressZipCode" maxlength="5">
       <div
         *ngIf="studentForm.controls['presentAddressZipCode'].invalid && (studentForm.controls['presentAddressZipCode'].dirty || studentForm.controls['presentAddressZipCode'].touched)"
         class="error mt-2">
         <div *ngIf="studentForm.controls['presentAddressZipCode'].errors['required']">
           ZipCode is required
         </div>
+        <div *ngIf="studentForm.get('presentAddressZipCode').hasError('pattern')">
+          Enter 5 Digit Number
+      </div>
       </div>
     </div>
 
@@ -359,7 +368,13 @@
 
     <div class="col-5">
       <label class="form-label">State <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="presentAddressState">
+      <!-- <input type="text" class="form-control" formControlName="presentAddressState"> -->
+      <select class="form-select" formControlName="presentAddressState">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of stateList" value="{{ day.name }}">
+          {{ day.name }}
+        </option>
+      </select>
       <div
         *ngIf="studentForm.controls['presentAddressState'].invalid && (studentForm.controls['presentAddressState'].dirty || studentForm.controls['presentAddressState'].touched)"
         class="error mt-2">
@@ -412,13 +427,16 @@
 
     <div class="col-3">
       <label class="form-label">ZipCode <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="permanentAddressZipCode">
+      <input type="text" class="form-control" formControlName="permanentAddressZipCode" maxlength="5">
       <div
         *ngIf="studentForm.controls['permanentAddressZipCode'].invalid && (studentForm.controls['permanentAddressZipCode'].dirty || studentForm.controls['permanentAddressZipCode'].touched)"
         class="error mt-2">
         <div *ngIf="studentForm.controls['permanentAddressZipCode'].errors['required']">
           ZipCode is required
         </div>
+        <div *ngIf="studentForm.get('permanentAddressZipCode').hasError('pattern')">
+          Enter 5 Digit Number
+      </div>
       </div>
     </div>
 
@@ -440,7 +458,13 @@
 
     <div class="col-5">
       <label class="form-label">State <span class="error">*</span></label>
-      <input type="text" class="form-control" formControlName="permanentAddressState">
+      <!-- <input type="text" class="form-control" formControlName="permanentAddressState"> -->
+      <select class="form-select" formControlName="permanentAddressState">
+        <option disabled value="select">Select</option>
+        <option *ngFor="let day of stateList" value="{{ day.name }}">
+          {{ day.name }}
+        </option>
+      </select>
       <div
         *ngIf="studentForm.controls['permanentAddressState'].invalid && (studentForm.controls['permanentAddressState'].dirty || studentForm.controls['permanentAddressState'].touched)"
         class="error mt-2">
@@ -507,13 +531,16 @@
 
       <div class="col-4">
         <label class="form-label">Mobile No <span class="error">*</span></label>
-        <input type="text" class="form-control" formControlName="mobileNumber" />
+        <input type="text" class="form-control" formControlName="mobileNumber" maxlength="10" />
         <div
           *ngIf="studentForm.get('guardian1.mobileNumber').invalid && (studentForm.get('guardian1.mobileNumber').dirty || studentForm.get('guardian1.mobileNumber').touched)"
           class="error mt-2">
           <div *ngIf="studentForm.get('guardian1.mobileNumber').errors['required']">
             Mobile No is required
           </div>
+          <div *ngIf="studentForm.get('guardian1.mobileNumber').hasError('pattern')">
+            Enter 10 digit Mobile Number
+        </div>
         </div>
       </div>
 
@@ -530,6 +557,9 @@
           <div *ngIf="studentForm.get('guardian1.email').errors['required']">
             Email is required
           </div>
+          <div *ngIf="studentForm.get('guardian1.email').hasError('pattern')">
+            Email is invalid
+        </div>
         </div>
       </div>
 
@@ -605,6 +635,9 @@
           <div *ngIf="studentForm.get('guardian2.mobileNumber').errors['required']">
             Mobile No is required
           </div>
+          <div *ngIf="studentForm.get('guardian2.mobileNumber').hasError('pattern')">
+            Enter 10 digit Mobile Number
+        </div>
         </div>
       </div>
 
@@ -621,6 +654,9 @@
           <div *ngIf="studentForm.get('guardian2.email').errors['required']">
             Email is required
           </div>
+          <div *ngIf="studentForm.get('guardian2.email').hasError('pattern')">
+            Email is invalid
+        </div>
         </div>
       </div>
 

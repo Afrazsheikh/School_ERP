@@ -19,11 +19,14 @@ export class EmpBaiscComponent {
   religionList: any[] = [];
   departments: any[] = [];
   designations: any[] = [];
+  stateList:any[] = [];
   address= {'present':[], 'permanent':[]};
+  emailPattern =  '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   constructor(private api: ApiService,private toastr: ToastrService, private router: Router,public fb: FormBuilder,private studentService: StudentService) {
     this.genderList = this.studentService.genderList;
     this.bloodGrList = this.studentService.bloodGrList;
     this.religionList = this.studentService.religionList;
+    this.stateList = this.studentService.indiaStateList;
   }
  ngOnInit() {
   this.empBasic = this.employeeData;
@@ -62,16 +65,16 @@ getDesignations() {
       dob: [this.empBasic?.dob, Validators.required],
       religion: [this.empBasic?.religion, Validators.required],      
       bloodGroup: [this.empBasic?.bloodGroup, Validators.required],
-      number: [this.empBasic?.number, Validators.required],
-      email: [this.empBasic?.email, Validators.required],
+      number: [this.empBasic?.number, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      email: [this.empBasic?.email,[Validators.required, Validators.pattern(this.emailPattern)]],
       presentAddressHouseNo: [this.empBasic?.presentAddressHouseNo,Validators.required],
       presentAddressStreet: [this.empBasic?.presentAddressStreet, Validators.required],
-      presentAddressZipCode: [this.empBasic?.presentAddressZipCode,Validators.required],
+      presentAddressZipCode: [this.empBasic?.presentAddressZipCode,[Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       presentAddressState: [this.empBasic?.presentAddressState, Validators.required],
       presentAddressCity: [this.empBasic?.presentAddressCity, Validators.required],    
       permanentAddressHouseNo: [this.empBasic?.premanentAddressHouseNo, Validators.required],
       permanentAddressStreet: [this.empBasic?.premanentAddressStreet, Validators.required],
-      permanentAddressZipCode: [this.empBasic?.premanentAddressZipCode, Validators.required],
+      permanentAddressZipCode: [this.empBasic?.premanentAddressZipCode, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       permanentAddressCity: [this.empBasic?.premanentAddressCity, Validators.required],
       permanentAddressState:[this.empBasic?.premanentAddressState, Validators.required],
       isSameAddress:[false],

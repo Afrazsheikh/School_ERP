@@ -285,7 +285,7 @@
 
       <div class="row mt-3 mb-4">
         <div class="col-6">
-          <label class="form-label">School Name <span class="error">*</span></label>
+          <label class="form-label">School Name</label>
           <input type="text" class="form-control" formControlName="previousSchoolName" />
           <div
             *ngIf="studentForm.controls['previousSchoolName'].invalid && (studentForm.controls['previousSchoolName'].dirty || studentForm.controls['previousSchoolName'].touched)"
@@ -297,7 +297,7 @@
         </div>
 
         <div class="col-6">
-          <label class="form-label">Qualification <span class="error">*</span></label>
+          <label class="form-label">Qualification</label>
           <input type="text" class="form-control" formControlName="previousQualification" />
           <div
             *ngIf="studentForm.controls['previousQualification'].invalid && (studentForm.controls['previousQualification'].dirty || studentForm.controls['previousQualification'].touched)"
@@ -347,13 +347,16 @@
         </div>
         <div class="col-3">
           <label class="form-label">ZipCode <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="presentAddressZipCode">
+          <input type="text" class="form-control" formControlName="presentAddressZipCode" maxlength="5">
           <div
             *ngIf="studentForm.controls['presentAddressZipCode'].invalid && (studentForm.controls['presentAddressZipCode'].dirty || studentForm.controls['presentAddressZipCode'].touched)"
             class="error mt-2">
             <div *ngIf="studentForm.controls['presentAddressZipCode'].errors['required']">
               ZipCode is required
             </div>
+            <div *ngIf="studentForm.get('presentAddressZipCode').hasError('pattern')">
+              Enter 5 Digit Number
+          </div>
           </div>
         </div>
       </div>
@@ -372,7 +375,13 @@
         </div>
         <div class="col-5">
           <label class="form-label">State <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="presentAddressState">
+          <!-- <input type="text" class="form-control" formControlName="presentAddressState"> -->
+          <select class="form-select" formControlName="presentAddressState">
+            <option disabled value="select">Select</option>
+            <option *ngFor="let day of stateList" value="{{ day.name }}">
+              {{ day.name }}
+            </option>
+          </select>
           <div
             *ngIf="studentForm.controls['presentAddressState'].invalid && (studentForm.controls['presentAddressState'].dirty || studentForm.controls['presentAddressState'].touched)"
             class="error mt-2">
@@ -421,13 +430,16 @@
         </div>
         <div class="col-3">
           <label class="form-label">ZipCode  <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="permanentAddressZipCode">
+          <input type="text" class="form-control" formControlName="permanentAddressZipCode" maxlength="5">
           <div
             *ngIf="studentForm.controls['permanentAddressZipCode'].invalid && (studentForm.controls['permanentAddressZipCode'].dirty || studentForm.controls['permanentAddressZipCode'].touched)"
             class="error mt-2">
             <div *ngIf="studentForm.controls['permanentAddressZipCode'].errors['required']">
               ZipCode is required
             </div>
+            <div *ngIf="studentForm.get('permanentAddressZipCode').hasError('pattern')">
+              Enter 5 Digit Number
+          </div>
           </div>
         </div>
       </div>
@@ -446,7 +458,12 @@
         </div>
         <div class="col-5">
           <label class="form-label">State  <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="permanentAddressState">
+          <select class="form-select" formControlName="permanentAddressState">
+            <option disabled value="select">Select</option>
+            <option *ngFor="let day of stateList" value="{{ day.name }}">
+              {{ day.name }}
+            </option>
+          </select>
           <div
             *ngIf="studentForm.controls['permanentAddressState'].invalid && (studentForm.controls['permanentAddressState'].dirty || studentForm.controls['permanentAddressState'].touched)"
             class="error mt-2">
@@ -573,13 +590,16 @@
 
           <div class="col-4">
             <label class="form-label">Mobile No <span class="error">*</span></label>
-            <input type="text" class="form-control" formControlName="mobileNumber" />
+            <input type="text" class="form-control" formControlName="mobileNumber" maxlength="10" />
             <div
               *ngIf="studentForm.get('guardian1.mobileNumber').invalid && (studentForm.get('guardian1.mobileNumber').dirty || studentForm.get('guardian1.mobileNumber').touched)"
               class="error mt-2">
               <div *ngIf="studentForm.get('guardian1.mobileNumber').errors['required']">
                 Mobile No is required
               </div>
+              <div *ngIf="studentForm.get('guardian1.mobileNumber').hasError('pattern')">
+                Enter 10 digit Mobile Number
+            </div>
             </div>
           </div>
         </div>
@@ -594,6 +614,9 @@
               <div *ngIf="studentForm.get('guardian1.email').errors['required']">
                 Email is required
               </div>
+              <div *ngIf="studentForm.get('guardian1.email').hasError('pattern')">
+                Email is invalid
+            </div>
             </div>
           </div>
 
@@ -655,13 +678,16 @@
 
           <div class="col-4">
             <label class="form-label">Mobile No <span class="error" *ngIf="isRequiredSign">*</span> </label>
-            <input type="text" class="form-control" formControlName="mobileNumber" />
+            <input type="text" class="form-control" formControlName="mobileNumber" maxlength="10"/>
             <div
               *ngIf="studentForm.get('guardian2.mobileNumber').invalid && (studentForm.get('guardian2.mobileNumber').dirty || studentForm.get('guardian2.mobileNumber').touched)"
               class="error mt-2">
               <div *ngIf="studentForm.get('guardian2.mobileNumber').errors['required']">
                 Mobile No is required
               </div>
+              <div *ngIf="studentForm.get('guardian2.mobileNumber').hasError('pattern')">
+                Enter 10 digit Mobile Number
+            </div>
             </div>
           </div>
         </div>
@@ -675,6 +701,9 @@
               <div *ngIf="studentForm.get('guardian2.email').errors['required']">
                 Email is required
               </div>
+              <div *ngIf="studentForm.get('guardian2.email').hasError('pattern')">
+                Email is invalid
+            </div>
             </div>
           </div>
 
@@ -752,7 +781,7 @@
 
         <div class="col-4">
           <label class="form-label">Username <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="userName" />
+          <input type="text" class="form-control" formControlName="userName" readonly />
           <div
             *ngIf="studentForm.controls['userName'].invalid && (studentForm.controls['userName'].dirty || studentForm.controls['userName'].touched)"
             class="error mt-2">
@@ -764,7 +793,7 @@
 
         <div class="col-4">
           <label class="form-label">Password <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="password" />
+          <input type="text" class="form-control" formControlName="password" readonly/>
           <div
             *ngIf="studentForm.controls['password'].invalid && (studentForm.controls['password'].dirty || studentForm.controls['password'].touched)"
             class="error mt-2">

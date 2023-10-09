@@ -27,6 +27,8 @@ export class StuInfoBasicComponent {
   relationShipList:any[] =[];
   occupationsList:any[] = [];
   educationList:any[] =[];
+  stateList:any[] = [];
+  emailPattern =  '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   @ViewChild('guardian2PrimaryGuard') private guardian2PrimaryGuard: MatCheckbox;
   @ViewChild('guardian1PrimaryGuard') private guardian1PrimaryGuard: MatCheckbox;
   isRequiredSign:boolean=false;
@@ -41,6 +43,7 @@ export class StuInfoBasicComponent {
     this.relationShipList = this.studentService.relationShipList;
     this.occupationsList = this.studentService.occupationsList;
     this.educationList = this.studentService.educationList;
+    this.stateList = this.studentService.indiaStateList;
     this.getTypeList();
     this.getAllSection();
   }
@@ -118,8 +121,8 @@ onChangeClass(event){
       motherTongue: [this.studentBasic?.motherTongue, Validators.required],
       religion: [this.studentBasic?.religion, Validators.required],
       caste: [this.studentBasic?.caste, Validators.required],
-      email: [this.studentBasic?.email, Validators.required],
-      mobileNumber: [this.studentBasic?.number, Validators.required],
+      email: [this.studentBasic?.email, [Validators.required, Validators.pattern(this.emailPattern)]],
+      mobileNumber: [this.studentBasic?.number, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       previousQualification:[this.studentBasic?.previousQualification],
       previousSchoolName:[this.studentBasic?.previousSchoolName],
       previousRemarks:[this.studentBasic?.previousRemarks],
@@ -128,8 +131,8 @@ onChangeClass(event){
         relation: [this.studentBasic?.guardian?.relation, Validators.required],
         setAsPrimaryGuradian:[this.studentBasic?.guardian?.isPrimary],
         fullName: [this.studentBasic?.guardian?.firstName, Validators.required],
-        mobileNumber: [this.studentBasic?.guardian?.number, Validators.required],
-        email: [this.studentBasic?.guardian?.email, Validators.required],
+        mobileNumber: [this.studentBasic?.guardian?.number, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+        email: [this.studentBasic?.guardian?.email, [Validators.required, Validators.pattern(this.emailPattern)]],
         occupation: [this.studentBasic?.guardian?.occupation, Validators.required],
         alreadyExists:[this.studentBasic?.guardian?.alreadyExists]
       }),
@@ -137,8 +140,8 @@ onChangeClass(event){
         relation: [this.studentBasic?.guardian2?.relation],
         setAsPrimaryGuradian:[this.studentBasic?.guardian2?.isPrimary],
         fullName: [this.studentBasic?.guardian2?.firstName],
-        mobileNumber: [this.studentBasic?.guardian2?.number],
-        email: [this.studentBasic?.guardian2?.email],
+        mobileNumber: [this.studentBasic?.guardian2?.number,[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+        email: [this.studentBasic?.guardian2?.email, [Validators.pattern(this.emailPattern)]],
         occupation: [this.studentBasic?.guardian2?.occupation]
       
       }), 
@@ -147,12 +150,12 @@ onChangeClass(event){
       password: [this.studentBasic?.guardian?.password, Validators.required],     
       presentAddressHouseNo: [this.studentBasic?.presentAddressHouseNo,Validators.required],
       presentAddressStreet: [this.studentBasic?.presentAddressStreet, Validators.required],
-      presentAddressZipCode: [this.studentBasic?.presentAddressZipCode,Validators.required],
+      presentAddressZipCode: [this.studentBasic?.presentAddressZipCode,[Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       presentAddressState: [this.studentBasic?.presentAddressState, Validators.required],
       presentAddressCity: [this.studentBasic?.presentAddressCity, Validators.required],    
       permanentAddressHouseNo: [this.studentBasic?.premanentAddressHouseNo, Validators.required],
       permanentAddressStreet: [this.studentBasic?.premanentAddressStreet, Validators.required],
-      permanentAddressZipCode: [this.studentBasic?.premanentAddressZipCode, Validators.required],
+      permanentAddressZipCode: [this.studentBasic?.premanentAddressZipCode, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       permanentAddressCity: [this.studentBasic?.premanentAddressCity, Validators.required],
       permanentAddressState:[this.studentBasic?.premanentAddressState, Validators.required],
     });

@@ -30,6 +30,7 @@ export class CreateStudentComponent {
   occupationsList:any[] = [];
   educationList:any[] =[];
   guardinList:any[] =[];
+  stateList:any[] = [];
   image: any;
   idCardDocument: any;
   GuardianImage: any;
@@ -70,7 +71,7 @@ export class CreateStudentComponent {
     this.relationShipList = this.studentService.relationShipList;
     this.occupationsList = this.studentService.occupationsList;
     this.educationList = this.studentService.educationList;
-
+    this.stateList = this.studentService.indiaStateList;
     
   }
   ngOnInit() {
@@ -151,16 +152,16 @@ export class CreateStudentComponent {
       mobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       presentAddressHouseNo: ['',Validators.required],
       presentAddressStreet: ['', Validators.required],
-      presentAddressZipCode: ['',Validators.required],
+      presentAddressZipCode: ['',[Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       presentAddressState: ['', Validators.required],
       presentAddressCity: ['', Validators.required],    
       permanentAddressHouseNo: ['', Validators.required],
       permanentAddressStreet: ['', Validators.required],
-      permanentAddressZipCode: ['', Validators.required],
+      permanentAddressZipCode: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       permanentAddressCity: ['', Validators.required],
       permanentAddressState:['', Validators.required],
-      previousQualification: ['', Validators.required],
-      previousSchoolName: ['', Validators.required],
+      previousQualification: [''],
+      previousSchoolName: [''],
       isSameAddress:[false],
       isGuardianExist: [false],
       alreadyExists: [false],
@@ -168,16 +169,16 @@ export class CreateStudentComponent {
         relation: ['', Validators.required],
         setAsPrimaryGuradian:[false,Validators.required],
         fullName: ['', Validators.required],
-        mobileNumber: ['', Validators.required],
-        email: ['', Validators.required],
+        mobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+        email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
         occupation: ['', Validators.required],
       }),
       guardian2:this.fb.group({
         relation: [''],
         setAsPrimaryGuradian:[false],
         fullName: [''],
-        mobileNumber: [''],
-        email: [''],
+        mobileNumber: ['',[Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+        email: ['',[Validators.pattern(this.emailPattern)]],
         occupation: [''],
       }),
       // permanentAddress: ['', Validators.required],

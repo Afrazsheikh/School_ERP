@@ -168,12 +168,15 @@
                 </div>
                 <div class="col-4">
                     <label class="form-label">Phone No.<span class="error">*</span></label>
-                    <input type="text" class="form-control"  formControlName="number">
+                    <input type="text" class="form-control"  formControlName="number" maxlength="10">
                     <div *ngIf="empB1Form.controls['number'].invalid && (empB1Form.controls['number'].dirty || empB1Form.controls['number'].touched)"
                       class="error mt-2">
                       <div *ngIf="empB1Form.controls['number'].errors['required']">
                         Phone No is required
                       </div>
+                      <div *ngIf="empB1Form.get('number').hasError('pattern')">
+                        Enter 10 digit Phone No.
+                    </div>
                   </div> 
                 </div>        
             </div>
@@ -186,6 +189,9 @@
                       <div *ngIf="empB1Form.controls['email'].errors['required']">
                         Email is required
                       </div>
+                      <div *ngIf="empB1Form.get('email').hasError('pattern')">
+                        Email is invalid
+                    </div>
                   </div>
                 </div>
             </div>
@@ -222,12 +228,15 @@
                 </div>
                 <div class="col-3">
                   <label class="form-label">ZipCode <span class="error">*</span></label>
-                  <input type="text" class="form-control"  formControlName="presentAddressZipCode" >  
+                  <input type="text" class="form-control"  formControlName="presentAddressZipCode" maxlength="5" >  
                   <div *ngIf="empB1Form.controls['presentAddressZipCode'].invalid && (empB1Form.controls['presentAddressZipCode'].dirty || empB1Form.controls['presentAddressZipCode'].touched)"
                   class="error mt-2">
                   <div *ngIf="empB1Form.controls['presentAddressZipCode'].errors['required']">
                     ZipCode is required
                   </div>
+                  <div *ngIf="empB1Form.get('presentAddressZipCode').hasError('pattern')">
+                    Enter 5 Digit Number
+                </div>
               </div> 
                 </div>
               </div>    
@@ -244,7 +253,13 @@
                 </div>
                 <div class="col-5">
                   <label class="form-label">State <span class="error">*</span></label>
-                  <input type="text" class="form-control"  formControlName="presentAddressState" >  
+                  <!-- <input type="text" class="form-control"  formControlName="presentAddressState" >   -->
+                  <select class="form-select" formControlName="presentAddressState">
+                    <option disabled value="select">Select</option>
+                    <option *ngFor="let day of stateList" value="{{ day.name }}">
+                      {{ day.name }}
+                    </option>
+                  </select>
                   <div *ngIf="empB1Form.controls['presentAddressState'].invalid && (empB1Form.controls['presentAddressState'].dirty || empB1Form.controls['presentAddressState'].touched)"
                   class="error mt-2">
                   <div *ngIf="empB1Form.controls['presentAddressState'].errors['required']">
@@ -287,12 +302,15 @@
               </div>
               <div class="col-3">
                 <label class="form-label">ZipCode <span class="error">*</span></label>
-                <input type="text" class="form-control"  formControlName="permanentAddressZipCode" > 
+                <input type="text" class="form-control"  formControlName="permanentAddressZipCode" maxlength="5" > 
                 <div *ngIf="empB1Form.controls['permanentAddressZipCode'].invalid && (empB1Form.controls['permanentAddressZipCode'].dirty || empB1Form.controls['permanentAddressZipCode'].touched)"
                 class="error mt-2">
                 <div *ngIf="empB1Form.controls['permanentAddressZipCode'].errors['required']">
                   ZipCode is required
                 </div>
+                <div *ngIf="empB1Form.get('permanentAddressZipCode').hasError('pattern')">
+                  Enter 5 Digit Number
+              </div>
             </div>  
               </div>
             </div>    
@@ -309,7 +327,13 @@
               </div>
               <div class="col-5">
                 <label class="form-label">State <span class="error">*</span></label>
-                <input type="text" class="form-control"  formControlName="permanentAddressState" > 
+                <!-- <input type="text" class="form-control"  formControlName="permanentAddressState" >  -->
+                <select class="form-select" formControlName="permanentAddressState">
+                  <option disabled value="select">Select</option>
+                  <option *ngFor="let day of stateList" value="{{ day.name }}">
+                    {{ day.name }}
+                  </option>
+                </select>
                 <div *ngIf="empB1Form.controls['permanentAddressState'].invalid && (empB1Form.controls['permanentAddressState'].dirty || empB1Form.controls['permanentAddressState'].touched)"
                 class="error mt-2">
                 <div *ngIf="empB1Form.controls['permanentAddressState'].errors['required']">
