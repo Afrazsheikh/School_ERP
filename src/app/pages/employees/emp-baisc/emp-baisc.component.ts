@@ -69,7 +69,7 @@ getDesignations() {
       email: [this.empBasic?.email,[Validators.required, Validators.pattern(this.emailPattern)]],
       presentAddressHouseNo: [this.empBasic?.presentAddressHouseNo,Validators.required],
       presentAddressStreet: [this.empBasic?.presentAddressStreet, Validators.required],
-      presentAddressZipCode: [this.empBasic?.presentAddressZipCode,[Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
+      presentAddressZipCode: [this.empBasic?.presentAddressZipCode,[Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
       presentAddressState: [this.empBasic?.presentAddressState, Validators.required],
       presentAddressCity: [this.empBasic?.presentAddressCity, Validators.required],    
       permanentAddressHouseNo: [this.empBasic?.premanentAddressHouseNo, Validators.required],

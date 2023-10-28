@@ -69,7 +69,7 @@ export class CreateEmpComponent {
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       presentAddressHouseNo: ['', Validators.required],
       presentAddressStreet: ['', Validators.required],
-      presentAddressZipCode: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{6}$")]],
+      presentAddressZipCode: ['', [Validators.pattern("^((\\+91-?)|0)?[0-9]{6}$")]],
       presentAddressState: ['', Validators.required],
       presentAddressCity: ['', Validators.required],
       permanentAddressHouseNo: ['', Validators.required],
