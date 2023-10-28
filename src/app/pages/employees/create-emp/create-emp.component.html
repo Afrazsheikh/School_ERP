@@ -228,14 +228,14 @@
                 </div>
                 <div class="col-3">
                   <label class="form-label">ZipCode <span class="error">*</span></label>
-                  <input type="text" class="form-control"  formControlName="presentAddressZipCode" maxlength="5" >  
+                  <input type="text" class="form-control"  formControlName="presentAddressZipCode" maxlength="6" >  
                   <div *ngIf="empB1Form.controls['presentAddressZipCode'].invalid && (empB1Form.controls['presentAddressZipCode'].dirty || empB1Form.controls['presentAddressZipCode'].touched)"
                   class="error mt-2">
                   <div *ngIf="empB1Form.controls['presentAddressZipCode'].errors['required']">
                     ZipCode is required
                   </div>
                   <div *ngIf="empB1Form.get('presentAddressZipCode').hasError('pattern')">
-                    Enter 5 Digit Number
+                    Enter 6 Digit Number
                 </div>
               </div> 
                 </div>
@@ -302,14 +302,14 @@
               </div>
               <div class="col-3">
                 <label class="form-label">ZipCode <span class="error">*</span></label>
-                <input type="text" class="form-control"  formControlName="permanentAddressZipCode" maxlength="5" > 
+                <input type="text" class="form-control"  formControlName="permanentAddressZipCode" maxlength="6" > 
                 <div *ngIf="empB1Form.controls['permanentAddressZipCode'].invalid && (empB1Form.controls['permanentAddressZipCode'].dirty || empB1Form.controls['permanentAddressZipCode'].touched)"
                 class="error mt-2">
                 <div *ngIf="empB1Form.controls['permanentAddressZipCode'].errors['required']">
                   ZipCode is required
                 </div>
                 <div *ngIf="empB1Form.get('permanentAddressZipCode').hasError('pattern')">
-                  Enter 5 Digit Number
+                  Enter 6 Digit Number
               </div>
             </div>  
               </div>

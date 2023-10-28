@@ -346,16 +346,13 @@
           </div>
         </div>
         <div class="col-3">
-          <label class="form-label">ZipCode <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="presentAddressZipCode" maxlength="5">
+          <label class="form-label">ZipCode</label>
+          <input type="text" class="form-control" formControlName="presentAddressZipCode" maxlength="6">
           <div
             *ngIf="studentForm.controls['presentAddressZipCode'].invalid && (studentForm.controls['presentAddressZipCode'].dirty || studentForm.controls['presentAddressZipCode'].touched)"
             class="error mt-2">
-            <div *ngIf="studentForm.controls['presentAddressZipCode'].errors['required']">
-              ZipCode is required
-            </div>
             <div *ngIf="studentForm.get('presentAddressZipCode').hasError('pattern')">
-              Enter 5 Digit Number
+              Enter 6 Digit Number
           </div>
           </div>
         </div>
@@ -430,7 +427,7 @@
         </div>
         <div class="col-3">
           <label class="form-label">ZipCode  <span class="error">*</span></label>
-          <input type="text" class="form-control" formControlName="permanentAddressZipCode" maxlength="5">
+          <input type="text" class="form-control" formControlName="permanentAddressZipCode" maxlength="6">
           <div
             *ngIf="studentForm.controls['permanentAddressZipCode'].invalid && (studentForm.controls['permanentAddressZipCode'].dirty || studentForm.controls['permanentAddressZipCode'].touched)"
             class="error mt-2">
@@ -438,7 +435,7 @@
               ZipCode is required
             </div>
             <div *ngIf="studentForm.get('permanentAddressZipCode').hasError('pattern')">
-              Enter 5 Digit Number
+              Enter 6 Digit Number
           </div>
           </div>
         </div>
