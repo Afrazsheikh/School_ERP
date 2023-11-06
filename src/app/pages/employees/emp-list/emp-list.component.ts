@@ -45,11 +45,13 @@ export class EmpListComponent {
   getEmployees() {
     this.spinner.show();
     this.pageNo =this.pagingConfig.currentPage;
+    this.filterByDes = [];
+    this.pagingConfig.totalItems  = 0;
     this.api.getEmployeesByPageNo(this.pageNo-1,this.departmentDrp).subscribe(resp => {
       this.spinner.hide();      
       this.employees = resp.employees;  
       this.filterByDes = this.employees;
-      this.pagingConfig.totalItems = resp['totalCount'];
+      this.pagingConfig.totalItems = resp['totalCount'] ; 
       // this.filterByDesignation("-1");    
     }, (err) =>{
       this.spinner.hide();
@@ -94,10 +96,12 @@ export class EmpListComponent {
   onChangeDepart(event){
     // this.filterByDes = [];
     // this.filterByDesignation(event.target.value);
+    this.departmentDrp = event.target.value;
     this.getEmployees();
   }
   pageChanged(event: any): void {
     this.pagingConfig.currentPage  = event;
+    this.pagingConfig.currentPage = 1;
     this.getEmployees();
    }
 
