@@ -23,6 +23,7 @@ export class ClassScheduleAddComponent {
   existSchedata:any[] =[];
   isShowScheduleData = false;
   aceYear:any[] = [];
+  designations:any[] = [];
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder,private studentService:StudentService) {
     this.createForm();
     this.aceYear = this.studentService.aceYear;
@@ -32,8 +33,14 @@ export class ClassScheduleAddComponent {
     this.hrsData();
     this.getAllClass();
     this.getSubject();
-    this.getTeacher();
+   // this.getTeacher();
+    this.getDesignations();
     this.addForm.addControl('rows', this.rows);   
+  }
+  getDesignations() {
+    this.api.getDesignations().subscribe(resp => {
+      this.designations = resp.designations;
+    });
   }
   hrsData() {
     this.hrs = [];
@@ -55,10 +62,19 @@ export class ClassScheduleAddComponent {
       this.subjectOption = resp.subjects
     });
   }
-  getTeacher()
-  {
-    this.api.getTeacherList().subscribe(resp => {
-      this.teacherOption = resp.teachers;    
+  // getTeacher()
+  // {
+  //   this.api.getTeacherList().subscribe(resp => {
+  //     this.teacherOption = resp.teachers;    
+  //   });
+  // }
+  onChangeDepart(event){
+    this.getTeacher(event.target.value) ;
+  }
+  getTeacher(id) {
+    this.teacherOption= [];
+    this.api.getEmployeeByRole(id).subscribe(resp => {
+      this.teacherOption = resp.employees;
     });
   }
   onChangeClass(event){
@@ -92,6 +108,7 @@ export class ClassScheduleAddComponent {
         break:  [''],
         subject:  ['', Validators.required],
         teacher:  ['',Validators.required],
+        designation:[''],
         startTime:  ['',Validators.required],
         endTime:  ['', Validators.required],
         classRoom:  ['']
@@ -104,6 +121,7 @@ export class ClassScheduleAddComponent {
         break:  [''],
         subject:  [data?.subject?._id, Validators.required],
         teacher:  [data?.teacher?._id,Validators.required],
+        designation:[''],
         startTime:  [(timeArr[0]).trim(),Validators.required],
         endTime:  [(timeArr[1]).trim(), Validators.required],
         classRoom:  ['']

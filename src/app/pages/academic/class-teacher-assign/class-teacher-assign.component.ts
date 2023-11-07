@@ -15,6 +15,7 @@ export class ClassTeacherAssignComponent {
   aceYear: any[] = [];
   teacher: any[] = [];
   employees: any[] = [];
+  designations: any[] = [];
   teacherForm:any;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder,
      private studentService:StudentService) {
@@ -22,8 +23,14 @@ export class ClassTeacherAssignComponent {
   }
   ngOnInit() {
     this.getAllClass();
-    this.getEmployees();
+    this.getDesignations();
+    //this.getEmployees();
     this.createForm();
+  }
+  getDesignations() {
+    this.api.getDesignations().subscribe(resp => {
+      this.designations = resp.designations;
+    });
   }
   getEmployees()
   {
@@ -54,6 +61,7 @@ export class ClassTeacherAssignComponent {
       studentClass: ['', Validators.required],
       section: ['', Validators.required],
       assignTeacher: ['', Validators.required],
+      designation:['']
     });
   }
   createInfo(formData){
@@ -71,5 +79,14 @@ export class ClassTeacherAssignComponent {
           this.toastr.error(err, "Assign Failed");
           console.error(err);
         });
+  }
+  onChangeDepart(event){
+    this.getTeacher(event.target.value) ;
+  }
+  getTeacher(id) {
+    this.teacher= [];
+    this.api.getEmployeeByRole(id).subscribe(resp => {
+      this.teacher = resp.employees;
+    });
   }
 }

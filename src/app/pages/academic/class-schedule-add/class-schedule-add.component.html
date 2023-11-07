@@ -42,11 +42,12 @@
       <div class="scheduler-sec" *ngIf="isShowScheduleData">
         <h6 class="table-heading mb-3">Add Schedule</h6>
 
-        <table class="table mt-3">
+        <table class="table mt-3 table-responsive">
           <thead>
             <tr>
              <!-- <th scope="col">Break</th> -->
               <th scope="col">Subject <span class="error">*</span></th>
+              <th scope="col">Designation </th>
               <th scope="col">Teacher <span class="error">*</span></th>
               <th scope="col">Starting Time <span class="error">*</span> </th>
               <th scope="col">Ending Time <span class="error">*</span> </th>
@@ -69,6 +70,11 @@
                   </div>
                 </div>
 
+              </td>
+              <td> <select class="form-select w-125" [formControl]="row.get('designation')" (change)="onChangeDepart($event)">
+                <option value="">Select</option>
+                  <option *ngFor="let designation of designations" [value]="designation._id">{{ designation.name }}</option>
+                </select>
               </td>
               <td> <select class="form-select w-125" [formControl]="row.get('teacher')">
                 <option value="">Select</option>

@@ -101,7 +101,7 @@ export class EmpListComponent {
   }
   pageChanged(event: any): void {
     this.pagingConfig.currentPage  = event;
-    this.pagingConfig.currentPage = 1;
+    this.pagingConfig.currentPage =1
     this.getEmployees();
    }
 
