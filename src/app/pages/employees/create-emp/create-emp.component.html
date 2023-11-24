@@ -168,7 +168,7 @@
                 </div>
                 <div class="col-4">
                     <label class="form-label">Phone No.<span class="error">*</span></label>
-                    <input type="text" class="form-control"  formControlName="number" maxlength="10">
+                    <input type="number" class="form-control"  formControlName="number" maxlength="10">
                     <div *ngIf="empB1Form.controls['number'].invalid && (empB1Form.controls['number'].dirty || empB1Form.controls['number'].touched)"
                       class="error mt-2">
                       <div *ngIf="empB1Form.controls['number'].errors['required']">
