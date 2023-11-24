@@ -23,7 +23,7 @@
           <label class="form-label">Admission Date <span class="error">*</span></label>
           <div class="input-group">
             <input matInput class="form-control me-3" [matDatepicker]="picker" placeholder="dd-mm-yyyy"
-              formControlName="admissionDate" />
+              formControlName="admissionDate" readonly/>
             <div class="mr-2 tooglePicker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             </div>
@@ -158,7 +158,7 @@
           <label class="form-label">Date Of Birth <span class="error">*</span></label>
           <div class="input-group">
             <input matInput class="form-control me-3" [matDatepicker]="picker2" placeholder="dd-mm-yyyy"
-              formControlName="dob" />
+              formControlName="dob" readonly/>
             <div class="mr-2 tooglePicker">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             </div>
@@ -425,15 +425,14 @@
             </div>
           </div>
         </div>
+        
         <div class="col-3">
-          <label class="form-label">ZipCode  <span class="error">*</span></label>
+          <label class="form-label">ZipCode</label>
           <input type="text" class="form-control" formControlName="permanentAddressZipCode" maxlength="6">
           <div
             *ngIf="studentForm.controls['permanentAddressZipCode'].invalid && (studentForm.controls['permanentAddressZipCode'].dirty || studentForm.controls['permanentAddressZipCode'].touched)"
             class="error mt-2">
-            <div *ngIf="studentForm.controls['permanentAddressZipCode'].errors['required']">
-              ZipCode is required
-            </div>
+            
             <div *ngIf="studentForm.get('permanentAddressZipCode').hasError('pattern')">
               Enter 6 Digit Number
           </div>
