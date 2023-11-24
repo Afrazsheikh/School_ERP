@@ -45,7 +45,7 @@
                            <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle >
                            </div>
                            <input matInput class="form-control" [matDatepicker]="picker"
-                           placeholder="dd-mm-yyyy" formControlName="joiningDate" >
+                           placeholder="dd-mm-yyyy" formControlName="joiningDate" readonly >
                  
                       <mat-datepicker #picker></mat-datepicker>
                   
@@ -127,7 +127,7 @@
                             <mat-datepicker-toggle  matSuffix [for]="picker1"></mat-datepicker-toggle>
                           </div>
                             <input matInput class="form-control" [matDatepicker]="picker1"
-                            placeholder="dd-mm-yyyy" formControlName="dob" >          
+                            placeholder="dd-mm-yyyy" formControlName="dob" readonly>          
                        <mat-datepicker #picker1></mat-datepicker>
                          
                           </div>
@@ -301,13 +301,11 @@
             </div> 
               </div>
               <div class="col-3">
-                <label class="form-label">ZipCode <span class="error">*</span></label>
+                <label class="form-label">ZipCode</label>
                 <input type="text" class="form-control"  formControlName="permanentAddressZipCode" maxlength="6" > 
                 <div *ngIf="empB1Form.controls['permanentAddressZipCode'].invalid && (empB1Form.controls['permanentAddressZipCode'].dirty || empB1Form.controls['permanentAddressZipCode'].touched)"
                 class="error mt-2">
-                <div *ngIf="empB1Form.controls['permanentAddressZipCode'].errors['required']">
-                  ZipCode is required
-                </div>
+                
                 <div *ngIf="empB1Form.get('permanentAddressZipCode').hasError('pattern')">
                   Enter 6 Digit Number
               </div>
