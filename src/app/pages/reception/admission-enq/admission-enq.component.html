@@ -3,24 +3,8 @@
     <div class="tab-container">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Enquiry List">
-          <div class="pt-4">
-            <!--<div class="top-options">
-              <div class="search-area">
-                <div class="input-group pe-3">
-                  <input type="search" class="form-control" placeholder="Search here...">
-                  <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                </div>
-                <div class="options">
-                  <button class="btn"><img src="assets/icons/opt-copy.svg"></button>
-                  <button class="btn"><img src="assets/icons/opt-excel.svg"></button>
-                  <button class="btn"><img src="assets/icons/opt-pdf.svg"></button>
-                  <button class="btn"><img src="assets/icons/opt-sheet.svg"></button>
-                  <button class="btn"><img src="assets/icons/opt-print.svg"></button>
-                </div>
-              </div>
-            </div> -->
-
-            <table class="table mt-3">
+          <div class="pt-4 ms-2">
+            <!-- <table class="table mt-3">
               <thead>
                 <tr>
                   <th scope="col">SL</th>
@@ -55,7 +39,8 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
+            <app-dynamic-table [data]="enquiries" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
           </div>
         </mat-tab>
         <mat-tab label="Add Enquiry">
@@ -72,21 +57,7 @@
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Date Of Birth <span class="error">*</span></label>
-          
-<!-- 
-              <mat-datepicker-toggle  matSuffix [for]="picker1"></mat-datepicker-toggle>
-      
-              <input matInput class="form-control" [matDatepicker]="picker1"
-              placeholder="dd-mm-yyyy" formControlName="dob" >
-            
-    
-         <mat-datepicker #picker1></mat-datepicker> -->
-
-       
-          
-           
-       
+              <label class="form-label">Date Of Birth <span class="error">*</span></label>       
             <div class="input-group flex-nowrap">
             
               <input type="text" class="date-picker-input" [matDatepicker]="picker1"
@@ -129,7 +100,7 @@
 
         </div>
           </div>
-          <div class="row ms-1">            
+          <div class="row mt-3 ms-1">            
             <div class="col-4">
               <label class="form-label">Class Apply For <span class="error">*</span></label>
               <input type="number" formControlName="classApplyFor" class="form-control">
@@ -145,90 +116,80 @@
     </div>
   </div>
 </app-layout>
-
-
-
-
-<!---Modal for Edit enq---->
-<div class="modal fade" id="editPrompt">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Designation</h5>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="editEnq">
-          <div class="mb-3">
-            <label class="form-label"> Name *</label>
-            <input type="text" class="form-control" formControlName="name">
-          </div>
-          <div class="mb-3">
-            <label class="form-label"> gender *</label>
-            <input type="text" class="form-control" formControlName="gender">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> Date of Birth *</label>
-            <input type="text" class="date-picker-input" formControlName="dob" 
-            [matDatepicker]="picker2"  (click)="picker2.open()"> 
-          </div>
-          <mat-datepicker #picker2></mat-datepicker>
-           <div class="mb-3">
-            <label class="form-label"> fatherName *</label>
-            <input type="text" class="form-control" formControlName="fatherName">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> motherName *</label>
-            <input type="text" class="form-control" formControlName="motherName">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> mobileNo *</label>
-            <input type="text" class="form-control" formControlName="mobileNo">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> email *</label>
-            <input type="text" class="form-control" formControlName="email">
-          </div> 
-          <div class="mb-3">
-            <label class="form-label"> assigned *</label>
-            <input type="text" class="form-control" formControlName="assigned">
-          </div>
-        <!-- </div>  -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit Enquiry</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editEnq">
+      <div class="modal-body bg-white">
         <div class="mb-3">
-          <label class="form-label"> classApplyFor *</label>
-          <input type="text" class="form-control" formControlName="classApplyFor">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" formControlName="name">
         </div>
-        </form>
+        <div class="mb-3">
+          <label class="form-label">Gender</label>
+          <input type="text" class="form-control" formControlName="gender">
+        </div>
+         <div class="mb-3">
+          <label class="form-label">Date of Birth</label>
+          <input type="text" class="date-picker-input" formControlName="dob" 
+          [matDatepicker]="picker2"  (click)="picker2.open()"> 
+        </div>
+        <mat-datepicker #picker2></mat-datepicker>
+         <div class="mb-3">
+          <label class="form-label">FatherName</label>
+          <input type="text" class="form-control" formControlName="fatherName">
+        </div>
+         <div class="mb-3">
+          <label class="form-label">MotherName</label>
+          <input type="text" class="form-control" formControlName="motherName">
+        </div>
+         <div class="mb-3">
+          <label class="form-label">Mobile No</label>
+          <input type="text" class="form-control" formControlName="mobileNo">
+        </div>
+         <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="text" class="form-control" formControlName="email">
+        </div> 
+        <div class="mb-3">
+          <label class="form-label">Assigned</label>
+          <input type="text" class="form-control" formControlName="assigned">
+        </div>
+      <div class="mb-3">
+        <label class="form-label">Class Apply For</label>
+        <input type="text" class="form-control" formControlName="classApplyFor">
       </div>
-      <div class="modal-footer">
-        <button id="editModalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-        <!-- <button type="button" class="btn btn-danger" [disabled]="isLoading || !editEnq.valid" (click)="updateEnq()">
-          <span *ngIf="isLoading" class="spinner-border text-light"></span>
-          <span *ngIf="!isLoading">Update</span>
-        </button> -->
-        <button (click)="updateEnq()" class="btn btn-primary"> Update</button>
+       
+      </div>
+      <div class="modal-footer">        
+        <button type="button" class="save_button btn" (click)="updateEnq()">Update</button>
+        <button type="button" class="save_button btn" (click)="closePopup()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #deletemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Delete Enquiry</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <span class="text-justify">Are you sure you want to delete this Qnquiry?</span>
       </div>
     </div>
+       
+      <div class="modal-footer mt-4">
+        <button type="button" class="save_button btn" (click)="delete()">Yes, Continue</button>
+        <button type="button" class="save_button btn" (click)="closePopup()">Cancel</button>
+      </div>
   </div>
-</div>
-
-
-<!-- -Modal for delete-- -->
-<div class="modal fade" id="deletePrompt">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Enquiry</h5>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete this Qnquiry?</p>
-      </div>
-      <div class="modal-footer">
-        <button id="modalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" [disabled]="isLoading" (click)="delete()">
-          <span *ngIf="isLoading" class="spinner-border text-light"></span>
-          <span *ngIf="!isLoading">Delete</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+</ng-template>

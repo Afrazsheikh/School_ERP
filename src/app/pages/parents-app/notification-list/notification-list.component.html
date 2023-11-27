@@ -4,24 +4,9 @@
         <div class="col-md-6"><span>Notification List</span></div>  
         <div class="col-md-6 text-end mb-1"> <button class="btn" role="navigation" (click)="addBtnClick()">Add Notification</button></div>   
     </div>
-        <table class="table mt-3">
-            <thead>
-              <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Type</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let notice of notifications; index as i">
-                <td>{{ notice.title }}</td>
-                <td>{{ notice.description }}</td>
-                <td>{{ notice.notiType | titlecase }}</td>
-                <td> <button class="btn emp-edit me-1" (click)="openDeleteModal(deletemplate, notice)"><i class="fa-solid fa-trash-can"></i></button></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="mt-2">
+            <app-dynamic-table [data]="notifications" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
+          </div>
     </div>
 </app-layout>
 <ng-template #deletemplate>

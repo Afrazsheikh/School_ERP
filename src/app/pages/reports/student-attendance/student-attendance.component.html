@@ -40,7 +40,7 @@
               </div>
           </form>
       </div>
-      <div class="top-options mt-3">
+      <!-- <div class="top-options mt-3">
         <div class="col-md-6">   <input type="text" class="form-control" placeholder="Search by Student Name" [(ngModel)]="searchText" (ngModelChange)="updateFilters()">
         </div>
       </div> 
@@ -74,6 +74,10 @@
                 </tbody>
             </table>
           </div>
+      </div> -->
+      <div class="mt-2">
+        <app-dynamic-table [data]="studentData" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
       </div>
+      
   </div>
 </app-layout>

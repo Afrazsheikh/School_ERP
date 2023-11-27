@@ -47,6 +47,8 @@ export class EmployeeAttendenceComponent {
   date = new FormControl(moment());
   designationList:any[] = [];
   employeeList:any[] = [];
+  selectedRow:any;
+  tableHeader:any;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
     private studentService:StudentService, private spinner: NgxSpinnerService, private datepipe: DatePipe
 ) {
@@ -56,6 +58,23 @@ export class EmployeeAttendenceComponent {
   }
   ngOnInit() {
     this.getDesignations();
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "name", dataType: "string", title: 'Employee Name', sort: true, visible: true, search:true },
+        {  field: "totalPresentCount", dataType: "string", title: 'Full Day', sort: true, visible: true, search:true },
+        {  field: "totalHalfDayCount", dataType: "string", title: 'Half Day', sort: true, visible: true, search:true },
+        {  field: "totalAbsentCount", dataType: "string", title: 'Absent', sort: true, visible: true, search:true }
+       ],
+      searchPlaceholder:"Search by Employee Name",
+      sortBy: { field: 'name', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+        },
+      },
+    }
   }
   getDesignations() {
     this.api.getDesignations().subscribe(resp => {
@@ -96,5 +115,7 @@ export class EmployeeAttendenceComponent {
  
   }
   
- 
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+  }
 }

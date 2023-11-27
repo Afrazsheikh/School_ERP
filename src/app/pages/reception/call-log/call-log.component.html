@@ -4,23 +4,8 @@
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Call Log List">
           <div class="pt-4">
-            <!--<div class="top-options">
-              <div class="search-area">
-                <div class="input-group pe-3">
-                  <input type="search" class="form-control" placeholder="Search here...">
-                  <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                </div>
-                <div class="options">
-                  <button class="btn"><img src="assets/icons/opt-copy.svg"></button>
-                  <button class="btn"><img src="assets/icons/opt-excel.svg"></button>
-                  <button class="btn"><img src="assets/icons/opt-pdf.svg"></button>
-                  <button class="btn"><img src="assets/icons/opt-sheet.svg"></button>
-                  <button class="btn"><img src="assets/icons/opt-print.svg"></button>
-                </div>
-              </div>
-            </div> -->
 
-            <table class="table mt-3">
+            <!-- <table class="table mt-3">
               <thead>
                 <tr>
                   <th scope="col">SL</th>
@@ -32,7 +17,6 @@
                   <th scope="col">Start Time</th>
                   <th scope="col">End Time</th>
                   <th scope="col">Follow up</th>
-                  <!-- <th scope="col">Duration</th> -->
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -47,7 +31,6 @@
                   <td>{{call.timeSlotFrom}}</td>
                   <td>{{call.timeSlotTo}}</td>
                   <td>{{call.followUpDate}}</td>
-                  <!-- <td>2</td> -->
                   <td>
                     <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#editPrompt"
                     (click)="setCall(call)">
@@ -60,7 +43,8 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
+            <app-dynamic-table [data]="callLogs" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
           </div>
         </mat-tab>
         <mat-tab label="Add Call Log">
@@ -133,87 +117,82 @@
     </div>
   </div>
 </app-layout>
-
-
-
-<!---Modal for Edit enq---->
-<div class="modal fade" id="editPrompt">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Designation</h5>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="editCall">
-          <div class="mb-3">
-            <label class="form-label"> callType *</label>
-            <input type="text" class="form-control" formControlName="callType">
-          </div>
-          <div class="mb-3">
-            <label class="form-label"> purpose *</label>
-            <input type="text" class="form-control" formControlName="purpose">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> name *</label>
-            <input type="text" class="form-control" formControlName="name">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> mobileNo *</label>
-            <input type="text" class="form-control" formControlName="mobileNo">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> date *</label>
-            <input type="text" class="form-control" formControlName="date">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> timeSlotTo *</label>
-            <input type="text" class="form-control" formControlName="timeSlotTo">
-          </div>
-           <div class="mb-3">
-            <label class="form-label"> timeSlotFrom *</label>
-            <input type="text" class="form-control" formControlName="timeSlotFrom">
-          </div> 
-          <div class="mb-3">
-            <label class="form-label"> followUpDate *</label>
-            <input type="text" class="form-control" formControlName="followUpDate">
-          </div>
-        <!-- </div>  -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit Log</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editCall">
+      <div class="modal-body bg-white">
         <div class="mb-3">
-          <label class="form-label"> note *</label>
-          <input type="text" class="form-control" formControlName="note">
+          <label class="form-label">Call Type</label>
+          <input type="text" class="form-control" formControlName="callType">
         </div>
-        </form>
+        <div class="mb-3">
+          <label class="form-label">Purpose</label>
+          <input type="text" class="form-control" formControlName="purpose">
+        </div>
+         <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" formControlName="name">
+        </div>
+         <div class="mb-3">
+          <label class="form-label">Mobile No</label>
+          <input type="text" class="form-control" formControlName="mobileNo">
+        </div>
+         <div class="mb-3">
+          <label class="form-label">Date</label>
+          <div class="input-group flex-nowrap">
+            
+            <input type="text" class="date-picker-input" [matDatepicker]="picker1"
+              (click)="picker1.open()" formControlName="date" readonly>
+          </div>
+          <mat-datepicker #picker1></mat-datepicker>
+        </div>
+         <div class="mb-3">
+          <label class="form-label">Time Slot To</label>
+          <input type="text" class="form-control" formControlName="timeSlotTo">
+        </div>
+         <div class="mb-3">
+          <label class="form-label">Time Slot From</label>
+          <input type="text" class="form-control" formControlName="timeSlotFrom">
+        </div> 
+        <div class="mb-3">
+          <label class="form-label"> followUpDate *</label>
+          <input type="text" class="form-control" formControlName="followUpDate">
+        </div>
+      <div class="mb-3">
+        <label class="form-label">Note</label>
+        <input type="text" class="form-control" formControlName="note">
       </div>
-      <div class="modal-footer">
-        <button id="editModalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-        <!-- <button type="button" class="btn btn-danger" [disabled]="isLoading || !editEnq.valid" (click)="updateEnq()">
-          <span *ngIf="isLoading" class="spinner-border text-light"></span>
-          <span *ngIf="!isLoading">Update</span>
-        </button> -->
-        <button (click)="updateEnq()"> Update</button>
+      </div>
+      <div class="modal-footer">        
+        <button type="button" class="save_button btn" (click)="updateEnq()">Update</button>
+        <button type="button" class="save_button btn" (click)="closePopup()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #deletemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Delete Enquiry</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <span class="text-justify">Are you sure you want to delete this Call?</span>
       </div>
     </div>
+       
+      <div class="modal-footer mt-4">
+        <button type="button" class="save_button btn" (click)="delete()">Yes, Continue</button>
+        <button type="button" class="save_button btn" (click)="closePopup()">Cancel</button>
+      </div>
   </div>
-</div>
-
-
-<!-- -Modal for delete-- -->
-<div class="modal fade" id="deletePrompt">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Call</h5>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete this Call?</p>
-      </div>
-      <div class="modal-footer">
-        <button id="modalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" [disabled]="isLoading" (click)="delete()">
-          <span *ngIf="isLoading" class="spinner-border text-light"></span>
-          <span *ngIf="!isLoading">Delete</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+</ng-template>

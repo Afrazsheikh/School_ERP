@@ -32,7 +32,16 @@
     </form>
         <div class="row">
             <div class="col-md-12">
-                <table class="table mt-3">
+              <app-dynamic-table [data]="transportList" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
+              <table class="table mt-3" *ngIf="transportList.length !== 0 ">
+                <tr>
+                  <td width="15%"></td>
+                  <td  width="30%"></td>
+                   <td  width="30%"><b>Total Amount</b></td>
+                   <td   width="30%" class="f-w-400">{{totalAmount}}</td>
+               </tr>
+              </table>
+                <!-- <table class="table mt-3">
                     <thead>
                       <tr>
                         <th width="15%">S. No</th>
@@ -57,7 +66,7 @@
                             </tr>
                         </ng-container>
                       </tbody>                     
-                </table>
+                </table> -->
             </div>
         </div>
 

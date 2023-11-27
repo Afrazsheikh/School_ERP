@@ -1,0 +1,13 @@
+<div >
+    <ng-container  *ngIf="tools_config?.view?.show">
+        <button class="btn emp-edit me-1" (click)="clicked('view')"><i class="fa-solid fa-list-ul"></i></button>
+    </ng-container>
+    <ng-container  *ngIf="tools_config?.edit?.show">
+        <button class="btn emp-edit me-1" (click)="clicked('edit')"><i class="fa-solid fa-pencil"></i></button>
+    </ng-container>
+    <ng-container  *ngIf="tools_config?.delete?.show">
+        <button class="btn emp-edit" (click)="clicked('delete')"><i class="fa-solid fa-trash-can"></i></button>
+    </ng-container>
+   
+ 
+</div>

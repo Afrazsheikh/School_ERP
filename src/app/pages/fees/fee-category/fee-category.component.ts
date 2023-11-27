@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -13,12 +13,45 @@ export class FeeCategoryComponent {
   modalRef!: BsModalRef;
   categoryList:any[] =[];
   categoryId:any;
+  selectedRow:any;
+  tableHeader:any;
+  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
   constructor(private api: ApiService, private toastr: ToastrService, 
     private router: Router,private modalService: BsModalService, private feeService:FeeService){
 
   }
   ngOnInit(): void {    
    this.getCategoryData();
+   this.tableHeader = {
+    data: [
+      {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+      {  field: "categoryName", dataType: "string", title: 'Name', sort: true, visible: true, search:true },
+      {  field: "code", dataType: "string", title: 'Code', sort: true, visible: true, search:true },
+      {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false  }
+     ],
+    searchPlaceholder:"Search by Name & Code",
+    sortBy: { field: 'categoryName', asc: true },
+    toolbar: {
+      show: true,
+      visibleOn: 'visibility',
+      config: {
+       
+        edit: {
+          show: true,
+          callback: () => {
+            
+          },
+        },
+        delete: {
+          show: true,
+          callback: () => {
+            // $('#detail-grievance').modal('show')
+
+          },
+        },
+      },
+    },
+  }
   }
   getCategoryData(){
     this.api.getAllFeeCategory().subscribe(data =>{
@@ -54,5 +87,15 @@ export class FeeCategoryComponent {
   }
   closePopup(){
     this.modalRef.hide();
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'edit'){
+     this.editCategory(this.selectedRow);
+    }
+    if($event['event'] === 'delete'){
+      this.openDeleteModal(this.deleteTemplate, this.selectedRow)
+    }
+
   }
 }

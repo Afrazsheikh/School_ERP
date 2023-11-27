@@ -31,35 +31,31 @@
               </div>
         </div>
         <div class="col-md-7">
-          <div class="card">
+           <div class="card">
             <div class="card-header header-txt">
               Category list
               </div>
               <div class="card-body">
+                <!-- <div class="row">
+                  <div class="col-md-6"></div>
+                  <div class="col-md-6 pe-4">
+                    <app-search-box [(model)]="searchText" (modelChange)="updateFilters()" [placeholder]="'Search by Category Name'"></app-search-box>
+                  </div>
+                </div>
                 <table class="table mt-3">
                   <thead>
                      <tr>
-                    <!-- <th>Branch</th> -->
-                    <th width="12%">S. No</th>
-                    <th width="35%">Id</th>
-
-                    <th width="30%">Name</th>
-                    <th>Action</th>
+                    <th width="20%">S. No</th>
+                    <th  [class.active]="order === 'categoryName'"
+                    (click)="setOrder('categoryName')" width="50%">Name<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span></th>
+                    <th >Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let row of categoryData;  let i = index">
+                    <ng-container *ngIf="( categoryData | orderBy: order:reverse:caseInsensitive | filter:peopleFilter:false) as result">
+                  <tr *ngFor="let row of result;  let i = index">
                     <td>{{i+1}}</td>
-                    <td style="word-break: break-all;">{{row._id}}</td>
-
-                    <!-- <td>
-
-                      <div class="cdk-virtual-scroll-data-source-example">
-                        <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
-                          <div *cdkVirtualFor =" let row of categoryData" class="example-item">{{row._id}}</div>
-                        </cdk-virtual-scroll-viewport>
-                      </div>
-                    </td> -->
                     <td>{{row.categoryName}}</td>
 
                     <td>
@@ -67,9 +63,12 @@
                       <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletemplate, row)"><i class="fa-solid fa-trash-can"></i></button>
                     </td>
                   </tr>
+                  </ng-container>
                 </tbody>
-                </table>
-                </div></div>
+                </table> -->
+                <app-dynamic-table [data]="categoryData" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
+                </div></div> 
+               
         </div>
     </div>
 </div>

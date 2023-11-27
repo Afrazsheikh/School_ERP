@@ -1,0 +1,69 @@
+<div class="row">
+       <div class="col-md-6">
+        <app-search-box [(model)]="searchText" (modelChange)="updateFilters()" [placeholder]="tableHeader.searchPlaceholder"></app-search-box>
+    </div>
+</div>
+<hr/>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <ng-container *ngFor="let header of tableHeader.data">
+                <ng-container *ngIf="header?.sort">
+                    <th scope="col" [class.active]="order === header.field" [attr.width]="header?.width"
+                    (click)="setOrder(header.field)" >{{ header.title }}<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span></th>
+                </ng-container>
+                <ng-container *ngIf="!header?.sort">
+                    <th scope="col" [style]="header.style" *ngIf="header.visible" [attr.width]="header?.width">
+                        {{ header.title }}
+                        </th>
+                </ng-container>
+               
+            </ng-container>
+        </tr>       
+    </thead>
+    <tbody>
+        <ng-container *ngIf="( data | orderBy: order:reverse:caseInsensitive | filter:peopleFilter:false) as result">          
+            <tr *ngFor="let item of result;let i = index ">
+                <ng-container *ngFor="let header of tableHeader.data">
+                    <ng-container *ngIf="header.dataType == 'autoNo'">
+                        <td>{{i+1}}</td>
+                    </ng-container>
+                    <ng-container *ngIf="header.dataType == 'string'">
+                        <td  >{{item?.[header.field] }}</td>                        
+                    </ng-container>
+                    <ng-container *ngIf="header.dataType == 'date'">
+                        <td>{{item[header.field] | date: 'dd-MM-YYYY'}}</td>                        
+                    </ng-container>
+                    <ng-container *ngIf="header.dataType == 'img'">
+                        <td>
+                            <img
+                                [src]="item[header.field]"
+                                alt="" width="100" 
+                            />
+                        </td>                        
+                    </ng-container>
+                    <ng-container *ngIf="header.dataType == 'status'">
+                        <td>
+                            <span class="badge badge-warning" *ngIf="(item[header.field]).toLowerCase() === 'pending'" style="text-transform: uppercase;">{{item[header.field]}}</span>
+                            <span class="badge badge-danger" *ngIf="(item[header.field]).toLowerCase() === 'rejected'" style="text-transform: uppercase;">{{item[header.field]}}</span>
+                             <span class="badge badge-success" *ngIf="(item[header.field]).toLowerCase() === 'approved'" style="text-transform: uppercase;">{{item[header.field]}}</span>
+                        </td>
+
+                    </ng-container>
+                    <ng-container *ngIf="header.dataType == 'action'">
+                        <td>
+                            <app-action-button-item class="toolbar" [(tools_config)]="tableHeader.toolbar.config"
+                            (tool_selected)="selected_tool($event, item)" [row]="item"></app-action-button-item>
+    
+                        </td>
+                    </ng-container>
+                </ng-container>
+            </tr>
+            <tr *ngIf="result.length === 0" class="no-record-found">
+                <td [attr.colspan]="count"   class="ps-4">No Record Found</td> 
+              </tr>
+        </ng-container>
+       
+    </tbody>
+</table>

@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-control-class',
   templateUrl: './control-class.component.html',
@@ -12,7 +13,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ControlClassComponent {
 
    @ViewChild('closeButton') closeButton;
-
+   selectedRow:any;
+   tableHeader:any;
+   modalRef!: BsModalRef;
+   @ViewChild('editClassTemplate', { read: TemplateRef }) editTemplate:TemplateRef<any>;
+   @ViewChild('deleteClassTemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
   ClassForm:  FormGroup
   sectionForm: FormGroup
   editClass: FormGroup
@@ -23,7 +28,8 @@ export class ControlClassComponent {
   selectedDesign: any;
   _id: string;
 
-  constructor(private api: ApiService, private toastr: ToastrService,  private route: ActivatedRoute,private spinner: NgxSpinnerService) {
+  constructor(private api: ApiService, private toastr: ToastrService,  private route: ActivatedRoute,
+    private spinner: NgxSpinnerService, private modalService: BsModalService) {
     this.ClassForm = new FormGroup({
       className: new FormControl(null, [Validators.required]),
       // sections: new FormControl(null, [Validators.required]),
@@ -118,11 +124,46 @@ export class ControlClassComponent {
   }
 
   getAllClass(){
-   
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "className", dataType: "string", title: 'Class Named', sort: true, visible: true, search:true },
+        {  field: "classNumeric", dataType: "string", title: 'Class Numerice', sort: true, visible: true, search:true },
+        {  field: "sectionsName", dataType: "string", title: 'Section', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false  }
+       ],
+      searchPlaceholder:"Search by Class Named and Section",
+      sortBy: { field: 'className', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+         
+          edit: {
+            show: true,
+            callback: () => {
+              
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // $('#detail-grievance').modal('show')
+  
+            },
+          },
+        },
+      },
+    }
     this.spinner.show();
     this.api.getAllClass().subscribe(resp => {
       this.spinner.hide();
-      this.classes = resp.classes
+      this.classes = resp.classes;
+      this.classes.forEach(element => {
+        if(element?.sections){
+          element['sectionsName'] =element.sections[0]?.name;
+        }
+      });
     },
     (err)=>{
       this.spinner.show();
@@ -209,14 +250,11 @@ export class ControlClassComponent {
 
     this.isLoading = true;
     this.api.deleteClass(this.selectedDesign._id).subscribe(resp => {
-      console.log(resp);
-      this.isLoading = false;
-   
-
-      this.toastr.success(resp.message, "Class  Deleted successFully");
-      // document.getElementById('modalDismissBtn')?.click();
-      this.closeButton.nativeElement?.click();
-      this.getAllClass()
+    console.log(resp);
+    this.isLoading = false;
+    this.toastr.success(resp.message, "Class  Deleted successFully");
+    this.closePopup();
+    this.getAllClass()
     },
     (err) => {
       this.isLoading = false;
@@ -237,7 +275,7 @@ export class ControlClassComponent {
       
       this.isLoading = false;
       this.toastr.success(resp.message, "  update success");
-      document.getElementById('editModalDismissBtn')?.click();
+      this.closePopup();
       this.getAllClass();
     },
     (err) => {
@@ -263,5 +301,23 @@ export class ControlClassComponent {
       this.toastr.error(err, "section  update failed");
     })
 
+  }
+  openModal(template: TemplateRef<any>, data: any) {
+    this.modalRef = this.modalService.show(template);
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'edit'){
+      this.setClass(this.selectedRow);
+      this.openModal(this.editTemplate, this.selectedRow)
+    }
+    if($event['event'] === 'delete'){
+      this.selectedDesign=  this.selectedRow;
+      this.openModal(this.deleteTemplate, this.selectedRow)
+    }
+
+  }
+  closePopup(){
+    this.modalRef.hide();
   }
 }

@@ -4,34 +4,10 @@
         <div class="col-md-6"><span>Notice Board List</span></div>  
         <div class="col-md-6 text-end mb-1"> <button class="btn" role="navigation" (click)="addBtnClick()">Add Notice</button></div>   
     </div>
-<table class="table mt-3">
-    <thead>
-      <tr>
-        <th scope="col" >Name</th>
-        <th scope="col" width="33%">Description</th>
-        <th scope="col">Date</th>
-        <th scope="col" width="15%">Banner Image</th>
-        <th scope="col">Type</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let notice of notices; index as i">
-        <td>{{ notice.name }}</td>
-        <td>{{ notice.description }}</td>
-        <td>{{ notice.noticeDate | date }}</td>
-        <td>
-          <img
-            class="img-thumbnail tableImg"
-            [src]="notice.imageAttachment"
-            alt=""
-          />
-        </td>
-        <td>{{ notice.noticeBoardType }}</td>
-        <td> <button class="btn emp-edit me-1" (click)="openDeleteModal(deletemplate, notice)"><i class="fa-solid fa-trash-can"></i></button></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="mt-2">
+    <app-dynamic-table [data]="notices" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
+  </div>
+ 
   </div>
   </app-layout>
   <ng-template #deletemplate>

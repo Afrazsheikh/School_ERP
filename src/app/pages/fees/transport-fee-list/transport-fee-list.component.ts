@@ -17,11 +17,43 @@ export class TransportFeeListComponent {
   reportForm:any;
   aceYear :any[] =[];
   totalAmount =0;
+  selectedRow:any;
+  tableHeader:any;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private modalService: BsModalService, private studentService:StudentService){
     this.aceYear = this.studentService.aceYear;
   }
   ngOnInit(): void {
       this.addForm();
+      this.tableHeader = {
+        data: [
+          {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+          {  field: "code", dataType: "string", title: 'Code', sort: true, visible: true, search:true },
+          {  field: "distance", dataType: "string", title: 'Distance', sort: true, visible: true, search:true },
+          {  field: "amount", dataType: "string", title: 'Amount', sort: true, visible: true, search:true }
+         ],
+        searchPlaceholder:"Search by Code, Distance and Amount",
+        sortBy: { field: 'distance', asc: true },
+        toolbar: {
+          show: true,
+          visibleOn: 'visibility',
+          config: {
+           
+            edit: {
+              show: true,
+              callback: () => {
+                
+              },
+            },
+            delete: {
+              show: true,
+              callback: () => {
+                // $('#detail-grievance').modal('show')
+    
+              },
+            },
+          },
+        },
+      }
   }
   addForm() {
     this.reportForm = new FormGroup({
@@ -49,6 +81,10 @@ export class TransportFeeListComponent {
       // this.toastr.error(err, " add failed");
        console.error(err);
      });
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+   
   }
 }
 

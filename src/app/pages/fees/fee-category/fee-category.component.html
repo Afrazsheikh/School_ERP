@@ -12,8 +12,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <table class="table mt-3">
+            <div class="col-md-12 mt-2">
+              <app-dynamic-table [data]="categoryList" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
+                <!-- <table class="table mt-3">
                     <thead>
                       <tr>
                         <th width="15%">S. No</th>
@@ -35,7 +36,7 @@
                             </tr>
                         </ng-container>
                       </tbody>                     
-                </table>
+                </table> -->
             </div>
         </div>
 

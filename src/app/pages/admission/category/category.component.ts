@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,12 +15,65 @@ export class CategoryComponent {
   categoryForm:FormGroup;
   modalRef!: BsModalRef;
   categoryId: any;
+  caseInsensitive: boolean = false;
+  order:  string = 'categoryName';
+  reverse: boolean = false;
+  searchText: any;
+  peopleFilter: any;
+  fields = {
+    categoryName :''
+  };
+  selectedRow:any;
+  tableHeader:any;
+  @ViewChild('template', { read: TemplateRef }) editTemplate:TemplateRef<any>;
+  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private modalService: BsModalService){
 
   }
-  ngOnInit(): void {    
+  ngOnInit(): void {  
+    this.peopleFilter = this.fields;   
     this.getAllCateogy();
     this.createForm();
+
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "categoryName", dataType: "string", title: 'Type', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false  }
+       ],
+      searchPlaceholder:"Search by Category Name",
+      sortBy: { field: 'categoryName', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+         
+          edit: {
+            show: true,
+            callback: () => {
+              
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // $('#detail-grievance').modal('show')
+  
+            },
+          },
+        },
+      },
+    }
+  }
+  updateFilters(){
+    this.fields.categoryName = this.searchText;
+    this.peopleFilter = this.fields;
+  }
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
   }
   getAllCateogy(){
     this.api.getCategory().subscribe(data =>{
@@ -84,9 +137,8 @@ export class CategoryComponent {
       this.closePopup();
       this.toastr.success(resp.message, "Updated success");
       this.getAllCateogy();
-      this.categoryForm.reset();
-     
-  // this.getExamTerms();
+      this.categoryForm.reset();     
+      // this.getExamTerms();
     },
     (err) => {
       this.toastr.error(err, " update failed");
@@ -106,5 +158,15 @@ export class CategoryComponent {
   }
   closePopup(){
     this.modalRef.hide();
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'edit'){
+      this.openModal(this.editTemplate, this.selectedRow)
+    }
+    if($event['event'] === 'delete'){
+      this.openDeleteModal(this.deleteTemplate, this.selectedRow)
+    }
+
   }
 }

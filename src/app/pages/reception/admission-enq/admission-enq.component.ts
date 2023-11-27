@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -9,15 +10,18 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./admission-enq.component.scss']
 })
 export class AdmissionEnqComponent {
-
-
+  selectedRow:any;
+  tableHeader:any;
+  modalRef!: BsModalRef;
+  @ViewChild('template', { read: TemplateRef }) editTemplate:TemplateRef<any>;
+  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
   addEnquiryForm: FormGroup
   isLoading: boolean;
   enquiries: any[]= []
   selectedEnq: any;
   editEnq: FormGroup;
   
-  constructor(private api: ApiService,private toastr: ToastrService  ) {
+  constructor(private api: ApiService,private toastr: ToastrService,private modalService: BsModalService  ) {
     this.addEnquiryForm =  new FormGroup ({
       name: new FormControl(null, [Validators.required]),
       gender: new FormControl(null, [Validators.required]),
@@ -47,34 +51,59 @@ export class AdmissionEnqComponent {
       assigned: new FormControl(null, [Validators.required]),
       response: new FormControl(null, [Validators.required]),
       classApplyFor: new FormControl(null, [Validators.required]),
-
-    
-    });
-   
-
-
- 
-
+    });   
   }
   exam:any
   ngOnInit(): void {
-    this.getEnqu() 
-    // this.getMarksDiturbution() 
+    this.getEnqu();
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "name", dataType: "string", title: 'Name', sort: true, visible: true, search:true },
+        {  field: "mobileNo", dataType: "string", title: 'Mobile No.', sort: true, visible: true, search:true },
+        {  field: "guardianName", dataType: "string", title: 'Guardian', sort: true, visible: true, search:true, width:"13%" },
+        {  field: "assigned", dataType: "string", title: 'Assigned', sort: true, visible: true, search:true },
+        {  field: "dob", dataType: "date", title: 'Date of Birth', sort: true, visible: true, search:true },
+        {  field: "response", dataType: "string", title: 'Response', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false  }
+       ],
+      searchPlaceholder:"Search by Name, Moblie No, Assigned and Response",
+      sortBy: { field: 'name', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+         
+          edit: {
+            show: true,
+            callback: () => {
+              
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // $('#detail-grievance').modal('show')
+  
+            },
+          },
+        },
+      },
+    } 
   }
 
-  getEnqu(){
-   
-  
+  getEnqu(){  
     this.api.getEnquery().subscribe(resp => {
-      console.log(resp);
-      
-      this.enquiries = resp.enquiries
+      console.log(resp);      
+      this.enquiries = resp.enquiries;
+      this.enquiries.forEach(element=>{
+          element['guardianName'] = element?.fatherName + " "+ element?.motherName;
+      })
     });
 
 }
   addDEnquery()
   {
-    // console.log(this.examTermForm.value);
     this.addEnquiryForm.value.mobileNo = this.addEnquiryForm.value.mobileNo.toString();
     this.addEnquiryForm.value.classApplyFor = this.addEnquiryForm.value.classApplyFor.toString();
     this.isLoading = true;
@@ -83,7 +112,6 @@ export class AdmissionEnqComponent {
       this.isLoading = false;
       this.toastr.success(resp.message, "add success");
       this.getEnqu();     
-  // this.getExamTerms();
     },
     (err) => {
       this.isLoading = false; 
@@ -123,7 +151,7 @@ export class AdmissionEnqComponent {
 
       this.isLoading = false;
 
-      document.getElementById('editModalDismissBtn')?.click();
+      this.closePopup();
       this.toastr.success(resp.message, "enquiry update success");
       this.getEnqu();
     ;
@@ -141,7 +169,7 @@ export class AdmissionEnqComponent {
     this.api.deleteenquiry(this.selectedEnq._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
+      this.closePopup();
       this.getEnqu();
     },
     (err) => {
@@ -149,5 +177,26 @@ export class AdmissionEnqComponent {
       console.error(err);
     })
   }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'edit'){
+      this.setEnq(this.selectedRow);
+      this.openModal(this.editTemplate, this.selectedRow)
+    }
+    if($event['event'] === 'delete'){
+      this.selectedEnq= this.selectedRow;
+      this.openDeleteModal(this.deleteTemplate, this.selectedRow)
+    }
+
+    }
+    openModal(template: TemplateRef<any>, data: any) {
+      this.modalRef = this.modalService.show(template);
+    }
+    openDeleteModal(template: TemplateRef<any>, data: any){
+     this.modalRef = this.modalService.show(template);
+    }
+    closePopup(){
+      this.modalRef.hide();
+    }
   }
 

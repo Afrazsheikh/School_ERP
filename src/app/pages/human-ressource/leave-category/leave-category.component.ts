@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -16,8 +17,13 @@ export class LeaveCategoryComponent implements OnInit {
   editLeaveForm: FormGroup;
   selectedLeave: any;
   isLoading: boolean;
-
-  constructor(private api: ApiService, private toastr: ToastrService)
+  selectedRow: any;
+  tableHeader: any;
+  modalRef!: BsModalRef;
+  @ViewChild('template', { read: TemplateRef }) editTemplate: TemplateRef<any>;
+  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate: TemplateRef<any>;
+  constructor(private api: ApiService, private toastr: ToastrService,
+  private modalService: BsModalService)
   {
     this.leaveForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
@@ -34,16 +40,46 @@ export class LeaveCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getLeaveCategory();
+    this.getDesignaions();
+   
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false, width:"10%" },
+        {  field: "name", dataType: "string", title: 'Name', sort: true, visible: true, search:true, width:"25%" },
+        {  field: "designationName", dataType: "string", title: 'Designation', sort: true, visible: true, search:true,  },
+        {  field: "days", dataType: "string", title: 'Day', sort: true, visible: true, search:true,  width:"8%" },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false, width:"20%"  }
+       ],
+      searchPlaceholder:"Search by Name and Designation",
+      sortBy: { field: 'name', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+         
+          edit: {
+            show: true,
+            callback: () => {
+              
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // $('#detail-grievance').modal('show')
+  
+            },
+          },
+        },
+      },
+    } 
   }
 
   getLeaveCategory()
   {
     this.api.getLeaveCategory().subscribe(resp => {
-      this.leaveCategories = resp.leavesCategory;
-      console.log(this.leaveCategories);
-      
-      this.getDesignaions();
+      this.leaveCategories = resp.leavesCategory;           
+      this.mapLeaveDesignation();
     })
   }
 
@@ -51,9 +87,8 @@ export class LeaveCategoryComponent implements OnInit {
   {
     this.api.getDesignaions().subscribe(resp => {
       this.designations = resp.designations;
-      console.log(this.designations);
-      
-      this.mapLeaveDesignation();
+      this.getLeaveCategory();
+     
     });
   }  
 
@@ -63,6 +98,7 @@ export class LeaveCategoryComponent implements OnInit {
       console.log(leave);
       
       leave["designationDetail"] = this.designations.find(d => d._id == leave.designation);
+      leave['designationName'] =leave.designationDetail?.name;
       console.log(leave.d);
       
     });
@@ -99,7 +135,7 @@ export class LeaveCategoryComponent implements OnInit {
     this.api.updateLeave(this.editLeaveForm.value).subscribe(resp => {
       this.isLoading = false;
       this.toastr.success(resp.message, "Leave category update success");
-      document.getElementById('editModalDismissBtn')?.click();
+      this.closePopup();
       this.getLeaveCategory();
     },
     (err) => {
@@ -114,7 +150,7 @@ export class LeaveCategoryComponent implements OnInit {
     this.api.deleteLeave(this.selectedLeave._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
+      this.closePopup();
       this.getLeaveCategory();
     },
     (err) => {
@@ -122,5 +158,25 @@ export class LeaveCategoryComponent implements OnInit {
       console.error(err);
     })
   }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'edit'){ 
+      this.patchLeaveForm(this.selectedRow);
+      this.openModal(this.editTemplate, this.selectedRow)
+    }
+    if($event['event'] === 'delete'){
+      this.selectedLeave = this.selectedRow;
+      this.openDeleteModal(this.deleteTemplate, this.selectedRow)
+    }
 
+    }
+    openModal(template: TemplateRef<any>, data: any) {
+      this.modalRef = this.modalService.show(template);
+    }
+    openDeleteModal(template: TemplateRef<any>, data: any){     
+     this.modalRef = this.modalService.show(template);
+    }
+    closePopup(){
+      this.modalRef.hide();
+    }
 }

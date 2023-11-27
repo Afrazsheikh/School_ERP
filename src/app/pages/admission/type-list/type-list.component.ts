@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -16,12 +16,45 @@ export class TypeListComponent {
   typeData:any[] = [];
   modalRef!: BsModalRef;
   typeId :any;
+  selectedRow:any;
+  tableHeader:any;
+  @ViewChild('template', { read: TemplateRef }) editTemplate:TemplateRef<any>;
+  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,public fb: FormBuilder,private modalService: BsModalService){
 
   }
   ngOnInit() {
     this.createForm();
     this.getAllType();
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "name", dataType: "string", title: 'Type Name', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false  }
+       ],
+      searchPlaceholder:"Search by Type Name",
+      sortBy: { field: 'name', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+         
+          edit: {
+            show: true,
+            callback: () => {
+              
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // $('#detail-grievance').modal('show')
+  
+            },
+          },
+        },
+      },
+    }
   }   
   createForm() {
     this.createTypeForm = this.fb.group({
@@ -97,5 +130,15 @@ export class TypeListComponent {
       this.toastr.error(err, " update failed");
       console.error(err);
     })
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'edit'){
+      this.openModal(this.editTemplate, this.selectedRow)
+    }
+    if($event['event'] === 'delete'){
+      this.openDeleteModal(this.deleteTemplate, this.selectedRow)
+    }
+
   }
 }

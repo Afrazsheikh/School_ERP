@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -21,13 +21,52 @@ export class HomeworkListComponent {
   modalRef!: BsModalRef;
   homeWorkId:any;
   aceYear: any [];
+  selectedRow:any;
+  tableHeader:any;
+  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService, 
     private homeworkService: HomeworkService,private studentService:StudentService ) {
       this.aceYear = this.studentService.aceYear;
     this.getAllClass();
-   // this.getAllSection();
     this.addForm();
     this.getSubject();
+  }
+  ngOnInit(): void {  
+
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "subjectName", dataType: "string", title: 'Subject', sort: true, visible: true, search:true },
+        {  field: "class", dataType: "string", title: 'Class', sort: true, visible: true, search:true },
+        {  field: "section", dataType: "string", title: 'Section', sort: true, visible: true, search:true },
+        {  field: "dateOfHomework", dataType: "date", title: 'Date of Homework', sort: true, visible: true, search:true },
+        {  field: "dateOfSubmission", dataType: "date", title: 'Date of Submission', sort: true, visible: true, search:true },
+        {  field: "scheduleDate", dataType: "date", title: 'Scheduled At', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false  }
+       ],
+      searchPlaceholder:"Search by Subject, Class, Section",
+      sortBy: { field: 'subjectName', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+         
+          edit: {
+            show: true,
+            callback: () => {
+              
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // $('#detail-grievance').modal('show')
+  
+            },
+          },
+        },
+      },
+    }
   }
   addForm() {
     this.reportForm = new FormGroup({
@@ -76,6 +115,11 @@ export class HomeworkListComponent {
     }
     this.api.getHomeWorkList(data).subscribe(data => {
      this.reportData = data.homework;
+     this.reportData.forEach(element => {
+        if(element?.subject){
+          element['subjectName'] = element?.subject?.subjectName
+        }
+     });
     },
     (err) =>{
       this.reportData =[];
@@ -103,5 +147,15 @@ export class HomeworkListComponent {
   }
   closePopup(){
     this.modalRef.hide();
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'edit'){
+    this.editHomeWorkClick(this.selectedRow)
+    }
+    if($event['event'] === 'delete'){
+      this.openDeleteModal(this.deleteTemplate, this.selectedRow)
+    }
+
   }
 }

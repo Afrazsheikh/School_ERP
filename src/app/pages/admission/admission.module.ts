@@ -9,7 +9,7 @@ import { CategoryComponent } from './category/category.component';
 import { MultipleImportComponent } from './multiple-import/multiple-import.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdmissionComponent } from './admission.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
@@ -21,7 +21,7 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TypeListComponent } from './type-list/type-list.component';
-
+import { OrderModule } from 'ngx-order-pipe';
 const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -45,6 +45,7 @@ const MY_FORMATS = {
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,    
     MatDatepickerModule,
     MatMomentDateModule,
@@ -53,6 +54,7 @@ const MY_FORMATS = {
     NgxFileDropModule,
     MatCheckboxModule,
     AdmissionRoutingModule,
+    OrderModule,
     SharedModule,
     ScrollingModule,
     SelectDropDownModule

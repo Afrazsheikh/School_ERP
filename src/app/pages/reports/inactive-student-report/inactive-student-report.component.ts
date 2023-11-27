@@ -19,6 +19,8 @@ export class InactiveStudentReportComponent {
   studentId:any;
   studentSelRow:any;
   aceYear :any[] =[];
+  selectedRow:any;
+  tableHeader:any;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
     private studentService:StudentService, private spinner: NgxSpinnerService
 ) {
@@ -27,6 +29,24 @@ export class InactiveStudentReportComponent {
   }
   ngOnInit(): void {  
     this.getAllClass(); 
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "name", dataType: "string", title: 'Student Name', sort: true, visible: true, search:true },
+        {  field: "registerNo", dataType: "string", title: 'Register No', sort: true, visible: true, search:true },
+        {  field: "dob", dataType: "date", title: 'DOB', sort: true, visible: true, search:true },
+        {  field: "number", dataType: "string", title: 'Phone', sort: true, visible: true, search:true },
+        {  field: "status", dataType: "string", title: 'Status', sort: true, visible: true, search:true }
+       ],
+      searchPlaceholder:"Search by Student Name, Registration No and Status",
+      sortBy: { field: 'name', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+        },
+      },
+    }
     
   }
   addForm() {
@@ -68,11 +88,18 @@ export class InactiveStudentReportComponent {
     this.api.getActiveInactiveStudent(data, type).subscribe(data => {
       this.spinner.hide();
       this.studentData = data['students'];
+      this.studentData.forEach(element => {
+        element['name'] = element?.firstName + " "+ element?.lastName;
+        element['status'] = (element?.active)? 'Active' : 'Inactive';
+      });
     },
     (err) =>{
       this.spinner.hide();
       this.studentData =[];
       this.toastr.error(err);
     })
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
   }
 }

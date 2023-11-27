@@ -47,7 +47,7 @@
                     Type List
                   </div>
                   <div class="card-body">
-                    <table class="table mt-3">
+                    <!-- <table class="table mt-3">
                         <thead>
                             <tr>
                                 <th width="15%">S. No</th>
@@ -66,7 +66,8 @@
                             </tr>
                         </tbody>
                         
-                    </table>
+                    </table> -->
+                    <app-dynamic-table [data]="typeData" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
                   </div>
             </div></div>
         </div>

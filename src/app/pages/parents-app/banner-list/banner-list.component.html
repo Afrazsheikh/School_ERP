@@ -4,12 +4,11 @@
         <div class="col-md-6"><span>Banner List</span></div>  
         <div class="col-md-6 text-end mb-1"> <button class="btn" role="navigation" (click)="addBtnClick()">Add Banner</button></div>   
     </div>
-<table class="table mt-3">
+<!-- <table class="table mt-3">
     <thead>
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Banner Image</th>
-       <!-- <th scope="col">Type</th>-->
         <th>Action</th>
       </tr>
     </thead>
@@ -22,11 +21,14 @@
             alt="" width="100" 
           />
         </td>
-        <!--<td>{{ banner?.bannerType }}</td>-->
         <td> <button class="btn emp-edit me-1" (click)="openDeleteModal(deletemplate, banner)"><i class="fa-solid fa-trash-can"></i></button></td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
+  <div class="mt-2">
+    <app-dynamic-table [data]="banners" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
+  </div>
+ 
   </div>
 </app-layout>
 <ng-template #deletemplate>
