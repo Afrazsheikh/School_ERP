@@ -24,7 +24,7 @@
                 </div></div>  
                   <div class="col-md-4 mt-3 pt-2">
                     <mat-form-field>
-                      <input matInput [matDatepicker]="dp" placeholder="Month and Year" [formControl]="date">
+                      <input matInput [matDatepicker]="dp" placeholder="Month and Year" [formControl]="date" readonly>
                       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                       <mat-datepicker #dp
                                       startView="multi-year"
