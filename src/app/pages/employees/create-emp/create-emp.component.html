@@ -167,18 +167,22 @@
                   </div> 
                 </div>
                 <div class="col-4">
-                    <label class="form-label">Phone No.<span class="error">*</span></label>
-                    <input type="number" class="form-control"  formControlName="number" maxlength="10">
-                    <div *ngIf="empB1Form.controls['number'].invalid && (empB1Form.controls['number'].dirty || empB1Form.controls['number'].touched)"
-                      class="error mt-2">
-                      <div *ngIf="empB1Form.controls['number'].errors['required']">
-                        Phone No is required
-                      </div>
-                      <div *ngIf="empB1Form.get('number').hasError('pattern')">
-                        Enter 10 digit Phone No.
-                    </div>
-                  </div> 
-                </div>        
+          <label class="form-label">Phone No.<span class="error">*</span></label>
+          <input type="tel" class="form-control" formControlName="number" maxlength="10" pattern="[0-9]*">
+          <div
+            *ngIf="empB1Form.controls['number'].invalid && (empB1Form.controls['number'].dirty || empB1Form.controls['number'].touched)"
+            class="error mt-2">
+            <div *ngIf="empB1Form.controls['number'].errors['required']">
+              Phone No is required.
+            </div>
+            <div *ngIf="empB1Form.controls['number'].hasError('maxlength')">
+              Phone No must be 10 digits.
+            </div>
+            <div *ngIf="empB1Form.controls['number'].hasError('pattern')">
+              Enter only numeric characters.
+            </div>
+          </div>
+        </div>        
             </div>
             <div class="row mt-2 mb-3 mt-3">
                 <div class="col-12">
