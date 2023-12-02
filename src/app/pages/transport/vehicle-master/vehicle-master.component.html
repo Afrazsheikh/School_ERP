@@ -95,6 +95,17 @@
                     <label class="form-label">Driver License  <span class="error">*</span></label>
                     <input type="text" class="form-control" formControlName="driverLicense">
                   </div>
+
+                  <div class="mb-3">
+                      <label class="form-label">Cleaner Name</label>
+                      <input type="text" class="form-control" formControlName="CleanerName">
+                    </div>
+  
+                    <div class="mb-3">
+                      <label class="form-label">Cleaner Phone</label>
+                      <input type="tel" class="form-control" formControlName="cleanerPhoneNo">
+                    </div>
+                  
                   <div class="text-end mb-3">
                     <button class="btn" [disabled]="isLoading || !vehicleForm.valid">
                       <span *ngIf="isLoading" class="spinner-border text-light"></span>
