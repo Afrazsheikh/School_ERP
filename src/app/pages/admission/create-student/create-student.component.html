@@ -249,16 +249,19 @@
       <div class="row mt-3 mb-3">
         <div class="col-3">
           <label class="form-label">Mobile No <span class="error">*</span></label>
-          <input type="number" class="form-control" formControlName="mobileNumber" ng-maxlength="10" />
+          <input type="tel" class="form-control" formControlName="mobileNumber" maxlength="10" pattern="[0-9]*" />
           <div
             *ngIf="studentForm.controls['mobileNumber'].invalid && (studentForm.controls['mobileNumber'].dirty || studentForm.controls['mobileNumber'].touched)"
             class="error mt-2">
             <div *ngIf="studentForm.controls['mobileNumber'].errors['required']">
               Mobile No is required.
             </div>
-            <div *ngIf="studentForm.get('mobileNumber').hasError('pattern')">
-              Enter 10 digit Mobile Number
-          </div>
+            <div *ngIf="studentForm.controls['mobileNumber'].hasError('maxlength')">
+              Enter 10-digit Mobile Number.
+            </div>
+            <div *ngIf="studentForm.controls['mobileNumber'].hasError('pattern')">
+              Enter only numeric characters.
+            </div>
           </div>
         </div>
 
@@ -585,19 +588,22 @@
           </div>
 
           <div class="col-4">
-            <label class="form-label">Mobile No <span class="error">*</span></label>
-            <input type="text" class="form-control" formControlName="mobileNumber" maxlength="10" />
+            <label class="form-label">Mobile No <span class="error" *ngIf="isRequiredSign">*</span></label>
+            <input type="tel" class="form-control" formControlName="mobileNumber" maxlength="10" pattern="[0-9]*" />
             <div
-              *ngIf="studentForm.get('guardian1.mobileNumber').invalid && (studentForm.get('guardian1.mobileNumber').dirty || studentForm.get('guardian1.mobileNumber').touched)"
+              *ngIf="studentForm.get('guardian2.mobileNumber').invalid && (studentForm.get('guardian2.mobileNumber').dirty || studentForm.get('guardian2.mobileNumber').touched)"
               class="error mt-2">
-              <div *ngIf="studentForm.get('guardian1.mobileNumber').errors['required']">
-                Mobile No is required
+              <div *ngIf="studentForm.get('guardian2.mobileNumber').errors['required']">
+                Mobile No is required.
               </div>
-              <div *ngIf="studentForm.get('guardian1.mobileNumber').hasError('pattern')">
-                Enter 10 digit Mobile Number
+              <div *ngIf="studentForm.get('guardian2.mobileNumber').hasError('maxlength')">
+                Enter 10-digit Mobile Number.
+              </div>
+              <div *ngIf="studentForm.get('guardian2.mobileNumber').hasError('pattern')">
+                Enter only numeric characters.
+              </div>
             </div>
-            </div>
-          </div>
+          </div>        
         </div>
         <div class="row mt-3 mb-3">
 
@@ -673,17 +679,20 @@
           </div>
 
           <div class="col-4">
-            <label class="form-label">Mobile No <span class="error" *ngIf="isRequiredSign">*</span> </label>
-            <input type="text" class="form-control" formControlName="mobileNumber" maxlength="10"/>
+            <label class="form-label">Mobile No <span class="error" *ngIf="isRequiredSign">*</span></label>
+            <input type="tel" class="form-control" formControlName="mobileNumber" maxlength="10" pattern="[0-9]*" />
             <div
               *ngIf="studentForm.get('guardian2.mobileNumber').invalid && (studentForm.get('guardian2.mobileNumber').dirty || studentForm.get('guardian2.mobileNumber').touched)"
               class="error mt-2">
               <div *ngIf="studentForm.get('guardian2.mobileNumber').errors['required']">
-                Mobile No is required
+                Mobile No is required.
+              </div>
+              <div *ngIf="studentForm.get('guardian2.mobileNumber').hasError('maxlength')">
+                Enter 10-digit Mobile Number.
               </div>
               <div *ngIf="studentForm.get('guardian2.mobileNumber').hasError('pattern')">
-                Enter 10 digit Mobile Number
-            </div>
+                Enter only numeric characters.
+              </div>
             </div>
           </div>
         </div>
