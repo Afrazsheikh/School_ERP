@@ -4,113 +4,142 @@
     <div class="tab-container">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Exam Term">
-
-          <div class="row">
-            <div class="col-6 px-4">
-              <form [formGroup]="examTermForm" (ngSubmit)="addDExamTerm()" >
-              <h5 class="mb-4"> Add Exam Terms</h5>
-              <div class="mb-3">
-                <label class="form-label"> Name <span class="error">*</span></label>
-                <input type="text" formControlName= "name" class="form-control">
-              </div>
-      
-              <div class="text-end">
-                <button type="submit" class="btn" [disabled]="isLoading || !examTermForm.valid">
-                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                  <span *ngIf="!isLoading">Save</span>
-                </button>
-              </div>
-              </form>
+          <div class="row mt-3">
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-header header-txt">
+                  Add Exam Term
+                  </div>
+                  <div class="card-body">
+                    <form [formGroup]="examTermForm">
+                      <div class="row">
+                          <div class="col-md-12">
+                            <label class="form-label"> Name <span class="error">*</span></label>
+                            <input type="text" formControlName= "name" class="form-control" />
+                          </div>
+                       
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-md-12">
+                          <button type="button" class="save_button btn" (click)="addDExamTerm()" [disabled]="!examTermForm.valid">Save</button>
+                        </div>
+                        
+                      </div>
+                    </form>
+                    </div>
+                  </div>
             </div>
-            <div class="col-6 px-4">
-              <h5 class="mb-4">Exam Term  List</h5>
-              <table class="table" [cellPadding]="0" [cellSpacing]="0">
-                <thead>
-                  <tr>
-                    <th scope="col">SL</th>
-                    <th scope="col">Name</th>
-                  
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let term of examTerms;  index as i">
-                    <td>{{i+1}}</td>
-                    <td>{{term.name}}</td>
-                <td>
-                  <button class="btn emp-edit me-1" data-bs-toggle="modal" data-bs-target="#editLeave"
-                  (click)="patchTermForm(term)">
-                  <i class="fa-solid fa-pencil"></i>
-                </button>
-                     
-                      <button class="btn emp-edit ms-1" (click)="openDeleteModal(deletePrompt, term)"><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
-                  </tr>
-      
-               
-                </tbody>
-              </table>
+            <div class="col-md-7">
+              <div class="card">
+                <div class="card-header header-txt">
+                  Exam Term  List
+                  </div>
+                  <div class="card-body">
+                    <app-dynamic-table [data]="examTerms" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>                   
+                  </div>
+                  </div>
             </div>
           </div>
+         
     
         </mat-tab>
         <mat-tab label="Distribution ">
 
-          <div class="row">
-            <div class="col-6 px-4">
-              <form [formGroup]="disturbutionForm" (ngSubmit)="addDist()" >
-              <h5 class="mb-4"> Add Marks Distribution</h5>
-              <div class="mb-3">
-                <label class="form-label"> Name <span class="error">*</span></label>
-                <input type="text" formControlName= "name" class="form-control">
-              </div>
-      
-              <div class="text-end">
-                <button type="submit" class="btn" [disabled]="isLoading || !disturbutionForm.valid">
-                  <span *ngIf="isLoading" class="spinner-border text-light"></span>
-                  <span *ngIf="!isLoading">Save</span>
-                </button>
-              </div>
-              </form>
+          <div class="row mt-3">
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-header header-txt">
+                  Add Marks Distribution
+                  </div>
+                  <div class="card-body">
+                    <form [formGroup]="disturbutionForm">
+                      <div class="row">
+                          <div class="col-md-12">
+                            <label class="form-label"> Name <span class="error">*</span></label>
+                            <input type="text" formControlName= "name" class="form-control">
+                          </div>
+                       
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-md-12">
+                          <button type="button" class="save_button btn" (click)="addDist()" [disabled]="!disturbutionForm.valid">Save</button>
+                        </div>
+                        
+                      </div>
+                    </form>
+                    </div>
+                  </div>
             </div>
-            <div class="col-6 px-4">
-              <h5 class="mb-4">Marks Distribution  List</h5>
-              <table class="table" [cellPadding]="0" [cellSpacing]="0">
-                <thead>
-                  <tr>
-                    <th scope="col">SL</th>
-                    <th scope="col">Name</th>
-                  
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let dist of marksDistributions;  index as i">
-                    <td>{{i+1}}</td>
-                    <td>{{dist.name}}</td>
-                <td>
-                  <button class="btn emp-edit me-1" (click)="patchDistForm(dist, editLeaveE)">
-                  <i class="fa-solid fa-pencil"></i>
-                </button>
+            <div class="col-md-7">
+               <div class="card">
+                <div class="card-header header-txt">
+                  Marks Distribution  List
+                  </div>
+                  <div class="card-body">
+                    <app-dynamic-table [data]="marksDistributions" [columns]="distributorTableHeader" (rowEvent)="distributionRowEvent($event)"></app-dynamic-table>  
+
+                    <!-- <table class="table" [cellPadding]="0" [cellSpacing]="0">
+                      <thead>
+                        <tr>
+                          <th scope="col">SL</th>
+                          <th scope="col">Name</th>
+                        
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let dist of marksDistributions;  index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{dist.name}}</td>
+                      <td>
+                        <button class="btn emp-edit me-1" (click)="patchDistForm(dist, editLeaveE)">
+                        <i class="fa-solid fa-pencil"></i>
+                      </button>
+                           
+                            <button class="btn emp-edit ms-1" (click)="openDeleteDistributionModal(deletePromptD, dist)" ><i class="fa-solid fa-trash-can"></i></button>
+                          </td>
+                        </tr>
+            
                      
-                      <button class="btn emp-edit ms-1" (click)="openDeleteDistributionModal(deletePromptD, dist)" ><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
-                  </tr>
-      
-               
-                </tbody>
-              </table>
+                      </tbody>
+                    </table> -->
+                  </div></div> 
+                   
             </div>
-          </div>
+        </div>
+        
         </mat-tab>
       </mat-tab-group>
     </div>
     </div>
     </app-layout>
-
-
     <!-- Modal for editing  -->
-<div class="modal fade" id="editLeave">
+    <ng-template #editLeave>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Edit Exam  Terms</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editTermForm">
+          <div class="modal-body bg-white">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="name">
+              </div>
+           
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="save_button btn" (click)="updateDist()" [disabled]="!editTermForm.valid">Save</button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+
+
+
+<!-- <div class="modal fade" id="editLeave">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -135,7 +164,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
   
   <ng-template #editLeaveE>
     <div class="modal-header">
@@ -221,7 +250,7 @@
 
   <ng-template #deletePromptD>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Delete Exam Term</h4>
+      <h4 class="modal-title pull-left">Delete Distribution</h4>
       <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
@@ -239,44 +268,3 @@
         </div>
     </div>
   </ng-template>
-
-  <!---<div class="modal fade" id="deletePrompt">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Exam Term</h5>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete Exsm Term ?</p>
-      </div>
-      <div class="modal-footer">
-        <button id="modalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" [disabled]="isLoading" (click)="deleteExaTerm()">
-          <span *ngIf="isLoading"  class="spinner-border text-light"></span>
-          <span *ngIf="!isLoading">Delete</span>
-        </button>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  Modal for delete dist
-<div class="modal fade" id="deletePromptD">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Exam Distribution</h5>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you want to delete ?</p>
-      </div>
-      <div class="modal-footer">
-        <button id="modalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" [disabled]="isLoading" (click)="deleteDist()">
-          <span *ngIf="isLoading"  class="spinner-border text-light"></span>
-          <span *ngIf="!isLoading">Delete</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>---->
