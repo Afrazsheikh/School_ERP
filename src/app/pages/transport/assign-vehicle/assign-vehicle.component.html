@@ -227,7 +227,22 @@
               </div>
             </div> -->
 
-            <table class="table mt-3">
+            <div class="col-6">
+              <label class="form-label">Filter by Vehichle <span class="error">*</span></label>
+              <select class="form-select" formControlName="vehicleId" #vehicleSelect (change)="onVehicleSelect(vehicleSelect.value)">
+                <option disabled value="select">Select</option>
+                <option *ngFor="let vehicle of vehicles" [value]="vehicle._id">
+                  {{vehicle.vehicleNo}}
+                </option>
+              </select>
+            </div>
+            <br>
+            <br>
+            <div *ngIf="mergedArray">
+        
+              <app-dynamic-table [data]="mergedArray" [columns]="tableHeader"></app-dynamic-table>
+            </div>
+            <!-- <table class="table mt-3">
               <thead>
                 <tr>
                   <th scope="col">SL</th>
@@ -244,14 +259,12 @@
                 <tr *ngFor="let expense of vehicles; index as i">
                   <td>{{i+1}}</td>
                   <td>{{expense.vehicleNo}}</td>
-                  <td>
-                    <span *ngIf="expense?.expenses.length !== 0">{{expense?.expenses[0].name}}</span>
-                    </td>
-                  <td><span *ngIf="expense?.expenses.length !== 0">{{expense?.expenses[0].amount}}</span></td>
-                  <td><span *ngIf="expense?.expenses.length !== 0">{{expense?.expenses[0].time}}</span></td>
-                  <td><span *ngIf="expense?.expenses.length !== 0">{{expense?.expenses[0].description}}</span></td>
+                  <td *ngFor="let expense of vehicles?.expenses"> </td>
+                  <span>{{expense.name}}</span>
              
-
+                  <td>{{expense.amount}}</td>
+                  <td>{{expense.time}}</td>
+                  <td>{{expense.description}}</td>
 
                   <td>
 
@@ -265,7 +278,7 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
           </div>
         </mat-tab>
       </mat-tab-group>

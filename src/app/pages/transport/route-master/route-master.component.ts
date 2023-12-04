@@ -16,6 +16,8 @@ export class RouteMasterComponent implements OnInit {
   selectedRoute: any;
   isLoading: boolean;
 
+  tableHeader: any
+
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router)
   {
     this.routeForm = new FormGroup({
@@ -32,6 +34,37 @@ export class RouteMasterComponent implements OnInit {
 
   getAllRoutes()
   {
+    this.tableHeader = {
+      data: [
+        { field: 'routeName', dataType: 'string', title: 'Route Name', sort: true, visible: true, search: true },
+        { field: 'subjectName', dataType: 'string', title: 'Subject Name Type', sort: true, visible: true, search: true },
+        { field: 'time', dataType: 'string', title: 'Time', sort: true, visible: true, search: true },
+        { field: 'teacherName', dataType: 'string', title: 'Teacher Name', sort: true, visible: true, search: true },
+        // Add more fields as needed
+        { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
+      ],
+      // Add additional properties as needed
+      searchPlaceholder: "Search by Route Name, Subject Name, Time, and Teacher Name",
+      sortBy: { field: 'routeName', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+          edit: {
+            show: true,
+            callback: () => {
+              // Handle edit action
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // Handle delete action
+            },
+          },
+        },
+      },
+    };
     this.api.getAllRoutes().subscribe(resp => {
       this.routes = resp.routes;
     });

@@ -15,11 +15,11 @@ export class AssignVehicleComponent {
 
   assigns: any[] = []
   routes: any[] = [];
-  vehicles: any[] = [];
+  vehicles: any;
   stopPages: any[] = []; 
   vAssignForm: FormGroup;
   editExpense: FormGroup;
-
+  tableHeader: any
   selectedAssign: any;
   isLoading: boolean;
   ExpensForm :FormGroup
@@ -32,6 +32,8 @@ export class AssignVehicleComponent {
   vehiclesId: String;
   selectedExpense: any;
   expenseData: any;
+  allExpenses:  any[] = []
+  mergedArray: any[];
 
 
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router)
@@ -66,9 +68,36 @@ data:any
     this.getAllVehicleAssigns();
     this.getAllRoutes();
     this.getAllVehiclesData()
-    //this.selectedEnq(this.data)
-    // this.getAllVehicleExoense()
-   // console.log(this.getVehcileID);
+    this.tableHeader = {
+      data: [
+        { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
+        { field: "vehicleNo", dataType: "string", title: 'Vehicle Name', sort: true, visible: true, search: true },
+        { field: "name", dataType: "string", title: 'Expense Name', sort: true, visible: true, search: true },
+        { field: "amount", dataType: "string", title: 'Amount', sort: true, visible: true, search: true },
+        { field: "time", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
+        { field: "description", dataType: "string", title: 'Description', sort: true, visible: true, search: true }
+      ],
+      searchPlaceholder: "Search by vehicleNo, amount, and time",
+      sortBy: { field: 'distance', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+          edit: {
+            show: true,
+            callback: () => {
+              // Handle edit action
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // Handle delete action
+            },
+          },
+        },
+      },
+    };
 
   }
 
@@ -137,6 +166,7 @@ data:any
 
     this.api.addExpensReport(postData).subscribe(resp => {
     console.log(resp);
+    this.getAllVehiclesData()
       this.isLoading = false;
       this.ExpensForm.reset();
       this.doc1 = this.doc2 = this.doc3 = null;
@@ -168,15 +198,39 @@ data:any
 
   getAllVehiclesData()
   {
-    this.api.getAllVehicles().subscribe(resp => {
-     // console.log("i am here")
-      this.vehicles = resp?.vehicles;
-      
-   // console.log(this.vehicles);
     
+    
+    this.api.getAllVehicles().subscribe((resp) => {
+      this.vehicles = resp?.vehicles;
+      this.allExpenses = [];
+    
+      this.vehicles.forEach((vehicle, index) => {
+        // Check if expenses array exists and has items
+        if (vehicle.expenses && vehicle.expenses.length > 0) {
+          // Iterate through each expense in the vehicle
+          vehicle.expenses.forEach((expense) => {
+            // Extract properties from the expense and add the vehicle properties
+            const expenseDetails = {
+              autoNo: index + 1, // Assuming autoNo is the index + 1
+              vehicleNo: vehicle.vehicleNo, // Replace 'vehicleNo' with the actual property name from your vehicle object
+              name: expense.name,
+              amount: expense.amount,
+              time: expense.time,
+              description: expense.description,
+            };
+    
+            // Add the expenseDetails to the allExpenses array
+            this.allExpenses.push(expenseDetails);
+          });
+        }
+      });
+    
+      // Now allExpenses contains all expense details with vehicle properties
+      console.log(this.allExpenses);
+      this.mergedArray = this.allExpenses;
+      console.log(this.mergedArray);
     });
-          
-  
+    
   }
   getEdit(data){
     console.log(data);
@@ -304,4 +358,30 @@ data:any
     })
   
   }
+
+  onVehicleSelect(event: any): void {
+    const selectedVehicleId = event;
+    const selectedVehicle = this.vehicles.find(vehicle => vehicle._id === selectedVehicleId);
+  
+    if (selectedVehicle) {
+      // Extract expenses from the selected vehicle
+      const expenses = selectedVehicle.expenses || [];
+  
+      // Create an array with the necessary fields for the dynamic table
+      const tableData = expenses.map((expense, index) => ({
+        autoNo: index + 1,
+        vehicleNo: selectedVehicle.vehicleNo,
+        name: expense.name,
+        amount: expense.amount,
+        time: expense.time,
+        description: expense.description
+      }));
+  
+      // Set the table data to be displayed
+      this.mergedArray = tableData;
+      console.log(this.mergedArray);
+    }
+  }
+  
+  
 }
