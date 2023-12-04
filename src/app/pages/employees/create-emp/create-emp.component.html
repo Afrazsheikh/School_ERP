@@ -1,9 +1,10 @@
 <app-layout>
     <div class="container p-5" >
-        <div class="row">
-            <div class="col-md-12 header-txt" >
+        <div class="row header-txt">
+            <div class="col-md-6 " >
                 <h6>Add Employee Detail</h6>
             </div>
+            <div class="col-md-6 text-end mb-1"><button (click)="backButtonClick()" class="btn">Back</button></div>
         </div>
         <form [formGroup]="empB1Form">
            <!-- <div class="row">

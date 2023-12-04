@@ -43,7 +43,9 @@ export class VehicleEditComponent {
       insuranceRenewalDate: new FormControl(this.editVehicle.insuranceRenewalDate, [Validators.required]),
       driverName: new FormControl(this.editVehicle.driverName, [Validators.required]),
       driverPhoneNo: new FormControl(this.editVehicle.driverPhoneNo, [Validators.required]),
-      driverLicense: new FormControl(this.editVehicle.driverLicense, [Validators.required])
+      driverLicense: new FormControl(this.editVehicle.driverLicense, [Validators.required]),
+      cleanderName: new FormControl(this.editVehicle?.cleanderName),
+      cleanerPhone: new FormControl(this.editVehicle?.cleanerPhone),
     });
   }
 
