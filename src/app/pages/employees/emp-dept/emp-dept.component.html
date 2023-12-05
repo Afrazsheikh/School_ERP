@@ -3,171 +3,178 @@
     <div class="tab-container">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Add Department">
-          <fieldset class="border rounded-3 p-3 mt-3 mb-3">
-            <legend  class="float-none w-auto px-2 f-15">Add Department</legend>
-            <div class="col-12 px-4">
-              <form [formGroup]="deptForm" (ngSubmit)="addDepartment()">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="mb-3">
-                        <label class="form-label">Department Name <span class="error">*</span></label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="name"
-                        />
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header header-txt">
+                  Add Department
+                  </div>
+                  <div class="card-body">
+                    <form [formGroup]="deptForm">
+                      <div class="row">
+                          <div class="col-md-12">
+                            <label class="form-label">Department Name <span class="error">*</span></label>
+                            <input type="text" class="form-control" formControlName="name">
+                          </div>
+                       
                       </div>
-                    </div>
-                    <div class="col-md-4 mt-4 pt-2">
-                       <button class="btn" [disabled]="isLoading || !deptForm.valid">
-                          <span
-                            *ngIf="isLoading"
-                            class="spinner-border text-light"
-                          ></span>
-                          <span *ngIf="!isLoading">Save</span>
-                        </button>
-                    </div>
+                      <div class="row mt-2">
+                        <div class="col-md-12">
+                          <button type="button" class="save_button btn" (click)="addDepartment()" [disabled]="!deptForm.valid">Save</button>
+                        </div>
+                        
+                      </div>
+                    </form>
+                  </div>
                 </div>
-            
+              </div>
+              <div class="col-md-8">
+                <div class="card">
+                  <div class="card-header header-txt">
+                    Department List
+                    </div>
+                    <div class="card-body">
+                      <table class="table mt-3" >
+                        <thead>
+                          <tr>
+                            <th scope="col">SL</th>
+                            <!-- <th style="width: 18%">Id</th> -->
+                            <th scope="col">Name</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let dept of departments; index as i">
+                            <td>{{ i + 1 }}</td>
+                            <!-- <td>{{ dept._id }}</td> -->
+        
+                            <td>{{ dept.name }}</td>
+                            <td>
+                              <ng-container *ngIf="(dept.name).toLowerCase() !== 'admin'">
+                                <button
+                                class="btn emp-edit me-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editPrompt"
+                                (click)="setDepartment(dept)"
+                              >
+                                <i class="fa-solid fa-pencil"></i>
+                              </button>
+                              <button
+                                class="btn emp-edit ms-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deletePrompt"
+                                (click)="selectedDept = dept"
+                              >
+                                <i class="fa-solid fa-trash-can"></i>
+                              </button>
+                              </ng-container>
+                             
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+              </div>
 
-              
-              </form>
-            </div>
-          </fieldset>
-            
-            <div class="col-12 px-4">
-              <h5 class="mb-4 header-txt">Department List</h5>
-              <table class="table" [cellPadding]="0" [cellSpacing]="0">
-                <thead>
-                  <tr>
-                    <th scope="col">SL</th>
-                    <th style="width: 18%">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let dept of departments; index as i">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ dept._id }}</td>
-
-                    <td>{{ dept.name }}</td>
-                    <td>
-                      <ng-container *ngIf="(dept.name).toLowerCase() !== 'admin'">
-                        <button
-                        class="btn emp-edit me-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editPrompt"
-                        (click)="setDepartment(dept)"
-                      >
-                        <i class="fa-solid fa-pencil"></i>
-                      </button>
-                      <button
-                        class="btn emp-edit ms-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deletePrompt"
-                        (click)="selectedDept = dept"
-                      >
-                        <i class="fa-solid fa-trash-can"></i>
-                      </button>
-                      </ng-container>
-                     
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          </div>
         </mat-tab>
         <mat-tab label="Add Designation">
-          <fieldset class="border rounded-3 p-3 mt-3 mb-3">
-            <legend  class="float-none w-auto px-2 f-15">Add Designation</legend>
-            <div class="col-12 px-4">
-              <form [formGroup]="designForm" (ngSubmit)="addDesignation()">
-                <div class="row">
-                  <div class="col-5 mb-3">
-                    <label class="form-label">Department <span class="error">*</span></label>
-                    <select class="form-select" formControlName="department">
-                      <option disabled value="select">Select</option>
-                      <option
-                        *ngFor="let dept of departments"
-                        [value]="dept._id"
-                      >
-                        {{ dept.name }}
-                      </option>
-                    </select>
+
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header header-txt">
+                  Add Designation
                   </div>
-                  <div class="col-5 mb-3">
-                    <label class="form-label ">Designation Name <span class="error">*</span></label>
+                  <div class="card-body">
+                    <form [formGroup]="designForm">
+                      <div class="row">
+                          <div class="col-md-12">
+                            <label class="form-label">Department <span class="error">*</span></label>
+                            <select class="form-select" formControlName="department">
+                              <option disabled value="select">Select</option>
+                              <option
+                                *ngFor="let dept of departments"
+                                [value]="dept._id"
+                              >
+                                {{ dept.name }}
+                              </option>
+                            </select>
+                          </div>
+                       
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-md-12">
+                          <label class="form-label ">Designation Name <span class="error">*</span></label>
                     <input
                       type="text"
                       class="form-control"
                       formControlName="name"
                     />
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-md-12">
+                          <button type="button" class="save_button btn" (click)="addDesignation()" [disabled]="!designForm.valid">Save</button>
+                        </div>
+                        
+                      </div>
+                    </form>
                   </div>
-                  
-                <div class="col-md-2 mt-4 pt-2">
-                  <button
-                    class="btn"
-                    [disabled]="isLoading || !designForm.valid"
-                  >
-                    <span
-                      *ngIf="isLoading"
-                      class="spinner-border text-light"
-                    ></span>
-                    <span *ngIf="!isLoading">Save</span>
-                  </button>
                 </div>
-                </div>
-
-              </form>
             </div>
-          </fieldset>
-           
-
-            <div class="col-12 px-4">
-              <h5 class="mb-4 header-txt">Designation List</h5>
-              <table class="table" [cellPadding]="0" [cellSpacing]="0">
-                <thead>
-                  <tr>
-                    <th scope="col">SL</th>
-                    <th scope="col">Id</th>
-                    <th scope="col">Department Name</th>
-
-                    <th scope="col">Name</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let design of designations; index as i">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ design._id }}</td>
-                    <td>{{ design.department?.name }}</td>
-                    <td>{{ design.name }}</td>
-
-                    <td>
-                      <ng-container *ngIf="design.name !== 'Teacher'">
-                        <button
-                        class="btn emp-edit me-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editPromptD"
-                        (click)="setDesignation(design)"
-                      >
-                        <i class="fa-solid fa-pencil"></i>
-                      </button>
-                      <button
-                        class="btn emp-edit ms-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deletePromptD"
-                        (click)="selectedDesign = design"
-                      >
-                        <i class="fa-solid fa-trash-can"></i>
-                      </button>
-                      </ng-container>
-                     
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header header-txt">
+                  Designation List
+                  </div>
+                  <div class="card-body">
+                    <table class="table" [cellPadding]="0" [cellSpacing]="0">
+                      <thead>
+                        <tr>
+                          <th scope="col">SL</th>
+                          <!-- <th scope="col">Id</th> -->
+                          <th scope="col">Department Name</th>
+      
+                          <th scope="col">Designation Name</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let design of designations; index as i">
+                          <td>{{ i + 1 }}</td>
+                          <!-- <td>{{ design._id }}</td> -->
+                          <td>{{ design.department?.name }}</td>
+                          <td>{{ design.name }}</td>
+      
+                          <td>
+                            <ng-container *ngIf="design.name !== 'Teacher'">
+                              <button
+                              class="btn emp-edit me-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#editPromptD"
+                              (click)="setDesignation(design)"
+                            >
+                              <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button
+                              class="btn emp-edit ms-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#deletePromptD"
+                              (click)="selectedDesign = design"
+                            >
+                              <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                            </ng-container>
+                           
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
             </div>
         </mat-tab>
       </mat-tab-group>

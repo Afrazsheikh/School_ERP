@@ -1,7 +1,6 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BsModalService ,BsModalRef} from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
@@ -14,15 +13,11 @@ import { ApiService } from 'src/app/services/api.service';
 export class SubjectComponent {
 subjectForm:  FormGroup
 editSubject:  FormGroup
-modalRef!: BsModalRef;
-@ViewChild('editClassTemplate', { read: TemplateRef }) editTemplate:TemplateRef<any>;
-@ViewChild('deleteClassTemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
+
   isLoading: boolean;
   subjects: any[] = [];
   selectedDesign: any;
-  tableHeader: any;
-  selectedRow: any;
-  constructor(private api: ApiService, private toastr: ToastrService , private modalService: BsModalService ,private route: ActivatedRoute,private spinner: NgxSpinnerService) {
+  constructor(private api: ApiService, private toastr: ToastrService,  private route: ActivatedRoute,private spinner: NgxSpinnerService) {
     this.subjectForm = new FormGroup({
       subjectName: new FormControl(null, [Validators.required]),
       subjectCode: new FormControl(null, [Validators.required]),
@@ -70,39 +65,6 @@ modalRef!: BsModalRef;
     })
   }
   getSubject(){
-    this.tableHeader = {
-      data: [
-        { field: 'autoNo', dataType: 'autoNo', title: 'S. No', sort: false, visible: true, search: false },
-        { field: 'subjectName', dataType: 'string', title: 'Subject Name', sort: true, visible: true, search: true },
-        { field: 'SubjectCode', dataType: 'string', title: 'Subject Code', sort: true, visible: true, search: true },
-        { field: 'subjectType', dataType: 'string', title: 'subject Type ', sort: true, visible: true, search: true },
-        { field: 'subjectAuthor', dataType: 'string', title: 'subject Author ', sort: true, visible: true, search: true },
-
-        // Add more fields as needed
-        { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
-      ],
-      searchPlaceholder: 'Search by Subject Name',
-      sortBy: { field: 'subjectName', asc: true },
-      toolbar: {
-        show: true,
-        visibleOn: 'visibility',
-        config: {
-          edit: {
-            show: true,
-            callback: () => {
-              // Handle edit action
-            },
-          },
-          delete: {
-            show: true,
-            callback: () => {
-              // Handle delete action
-            },
-          },
-        },
-      },
-    };
-
     this.spinner.show();
       this.api.getAllSubjects().subscribe(resp => {
         this.spinner.hide();        
@@ -157,7 +119,6 @@ deleteSubject(){
   this.api.deleteSubject(this.selectedDesign._id).subscribe(resp => {
     console.log(resp);
     this.isLoading = false;
-    this.closePopup()
     document.getElementById('modalDismissBtn')?.click();
     this.getSubject()
   },
@@ -166,23 +127,7 @@ deleteSubject(){
     console.error(err);
   })
 }
-openModal(template: TemplateRef<any>, data: any) {
-  this.modalRef = this.modalService.show(template);
-}
-rowEvent($event: any) {
-  this.selectedRow = $event.lead;
-  if($event['event'] === 'edit'){
-    this.setSubject(this.selectedRow);
-    this.openModal(this.editTemplate, this.selectedRow)
-  }
-  if($event['event'] === 'delete'){
-    this.selectedDesign=  this.selectedRow;
-    this.openModal(this.deleteTemplate, this.selectedRow)
-  }
 
-}
-closePopup(){
-  this.modalRef.hide();
-}
+
 }
 

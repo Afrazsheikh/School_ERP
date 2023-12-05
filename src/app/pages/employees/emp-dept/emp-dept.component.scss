@@ -1,60 +1,60 @@
-@import "src/app/themes/variables";
+// @import "src/app/themes/variables";
 
-table {
-  border-collapse: separate;
-  border-spacing: 0 8px;
+// table {
+//   border-collapse: separate;
+//   border-spacing: 0 8px;
 
-  h4, p {
-    margin: 0;
-  }
+//   h4, p {
+//     margin: 0;
+//   }
 
-  h4 {
-    color: $color-primary;
-  }
+//   h4 {
+//     color: $color-primary;
+//   }
 
-  p {
-    color: #A5A5A5;
-  }
+//   p {
+//     color: #A5A5A5;
+//   }
 
-  td {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-  }
-}
+//   td {
+//     border-top: 1px solid;
+//     border-bottom: 1px solid;
+//   }
+// }
 
-table td:first-child {
-  border-left: 1px solid;
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
+// table td:first-child {
+//   border-left: 1px solid;
+//   border-top: 1px solid;
+//   border-bottom: 1px solid;
+//   border-top-left-radius: 10px;
+//   border-bottom-left-radius: 10px;
+// }
 
-table td:last-child {
-  border-right: 1px solid;
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
+// table td:last-child {
+//   border-right: 1px solid;
+//   border-top: 1px solid;
+//   border-bottom: 1px solid;
+//   border-top-right-radius: 10px;
+//   border-bottom-right-radius: 10px;
+// }
 
-.btn.emp-edit {
-  width: 40px;
-  height: 40px;
-  background-color:transparent!important;
-  border-color: $color-primary;
-  border-radius: 16px;
+// .btn.emp-edit {
+//   width: 40px;
+//   height: 40px;
+//   background-color:transparent!important;
+//   border-color: $color-primary;
+//   border-radius: 16px;
 
-  i {
-    color: $color-primary;
-  }
-}
+//   i {
+//     color: $color-primary;
+//   }
+// }
 
-.btn.emp-edit:last-child {
-  background-color:#F44336!important;
-  border-color: #F44336;
+// .btn.emp-edit:last-child {
+//   background-color:#F44336!important;
+//   border-color: #F44336;
 
-  i {
-    color: #FFFFFF;
-  }
-}
+//   i {
+//     color: #FFFFFF;
+//   }
+// }
