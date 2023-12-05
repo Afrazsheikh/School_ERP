@@ -74,9 +74,8 @@ export class TransportFeeAddComponent {
       })
     }
    
-  }
-  backButtonClick(){
-    this.router.navigate(['fees/transport-fee-list']);
+   
+    
   }
   editCategory(rowData){
     this.reportForm.patchValue({

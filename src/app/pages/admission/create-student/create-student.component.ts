@@ -133,7 +133,6 @@ export class CreateStudentComponent {
     this.studentForm = this.fb.group({
       id: [''],
       academicYear: ['', Validators.required],
-      permanentEducationNo:['', Validators.required],
       studentClass: ['', Validators.required],
       section: [''],
       category: ['', Validators.required],
@@ -267,7 +266,6 @@ export class CreateStudentComponent {
     let postData = new FormData();
 
     postData.append("academicYear", _form.value.academicYear);
-    postData.append("permanentEducationNo", _form.value.permanentEducationNo);
     postData.append("section", _form.value.studentClass?.sections[0]?._id);
     postData.append("category", _form.value.category);
     postData.append("studentClass", _form.value.studentClass?._id);

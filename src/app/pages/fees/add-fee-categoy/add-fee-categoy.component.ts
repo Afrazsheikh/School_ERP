@@ -24,9 +24,6 @@ export class AddFeeCategoyComponent {
       code: ['']
     });
   }
-  backButtonClick(){
-    this.router.navigate(['/fees/category']);
-  }
   createInfo(formData){
     console.log(formData);
     let payload = {

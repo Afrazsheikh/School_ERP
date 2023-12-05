@@ -29,7 +29,7 @@ classAssignForm: FormGroup
   className: any;
   sectionName: any;
   subjectArray: any[];
-
+  tableHeader: any;
 
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
      private studentService:StudentService,private spinner: NgxSpinnerService)
@@ -45,6 +45,35 @@ classAssignForm: FormGroup
     this.getSubject();
     this.getAllStudent()
     this.getAllAcademics()
+    this.tableHeader = {
+      data: [
+        { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
+        { field: "className", dataType: "string", title: 'Class', sort: true, visible: true, search: true },
+        { field: "sectionName", dataType: "string", title: 'Section', sort: true, visible: true, search: true },
+        { field: "subjectName", dataType: "string", title: 'Subject', sort: true, visible: true, search: true }
+      ],
+      searchPlaceholder: "Search by Class, Section, and Subject",
+      sortBy: { field: 'distance', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+          edit: {
+            show: true,
+            callback: () => {
+              // Handle edit action
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // Handle delete action
+            },
+          },
+        },
+      },
+    };
+    
   
 
   }
@@ -204,8 +233,13 @@ getAllStudent(){
 
       this.className = data['academics']['class'];
       this.sectionName = data['academics']['section'];
+   
+      this.subjectList = data['academics']['subjects'].map(subject => ({
+        ...subject,
+        className: this.className,
+        sectionName: this.sectionName
+      }));
       console.log(this.subjectList);
-      
 
     },
     (err) =>{
