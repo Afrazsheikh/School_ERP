@@ -25,7 +25,7 @@ export class VehicleMasterComponent implements OnInit {
       insuranceRenewalDate: new FormControl(null, [Validators.required]),
       driverName: new FormControl(null, [Validators.required]),
       driverPhoneNo: new FormControl(null, [Validators.required]),
-      driverLicense: new FormControl(null, [Validators.required])
+      driverLicense: new FormControl(null, [Validators.required]),
     });
   }
 
