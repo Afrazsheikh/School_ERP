@@ -55,5 +55,8 @@ export class GradeEditComponent {
       this.toastr.error(err, "Route update failed");
     });
   }
+  gradeList(){
+    this.router.navigate(['/marks/grade']);
+  }
 
 }
