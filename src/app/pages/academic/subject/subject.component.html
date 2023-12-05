@@ -16,7 +16,7 @@
                 <button class="btn"><img src="assets/icons/opt-sheet.svg"></button>
                 <button class="btn"><img src="assets/icons/opt-print.svg"></button>
               </div>
-      
+            </div>
           </div> -->
           <div *ngIf="subjects.length > 0">
             <app-dynamic-table [data]="subjects" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>>
