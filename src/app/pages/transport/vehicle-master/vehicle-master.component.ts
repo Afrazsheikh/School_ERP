@@ -26,7 +26,6 @@ export class VehicleMasterComponent implements OnInit {
       driverName: new FormControl(null, [Validators.required]),
       driverPhoneNo: new FormControl(null, [Validators.required]),
       driverLicense: new FormControl(null, [Validators.required])
-      driverLicense: new FormControl(null, [Validators.required]),
     });
   }
 
