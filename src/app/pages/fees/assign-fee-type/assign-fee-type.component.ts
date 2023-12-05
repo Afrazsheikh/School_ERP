@@ -114,6 +114,9 @@ export class AssignFeeTypeComponent {
      });
   
   }
+  backButtonClick(){
+    this.router.navigate(['/fees/fee-list']);
+  }
   resetField() {
     this.pairs.controls.forEach(group => group.get('amount').reset());
   }
