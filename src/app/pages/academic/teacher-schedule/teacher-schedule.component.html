@@ -18,8 +18,12 @@
    
 
     <h6 class="table-heading mb-4">Schedule List</h6>
+  <div *ngIf="transformedData">
+
+    <app-dynamic-table [data]="transformedData" [columns]="tableHeader"></app-dynamic-table>
     
-    <ng-container *ngFor="let  data of scheduleArr">
+  </div>
+    <!-- <ng-container *ngFor="let  data of scheduleArr">
       <div class="row">
         <div class="col border border-dark">{{data.day}}</div>
         <div class="col border border-dark" *ngFor="let  row of data.activities">
@@ -28,6 +32,6 @@
           <div class="w-100  text-center"> Teacher: {{row?.teacher?.name}}</div>  
         </div>
       </div>
-    </ng-container>
+    </ng-container> -->
   </div>
 </app-layout>
