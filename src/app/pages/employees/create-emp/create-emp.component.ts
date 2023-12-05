@@ -45,6 +45,9 @@ export class CreateEmpComponent {
       this.designations = resp.designations;
     });
   }
+  backButtonClick(){
+    this.router.navigate(['/employee/list']);
+  }
   createFrom() {
     if (this.empBasic?.joiningDate !== '' && this.empBasic?.joiningDate !== null && this.empBasic?.joiningDate !== undefined) {
       this.empBasic.joiningDate = new Date(this.empBasic.joiningDate);

@@ -28,6 +28,9 @@ export class EditFeeCategoyComponent {
       this.router.navigate(['/fees/category']);
     }    
   }
+  backButtonClick(){
+    this.router.navigate(['/fees/category']);
+  }
   createForm() {
     this.feeForm = this.fb.group({
       id: [''],
