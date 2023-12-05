@@ -2,7 +2,7 @@
     <div class="container p-4">
         <div class="tab-container">
             <nav mat-tab-nav-bar mat-stretch-tabs="false" mat-align-tabs="start" selectedIndex="2" [tabPanel]="tabPanel">
-                <a mat-tab-link  (click)="gradeList()">Grade List</a>
+                <a mat-tab-link routerLink="../">Grade List</a>
                 <a mat-tab-link [active]="true">Edit Grade </a>
             </nav>
             <mat-tab-nav-panel #tabPanel>

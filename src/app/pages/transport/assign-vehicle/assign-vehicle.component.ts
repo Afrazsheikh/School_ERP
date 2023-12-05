@@ -1,8 +1,7 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import * as moment from 'moment';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxFileDropEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
@@ -16,11 +15,11 @@ export class AssignVehicleComponent {
 
   assigns: any[] = []
   routes: any[] = [];
-  vehicles: any[] = [];
+  vehicles: any;
   stopPages: any[] = []; 
   vAssignForm: FormGroup;
   editExpense: FormGroup;
-
+  tableHeader: any
   selectedAssign: any;
   isLoading: boolean;
   ExpensForm :FormGroup
@@ -28,15 +27,16 @@ export class AssignVehicleComponent {
   doc2: any;
   doc3: any;
   selectedEnqaa: any;
+  // cart_detail: Array<any> = [];
   getVehcileID:  string;
   vehiclesId: String;
   selectedExpense: any;
   expenseData: any;
-  selectedRow: any;
-  tableHeader: any;
-  modalRef!: BsModalRef;
-  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate: TemplateRef<any>;
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,private modalService: BsModalService)
+  allExpenses:  any[] = []
+  mergedArray: any[];
+
+
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router)
   {
     this.vAssignForm = new FormGroup({
       route: new FormControl("select", [Validators.required]),
@@ -68,42 +68,36 @@ data:any
     this.getAllVehicleAssigns();
     this.getAllRoutes();
     this.getAllVehiclesData()
-  
     this.tableHeader = {
       data: [
-        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
-        {  field: "routeName", dataType: "string", title: 'Route Name', sort: true, visible: true, search:true },
-        {  field: "startPlace", dataType: "string", title: 'Start Place', sort: true, visible: true, search:true },
-        {  field: "stoppageName", dataType: "string", title: 'Stop Page', sort: true, visible: true, search:true, width:"13%" },
-        {  field: "stopTime", dataType: "string", title: 'Stop Time', sort: true, visible: true, search:true,width:"13%" },
-        {  field: "stopPlace", dataType: "string", title: 'Stop Place', sort: true, visible: true, search:true },
-        {  field: "routeFare", dataType: "string", title: 'Route Fare', sort: true, visible: true, search:true,width:"8%" },
-        {  field: "vehicleNo", dataType: "string", title: 'Vehicle No.', sort: true, visible: true, search:true },
-        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false,width:"12%"  }
-       ],
-      searchPlaceholder:"Search by Route Name,Start Place, Stop Place, Stop Page and Vehicle No.",
-      sortBy: { field: 'routeName', asc: true },
+        { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
+        { field: "vehicleNo", dataType: "string", title: 'Vehicle Name', sort: true, visible: true, search: true },
+        { field: "name", dataType: "string", title: 'Expense Name', sort: true, visible: true, search: true },
+        { field: "amount", dataType: "string", title: 'Amount', sort: true, visible: true, search: true },
+        { field: "time", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
+        { field: "description", dataType: "string", title: 'Description', sort: true, visible: true, search: true }
+      ],
+      searchPlaceholder: "Search by vehicleNo, amount, and time",
+      sortBy: { field: 'distance', asc: true },
       toolbar: {
         show: true,
         visibleOn: 'visibility',
         config: {
-         
           edit: {
             show: true,
             callback: () => {
-              
+              // Handle edit action
             },
           },
           delete: {
             show: true,
             callback: () => {
-              // $('#detail-grievance').modal('show')
-  
+              // Handle delete action
             },
           },
         },
       },
-    } 
+    };
 
   }
 
@@ -111,17 +105,14 @@ data:any
   {
     this.api.getAllVehicleAssigns().subscribe(resp => { 
       this.assigns = resp.vehicleRoutes;
-      this.assigns.forEach(element=>{
-          element['routeName'] =element.route.routeName;
-          element['startPlace'] =element.route.startPlace;
-          element['stoppageName'] =element.stoppage.stoppageName;
-          element['stopTime'] =element.stoppage.stopTime;
-          element['stopPlace'] =element.route.stopPlace;
-          element['routeFare'] =element.stoppage.routeFare;
-          element['vehicleNo'] =element.vehicle.vehicleNo;
-      })
     });
   }
+  // getAllVehicleExpense()
+  // {
+  //   this.api.getAllExapense().subscribe(resp => {
+  //     this.assigns = resp.vehicleRoutes;
+  //   });
+  // }
  
   onFilesDropped(files: NgxFileDropEntry[], imgType: string)
   {
@@ -175,6 +166,7 @@ data:any
 
     this.api.addExpensReport(postData).subscribe(resp => {
     console.log(resp);
+    this.getAllVehiclesData()
       this.isLoading = false;
       this.ExpensForm.reset();
       this.doc1 = this.doc2 = this.doc3 = null;
@@ -206,15 +198,39 @@ data:any
 
   getAllVehiclesData()
   {
-    this.api.getAllVehicles().subscribe(resp => {
-     // console.log("i am here")
-      this.vehicles = resp?.vehicles;
-      
-   // console.log(this.vehicles);
     
+    
+    this.api.getAllVehicles().subscribe((resp) => {
+      this.vehicles = resp?.vehicles;
+      this.allExpenses = [];
+    
+      this.vehicles.forEach((vehicle, index) => {
+        // Check if expenses array exists and has items
+        if (vehicle.expenses && vehicle.expenses.length > 0) {
+          // Iterate through each expense in the vehicle
+          vehicle.expenses.forEach((expense) => {
+            // Extract properties from the expense and add the vehicle properties
+            const expenseDetails = {
+              autoNo: index + 1, // Assuming autoNo is the index + 1
+              vehicleNo: vehicle.vehicleNo, // Replace 'vehicleNo' with the actual property name from your vehicle object
+              name: expense.name,
+              amount: expense.amount,
+              time: expense.time,
+              description: expense.description,
+            };
+    
+            // Add the expenseDetails to the allExpenses array
+            this.allExpenses.push(expenseDetails);
+          });
+        }
+      });
+    
+      // Now allExpenses contains all expense details with vehicle properties
+      console.log(this.allExpenses);
+      this.mergedArray = this.allExpenses;
+      console.log(this.mergedArray);
     });
-          
-  
+    
   }
   getEdit(data){
     console.log(data);
@@ -240,7 +256,29 @@ data:any
   })
   }
   
+
+  // getAllVehicleExoense()
+  // {
+  //   // this.cart_detail = this.vehiclesId
+    
+  //   this.api.getAllExapense(this.getVehcileID).subscribe(resp => {
+  //   console.log(this.getVehcileID);
+  //     this.vehicles = resp.vehicles;
+      
+  //     console.log(this.vehicles);
+      
+  //   });
+  // }
   selectedEnq(vehd : any){
+//console.log(vehd);
+    
+   // this.selectedEnqaa 
+    //console.log(this.selectedEnqaa);
+
+  
+
+  
+    
 }
   assignVehicle()
   {
@@ -275,8 +313,7 @@ data:any
     this.api.deleteAssignVehicle(this.selectedAssign._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-     this.closePopup();
-     this.toastr.success(resp.message, "  Delete Successfully");
+      document.getElementById('modalDismissBtn')?.click();
       this.getAllVehicleAssigns();
     },
     (err) => {
@@ -291,8 +328,7 @@ data:any
     this.api.deleteVehicleExpense(this.expenseData._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      this.closePopup();
-      this.toastr.success(resp.message, "  Delete Successfully");
+      document.getElementById('modalDismissBtn')?.click();
       this.getAllVehicleAssigns();
     },
     (err) => {
@@ -322,21 +358,30 @@ data:any
     })
   
   }
-  rowEvent($event: any) {
-    this.selectedRow = $event.lead;
-    if($event['event'] === 'edit'){  
-      this.editAssignVehicle(this.selectedRow);
-    }
-    if($event['event'] === 'delete'){
-      this.openDeleteModal(this.deleteTemplate, this.selectedRow)
-    }
 
+  onVehicleSelect(event: any): void {
+    const selectedVehicleId = event;
+    const selectedVehicle = this.vehicles.find(vehicle => vehicle._id === selectedVehicleId);
+  
+    if (selectedVehicle) {
+      // Extract expenses from the selected vehicle
+      const expenses = selectedVehicle.expenses || [];
+  
+      // Create an array with the necessary fields for the dynamic table
+      const tableData = expenses.map((expense, index) => ({
+        autoNo: index + 1,
+        vehicleNo: selectedVehicle.vehicleNo,
+        name: expense.name,
+        amount: expense.amount,
+        time: expense.time,
+        description: expense.description
+      }));
+  
+      // Set the table data to be displayed
+      this.mergedArray = tableData;
+      console.log(this.mergedArray);
     }
-    openDeleteModal(template: TemplateRef<any>, data: any){
-      this.selectedAssign = data;
-     this.modalRef = this.modalService.show(template);
-    }
-    closePopup(){
-      this.modalRef.hide();
-    }
+  }
+  
+  
 }

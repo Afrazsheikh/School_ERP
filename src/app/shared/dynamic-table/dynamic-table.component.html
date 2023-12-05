@@ -9,12 +9,9 @@
         <tr>
             <ng-container *ngFor="let header of tableHeader.data">
                 <ng-container *ngIf="header?.sort">
-                    <!-- <th scope="col" [class.active]="order === header.field" [attr.width]="header?.width"
-                    (click)="setOrder(header.field)" >{{ header.title }}<span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span></th> -->
                     <th scope="col" [class.active]="order === header.field" [attr.width]="header?.width"
-                    (click)="setOrder(header.field)" >{{ header.title }}<span [hidden]="reverse"><img src="../../../assets/images/az.png"></span>
-                    <span [hidden]="!reverse"><img src="../../../assets/images/sort.png"></span></th>
+                    (click)="setOrder(header.field)" >{{ header.title }}<span [hidden]="reverse">▼</span>
+                    <span [hidden]="!reverse">▲</span></th>
                 </ng-container>
                 <ng-container *ngIf="!header?.sort">
                     <th scope="col" [style]="header.style" *ngIf="header.visible" [attr.width]="header?.width">
@@ -55,11 +52,9 @@
 
                     </ng-container>
                     <ng-container *ngIf="header.dataType == 'action'">
-
-                        <td >
-                                 <app-action-button-item class="toolbar" [(tools_config)]="tableHeader.toolbar.config"
-                                (tool_selected)="selected_tool($event, item)" [row]="item"></app-action-button-item>
-                           
+                        <td>
+                            <app-action-button-item class="toolbar" [(tools_config)]="tableHeader.toolbar.config"
+                            (tool_selected)="selected_tool($event, item)" [row]="item"></app-action-button-item>
     
                         </td>
                     </ng-container>

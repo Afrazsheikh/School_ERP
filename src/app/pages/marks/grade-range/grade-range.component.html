@@ -3,9 +3,24 @@
     <div class="tab-container">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Grade List">
-          <div class="pt-4 ms-2">
-            <app-dynamic-table [data]="grades" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
-            <!-- <table class="table mt-3">
+          <div class="pt-4">
+           <!-- <div class="top-options">
+              <div class="search-area">
+                <div class="input-group pe-3">
+                  <input type="search" class="form-control" placeholder="Search here...">
+                  <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </div>
+                <div class="options">
+                  <button class="btn"><img src="assets/icons/opt-copy.svg"></button>
+                  <button class="btn"><img src="assets/icons/opt-excel.svg"></button>
+                  <button class="btn"><img src="assets/icons/opt-pdf.svg"></button>
+                  <button class="btn"><img src="assets/icons/opt-sheet.svg"></button>
+                  <button class="btn"><img src="assets/icons/opt-print.svg"></button>
+                </div>
+              </div>
+            </div> -->
+
+            <table class="table mt-3">
               <thead>
                 <tr>
                   <th scope="col">SL</th>
@@ -33,7 +48,7 @@
                   </td>
                 </tr>
               </tbody>
-            </table> -->
+            </table>
           </div>
         </mat-tab>
         <mat-tab label="Create Grade">
@@ -83,24 +98,23 @@
 
 
   <!---Modal for delete---->
-  <ng-template #deletemplate>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Delete Grade</h4>
-      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closePopup()">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="row">
-        <div class="col-md-12">
-          <span class="text-justify">Are you sure you want to delete this Grade?</span>
+  <div class="modal fade" id="deletePrompt">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Grade </h5>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this Grade?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="modalDismissBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" [disabled]="isLoading" (click)="deleteGrade()">
+            <span *ngIf="isLoading" class="spinner-border text-light"></span>
+            <span *ngIf="!isLoading">Delete</span>
+          </button>
         </div>
       </div>
-         
-        <div class="modal-footer mt-4">
-          <button type="button" class="save_button btn" (click)="deleteGrade()">Yes, Continue</button>
-          <button type="button" class="save_button btn" (click)="closePopup()">Cancel</button>
-        </div>
     </div>
-  </ng-template>
+  </div>
   

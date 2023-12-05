@@ -48,9 +48,7 @@
       <thead>
         <tr>
           <th scope="col">Photo</th>
-            <th scope="col">First Name </th>
-            <th scope="col">Last Name</th>
-            <th scope="col"> DOB</th>
+            <th scope="col" style="width:160px;">Name / DOB</th>
             <th scope="col">Class</th>
             <th scope="col">Register No</th>
             <!--<th scope="col">Roll No</th> -->
@@ -65,9 +63,7 @@
           <tr>
           <td>  <img class="image" [src]="student?.image? student.image: 'assets/images/no-profile.jpg'"
             alt=""></td>
-            <td>{{student.firstName}}</td>   
-            <td>{{student.lastName}}</td>   
-          <td>{{student.dob | date :"MM/dd/yyyy"}}</td>         
+          <td>{{student.name}} {{student.dob | date :"MM/dd/yyyy"}}</td>         
           <td>{{student.class}} ({{student.section}})</td>
           <td>{{student.registerNo}}</td>
       <!--<td>{{student.rollNo}}</td>--> 

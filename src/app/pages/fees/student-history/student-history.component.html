@@ -50,8 +50,7 @@
 <table class="table mt-3">
 <thead>
 <tr>
-  <th scope="col">First Name</th>
-  <th scope="col">Last Name</th>
+  <th scope="col">Student Name</th>
   <th scope="col">Class</th>
   <th scope="col">Section</th>
   <th scope="col">Registration</th>
@@ -65,8 +64,7 @@
 
   <ng-container *ngFor="let student of studentData; let i = index">
     <tr>
-    <td>{{student.firstName}} </td>         
-    <td>{{student.lastName}}</td>
+    <td>{{student.firstName + " " + student.lastName}}</td>         
     <td>{{student.class}}</td>
     <td>{{student.section}}</td>
     <td>{{student.registerNo}}</td>

@@ -1,87 +1,50 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-route-master',
   templateUrl: './route-master.component.html',
-  styleUrls: ['./route-master.component.scss'],
+  styleUrls: ['./route-master.component.scss']
 })
 export class RouteMasterComponent implements OnInit {
+
   routes: any[] = [];
   routeForm: FormGroup;
   selectedRoute: any;
   isLoading: boolean;
-  selectedRow: any;
-  tableHeader: any;
-  modalRef!: BsModalRef;
-  @ViewChild('deletemplate', { read: TemplateRef })
-  deleteTemplate: TemplateRef<any>;
-  constructor(
-    private api: ApiService,
-    private toastr: ToastrService,
-    private router: Router,
-    private modalService: BsModalService
-  ) {
+
+  tableHeader: any
+
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router)
+  {
     this.routeForm = new FormGroup({
       routeName: new FormControl(null, [Validators.required]),
       startPlace: new FormControl(null, [Validators.required]),
       stopPlace: new FormControl(null, [Validators.required]),
-      remarks: new FormControl(null),
+      remarks: new FormControl(null)
     });
   }
 
   ngOnInit(): void {
     this.getAllRoutes();
+  }
+
+  getAllRoutes()
+  {
     this.tableHeader = {
       data: [
-        {
-          field: 'routeName',
-          dataType: 'string',
-          title: 'Route Name',
-          sort: true,
-          visible: true,
-          search: true,
-        },
-        {
-          field: 'startPlace',
-          dataType: 'string',
-          title: 'Start Place',
-          sort: true,
-          visible: true,
-          search: true,
-        },
-        {
-          field: 'stopPlace',
-          dataType: 'string',
-          title: 'Stop Place',
-          sort: true,
-          visible: true,
-          search: true,
-        },
-        {
-          field: 'remarks',
-          dataType: 'string',
-          title: 'Remarks',
-          sort: true,
-          visible: true,
-          search: true,
-          width: '30%',
-        },
-        {
-          field: 'action',
-          dataType: 'action',
-          title: 'Action',
-          sort: false,
-          visible: true,
-          search: false,
-          width: '15%',
-        },
+        { field: 'routeName', dataType: 'string', title: 'Route Name', sort: true, visible: true, search: true },
+        { field: 'subjectName', dataType: 'string', title: 'Subject Name Type', sort: true, visible: true, search: true },
+        { field: 'time', dataType: 'string', title: 'Time', sort: true, visible: true, search: true },
+        { field: 'teacherName', dataType: 'string', title: 'Teacher Name', sort: true, visible: true, search: true },
+        // Add more fields as needed
+        { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
       ],
-      searchPlaceholder: 'Search by Route Name, Start Place and Stop Place',
+      // Add additional properties as needed
+      searchPlaceholder: "Search by Route Name, Subject Name, Time, and Teacher Name",
       sortBy: { field: 'routeName', asc: true },
       toolbar: {
         show: true,
@@ -89,84 +52,63 @@ export class RouteMasterComponent implements OnInit {
         config: {
           edit: {
             show: true,
-            callback: () => {},
+            callback: () => {
+              // Handle edit action
+            },
           },
           delete: {
             show: true,
             callback: () => {
-              // $('#detail-grievance').modal('show')
+              // Handle delete action
             },
           },
         },
       },
     };
-  }
-
-  getAllRoutes() {
-    this.api.getAllRoutes().subscribe((resp) => {
+    this.api.getAllRoutes().subscribe(resp => {
       this.routes = resp.routes;
     });
   }
 
-  addRoute() {
+  addRoute()
+  {
     this.isLoading = true;
-    this.api.addRoute(this.routeForm.value).subscribe(
-      (resp) => {
-        this.isLoading = false;
-        this.toastr.success(resp.message, 'Route add success');
-        this.routeForm.reset();
-        this.getAllRoutes();
-      },
-      (err) => {
-        this.isLoading = false;
-        this.toastr.error(err, 'Route add failed');
-      }
-    );
+    this.api.addRoute(this.routeForm.value).subscribe(resp => {
+      this.isLoading = false;
+      this.toastr.success(resp.message, "Route add success");
+      this.routeForm.reset();
+      this.getAllRoutes();
+    },
+    (err) => {
+      this.isLoading = false;
+      this.toastr.error(err, "Route add failed");
+    });
   }
 
-  editRoute(route: any) {
+  editRoute(route: any)
+  {
     this.selectedRoute = route;
     const navExtras: NavigationExtras = {
       state: {
-        data: this.selectedRoute,
-      },
+        data: this.selectedRoute
+      }
     };
 
-    this.router.navigate(
-      ['/transport/route/', this.selectedRoute._id],
-      navExtras
-    );
+    this.router.navigate(["/transport/route/", this.selectedRoute._id], navExtras);
   }
 
-  deleteRoute() {
+  deleteRoute()
+  {
     this.isLoading = true;
-    this.api.deleteRoute(this.selectedRoute._id).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.isLoading = false;
-         this.closePopup();
-        this.getAllRoutes();
-      },
-      (err) => {
-        this.isLoading = false;
-        console.error(err);
-      }
-    );
-  }
-  rowEvent($event: any) {
-    this.selectedRow = $event.lead;
-    if ($event['event'] === 'edit') {
-      this.editRoute(this.selectedRow);
-    }
-    if ($event['event'] === 'delete') {
-      this.openDeleteModal(this.deleteTemplate, this.selectedRow);
-    }
-  }
-  openDeleteModal(template: TemplateRef<any>, data: any) {
-    this.selectedRoute = data;
-    this.modalRef = this.modalService.show(template);
-  }
-  closePopup() {
-    this.modalRef.hide();
+    this.api.deleteRoute(this.selectedRoute._id).subscribe(resp => {
+      console.log(resp);
+      this.isLoading = false;
+      document.getElementById('modalDismissBtn')?.click();
+      this.getAllRoutes();
+    },
+    (err) => {
+      this.isLoading = false;
+      console.error(err);
+    })
   }
 }

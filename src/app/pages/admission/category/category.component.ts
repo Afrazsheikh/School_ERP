@@ -39,7 +39,7 @@ export class CategoryComponent {
       data: [
         {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
         {  field: "categoryName", dataType: "string", title: 'Type', sort: true, visible: true, search:true },
-        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false }
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false  }
        ],
       searchPlaceholder:"Search by Category Name",
       sortBy: { field: 'categoryName', asc: true },
