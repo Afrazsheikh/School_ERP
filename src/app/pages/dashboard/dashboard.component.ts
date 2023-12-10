@@ -197,5 +197,7 @@ export class DashboardComponent {
       this.reception=data;
     });
   }
- 
+  clickMe(url){
+    this.router.navigate([url]);
+  }
 }

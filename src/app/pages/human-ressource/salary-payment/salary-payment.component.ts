@@ -15,6 +15,7 @@ import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import { Moment } from 'moment';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const moment = _moment;
 export const MY_FORMATS = {
@@ -51,13 +52,39 @@ export class SalaryPaymentComponent {
   designations: any[] = [];
   designFilter: string = 'select';
   date = new FormControl(moment());
-  constructor(private api: ApiService, private router: Router) {}
+  selectedRow:any;
+  tableHeader:any;
+  constructor(private api: ApiService, private router: Router,private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
     this.getAllEmployees();
     this.getDesignations();
-  }
+    this.tableHeader = {
+      data: [
+        {  field: "newId", dataType:"string", title: 'Staff Id', sort: false, visible: true, search:false },
+        {  field: "name", dataType: "string", title: 'Name', sort: true, visible: true, search:true, width:"15%" },
+        {  field: "designationName", dataType: "string", title: 'Designation', sort: true, visible: true, search:true, width:"15%"  },
+        {  field: "departmentName", dataType: "string", title: 'Department', sort: true, visible: true, search:true, width:"15%"  },
+        {  field: "number", dataType: "string", title: 'Mobile Noe', sort: true, visible: true, search:true },
+        {  field: "salaryGradeTitle", dataType: "string", title: 'Salary Grade', sort: true, visible: true, search:true },
+        {  field: "basicSalary", dataType: "string", title: 'Basic Salary', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false }
+       ],
 
+      searchPlaceholder:"Search by Name, Designation, Department and Salary Grade and Basic Salary",
+      sortBy: { field: 'name', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {         
+          paynow: {
+            show: true,
+            callback: () => {},
+          }
+      },
+    }
+  }
+  }
   getDesignations() {
     this.api.getDesignations().subscribe((resp) => {
       this.designations = resp.designations;
@@ -114,15 +141,24 @@ export class SalaryPaymentComponent {
   }
 
   onFilter() {
-    console.log(this.date.value);
-
-    this.api
+    this.spinner.show();
+     this.api
       .getEmployeeSalaryWithStatusBYMonth(this.date.value.format('MM-YYYY'))
       .subscribe((resp) => {
+        this.spinner.hide();
         this.filteredEmployees = resp.salary_receipts;
         this.employees = resp.salary_receipts;
-        // this.filteredEmployees = resp.employees;
-        // this.getAllSalaries();
+        this.filteredEmployees.forEach(Element =>{
+          Element['newId'] = Element._id.substr(Element._id.length - 4);
+          Element['designationName']= Element?.designation?.name;
+          Element['departmentName']= Element?.department?.name;
+          Element['basicSalary']= "₹" + ((Element?.salaryGrade?.basicSalary) ? Element.salaryGrade.basicSalary : 0);
+          Element['salaryGradeTitle']= Element?.salaryGrade?.salaryGrade;       
+          Element['salaryStatus']= Element.salaryStatus === "PAID" ? "Salary Paid" : "Pay Now";
+        })
+      },
+      (err) =>{
+        this.spinner.hide();
       });
   }
 
@@ -147,5 +183,12 @@ export class SalaryPaymentComponent {
       );
     }
     
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'paynow'){
+      this.navigateToSalaryCreate(this.selectedRow);
+    }
+
   }
 }

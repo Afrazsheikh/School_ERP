@@ -1,100 +1,93 @@
 <app-layout>
-  <div class="body_content bg-light p-2">
-    <div class="stats__wrapper bg-light">
-      <div class="col-xl-3 col-md-6 col-12 p-2">
-        <div class="box bg-white">
-          <div class="box-body">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h4 class="text-fade">Class (Section)</h4>
-                <h4 class="fw-600">
-                  <ng-container *ngIf="sectionObj?.classCount">
-                    {{sectionObj?.classCount}} ({{sectionObj?.sectionCount}})
-                  </ng-container>
-                </h4>
-                <!-- <p class="mb-0">
-                  <span class="text-success">12%</span> Increase
-                </p>-->
-              </div>
-              <div>
-                <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-md-6 col-12 p-2">
-        <div class="box bg-white">
-          <div class="box-body">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h4 class="text-fade">New Student</h4>
-                <h4 class="fw-600">
-                  <ng-container *ngIf="dashboardObj?.newEnrollStudentCount">
-                    {{dashboardObj?.newEnrollStudentCount}}
-                  </ng-container>
-                </h4>
-                <!-- <p class="mb-0">
-                  <span class="text-success">&nbsp;</span>
-                </p>-->
-              </div>
-              <div>
-                <img src="../../../assets/images/dashboard-02.svg" class="w-100" alt="" height="97" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-md-6 col-12 p-2">
-        <div class="box bg-white">
-          <div class="box-body">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h4 class="text-fade">Student</h4>
-                <h4 class="fw-600">
-                  <ng-container *ngIf="dashboardObj?.studentCount">
-                    {{dashboardObj?.studentCount}}
-                  </ng-container>
-                </h4>
-                <!--<p class="mb-0"><span class="text-success">49%</span> Total</p>-->
-              </div>
-              <div>
-                <img src="../../../assets/images/dashboard-03.svg" class="w-100" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-md-6 col-12 p-2">
-        <div class="box bg-white">
-          <div class="box-body">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h4 class="text-fade">Employee</h4>
-                <h4 class="fw-600">
-                  <ng-container *ngIf="dashboardObj?.employeeCount">
-                    {{dashboardObj?.employeeCount}}
-                  </ng-container>
-                </h4>
-                <!--<p class="mb-0"><span class="text-danger">-51%</span> Total</p>-->
-              </div>
-              <div>
-                <img src="../../../assets/images/dashboard-04.svg" class="w-100" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class=" ms-3 me-3 ">
+    <div class="row mt-3 mb-3">
+      <div class="col-md-12 header-txt">
+        <i _ngcontent-dan-c162="" class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;<span>Dashboard</span>
       </div>
     </div>
+    <div class="row">
+        <div class="col-xl-3 hand" (click)="clickMe('/academic/class')">
+          <div class="card bg-white" style="width: 250px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h4 class="text-fade">Class (Section)</h4>
+                  <h4 class="fw-600">
+                    <ng-container *ngIf="sectionObj?.classCount">
+                      {{sectionObj?.classCount}} ({{sectionObj?.sectionCount}})
+                    </ng-container>
+                  </h4>
+                </div>
+                <div>
+                  <img src="../../../assets/images/class.jpg" class="w-100" height="97" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 hand" (click)="clickMe('/admission/create')">
+          <div class="card bg-white" style="width: 250px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h4 class="text-fade">New Student</h4>
+                  <h4 class="fw-600">
+                    <ng-container *ngIf="dashboardObj?.newEnrollStudentCount">
+                      {{dashboardObj?.newEnrollStudentCount}}
+                    </ng-container>
+                  </h4>
+                </div>
+                <div>
+                  <img src="../../../assets/images/dashboard-02.svg" class="w-100" alt="" height="97" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 hand"  (click)="clickMe('/student-details/student-list')">
+          <div class="card bg-white" style="width: 250px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h4 class="text-fade">Student</h4>
+                  <h4 class="fw-600">
+                    <ng-container *ngIf="dashboardObj?.studentCount">
+                      {{dashboardObj?.studentCount}}
+                    </ng-container>
+                  </h4>
+                </div>
+                <div>
+                  <img src="../../../assets/images/students.jpg" class="w-100" alt="" height="97" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 hand" (click)="clickMe('/employee/list')">
+          <div class="card bg-white" style="width: 250px;">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h4 class="text-fade">Employee</h4>
+                  <h4 class="fw-600">
+                    <ng-container *ngIf="dashboardObj?.employeeCount">
+                      {{dashboardObj?.employeeCount}}
+                    </ng-container>
+                  </h4>
+                </div>
+                <div>
+                  <img src="../../../assets/images/Employee.jpg" class="w-100" alt="" height="97" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
 
-    <div class="main__wrapper mt-1">
-
-
-
-      <div class="stats__wrapper row bg-light" style="padding: 0 10px 0 12px;    height: min-content;">
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+    <div class="row">
+        <div class="col-md-4 hand mt-3" (click)="clickMe('/transport/vehicle')">
+          <div class="card bg-white">
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
                   <h4 class="text-fade">Vehicle</h4>
@@ -105,16 +98,15 @@
                   </h4>
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/vehicle.png" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+        <div class="col-md-4 hand mt-3" (click)="clickMe('/transport/route')">
+          <div class="card bg-white" >
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
                   <h4 class="text-fade">Route</h4>
@@ -125,16 +117,15 @@
                   </h4>
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/route.jpg" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+        <div class="col-md-4 hand mt-3" (click)="clickMe('/attendance/student')">
+          <div class="card bg-white" >
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
                   <h4 class="text-fade">Student Attendance</h4>
@@ -143,21 +134,17 @@
                       {{attendance?.student}}
                     </ng-container>
                   </h4>
-                  <!-- <p class="mb-0">
-                    <span class="text-success">&nbsp;</span>
-                  </p>-->
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/attendance.jpg" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+        <div class="col-md-4 hand mt-3"  (click)="clickMe('/attendance/employee')">
+          <div class="card bg-white" >
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
                   <h4 class="text-fade">Employee Attendance</h4>
@@ -166,21 +153,17 @@
                       {{attendance?.employee}}
                     </ng-container>
                   </h4>
-                  <!-- <p class="mb-0">
-                    <span class="text-success">&nbsp;</span>
-                  </p>-->
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/emp.jpg" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+        <div class="col-md-4 hand mt-3" (click)="clickMe('/reception/visitorlog')">
+          <div class="card bg-white">
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
                   <h4 class="text-fade">Reception Visitor</h4>
@@ -189,19 +172,17 @@
                       {{reception?.visitorCount}}
                     </ng-container>
                   </h4>
-                  <!--<p class="mb-0"><span class="text-success">49%</span> Total</p>-->
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/visitor.jpg" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+        <div class="col-md-4 hand mt-3"  (click)="clickMe('/reception/calllog')">
+          <div class="card bg-white">
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
                   <h4 class="text-fade">Reception CallLog</h4>
@@ -210,19 +191,17 @@
                       {{reception?.callLogCount}}
                     </ng-container>
                   </h4>
-                  <!--<p class="mb-0"><span class="text-success">49%</span> Total</p>-->
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/call.jpg" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+        <div class="col-md-4 hand mt-3" (click)="clickMe('/reception/enquiry')">
+          <div class="card bg-white" >
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
                   <h4 class="text-fade">Reception Enquiry</h4>
@@ -231,64 +210,58 @@
                       {{reception?.enquiryCount}}
                     </ng-container>
                   </h4>
-                  <!--<p class="mb-0"><span class="text-success">49%</span> Total</p>-->
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/enquiry.jpg" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+        <div class="col-md-4 hand mt-3"  (click)="clickMe('/parent/banner-list')">
+          <div class="card bg-white" >
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
-                  <h4 class="text-fade">Reception Banner</h4>
+                  <h4 class="text-fade">Total App Banners</h4>
                   <h4 class="fw-600">
                     <ng-container *ngIf="reception">
                       {{reception?.bannerCount}}
                     </ng-container>
                   </h4>
-                  <!--<p class="mb-0"><span class="text-success">49%</span> Total</p>-->
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/banner.jpg" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-   
-        <div class="col-xl-4 col-md-6 col-12 p-2">
-          <div class="box bg-white">
-            <div class="box-body">
+        <div class="col-md-4 hand mt-3"  (click)="clickMe('/parent/notice-board-list')">
+          <div class="card bg-white" >
+            <div class="card-body">
               <div class="d-flex justify-content-between">
                 <div>
-                  <h4 class="text-fade">Reception Notice Board</h4>
+                  <h4 class="text-fade">Total Notice Board</h4>
                   <h4 class="fw-600">
                     <ng-container *ngIf="reception">
                       {{reception?.noticeBoardCount}}
                     </ng-container>
                   </h4>
-                  <!--<p class="mb-0"><span class="text-success">49%</span> Total</p>-->
                 </div>
                 <div>
-                  <img src="../../../assets/images/dashboard-01.svg" class="w-100" height="97" alt="" />
+                  <img src="../../../assets/images/complaint-01.svg" class="w-100" height="97" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-      </div>
-
+    </div>
 
 
 
-      <!-- <div class="col-xl-8 col-md-8 col-12 p-2">
+
+    <!-- <div class="col-xl-8 col-md-8 col-12 p-2">
         <div class="box bg-white">
           <div class="box-header px-3 pt-3 pb-2">
             <h4>New Admission Report</h4>
@@ -329,14 +302,19 @@
         </div>
       </div> -->
 
-      <div class="col-xl-4 col-md-4 col-12 p-2">
-        <div class="box bg-white">
-          <div class="box-header px-3 pt-3 pb-2">
-            <h4>Raised Ticket By Student</h4>
-          </div>
-          <div class="box-body p-3">
-            <div class="box-scroll">
-              <div class="box no-shadow mb-3" *ngFor="let row of studentTickets;  let i = index">
+    <div class="outer-container mt-4">
+      <div class="box bg-white">
+        <div class="box-header px-3 pt-3 pb-2">
+          <a href="http://erpadmin.s3-website.ap-south-1.amazonaws.com/parent/ticket-list"
+            style="text-decoration: none; color: inherit;">
+            <h4>Raised Ticket By Students</h4>
+          </a>
+        </div>
+        <div class="box-body p-3">
+          <div class="row">
+            <!-- Repeat the card structure for each item in studentTickets array -->
+            <div class="col-xl-4 col-md-4 col-12 p-2" *ngFor="let row of studentTickets; let i = index">
+              <div class="box no-shadow mb-3">
                 <div class="box-body">
                   <div class="d-flex align-items-center">
                     <div class="me-15">
@@ -353,9 +331,14 @@
                 </div>
               </div>
             </div>
+            <!-- End of card structure -->
           </div>
         </div>
       </div>
     </div>
+
+
+
+
   </div>
 </app-layout>

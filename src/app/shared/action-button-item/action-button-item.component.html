@@ -8,6 +8,21 @@
     <ng-container  *ngIf="tools_config?.delete?.show">
         <button class="btn emp-edit" (click)="clicked('delete')"><i class="fa-solid fa-trash-can"></i></button>
     </ng-container>
-   
- 
+    <ng-container  *ngIf="tools_config?.paynow?.show">
+        <button class="btn" (click)="clicked('paynow')">{{row?.salaryStatus}}</button>
+    </ng-container>
+    <ng-container  *ngIf="tools_config?.empEdit?.show">
+        <ng-container *ngIf="(row.name).toLowerCase() === 'admin' || (row.name).toLowerCase() === 'teacher' ; else newDeb">
+        </ng-container>
+        <ng-template #newDeb>
+            <button class="btn emp-edit me-1" (click)="clicked('empEdit')"><i class="fa-solid fa-pencil"></i></button>
+        </ng-template>     
+    </ng-container>
+    <ng-container  *ngIf="tools_config?.empDelete?.show">
+        <ng-container *ngIf="(row.name).toLowerCase() === 'admin' || (row.name).toLowerCase() === 'teacher' ; else newDeb1">
+        </ng-container>  
+        <ng-template #newDeb1>
+            <button class="btn emp-edit" (click)="clicked('empDelete')"><i class="fa-solid fa-trash-can"></i></button>
+        </ng-template>     
+    </ng-container>
 </div>
