@@ -27,7 +27,8 @@ export class MultipleImportComponent {
   selectedFiles: any[];
   file: any;
   fileData: any;
-
+  downloadData:any[] =[];
+  data:any;
 
   acceptedFileTypes: string = '.csv';
   
@@ -151,6 +152,46 @@ onFilesDropped(files: NgxFileDropEntry[])
         }
       }
     }
+  }
+  
+ 
+  download() {
+    this.api.getAdmissionDownload().subscribe(resp => {
+      this.data = resp;
+       
+    let fileName = 'admissionList.csv';
+    let columnNames = ["registerNo", "admissionDate","rollNo","firstName", "lastName", "gender","email","dob","bloodGroup","motherTongue",
+    "religion","caste","userName"];
+    let header = columnNames.join(',');
+
+    let csv = header;
+    csv += '\r\n';
+
+    this.data.map(c => {
+      csv += [c["registerNo"], c["admissionDate"], c["rollNo"], c["firstName"],c["lastName"],c["gender"],c["email"],c["dob"],
+      c["bloodGroup"],c["motherTongue"],c["religion"],c["caste"],c?.guardian?.userName].join(',');
+      csv += '\r\n';
+    })
+
+    var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+    var link = document.createElement("a");
+    if (link.download !== undefined) {
+      var url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    
+    },
+    (err) => {
+      this.toastr.error(err, " add failed");
+      console.error(err);
+    });
+
+ 
   }
 
 }
