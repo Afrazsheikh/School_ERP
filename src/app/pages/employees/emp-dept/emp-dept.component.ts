@@ -1,8 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 import {startCase, camelCase} from 'lodash'
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-emp-dept',
   templateUrl: './emp-dept.component.html',
@@ -19,14 +20,20 @@ export class EmpDeptComponent {
   deptForm: FormGroup;
   editDept: FormGroup;
   selectedDept: any;
-  // designation
   designations: any[] = [];
 
   designForm: FormGroup;
   editDesign: FormGroup;
   selectedDesign: any;
-
-  constructor(private api: ApiService, private toastr: ToastrService) {
+  selectedRow:any;
+  tableHeader:any;
+  tableHeaderDesignation:any;
+  modalRef!: BsModalRef;
+  @ViewChild('template', { read: TemplateRef }) editTemplate:TemplateRef<any>;
+  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
+  @ViewChild('DesignationTemplate', { read: TemplateRef }) editDesignationTemplate:TemplateRef<any>;
+  @ViewChild('DesignationDeletemplate', { read: TemplateRef }) deleteDesignationTemplate:TemplateRef<any>;
+  constructor(private api: ApiService, private toastr: ToastrService,private modalService: BsModalService) {
     this.deptForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
 
@@ -54,6 +61,63 @@ export class EmpDeptComponent {
   ngOnInit(): void {
     this.getDepartments();
     this.getDesignations();
+    this.tableHeaderDesignation = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "deptName", dataType: "string", title: 'Department Name', sort: true, visible: true, search:true },
+        {  field: "name", dataType: "string", title: 'Designation Name', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false }
+       ],
+      searchPlaceholder:"Search by Department Name & Designation Name",
+      sortBy: { field: 'name', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {         
+          empEdit: {
+            show: true,
+            callback: () => {
+              
+            },
+          },
+          empDelete: {
+            show: true,
+            callback: () => {
+              // $('#detail-grievance').modal('show')
+  
+            },
+          },
+        },
+      },
+    };
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "name", dataType: "string", title: 'Name', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false }
+       ],
+      searchPlaceholder:"Search by Name",
+      sortBy: { field: 'name', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {         
+          empEdit: {
+            show: true,
+            callback: () => {
+              
+            },
+          },
+          empDelete: {
+            show: true,
+            callback: () => {
+              // $('#detail-grievance').modal('show')
+  
+            },
+          },
+        },
+      },
+    }
   }
 
   getDepartments()
@@ -97,14 +161,10 @@ export class EmpDeptComponent {
     this.isLoading = true;
     this.deptForm.controls['name'].setValue(startCase(camelCase(this.deptForm.value.name)));
     this.api.updateDepartment(this.selectedDept._id, this.editDept.value).subscribe(resp => {
-      console.log(resp);
-
       this.isLoading = false;
-
-      document.getElementById('editModalDismissBtn')?.click();
+      this.closePopup();
       this.toastr.success(resp.message, "Department update success");
       this.getDepartments();
-    ;
     },
     (err) => {
       this.isLoading = false;
@@ -119,7 +179,8 @@ export class EmpDeptComponent {
     this.api.deleteDepartment(this.selectedDept._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
+      this.toastr.success(resp.message, "Department Deleted Success");
+      this.closePopup();
       this.getDepartments();
     },
     (err) => {
@@ -131,9 +192,10 @@ export class EmpDeptComponent {
   getDesignations()
   {
     this.api.getDesignations().subscribe(resp => {
-      console.log(resp);
-      
-      this.designations = resp.designations
+         this.designations = resp.designations;
+         this.designations.forEach(element => {
+          element['deptName'] =element.department?.name
+         });
     });
   }
 
@@ -186,7 +248,7 @@ export class EmpDeptComponent {
 
       // document.getElementById('editModalDismissBtn')?.click();
       this.toastr.success(resp.message, "Designations update success");
-      this.closeButton.nativeElement?.click();
+     this.closePopup();
       this.getDesignations();
     ;
     },
@@ -203,7 +265,8 @@ export class EmpDeptComponent {
     this.api.deleteDesignation(this.selectedDesign._id).subscribe(resp => {
       console.log(resp);
       this.isLoading = false;
-      this.closeButtonDelete.nativeElement?.click();
+      this.toastr.success(resp.message, "Designations Delete Success");
+      this.closePopup();
       this.getDesignations();
     },
     (err) => {
@@ -224,4 +287,43 @@ export class EmpDeptComponent {
         }
     });
   } 
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'empEdit'){
+      this.openModal(this.editTemplate, this.selectedRow)
+    }
+    if($event['event'] === 'empDelete'){
+      this.openDeleteModal(this.deleteTemplate, this.selectedRow)
+    }
+
+  }
+  openModal(template: TemplateRef<any>, data: any) {
+    this.setDepartment(data);
+    this.modalRef = this.modalService.show(template);
+  }
+  openDeleteModal(template: TemplateRef<any>, data: any){
+    this.selectedDept = data;
+    this.modalRef = this.modalService.show(template);
+  }
+  closePopup(){
+    this.modalRef.hide();
+  }
+  rowEventDesignation($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'empEdit'){
+      this.openModalDesignation(this.editDesignationTemplate, this.selectedRow)
+    }
+    if($event['event'] === 'empDelete'){
+      this.openDeleteModalDesignation(this.deleteDesignationTemplate, this.selectedRow)
+    }
+
+  }
+  openModalDesignation(template: TemplateRef<any>, data: any) {
+    this.setDesignation(data);
+    this.modalRef = this.modalService.show(template);
+  }
+  openDeleteModalDesignation(template: TemplateRef<any>, data: any){
+    this.selectedDesign = data;
+    this.modalRef = this.modalService.show(template);
+  }
 }

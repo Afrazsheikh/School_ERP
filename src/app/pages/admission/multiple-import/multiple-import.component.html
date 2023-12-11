@@ -8,84 +8,79 @@
       </div>
       <div class="row py-3">
         <form [formGroup]="myForm">
-        <div class="col-6">
-          <div class="row pb-3">
-            <div class="col-4">
-              <div class="form-group">
-                <label  class="form-label">Class</label>
-     
-                <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="form-group">
-                <label class="form-label">Section <span class="error">*</span></label>
-            <select class="form-select" formControlName="section">
-              <option disabled value="select">Select</option>
-              <option *ngFor="let sec of sections" value="{{sec._id}}">{{sec.name}}</option>
-            </select>
-              </div>
-            </div>
-
-
-            <div class="col-4">
-              <div class="form-group">
-                <label class="form-label">Year <span class="error">*</span></label>
-                <select class="form-select" formControlName="academicYear">
-                  <option disabled value="select">Select</option>
-                  <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
-                </select>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="row pb-3">
-            <div class="col-12">
-              <div class="form-group">
-                <label>Select CSV File</label>
-                <div class="uploads">
-                  <div class="upload-cont">
-
-
-<!-- <ngx-file-drop [multiple]="true"  (onFileDrop)="dropped($event)">
-  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-      <ng-container >
-     drop
-        <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()"> Files</a>
-      </ng-container>
-
-  </ng-template>
-</ngx-file-drop> -->
-<ngx-file-drop [multiple]="false" [directory]="false" [accept]="acceptedFileTypes" (onFileDrop)="onFilesDropped($event)">
-  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-      <ng-container *ngIf="!fileData">
-        Drag and drop or
-        <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
-      </ng-container>
-      <ng-container *ngIf="fileData">
-        {{fileData.name}}
-        <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="fileData=null">
-          Remove
-        </a>
-      </ng-container>
-  </ng-template>
-</ngx-file-drop>
-
+        <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="row pb-3">
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label  class="form-label">Class</label>
+           
+                      <select class="form-select" formControlName="studentClass" (change)="onChangeClass($event)">
+                        <option disabled value="select">Select</option>
+                        <option *ngFor="let sec of classes" value="{{sec._id}}">{{sec.className}}</option>
+                      </select>
+                    </div>
                   </div>
-                  <p class="pt-3 text-center">Drag and drop a file here or click</p>
-
-
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label class="form-label">Section <span class="error">*</span></label>
+                  <select class="form-select" formControlName="section">
+                    <option disabled value="select">Select</option>
+                    <option *ngFor="let sec of sections" value="{{sec._id}}">{{sec.name}}</option>
+                  </select>
+                    </div>
+                  </div>
+      
+      
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label class="form-label">Year <span class="error">*</span></label>
+                      <select class="form-select" formControlName="academicYear">
+                        <option disabled value="select">Select</option>
+                        <option *ngFor="let day of aceYear" value="{{day._id}}">{{day.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pb-3">
+                  <div class="col-8">
+                    <div class="form-group">
+                      <label>Select CSV File</label>
+                      <div class="uploads">
+                        <div class="upload-cont">
+      <ngx-file-drop [multiple]="false" [directory]="false" [accept]="acceptedFileTypes" (onFileDrop)="onFilesDropped($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <ng-container *ngIf="!fileData">
+              Drag and drop or
+              <a class="p-1 btn btn-link" type="button" (click)="openFileSelector()">Browse Files</a>
+            </ng-container>
+            <ng-container *ngIf="fileData">
+              {{fileData.name}}
+              <a class="p-1 btn btn-link" style="color: #F44336;" type="button" (click)="fileData=null">
+                Remove
+              </a>
+            </ng-container>
+        </ng-template>
+      </ngx-file-drop>
+      
+                        </div>
+                        <p class="pt-3 text-center">Drag and drop a file here or click</p>
+      
+      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-5 text-center">
+                  <button class="btn btn-lg" (click)="submit()">Import <i class="fa-solid fa-file-import"></i></button>
                 </div>
               </div>
+              <div class="col-md-4 ">
+                <button class="btn float-end" (click)="download()">Download CSV File</button>
+              </div>
+
             </div>
-          </div>
-          <div class="mb-5 text-center">
-            <button class="btn btn-lg" (click)="submit()">Import <i class="fa-solid fa-file-import"></i></button>
-          </div>
         </div>
    
 

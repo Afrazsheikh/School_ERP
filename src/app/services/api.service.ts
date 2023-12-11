@@ -831,6 +831,11 @@ export class ApiService {
       .post(environment.apiBaseUrl + '/student/admission', postData)
       .pipe(catchError(this.errorHandler));
   }
+  getAdmissionDownload(): Observable<any> {
+    return this.httpClient
+      .get(environment.apiBaseUrl + '/student/admission/download')
+      .pipe(catchError(this.errorHandler));
+  }
   editStudent(postData: any, id: any): Observable<any> {
     return this.httpClient
       .put(environment.apiBaseUrl + '/student/' + id, postData)

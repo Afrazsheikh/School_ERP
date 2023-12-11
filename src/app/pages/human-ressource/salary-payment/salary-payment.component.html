@@ -58,8 +58,14 @@
       <div class="grey-border row mt-3">
         <p class="table-heading"><b>Staff List</b></p>
       </div>
-
-      <!--  -->
+      <div class="row">
+        <div class="col-md-12 mt-3 ms-1">
+          <app-dynamic-table [data]="filteredEmployees" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
+        </div>
+      </div>
+     <!--
+      <hr/><br/><br/>
+       
       <table class="table mt-3 py-4">
         <thead>
           <tr>
@@ -80,9 +86,9 @@
             <td>{{ emp.designation?.name }}</td>
             <td>{{ emp.department?.name }}</td>
             <td>{{ emp.number }}</td>
-            <!-- <td>{{ emp.salaryDetails?.salaryGrade }}</td> -->
+            <td>{{ emp.salaryDetails?.salaryGrade }}</td> 
             <td>{{ emp.salaryGrade?.salaryGrade }}</td>
-            <!-- <td>₹{{ emp.salaryDetails?.basicSalary }}</td> -->
+            <td>₹{{ emp.salaryDetails?.basicSalary }}</td> 
             <td>₹{{ emp.salaryGrade?.basicSalary }}</td>
             <td>
               <button (click)="navigateToSalaryCreate(emp)">
@@ -91,7 +97,7 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table>-->
     </div>
   </div>
 </app-layout>

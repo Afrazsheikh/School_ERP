@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -14,8 +16,13 @@ export class SalaryTempleteComponent implements OnInit {
   salaryForm: FormGroup;
   salaries: any[] = [];
   selectedSal: any;
-
-  constructor(private api: ApiService, private toastr: ToastrService)
+  selectedRow:any;
+  tableHeader:any;
+  modalRef!: BsModalRef;
+  @ViewChild('template', { read: TemplateRef }) editTemplate:TemplateRef<any>;
+  @ViewChild('deletemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
+    private modalService: BsModalService)
   {
     this.salaryForm = new FormGroup({
       salaryGrade: new FormControl(null, [Validators.required]),
@@ -41,7 +48,36 @@ export class SalaryTempleteComponent implements OnInit {
   }
 
   ngOnInit(): void {
- this.getSalaryTemplatesA()
+    this.getSalaryTemplatesA();
+    this.tableHeader = {
+      data: [
+        {  field: "autoNo", dataType:"autoNo", title: 'S. No', sort: false, visible: true, search:false },
+        {  field: "salaryGrade", dataType: "string", title: 'Salary Grades', sort: true, visible: true, search:true },
+        {  field: "basicSalary", dataType: "string", title: 'Basic Salary', sort: true, visible: true, search:true },
+        {  field: "overTimeRatePerHr", dataType: "string", title: 'Over Time Rate(Per Hour)', sort: true, visible: true, search:true },
+        {  field: "action", dataType:"action", title: 'Action', sort: false, visible: true, search:false }
+       ],
+      searchPlaceholder:"Search by Salary Grades, Basic Salary and Over Time",
+      sortBy: { field: 'salaryGrade', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+          view: {
+            show: true,
+            callback: () => { },
+          },
+          edit: {
+            show: true,
+            callback: () => {},
+          },
+          delete: {
+            show: true,
+            callback: () => {},
+          },
+        },
+      },
+    }
   }
 
   getSalaryTemplates()
@@ -122,7 +158,7 @@ export class SalaryTempleteComponent implements OnInit {
       this.isLoading = false;
       this.salaryForm.reset();
       this.toastr.success(resp.message, "Salary template add success");
-      this.getSalaryTemplates();
+      this.getSalaryTemplatesA();
     },
     (err) => {
       this.isLoading = false;
@@ -135,14 +171,36 @@ export class SalaryTempleteComponent implements OnInit {
   {
     this.isLoading = true;
     this.api.deleteSalary(this.selectedSal._id).subscribe(resp => {
-      console.log(resp);
       this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
-      this.getSalaryTemplates();
+      this.closePopup();
+      this.getSalaryTemplatesA();
     },
     (err) => {
       this.isLoading = false;
       console.error(err);
     })
+  }
+  closePopup(){
+    this.modalRef.hide();
+  }
+  rowEvent($event: any) {
+    this.selectedRow = $event.lead;
+    if($event['event'] === 'edit'){
+      this.router.navigate(['/human-resource/salary-templete/'+this.selectedRow._id]);
+    }
+    if($event['event'] === 'delete'){
+      this.openDeleteModal(this.deleteTemplate)
+    }
+    if($event['event'] === 'view'){
+      this.openModal(this.editTemplate)
+    }
+  }
+  openModal(template: TemplateRef<any>){
+    this.selectedSal = this.selectedRow;
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
+  }
+  openDeleteModal(template: TemplateRef<any>){
+    this.selectedSal = this.selectedRow;
+    this.modalRef = this.modalService.show(template);
   }
 }
