@@ -659,11 +659,14 @@ export class ApiService {
       .put(environment.apiBaseUrl + '/vehicle/expense/' + expenseId, postData)
       .pipe(catchError(this.errorHandler));
   }
-  deleteVehicleExpense(id: string): Observable<any> {
+  deleteVehicleExpense(id: string, vehicleId: string): Observable<any> {
+    const url = `${environment.apiBaseUrl}/vehicle/${vehicleId}/expense/${id}`;
+  
     return this.httpClient
-      .delete(environment.apiBaseUrl + '/vehicle/:id/expense/' + id)
+      .delete(url)
       .pipe(catchError(this.errorHandler));
   }
+  
   getAllExapense(vehicleId: String): Observable<any> {
     return this.httpClient
       .get(environment.apiBaseUrl + '/vehicle/' + vehicleId)

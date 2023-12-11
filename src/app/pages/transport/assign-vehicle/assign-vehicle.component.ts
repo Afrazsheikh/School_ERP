@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxFileDropEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api.service';
+import { BsModalService ,BsModalRef} from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-assign-vehicle',
@@ -12,7 +13,9 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./assign-vehicle.component.scss']
 })
 export class AssignVehicleComponent {
-
+  @ViewChild('editClassTemplate', { read: TemplateRef }) editTemplate:TemplateRef<any>;
+@ViewChild('deleteClassTemplate', { read: TemplateRef }) deleteTemplate:TemplateRef<any>;
+  modalRef!: BsModalRef;
   assigns: any[] = []
   routes: any[] = [];
   vehicles: any;
@@ -34,9 +37,15 @@ export class AssignVehicleComponent {
   expenseData: any;
   allExpenses:  any[] = []
   mergedArray: any[];
+  selectedRow: any;
+  selectedDesign: any;
+  flattenAssigns: any[];
+  mergedAssignArray: any[];
+  ROUTE: any[];
+  STOPPAGE: any[];
 
 
-  constructor(private api: ApiService, private toastr: ToastrService, private router: Router)
+  constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService)
   {
     this.vAssignForm = new FormGroup({
       route: new FormControl("select", [Validators.required]),
@@ -68,55 +77,167 @@ data:any
     this.getAllVehicleAssigns();
     this.getAllRoutes();
     this.getAllVehiclesData()
-    this.tableHeader = {
-      data: [
-        { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
-        { field: "vehicleNo", dataType: "string", title: 'Vehicle Name', sort: true, visible: true, search: true },
-        { field: "name", dataType: "string", title: 'Expense Name', sort: true, visible: true, search: true },
-        { field: "amount", dataType: "string", title: 'Amount', sort: true, visible: true, search: true },
-        { field: "time", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
-        { field: "description", dataType: "string", title: 'Description', sort: true, visible: true, search: true }
-      ],
-      searchPlaceholder: "Search by vehicleNo, amount, and time",
-      sortBy: { field: 'distance', asc: true },
-      toolbar: {
-        show: true,
-        visibleOn: 'visibility',
-        config: {
-          edit: {
-            show: true,
-            callback: () => {
-              // Handle edit action
-            },
+    // this.tableHeader = {
+    //   data: [
+    //     { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
+    //     { field: "vehicleNo", dataType: "string", title: 'Vehicle Name', sort: true, visible: true, search: true },
+    //     { field: "name", dataType: "string", title: 'Expense Name', sort: true, visible: true, search: true },
+    //     { field: "amount", dataType: "string", title: 'Amount', sort: true, visible: true, search: true },
+    //     { field: "time", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
+    //     { field: "description", dataType: "string", title: 'Description', sort: true, visible: true, search: true },
+    //     { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
+    //   ],
+    //   searchPlaceholder: "Search by vehicleNo, amount, and time",
+    //   sortBy: { field: 'distance', asc: true },
+    //   toolbar: {
+    //     show: true,
+    //     visibleOn: 'visibility',
+    //     config: {
+    //       edit: {
+    //         show: true,
+    //         callback: () => {
+    //           // Handle edit action
+    //         },
+    //       },
+    //       delete: {
+    //         show: true,
+    //         callback: () => {
+    //           // Handle delete action
+    //         },
+    //       },
+    //     },
+    //   },
+    // };
+
+  }
+table () { 
+  this.tableHeader = {
+    data: [
+      { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
+      { field: "routeFare", dataType: "string", title: 'Route Name', sort: true, visible: true, search: true },
+      { field: "startPlace", dataType: "string", title: 'Start Place', sort: true, visible: true, search: true },
+      { field: "stoppageName", dataType: "string", title: 'Stop page', sort: true, visible: true, search: true },
+      { field: "stopTime", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
+      // { field: "description", dataType: "string", title: 'Description', sort: true, visible: true, search: true },
+      // { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
+    ],
+    searchPlaceholder: "Search by vehicleNo, amount, and time",
+    sortBy: { field: 'distance', asc: true },
+    toolbar: {
+      show: true,
+      visibleOn: 'visibility',
+      config: {
+        edit: {
+          show: true,
+          callback: () => {
+            // Handle edit action
           },
-          delete: {
-            show: true,
-            callback: () => {
-              // Handle delete action
-            },
+        },
+        delete: {
+          show: true,
+          callback: () => {
+            // Handle delete action
           },
         },
       },
-    };
-
-  }
-
+    },
+  };
+}
   getAllVehicleAssigns()
   {
+   
+  
+
+    
     this.api.getAllVehicleAssigns().subscribe(resp => { 
+      console.log(resp);
+      
       this.assigns = resp.vehicleRoutes;
+      
+      console.log(this.assigns);
+      const routeArrayValues = this.assigns.map(assign => assign.route);
+      const stoppageArray = this.assigns.map(assign => assign.stoppage);
+      this.api.getAllVehicleAssigns().subscribe(resp => { 
+        console.log(resp);
+        
+        this.assigns = resp.vehicleRoutes;
+      
+        this.assigns.forEach((stopage, index) => {
+          if (stopage.stoppage) {
+           
+             
+            // stopage.stoppage.forEach((route) => {
+              const stoppageDetails = {
+                autoNo: index + 1, 
+                routeFare: stopage.stoppage.routeFare,
+                stopTime: stopage.stoppage.stopTime,
+                stoppageName: stopage.stoppage.stoppageName,
+                Id: stopage.stoppage._id,
+              };
+          
+              
+              this.STOPPAGE = [];
+              this.STOPPAGE.push(stoppageDetails);
+
+
+            // });
+
+          }
+        });
+      
+        this.assigns.forEach((assign, index) => {
+          if (assign.route) {
+        
+              const routeDetails = {
+                autoNo: index + 1, 
+                routeName: assign.route.routeName,
+                startPlace: assign.route.startPlace,
+                stopPlace: assign.route.stopPlace,
+                RouteId: assign.route._id,
+              };
+            this.  ROUTE = []
+              this.ROUTE.push(routeDetails);
+       
+          }
+        });
+        this.table()
+      
+      
+        // Combine ROUTE and STOPPAGE arrays into a single array
+        // this.mergedArray = [...this.ROUTE, ...this.STOPPAGE];
+        for (let i = 0; i < Math.max(this.ROUTE.length, this.STOPPAGE.length); i++) {
+          const routeItem = this.ROUTE[i] || {};
+          const stoppageItem = this.STOPPAGE[i] || {};
+        
+          const mergedItem = {
+            autoNo: routeItem.autoNo || stoppageItem.autoNo,
+            routeName: routeItem.routeName,
+            startPlace: routeItem.startPlace,
+            stopPlace: routeItem.stopPlace,
+            RouteId: routeItem.Id,
+            routeFare: stoppageItem.routeFare,
+            stopTime: stoppageItem.stopTime,
+            stoppageName: stoppageItem.stoppageName,
+          };
+        
+          this.mergedArray.push(mergedItem);
+        }
+        
+        console.log(this.mergedArray);
+        console.log(this.mergedArray);
+        this.table()
+      });
+     
+  //     // this.assigns =routeArrayValues.concat(stoppageArray);
+
+  //     console.log(this.assigns);
+
+      
     });
   }
-  // getAllVehicleExpense()
-  // {
-  //   this.api.getAllExapense().subscribe(resp => {
-  //     this.assigns = resp.vehicleRoutes;
-  //   });
-  // }
- 
+
   onFilesDropped(files: NgxFileDropEntry[], imgType: string)
   {
-    console.log(files);
     if(files.length > 1) {
       alert('Please upload a single file');
     }
@@ -145,7 +266,6 @@ data:any
   // For adding expense
   AddExpense()
   {
-    console.log(this.ExpensForm.value);
 
     let postData = new FormData();
     postData.append("vehicleId", this.ExpensForm.value.vehicleId);
@@ -165,7 +285,6 @@ data:any
     }
 
     this.api.addExpensReport(postData).subscribe(resp => {
-    console.log(resp);
     this.getAllVehiclesData()
       this.isLoading = false;
       this.ExpensForm.reset();
@@ -198,86 +317,81 @@ data:any
 
   getAllVehiclesData()
   {
-    
-    
+    this.tableHeader = {
+      data: [
+        { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
+        { field: "vehicleNo", dataType: "string", title: 'Vehicle Name', sort: true, visible: true, search: true },
+        { field: "name", dataType: "string", title: 'Expense Name', sort: true, visible: true, search: true },
+        { field: "amount", dataType: "string", title: 'Amount', sort: true, visible: true, search: true },
+        { field: "time", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
+        { field: "description", dataType: "string", title: 'Description', sort: true, visible: true, search: true },
+        { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
+      ],
+      searchPlaceholder: "Search by vehicleNo, amount, and time",
+      sortBy: { field: 'distance', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+          edit: {
+            show: true,
+            callback: () => {
+              // Handle edit action
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // Handle delete action
+            },
+          },
+        },
+      },
+    };
     this.api.getAllVehicles().subscribe((resp) => {
       this.vehicles = resp?.vehicles;
       this.allExpenses = [];
-    
       this.vehicles.forEach((vehicle, index) => {
-        // Check if expenses array exists and has items
         if (vehicle.expenses && vehicle.expenses.length > 0) {
-          // Iterate through each expense in the vehicle
           vehicle.expenses.forEach((expense) => {
-            // Extract properties from the expense and add the vehicle properties
             const expenseDetails = {
-              autoNo: index + 1, // Assuming autoNo is the index + 1
-              vehicleNo: vehicle.vehicleNo, // Replace 'vehicleNo' with the actual property name from your vehicle object
+              autoNo: index + 1, 
+              vehicleNo: vehicle.vehicleNo,
               name: expense.name,
               amount: expense.amount,
               time: expense.time,
               description: expense.description,
+              _id: expense._id,
+          
             };
     
-            // Add the expenseDetails to the allExpenses array
             this.allExpenses.push(expenseDetails);
           });
         }
       });
     
-      // Now allExpenses contains all expense details with vehicle properties
-      console.log(this.allExpenses);
       this.mergedArray = this.allExpenses;
-      console.log(this.mergedArray);
     });
-    
+     
   }
   getEdit(data){
     console.log(data);
 
-    this.selectedExpense=data.expenses[0]._id
-    this.expenseData = data.expenses[0]
-    console.log(this.selectedExpense);
-    console.log(this.expenseData._id);
-
-
-    this.editExpense.patchValue({
-
-      expenseId: this.expenseData._id,
-      vehicleId: this.selectedExpense.vehicleNo,
-
-      expenseName: data.expenses[0].name,
-
-      expenseValue: this.expenseData.amount,
-      expenseTime: this.expenseData.time ,
-      description: this.expenseData.description,
-    
-    
-  })
+  
+this.editExpense.patchValue({
+  // autoNo: data.autoNo,
+  // vehicleId: data.vehicleNo,
+  expenseName: data.name,
+  expenseValue: data.amount,
+  expenseTime: data.time,
+  description: data.description
+});
   }
   
 
-  // getAllVehicleExoense()
-  // {
-  //   // this.cart_detail = this.vehiclesId
-    
-  //   this.api.getAllExapense(this.getVehcileID).subscribe(resp => {
-  //   console.log(this.getVehcileID);
-  //     this.vehicles = resp.vehicles;
-      
-  //     console.log(this.vehicles);
-      
-  //   });
-  // }
+
   selectedEnq(vehd : any){
-//console.log(vehd);
-    
-   // this.selectedEnqaa 
-    //console.log(this.selectedEnqaa);
 
-  
-
-  
     
 }
   assignVehicle()
@@ -311,7 +425,6 @@ data:any
   {
     this.isLoading = true;
     this.api.deleteAssignVehicle(this.selectedAssign._id).subscribe(resp => {
-      console.log(resp);
       this.isLoading = false;
       document.getElementById('modalDismissBtn')?.click();
       this.getAllVehicleAssigns();
@@ -324,12 +437,17 @@ data:any
   
   deleteVehicleExpen()
   {
+   const expenseId =  this.selectedDesign._id
+   const vehicleId = this.vehicles
+   .filter(vehicle => vehicle.expenses.some(expense => expense._id === expenseId))
+   .map(vehicle => vehicle._id)[0];
+
     this.isLoading = true;
-    this.api.deleteVehicleExpense(this.expenseData._id).subscribe(resp => {
-      console.log(resp);
+    this.api.deleteVehicleExpense(expenseId, vehicleId).subscribe(resp => {
       this.isLoading = false;
-      document.getElementById('modalDismissBtn')?.click();
-      this.getAllVehicleAssigns();
+      // document.getElementById('modalDismissBtn')?.click();
+      this.closePopup()
+      this.getAllVehiclesData();
     },
     (err) => {
       this.isLoading = false;
@@ -338,11 +456,9 @@ data:any
   }
   updateExpense(){
     this.expenseData 
-    console.log(this.expenseData._id);
     
 
     this.isLoading = true;
-    console.log(":this.editDistForm.value", this.editExpense.value);
     
     this.api.updateExpense(this.editExpense.value, this.expenseData._id).subscribe(resp => {
       console.log(resp);
@@ -374,7 +490,8 @@ data:any
         name: expense.name,
         amount: expense.amount,
         time: expense.time,
-        description: expense.description
+        description: expense.description, 
+        vehicleId  :expense.selectedVehicle
       }));
   
       // Set the table data to be displayed
@@ -382,6 +499,31 @@ data:any
       console.log(this.mergedArray);
     }
   }
+
+  closePopup(){
+    this.modalRef.hide();
+  }
+
+  openModal(template: TemplateRef<any>, data: any) {
+    this.modalRef = this.modalService.show(template);
+  }
+  
+  rowEvent($event: any) {
+  
+    this.selectedRow = $event.lead;
+  
+    if ($event['event'] === 'edit') {
+      this.getEdit(this.selectedRow);
+
+      this.openModal(this.editTemplate, this.selectedRow);
+    }
+  
+    if ($event['event'] === 'delete') {
+      this.selectedDesign = this.selectedRow;
+      this.openModal(this.deleteTemplate, this.selectedRow);
+    }
+  }
+  
   
   
 }
