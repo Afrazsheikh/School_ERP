@@ -43,6 +43,7 @@ export class AssignVehicleComponent {
   mergedAssignArray: any[];
   ROUTE: any[];
   STOPPAGE: any[];
+  mergedArrayNew: any[];
 
 
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router, private modalService: BsModalService)
@@ -76,87 +77,52 @@ data:any
   ngOnInit(): void {
     this.getAllVehicleAssigns();
     this.getAllRoutes();
-    this.getAllVehiclesData()
-    // this.tableHeader = {
-    //   data: [
-    //     { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
-    //     { field: "vehicleNo", dataType: "string", title: 'Vehicle Name', sort: true, visible: true, search: true },
-    //     { field: "name", dataType: "string", title: 'Expense Name', sort: true, visible: true, search: true },
-    //     { field: "amount", dataType: "string", title: 'Amount', sort: true, visible: true, search: true },
-    //     { field: "time", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
-    //     { field: "description", dataType: "string", title: 'Description', sort: true, visible: true, search: true },
-    //     { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
-    //   ],
-    //   searchPlaceholder: "Search by vehicleNo, amount, and time",
-    //   sortBy: { field: 'distance', asc: true },
-    //   toolbar: {
-    //     show: true,
-    //     visibleOn: 'visibility',
-    //     config: {
-    //       edit: {
-    //         show: true,
-    //         callback: () => {
-    //           // Handle edit action
-    //         },
-    //       },
-    //       delete: {
-    //         show: true,
-    //         callback: () => {
-    //           // Handle delete action
-    //         },
-    //       },
-    //     },
-    //   },
-    // };
+    // this.getAllVehiclesData()
+  
 
   }
-table () { 
-  this.tableHeader = {
-    data: [
-      { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
-      { field: "routeFare", dataType: "string", title: 'Route Name', sort: true, visible: true, search: true },
-      { field: "startPlace", dataType: "string", title: 'Start Place', sort: true, visible: true, search: true },
-      { field: "stoppageName", dataType: "string", title: 'Stop page', sort: true, visible: true, search: true },
-      { field: "stopTime", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
-      // { field: "description", dataType: "string", title: 'Description', sort: true, visible: true, search: true },
-      // { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
-    ],
-    searchPlaceholder: "Search by vehicleNo, amount, and time",
-    sortBy: { field: 'distance', asc: true },
-    toolbar: {
-      show: true,
-      visibleOn: 'visibility',
-      config: {
-        edit: {
-          show: true,
-          callback: () => {
-            // Handle edit action
-          },
-        },
-        delete: {
-          show: true,
-          callback: () => {
-            // Handle delete action
-          },
-        },
-      },
-    },
-  };
-}
+
   getAllVehicleAssigns()
   {
    
+    this.tableHeader = {
+      data: [
+        { field: "autoNo", dataType: "autoNo", title: 'S. No', sort: false, visible: true, search: false },
+        { field: "routeFare", dataType: "string", title: 'Route Name', sort: true, visible: true, search: true },
+        { field: "startPlace", dataType: "string", title: 'Start Place', sort: true, visible: true, search: true },
+        { field: "stoppageName", dataType: "string", title: 'Stop page', sort: true, visible: true, search: true },
+        { field: "stopTime", dataType: "string", title: 'Time', sort: true, visible: true, search: true },
+        { field: 'action', dataType: 'action', title: 'Action', sort: false, visible: true, search: false }
+      ],
+      searchPlaceholder: "Search by startPlace, stoppageName, and time",
+      sortBy: { field: 'distance', asc: true },
+      toolbar: {
+        show: true,
+        visibleOn: 'visibility',
+        config: {
+          edit: {
+            show: true,
+            callback: () => {
+              // Handle edit action
+            },
+          },
+          delete: {
+            show: true,
+            callback: () => {
+              // Handle delete action
+            },
+          },
+        },
+      },
+    };
   
 
     
-    this.api.getAllVehicleAssigns().subscribe(resp => { 
-      console.log(resp);
-      
-      this.assigns = resp.vehicleRoutes;
-      
-      console.log(this.assigns);
-      const routeArrayValues = this.assigns.map(assign => assign.route);
-      const stoppageArray = this.assigns.map(assign => assign.stoppage);
+    // this.api.getAllVehicleAssigns().subscribe(resp => {       
+      // this.assigns = resp.vehicleRoutes;
+      // console.log(this.assigns);
+      // const routeArrayValues = this.assigns.map(assign => assign.route);
+      // const stoppageArray = this.assigns.map(assign => assign.stoppage);
       this.api.getAllVehicleAssigns().subscribe(resp => { 
         console.log(resp);
         
@@ -164,9 +130,6 @@ table () {
       
         this.assigns.forEach((stopage, index) => {
           if (stopage.stoppage) {
-           
-             
-            // stopage.stoppage.forEach((route) => {
               const stoppageDetails = {
                 autoNo: index + 1, 
                 routeFare: stopage.stoppage.routeFare,
@@ -174,17 +137,10 @@ table () {
                 stoppageName: stopage.stoppage.stoppageName,
                 Id: stopage.stoppage._id,
               };
-          
-              
               this.STOPPAGE = [];
               this.STOPPAGE.push(stoppageDetails);
-
-
-            // });
-
           }
         });
-      
         this.assigns.forEach((assign, index) => {
           if (assign.route) {
         
@@ -200,11 +156,7 @@ table () {
        
           }
         });
-        this.table()
-      
-      
-        // Combine ROUTE and STOPPAGE arrays into a single array
-        // this.mergedArray = [...this.ROUTE, ...this.STOPPAGE];
+
         for (let i = 0; i < Math.max(this.ROUTE.length, this.STOPPAGE.length); i++) {
           const routeItem = this.ROUTE[i] || {};
           const stoppageItem = this.STOPPAGE[i] || {};
@@ -219,13 +171,11 @@ table () {
             stopTime: stoppageItem.stopTime,
             stoppageName: stoppageItem.stoppageName,
           };
-        
-          this.mergedArray.push(mergedItem);
+        this.  mergedArrayNew = []
+          this.mergedArrayNew.push(mergedItem);
         }
-        
-        console.log(this.mergedArray);
-        console.log(this.mergedArray);
-        this.table()
+  
+  
       });
      
   //     // this.assigns =routeArrayValues.concat(stoppageArray);
@@ -233,7 +183,7 @@ table () {
   //     console.log(this.assigns);
 
       
-    });
+    // });
   }
 
   onFilesDropped(files: NgxFileDropEntry[], imgType: string)
@@ -411,6 +361,8 @@ this.editExpense.patchValue({
 
   editAssignVehicle(route: any)
   {
+    console.log("dsa",route );
+    
     this.selectedAssign = route;
     const navExtras: NavigationExtras = {
       state: {
@@ -522,8 +474,26 @@ this.editExpense.patchValue({
       this.selectedDesign = this.selectedRow;
       this.openModal(this.deleteTemplate, this.selectedRow);
     }
+
+    
   }
   
   
+  rowEventAssign($event: any) {
+    this.selectedRow = $event.lead;
+    if ($event['event'] === 'edit') {
+      console.log("fsdf");
+      
+      this.editAssignVehicle(this.selectedRow);
+
+      // this.openModal(this.editTemplate, this.selectedRow);
+    }
   
+    if ($event['event'] === 'delete') {
+      this.selectedDesign = this.selectedRow;
+      this.openModal(this.deleteTemplate, this.selectedRow);
+    }
+
+  
+}
 }

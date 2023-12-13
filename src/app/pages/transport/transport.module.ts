@@ -32,7 +32,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     VehicleEditComponent,
     StopEditComponent,
     AssignEditComponent,
-    ExpenseReportComponent
+    ExpenseReportComponent,
   ],
   imports: [
     CommonModule,

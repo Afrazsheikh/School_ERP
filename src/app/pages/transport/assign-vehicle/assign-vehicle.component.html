@@ -4,10 +4,10 @@
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
         <mat-tab label="Assign List">
           <div class="pt-4">
+            <!-- <app-assign-list></app-assign-list> -->
+            <div *ngIf="mergedArrayNew">
         
-            <div *ngIf="assigns">
-        
-              <app-dynamic-table [data]="mergedArray" [columns]="tableHeader"  (rowEvent)="rowEvent($event)"></app-dynamic-table>
+              <app-dynamic-table [data]="mergedArrayNew" [columns]="tableHeader"  (rowEvent)="rowEventAssign($event)"></app-dynamic-table>
             </div>
             <!-- <table class="table mt-3">
               <thead>

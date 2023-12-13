@@ -25,6 +25,8 @@ export class EmpListComponent {
     'itemsPerPage': 5,
     'totalItems' : 0
   }
+  departments: any;
+  depat: string = "";
   constructor(private api: ApiService,private modalService: BsModalService,
     private toastr: ToastrService,
     private router: Router,
@@ -36,20 +38,33 @@ export class EmpListComponent {
   ngOnInit(): void {
     this.getDesignations();
     this.getEmployees();    
+    this.getDepartments()
   }
   getDesignations() {
     this.api.getDesignations().subscribe(resp => {
       this.designations = resp.designations;
     });
   }
+
+  
+  getDepartments()
+  {
+    this.api.getDepartments().subscribe(resp => {
+      
+      this.departments = resp.departments
+    });
+  }
+
   getEmployees() {
     this.spinner.show();
     this.pageNo =this.pagingConfig.currentPage;
     this.filterByDes = [];
     this.pagingConfig.totalItems  = 0;
-    this.api.getEmployeesByPageNo(this.pageNo-1,this.departmentDrp).subscribe(resp => {
+    this.api.getEmployeesByPageNo(this.pageNo-1, this.depat).subscribe(resp => {
       this.spinner.hide();      
       this.employees = resp.employees;  
+      console.log(this.employees);
+      
       this.filterByDes = this.employees;
       this.pagingConfig.totalItems = resp['totalCount'] ; 
       // this.filterByDesignation("-1");    
@@ -97,6 +112,9 @@ export class EmpListComponent {
     // this.filterByDes = [];
     // this.filterByDesignation(event.target.value);
     this.departmentDrp = event.target.value;
+    this.depat =  event.target.value
+    console.log(this.depat);
+    
     this.getEmployees();
   }
   pageChanged(event: any): void {
