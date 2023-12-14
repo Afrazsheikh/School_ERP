@@ -20,14 +20,14 @@
         </div>
 
         <div class="col-4">
-          <label class="form-label">Permanent Education No <span class="error">*</span></label>
+          <label class="form-label">Permanent Education No </label>
           <input type="text" class="form-control" formControlName="permanentEducationNo"  />
           <div
             *ngIf="studentForm.controls['registerNo'].invalid && (studentForm.controls['permanentEducationNo'].dirty || studentForm.controls['permanentEducationNo'].touched)"
             class="error mt-2">
-            <div *ngIf="studentForm.controls['permanentEducationNo'].errors['required']">
+<!--             <div *ngIf="studentForm.controls['permanentEducationNo'].errors['required']">
               Permanent Education No is required.
-            </div>
+            </div> -->
           </div>
         </div>
 
