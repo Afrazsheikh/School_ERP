@@ -110,7 +110,7 @@ onChangeClass(event){
       section: [this.studentBasic?.academic?.section?._id],
       category: [this.studentBasic?.category?._id, Validators.required],      
       registerNo: [{value:this.studentBasic?.registerNo,disabled:true }, Validators.required],
-    //  rollNo: [this.studentBasic?.rollNo],
+      rollNo: [this.studentBasic?.rollNo],
       admissionDate: [this.studentBasic?.admissionDate, Validators.required],
       type: [this.studentBasic?.type],
       firstName: [this.studentBasic?.firstName, Validators.required],

@@ -7,7 +7,7 @@
     </div>
     <form [formGroup]="studentForm">
       <div class="row mt-4">
-        <div class="col-4">
+        <div class="col-3">
           <label class="form-label">Register No <span class="error">*</span></label>
           <input type="text" class="form-control" formControlName="registerNo" readonly />
           <div
@@ -19,7 +19,7 @@
           </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-3">
           <label class="form-label">Permanent Education No </label>
           <input type="text" class="form-control" formControlName="permanentEducationNo"  />
           <div
@@ -30,8 +30,11 @@
             </div> -->
           </div>
         </div>
-
-        <div class="col-4">
+        <div class="col-3">
+          <label class="form-label">Roll No </label>
+          <input type="text" class="form-control" formControlName="rollNo"  />
+        </div>
+        <div class="col-3">
           <label class="form-label">Admission Date <span class="error">*</span></label>
           <div class="input-group">
             <input matInput class="form-control me-3" [matDatepicker]="picker" placeholder="dd-mm-yyyy"
@@ -49,6 +52,7 @@
             </div>
           </div>
         </div>
+       
       </div>
       <div class="row">
         <div class="col-md-12 header-txt">
