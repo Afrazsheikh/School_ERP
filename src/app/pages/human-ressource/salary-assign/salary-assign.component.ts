@@ -27,13 +27,16 @@ export class SalaryAssignComponent implements OnInit {
   }
   getDesignations()
   {
-
     this.api.getDesignations().subscribe(resp => {
-      this.designations = resp.designations
-      console.log(this.designations);
-
+      if (Array.isArray(resp.designations)) {
+        resp.designations.sort((a, b) => a.name.localeCompare(b.name));
+        this.designations = resp.designations;
+      } else {
+        console.error('Designations data is not an array:', resp.designations);
+      }
     });
   }
+
   getAllEmployees()
   {
     this.api.getAllEmployees().subscribe(resp => {

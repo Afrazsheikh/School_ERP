@@ -42,7 +42,12 @@ export class EmpListComponent {
   }
   getDesignations() {
     this.api.getDesignations().subscribe(resp => {
-      this.designations = resp.designations;
+      if (Array.isArray(resp.designations)) {
+        resp.designations.sort((a, b) => a.name.localeCompare(b.name));
+        this.designations = resp.designations;
+      } else {
+        console.error('Designations data is not an array:', resp.designations);
+      }
     });
   }
 

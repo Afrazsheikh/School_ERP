@@ -13,13 +13,13 @@
           <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
         </select> 
   </div>
-  <div class="col-3 mt-4 mb-2" >
-    <label class="form-label">Filter By Designation</label>
+  <!-- <div class="col-3 mt-4 " >
+    <label class="form-label">Filter By Department</label>
     <select class="form-select" [(ngModel)]="depat" (change)="onChangeDepart($event)">
         <option value="">All</option>
         <option *ngFor="let dept of departments" [value]="dept._id">{{dept.name}}</option>
       </select> 
-</div>
+</div> -->
   <!--<div class="col-md-8 mt-5 mb-2">
     <div class="options">
       <button class="btn"><img src="assets/icons/opt-copy.svg"></button>

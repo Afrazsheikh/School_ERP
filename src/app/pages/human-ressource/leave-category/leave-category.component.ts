@@ -85,12 +85,16 @@ export class LeaveCategoryComponent implements OnInit {
 
   getDesignaions()
   {
-    this.api.getDesignaions().subscribe(resp => {
-      this.designations = resp.designations;
-      this.getLeaveCategory();
-     
+    this.api.getDesignations().subscribe(resp => {
+      if (Array.isArray(resp.designations)) {
+        resp.designations.sort((a, b) => a.name.localeCompare(b.name));
+        this.designations = resp.designations;
+      } else {
+        console.error('Designations data is not an array:', resp.designations);
+      }
     });
-  }  
+  }
+
 
   mapLeaveDesignation()
   {

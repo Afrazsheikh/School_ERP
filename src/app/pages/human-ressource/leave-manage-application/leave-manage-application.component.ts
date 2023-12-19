@@ -162,17 +162,24 @@ export class LeaveManageApplicationComponent implements OnInit {
   }
   getDesignations() {
     this.api.getDesignations().subscribe((resp) => {
-      this.designations = resp.designations;
-      this.filteredLeaveApps.forEach((leave, index) => {
-        if (leave.employee) {
-          leave.employee.designation = this.designations.find(
-            (design) => design._id === leave.employee?.designation
-          );
-        }
-      });
-      console.log(this.designations);
+      if (Array.isArray(resp.designations)) {
+        resp.designations.sort((a, b) => a.name.localeCompare(b.name));
+        this.designations = resp.designations;
+        this.filteredLeaveApps.forEach((leave, index) => {
+          if (leave.employee) {
+            leave.employee.designation = this.designations.find(
+              (design) => design._id === leave.employee?.designation
+            );
+          }
+        });
+  
+        console.log(this.designations);
+      } else {
+        console.error('Designations data is not an array:', resp.designations);
+      }
     });
   }
+  
 
   getLeaveApplication() {
     this.getDesignations();
