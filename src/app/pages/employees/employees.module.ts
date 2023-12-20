@@ -25,7 +25,7 @@ import { EmpBankDetailComponent } from './emp-bank-detail/emp-bank-detail.compon
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { CreateEmpComponent } from './create-emp/create-emp.component';
 import { EmpMultipleImportComponent } from './emp-multiple-import/emp-multiple-import.component';
-
+import { OrderModule } from 'ngx-order-pipe';
 const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -67,7 +67,8 @@ const MY_FORMATS = {
     MatMomentDateModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    OrderModule
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },

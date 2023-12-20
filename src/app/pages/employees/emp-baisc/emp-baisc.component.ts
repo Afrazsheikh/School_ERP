@@ -61,7 +61,8 @@ getDesignations() {
       experienceDetails: [this.empBasic?.experienceDetails, Validators.required],
       totalExperience: [this.empBasic?.totalExperience, Validators.required],
       gender: [this.empBasic?.gender, Validators.required],
-      name: [this.empBasic?.name, Validators.required],
+      firstName: [this.empBasic?.firstName, Validators.required],
+      lastName: [this.empBasic?.lastName, Validators.required],
       dob: [this.empBasic?.dob, Validators.required],
       religion: [this.empBasic?.religion, Validators.required],      
       bloodGroup: [this.empBasic?.bloodGroup, Validators.required],
@@ -95,7 +96,8 @@ getDesignations() {
     qualification : formData.value.qualification, 
     experienceDetails :formData.value.experienceDetails, 
     totalExperience :formData.value.totalExperience, 
-    name :formData.value.name, 
+    firstName :formData.value.firstName, 
+    lastName :formData.value.lastName,
     gender :formData.value.gender, 
     bloodGroup :formData.value.bloodGroup, 
     religion :formData.value.religion, 
@@ -120,6 +122,7 @@ getDesignations() {
     twitter: formData.value.twitter, 
     linkedin:formData.value.linkedin
   }
+  console.log(payload);
   this.api.updateEmpployee(payload).subscribe(resp => {
    this.toastr.success(resp[0].msg, " Updated Successfully");
   },

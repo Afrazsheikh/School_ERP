@@ -5,21 +5,29 @@
       <div class="col-md-6 text-end mb-1"><button class="btn" (click)="addEmployee()"> Add Employee</button>
       &nbsp;&nbsp;</div>      
   </div>
-  <div class="row top-options grey-border">
-    <div class="col-3 mt-4 mb-2" >
-      <label class="form-label">Filter By Designation</label>
-      <select class="form-select" [(ngModel)]="departmentDrp" (change)="onChangeDepart($event)">
-          <option value="">All</option>
-          <option *ngFor="let designation of designations" [value]="designation._id">{{designation.name}}</option>
-        </select> 
-  </div>
-  <!-- <div class="col-3 mt-4 " >
-    <label class="form-label">Filter By Department</label>
-    <select class="form-select" [(ngModel)]="depat" (change)="onChangeDepart($event)">
+
+  <div class="row top-options grey-border pb-3 mt-3">
+    <div class="col-md-3">
+      <label class="form-label">Department</label>
+      <select class="form-select" [(ngModel)]="depat" (change)="onChangeDepart($event)">
         <option value="">All</option>
-        <option *ngFor="let dept of departments" [value]="dept._id">{{dept.name}}</option>
-      </select> 
-</div> -->
+        <option *ngFor="let dept of departments | orderBy:deporderBy:false:true " [value]="dept._id">{{dept.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Designation</label>
+      <select class="form-select" [(ngModel)]="departmentDrp" >
+        <option disabled value="select">Select</option>
+        <option *ngFor="let designation of selectedDesgingation | orderBy:deporderBy:false:true" [value]="designation._id">{{designation.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-4 mt-2">
+      <input type="text" class="form-control mt-4" placeholder="Search by Employee Name and Email" [(ngModel)]="searchText"  >
+    </div>
+    <div class="col-md-2 mt-2">
+      <button class="btn mt-4" (click)="search()" [disabled]="departmentDrp == ''|| departmentDrp == 'select'">Search</button>
+    </div>
+  </div>
   <!--<div class="col-md-8 mt-5 mb-2">
     <div class="options">
       <button class="btn"><img src="assets/icons/opt-copy.svg"></button>
@@ -29,7 +37,7 @@
       <button class="btn"><img src="assets/icons/opt-print.svg"></button>
     </div>
   </div> -->
-  </div>
+
   <table class="table mt-3">
     <thead>
       <tr>

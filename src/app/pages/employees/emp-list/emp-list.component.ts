@@ -18,11 +18,14 @@ export class EmpListComponent {
   isLoading: boolean;
   employeeId:any;
   departmentDrp:string="";
+  selectedDesgingation =[];
+  searchText ="";
+  deporderBy = "name";
   pageNo = 1;
   p: number = 1;
   pagingConfig = {
     'currentPage'  : 1,
-    'itemsPerPage': 5,
+    'itemsPerPage': 15,
     'totalItems' : 0
   }
   departments: any;
@@ -36,18 +39,20 @@ export class EmpListComponent {
   }
 
   ngOnInit(): void {
+    this.getDepartments()
     this.getDesignations();
     this.getEmployees();    
-    this.getDepartments()
+   
   }
   getDesignations() {
     this.api.getDesignations().subscribe(resp => {
-      if (Array.isArray(resp.designations)) {
-        resp.designations.sort((a, b) => a.name.localeCompare(b.name));
-        this.designations = resp.designations;
-      } else {
-        console.error('Designations data is not an array:', resp.designations);
-      }
+      this.designations = resp.designations;
+      // if (Array.isArray(resp.designations)) {
+      //   resp.designations.sort((a, b) => a.name.localeCompare(b.name));
+      //   this.designations = resp.designations;
+      // } else {
+      //   console.error('Designations data is not an array:', resp.designations);
+      // }
     });
   }
 
@@ -59,13 +64,16 @@ export class EmpListComponent {
       this.departments = resp.departments
     });
   }
-
+search(){
+  this.pagingConfig.currentPage = 1; 
+  this.getEmployees();
+}
   getEmployees() {
     this.spinner.show();
     this.pageNo =this.pagingConfig.currentPage;
     this.filterByDes = [];
     this.pagingConfig.totalItems  = 0;
-    this.api.getEmployeesByPageNo(this.pageNo-1, this.depat).subscribe(resp => {
+    this.api.getEmployeesByPageNo(this.pageNo-1, this.departmentDrp).subscribe(resp => {
       this.spinner.hide();      
       this.employees = resp.employees;  
       console.log(this.employees);
@@ -114,13 +122,14 @@ export class EmpListComponent {
     this.router.navigate(["/employee/detail/"+ employee._id]);
   }
   onChangeDepart(event){
-    // this.filterByDes = [];
-    // this.filterByDesignation(event.target.value);
-    this.departmentDrp = event.target.value;
-    this.depat =  event.target.value
-    console.log(this.depat);
-    
-    this.getEmployees();
+    this.selectedDesgingation =[];
+    this.departmentDrp = 'select' ;
+    const id = event.target.value;
+   this.designations.forEach(element => {
+     if ( element?.department?._id === id) {
+       this.selectedDesgingation.push(element) ;
+     }
+   });   
   }
   pageChanged(event: any): void {
     this.pagingConfig.currentPage  = event;

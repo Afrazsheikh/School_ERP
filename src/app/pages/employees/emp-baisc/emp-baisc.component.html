@@ -106,33 +106,26 @@
             </div> 
         </div>
         <div class="col-4">
-            <label class="form-label">Name <span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="name">
-            <div *ngIf="empB1Form.controls['name'].invalid && (empB1Form.controls['name'].dirty || empB1Form.controls['name'].touched)"
+            <label class="form-label">First Name <span class="error">*</span></label>
+            <input type="text" class="form-control"  formControlName="firstName">
+            <div *ngIf="empB1Form.controls['firstName'].invalid && (empB1Form.controls['firstName'].dirty || empB1Form.controls['firstName'].touched)"
             class="error mt-2">
-            <div *ngIf="empB1Form.controls['name'].errors['required']">
-                Name is required
+            <div *ngIf="empB1Form.controls['firstName'].errors['required']">
+                First Name is required
             </div>
           </div> 
         </div>
         <div class="col-4">
-            <label class="form-label">Date Of Birth<span class="error">*</span></label>
-            <div class="input-group">
-                <div class="tooglePicker">
-                    <mat-datepicker-toggle  matSuffix [for]="picker1"></mat-datepicker-toggle>
-                  </div>
-                    <input matInput class="form-control" [matDatepicker]="picker1"
-                    placeholder="dd-mm-yyyy" formControlName="dob" >          
-               <mat-datepicker #picker1></mat-datepicker>
-                 
-                  </div>
-            <div *ngIf="empB1Form.controls['dob'].invalid && (empB1Form.controls['dob'].dirty || empB1Form.controls['dob'].touched)"
-            class="error mt-2">
-            <div *ngIf="empB1Form.controls['dob'].errors['required']">
-                Date Of Birth is required
-            </div>
+          <label class="form-label">Last Name <span class="error">*</span></label>
+          <input type="text" class="form-control"  formControlName="lastName">
+          <div *ngIf="empB1Form.controls['lastName'].invalid && (empB1Form.controls['lastName'].dirty || empB1Form.controls['lastName'].touched)"
+          class="error mt-2">
+          <div *ngIf="empB1Form.controls['lastName'].errors['required']">
+            Last Name is required
+          </div>
         </div> 
-        </div>        
+      </div>
+             
     </div>
     <div class="row mt-2 mb-3 mt-3">
         <div class="col-4">
@@ -162,21 +155,39 @@
           </div> 
         </div>
         <div class="col-4">
-            <label class="form-label">Phone No.<span class="error">*</span></label>
-            <input type="text" class="form-control"  formControlName="number">
-            <div *ngIf="empB1Form.controls['number'].invalid && (empB1Form.controls['number'].dirty || empB1Form.controls['number'].touched)"
-              class="error mt-2">
-              <div *ngIf="empB1Form.controls['number'].errors['required']">
-                Phone No is required
-              </div>
-              <div *ngIf="empB1Form.get('number').hasError('pattern')">
-                Enter 10 digit Phone No.
-            </div>
-          </div> 
-        </div>        
+          <label class="form-label">Date Of Birth<span class="error">*</span></label>
+          <div class="input-group">
+              <div class="tooglePicker">
+                  <mat-datepicker-toggle  matSuffix [for]="picker1"></mat-datepicker-toggle>
+                </div>
+                  <input matInput class="form-control" [matDatepicker]="picker1"
+                  placeholder="dd-mm-yyyy" formControlName="dob" >          
+             <mat-datepicker #picker1></mat-datepicker>
+               
+                </div>
+          <div *ngIf="empB1Form.controls['dob'].invalid && (empB1Form.controls['dob'].dirty || empB1Form.controls['dob'].touched)"
+          class="error mt-2">
+          <div *ngIf="empB1Form.controls['dob'].errors['required']">
+              Date Of Birth is required
+          </div>
+      </div> 
+      </div> 
     </div>
     <div class="row mt-2 mb-3 mt-3">
-        <div class="col-12">
+      <div class="col-4">
+        <label class="form-label">Phone No.<span class="error">*</span></label>
+        <input type="text" class="form-control"  formControlName="number">
+        <div *ngIf="empB1Form.controls['number'].invalid && (empB1Form.controls['number'].dirty || empB1Form.controls['number'].touched)"
+          class="error mt-2">
+          <div *ngIf="empB1Form.controls['number'].errors['required']">
+            Phone No is required
+          </div>
+          <div *ngIf="empB1Form.get('number').hasError('pattern')">
+            Enter 10 digit Phone No.
+        </div>
+      </div> 
+    </div>  
+        <div class="col-8">
             <label class="form-label">Email <span class="error">*</span></label>
             <input type="text" class="form-control"  formControlName="email">
             <div *ngIf="empB1Form.controls['email'].invalid && (empB1Form.controls['email'].dirty || empB1Form.controls['email'].touched)"
