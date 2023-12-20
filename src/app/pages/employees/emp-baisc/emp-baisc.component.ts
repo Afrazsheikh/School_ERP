@@ -122,7 +122,6 @@ getDesignations() {
     twitter: formData.value.twitter, 
     linkedin:formData.value.linkedin
   }
-  console.log(payload);
   this.api.updateEmpployee(payload).subscribe(resp => {
    this.toastr.success(resp[0].msg, " Updated Successfully");
   },
