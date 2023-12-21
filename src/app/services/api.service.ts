@@ -232,10 +232,15 @@ export class ApiService {
       .get(environment.apiBaseUrl + '/employee/all/')
       .pipe(catchError(this.errorHandler));
   }
-  getEmployeesByPageNo(pageNo: number,designation:string, ): Observable<any> {
+  getEmployeesByPageNoOld(pageNo: number,designation:string ): Observable<any> {
     return this.httpClient
       .get(environment.apiBaseUrl + '/employee/all/'+pageNo+"/"+designation )
       .pipe(catchError(this.errorHandler));
+  }
+  getEmployeesByPageNo(postData:any ): Observable<any> {
+    return this.httpClient
+    .post(environment.apiBaseUrl + '/employee/all', postData)
+    .pipe(catchError(this.errorHandler));
   }
   
   getAllEmployeesById(id: string): Observable<any> {

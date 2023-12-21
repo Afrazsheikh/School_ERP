@@ -73,7 +73,12 @@ search(){
     this.pageNo =this.pagingConfig.currentPage;
     this.filterByDes = [];
     this.pagingConfig.totalItems  = 0;
-    this.api.getEmployeesByPageNo(this.pageNo-1, this.departmentDrp).subscribe(resp => {
+    const payload = {
+      page: this.pageNo-1,
+      designation:this.departmentDrp,
+      searchKey:this.searchText 
+    }
+    this.api.getEmployeesByPageNo(payload).subscribe(resp => {
       this.spinner.hide();      
       this.employees = resp.employees;  
       console.log(this.employees);
