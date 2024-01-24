@@ -18,7 +18,7 @@
       <label class="form-label">Designation</label>
       <select class="form-select" [(ngModel)]="departmentDrp" >
         <option disabled value="select">Select</option>
-        <option value="-1">All</option>
+        <option value="all">All</option>
         <option *ngFor="let designation of selectedDesgingation | orderBy:deporderBy:false:true" [value]="designation._id">{{designation.name}}</option>
       </select>
     </div>
