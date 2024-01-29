@@ -35,8 +35,16 @@
                     </mat-form-field>
                     </div> 
                     <div class="col-md-3 mt-4">
-                      <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+                     
+                      <button class="btn mt-2 mr-4" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+                      <button class="btn mt-2" style="margin-left: 5px;" (click)="downloadCSV()" *ngIf="isCsvShow==true" >Download CSV</button> 
                     </div>
+                    <!-- <div class="col-md-3 mt-4" *ngIf="studentData">
+                      
+                    </div> -->
+
+
+                   
               </div>
           </form>
       </div>

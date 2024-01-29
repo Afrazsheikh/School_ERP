@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { concat } from 'rxjs';
 const moment = _rollupMoment || _moment;
+import { saveAs } from 'file-saver';
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
@@ -61,6 +62,7 @@ export class StudentAttendanceComponent {
   selectedRow:any;
   tableHeader:any;
   isLoading = true;
+  isCsvShow: boolean =false;
   constructor(
     private api: ApiService,
     private toastr: ToastrService,
@@ -131,6 +133,7 @@ export class StudentAttendanceComponent {
     datepicker.close();
   }
   callReport(formData) {
+    this.isCsvShow = true
     const payload = {
       classId: formData.value.studentClass,
       sectionId: formData.value.section,
@@ -140,6 +143,8 @@ export class StudentAttendanceComponent {
     this.api.getStudentAttendanceReport(payload).subscribe(
       (resp) => {
         this.studentData = resp[0]['data'];
+        console.log(this.studentData);
+        
       },
       (err) => {
         this.spinner.hide();
@@ -149,5 +154,21 @@ export class StudentAttendanceComponent {
   }
   rowEvent($event: any) {
     this.selectedRow = $event.lead;
+  }
+
+  downloadCSV() {
+    const csvContent = this.generateCSVContent();
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, 'student_data.csv');
+  }
+
+  private generateCSVContent(): string {
+    const header = 'Name,Fullday,HalfDay,Absent\n';
+
+    const rows = this.studentData
+      .map((student) => `${student.name}, ${student.totalPresentCount},  ${student.totalHalfDayCount}, ${student.totalAbsentCount}`)
+      .join('\n');
+
+    return header + rows;
   }
 }

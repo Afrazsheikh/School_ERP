@@ -54,6 +54,9 @@
                 </div> 
             <div class="col-md-3 mt-4">
               <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Search</button>
+     <button class="btn mt-2" style="margin-left: 5px;" (click)="downloadCSV()"  *ngIf="hasDataForDownload()">Download CSV</button> 
+           
+           
             </div>
               </div>             
           </form>  
@@ -136,5 +139,12 @@
             </table>
           </div>
       </div>
+
+      <!-- download csv -->
+      <!-- <div class="row mt-3" *ngIf="hasDataForDownload()">
+        <div class="col-md-12">
+          <button class="btn btn-primary" (click)="downloadCSV()">Download CSV</button>
+        </div>
+      </div> -->
   </div>
 </app-layout>

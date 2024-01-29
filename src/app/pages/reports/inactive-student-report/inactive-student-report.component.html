@@ -46,10 +46,13 @@
               Class is required.
             </div>
           </div></div> 
-            
+        
       <div class="col-md-3 mt-4">
+     
         <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Search</button>
-      </div>
+    
+     <button class="btn mt-2" style="margin-left: 5px;" (click)="downloadCSV()" *ngIf="studentData" >Download CSV</button> 
+    </div>
         </div>             
     </form> 
       <!-- <table class="table mt-3">
@@ -80,6 +83,7 @@
       <div class="mt-2">
         <app-dynamic-table [data]="studentData" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
       </div>
+      
     </div>
   </app-layout>
   

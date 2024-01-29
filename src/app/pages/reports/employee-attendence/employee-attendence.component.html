@@ -46,6 +46,8 @@
                       </div> 
                       <div class="col-md-3 mt-4">
                         <button class="btn mt-2" (click)="callReport(reportForm)"  [disabled]="!reportForm.valid">Filter</button>
+     <button class="btn mt-2" style="margin-left: 5px;" (click)="downloadEmployeeCSV()" *ngIf="enableCsv" >Download CSV</button> 
+                      
                       </div>
                 </div>
             </form>
@@ -76,6 +78,11 @@
               </table> -->
               <app-dynamic-table [data]="employeeList" [columns]="tableHeader" (rowEvent)="rowEvent($event)"></app-dynamic-table>
             </div>
+            <!-- <div class="row mt-3"  *ngIf="this.enableCsv">
+              <div class="col-md-12">
+                <button class="btn btn-primary" (click)="downloadEmployeeCSV()">Download CSV</button>
+              </div>
+            </div> -->
         </div>
     </div>
 </app-layout>

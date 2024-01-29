@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { StudentService } from '../../student-details/student.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-inactive-student-report',
   templateUrl: './inactive-student-report.component.html',
@@ -88,6 +89,7 @@ export class InactiveStudentReportComponent {
     this.api.getActiveInactiveStudent(data, type).subscribe(data => {
       this.spinner.hide();
       this.studentData = data['students'];
+      
       this.studentData.forEach(element => {
         element['name'] = element?.firstName + " "+ element?.lastName;
         element['status'] = (element?.active)? 'Active' : 'Inactive';
@@ -102,4 +104,20 @@ export class InactiveStudentReportComponent {
   rowEvent($event: any) {
     this.selectedRow = $event.lead;
   }
+  downloadCSV() {
+    const csvContent = this.generateCSVContent();
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, 'student_data.csv');
+  }
+
+  private generateCSVContent(): string {
+    const header = 'Name,RegisterNo,DOB,Phone,Status\n';
+
+    const rows = this.studentData
+      .map((student) => `${student.name}, ${student.registerNo},  ${student.dob}, ${student.number}, ${student.status}`)
+      .join('\n');
+
+    return header + rows;
+  }
 }
+

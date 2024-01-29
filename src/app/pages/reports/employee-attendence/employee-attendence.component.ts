@@ -15,6 +15,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { concat } from 'rxjs';
 const moment = _rollupMoment || _moment;
+import { saveAs } from 'file-saver';
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
@@ -49,6 +50,7 @@ export class EmployeeAttendenceComponent {
   employeeList:any[] = [];
   selectedRow:any;
   tableHeader:any;
+  enableCsv: boolean =false;
   constructor(private api: ApiService, private toastr: ToastrService, private router: Router,
     private studentService:StudentService, private spinner: NgxSpinnerService, private datepipe: DatePipe
 ) {
@@ -100,6 +102,7 @@ export class EmployeeAttendenceComponent {
     datepicker.close();
   }
   callReport(formData){
+    this.enableCsv= true
     const payload = {
       designation: formData.value.designation,
       date:moment(this.date.value).format("MM/YYYY")
@@ -107,6 +110,8 @@ export class EmployeeAttendenceComponent {
     this.employeeList = [];
     this.api.getEmployeeAttendanceReport(payload).subscribe(resp => {
       this.employeeList = resp[0]['data'];
+      console.log(this.employeeList);
+      
     },
       (err) => {
         this.spinner.hide();
@@ -117,5 +122,20 @@ export class EmployeeAttendenceComponent {
   
   rowEvent($event: any) {
     this.selectedRow = $event.lead;
+  }
+  downloadEmployeeCSV() {
+    const csvContent = this.generateEmployeeCSVContent();
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, 'employee_data.csv');
+  }
+  
+  private generateEmployeeCSVContent(): string {
+    const header = 'Name,FullDays,HalfDays,Absent\n';
+  
+    const rows = this.employeeList
+      .map(employee => `${employee.name},${employee.totalPresentCount},${employee.totalHalfDayCount}, ${employee.totalAbsentCount}`)
+      .join('\n');
+  
+    return header + rows;
   }
 }
